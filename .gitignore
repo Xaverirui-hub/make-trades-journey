@@ -1,0 +1,15 @@
+# Claude Code 本机设定（每台电脑不一样，不需要版本控制）
+.claude/settings.local.json
+
+# Windows
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+
+# 暂存 / 输出
+*.tmp
+*.bak
+~$*
