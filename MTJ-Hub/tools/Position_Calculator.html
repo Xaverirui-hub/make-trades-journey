@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" href="data:image/png;base64,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">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Position Size Calculator · Make Trades Journey</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#060608; --panel:rgba(20,20,26,.55); --panel-2:rgba(255,255,255,.018);
+  --gold:#E8C877; --gold-bright:#FCE9A8; --gold-deep:#C9A227;
+  --bull:#2CD98A; --bear:#FF5C63; --cyan:#2FE0D6;
+  --text:#EDEBE2; --muted:#9A968C; --muted-2:#6f6c64;
+  --line:rgba(232,200,119,.16); --line-soft:rgba(232,200,119,.09);
+  --maxw:1180px;
+}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'Sora','Noto Sans SC',system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;line-height:1.6;}
+a{color:inherit;}
+.bg-glow{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(1000px 600px at 82% -12%,rgba(232,200,119,.09),transparent 60%),
+             radial-gradient(800px 520px at -8% 30%,rgba(201,162,39,.07),transparent 60%);}
+.bg-grid{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.35;
+  background-image:linear-gradient(rgba(232,200,119,.04) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(232,200,119,.04) 1px,transparent 1px);
+  background-size:64px 64px;
+  mask-image:radial-gradient(circle at 50% 20%,#000 0%,transparent 78%);
+  -webkit-mask-image:radial-gradient(circle at 50% 20%,#000 0%,transparent 78%);}
+.wrap{position:relative;z-index:2;max-width:var(--maxw);margin:0 auto;padding:22px clamp(14px,4vw,32px) 60px;}
+
+/* header */
+.head{display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  padding-bottom:16px;margin-bottom:22px;border-bottom:1px solid var(--line-soft);position:relative;}
+.head::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;
+  background:linear-gradient(90deg,var(--gold),transparent 46%);}
+.head img{height:46px;width:auto;border-radius:9px;flex:none;
+  border:1px solid rgba(232,200,119,.26);box-shadow:0 0 22px rgba(232,200,119,.12);}
+.head .ht{flex:1;min-width:200px;}
+.head .eyebrow{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.3em;
+  text-transform:uppercase;color:var(--gold-deep);}
+.head h1{margin:4px 0 2px;font-size:clamp(19px,3.4vw,26px);font-weight:800;letter-spacing:-.01em;}
+.head .zh{font-family:'Noto Sans SC';font-size:13px;color:var(--muted);letter-spacing:.16em;}
+.head .back{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;border:1px solid var(--line-soft);border-radius:24px;
+  padding:9px 15px;transition:.25s;white-space:nowrap;}
+.head .back:hover{color:var(--gold-bright);border-color:var(--gold);}
+
+/* layout */
+.grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.08fr);gap:14px;align-items:start;}
+@media(max-width:900px){.grid{grid-template-columns:1fr;}}
+.card{border:1px solid var(--line-soft);border-radius:16px;background:var(--panel);
+  backdrop-filter:blur(4px);padding:20px 20px 22px;}
+.card + .card{margin-top:14px;}
+.card h2{margin:0 0 4px;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--gold-deep);font-weight:500;}
+.card .h-zh{font-family:'Noto Sans SC';font-size:12px;color:var(--muted-2);margin-bottom:16px;letter-spacing:.1em;}
+
+/* fields */
+.field{margin-bottom:13px;}
+.field:last-child{margin-bottom:0;}
+.field label{display:flex;align-items:baseline;justify-content:space-between;gap:8px;
+  font-size:12.5px;color:var(--muted);margin-bottom:6px;}
+.field label .zh{font-family:'Noto Sans SC';font-size:11.5px;color:var(--muted-2);}
+input[type=number],input[type=text],select{
+  width:100%;background:rgba(6,6,8,.7);border:1px solid var(--line-soft);border-radius:10px;
+  color:var(--text);font-family:'JetBrains Mono',monospace;font-size:15px;padding:11px 13px;
+  transition:.2s;appearance:none;-webkit-appearance:none;}
+select{background-image:linear-gradient(45deg,transparent 50%,var(--gold) 50%),linear-gradient(135deg,var(--gold) 50%,transparent 50%);
+  background-position:calc(100% - 18px) 51%,calc(100% - 13px) 51%;background-size:5px 5px,5px 5px;background-repeat:no-repeat;padding-right:36px;}
+input:focus,select:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(232,200,119,.08);}
+input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
+input[type=number]{-moz-appearance:textfield;}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:11px;}
+@media(max-width:420px){.row2{grid-template-columns:1fr;}}
+
+/* segmented toggle */
+.seg{display:flex;gap:6px;}
+.seg button{flex:1;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;
+  text-transform:uppercase;padding:10px 6px;border-radius:9px;cursor:pointer;transition:.22s;
+  background:rgba(6,6,8,.7);border:1px solid var(--line-soft);color:var(--muted);}
+.seg button:hover{color:var(--text);}
+.seg button.on{border-color:var(--gold);color:var(--gold-bright);background:rgba(232,200,119,.1);}
+.seg button.on.buy{border-color:var(--bull);color:var(--bull);background:rgba(44,217,138,.1);}
+.seg button.on.sell{border-color:var(--bear);color:var(--bear);background:rgba(255,92,99,.1);}
+
+/* hero result */
+.result{border:1px solid var(--line);border-radius:16px;padding:24px 20px;text-align:center;
+  background:radial-gradient(520px 220px at 50% 0%,rgba(232,200,119,.12),transparent 70%);}
+.result .rl{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.3em;
+  text-transform:uppercase;color:var(--muted-2);}
+.result .lots{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:clamp(44px,11vw,68px);
+  line-height:1;margin:10px 0 4px;letter-spacing:-.02em;
+  background:linear-gradient(180deg,#fff 4%,var(--gold-bright) 46%,var(--gold-deep) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;}
+.result .lots.bad{background:none;color:var(--bear);-webkit-text-fill-color:var(--bear);}
+.result .unit{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--gold);}
+.result .exact{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted-2);margin-top:10px;}
+
+/* stat grid */
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:14px;}
+@media(max-width:420px){.stats{grid-template-columns:1fr;}}
+.stat{border:1px solid var(--line-soft);border-radius:11px;padding:11px 13px;background:var(--panel-2);}
+.stat .k{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--muted-2);}
+.stat .k .zh{font-family:'Noto Sans SC';letter-spacing:.06em;text-transform:none;}
+.stat .v{font-family:'JetBrains Mono',monospace;font-size:17px;margin-top:3px;color:var(--text);}
+.stat .v.gold{color:var(--gold);} .stat .v.bull{color:var(--bull);} .stat .v.bear{color:var(--bear);} .stat .v.cyan{color:var(--cyan);}
+.stat .s{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted-2);margin-top:2px;}
+
+/* tp table */
+.tptable{width:100%;border-collapse:collapse;margin-top:12px;font-family:'JetBrains Mono',monospace;font-size:12.5px;}
+.tptable th{font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted-2);
+  font-weight:400;text-align:right;padding:7px 9px;border-bottom:1px solid var(--line-soft);}
+.tptable th:first-child{text-align:left;}
+.tptable td{padding:9px;text-align:right;border-bottom:1px solid rgba(232,200,119,.05);}
+.tptable td:first-child{text-align:left;color:var(--gold);}
+.tptable tr:last-child td{border-bottom:none;}
+.tptable .win{color:var(--bull);}
+
+/* warnings */
+.warns{margin-top:14px;display:flex;flex-direction:column;gap:8px;}
+.warn{border-radius:10px;padding:10px 13px;font-size:12.5px;line-height:1.65;
+  font-family:'JetBrains Mono',monospace;border:1px solid;}
+.warn .zh{font-family:'Noto Sans SC';display:block;margin-top:3px;font-size:12px;}
+.warn.err{color:var(--bear);border-color:rgba(255,92,99,.35);background:rgba(255,92,99,.07);}
+.warn.cau{color:var(--gold);border-color:rgba(232,200,119,.3);background:rgba(232,200,119,.05);}
+.warn.ok{color:var(--bull);border-color:rgba(44,217,138,.28);background:rgba(44,217,138,.06);}
+
+/* survival bar */
+.surv{margin-top:14px;}
+.surv .lbl{display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;
+  font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted-2);margin-bottom:7px;}
+.survbar{display:flex;gap:3px;}
+.survbar i{flex:1;height:26px;border-radius:3px;background:rgba(255,255,255,.05);
+  border:1px solid var(--line-soft);transition:.3s;}
+.survbar i.hit{background:linear-gradient(180deg,rgba(255,92,99,.5),rgba(255,92,99,.18));border-color:rgba(255,92,99,.4);}
+.survbar i.safe{background:linear-gradient(180deg,rgba(44,217,138,.35),rgba(44,217,138,.12));border-color:rgba(44,217,138,.35);}
+.surv .cap{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);margin-top:9px;line-height:1.7;}
+.surv .cap b{color:var(--text);font-weight:500;}
+.surv .cap .zh{font-family:'Noto Sans SC';display:block;color:var(--muted-2);margin-top:2px;}
+
+/* note */
+.note{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold-deep);letter-spacing:.04em;
+  border-left:2px solid var(--line);padding-left:12px;margin-top:16px;line-height:1.8;}
+.note .zh{font-family:'Noto Sans SC';display:block;color:var(--muted-2);margin-top:2px;}
+
+/* footer */
+.foot{margin-top:30px;padding-top:20px;border-top:1px solid var(--line-soft);
+  font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--muted-2);line-height:1.9;}
+.foot i{color:var(--gold);font-style:normal;}
+.foot .brand{display:flex;align-items:center;gap:12px;margin-top:16px;}
+.foot .brand img{height:34px;border-radius:7px;border:1px solid rgba(232,200,119,.2);}
+.foot .brand b{color:var(--gold-bright);font-family:'Sora',sans-serif;font-size:13px;display:block;}
+</style>
+</head>
+<body>
+<div class="bg-glow"></div>
+<div class="bg-grid"></div>
+
+<div class="wrap">
+
+<div class="head">
+  <img src="data:image/png;base64,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" alt="Make Trades Journey">
+  <div class="ht">
+    <div class="eyebrow">Risk Tool · 风控工具</div>
+    <h1>Position Size Calculator</h1>
+    <div class="zh">仓 位 计 算 机</div>
+  </div>
+  <a class="back" href="../MakeTradesJourney.html">&#8592; Hub &middot; 返回目录</a>
+</div>
+
+<div class="grid">
+
+  <!-- ============ INPUTS ============ -->
+  <div>
+    <div class="card">
+      <h2>Account · 帐户设定</h2>
+      <div class="h-zh">先决定你愿意亏多少，仓位是算出来的</div>
+
+      <div class="field">
+        <label>Account Balance <span class="zh">帐户余额 (USD)</span></label>
+        <input type="number" id="bal" value="5000" min="1" step="any">
+      </div>
+
+      <div class="field">
+        <label>Risk Mode <span class="zh">风险设定方式</span></label>
+        <div class="seg" id="riskMode">
+          <button data-m="pct" class="on">% of Balance</button>
+          <button data-m="fix">Fixed $</button>
+        </div>
+      </div>
+
+      <div class="field" id="fRiskPct">
+        <label>Risk per Trade <span class="zh">单笔风险 %</span></label>
+        <input type="number" id="riskPct" value="1" min="0.01" step="0.1">
+      </div>
+
+      <div class="field" id="fRiskAmt" style="display:none">
+        <label>Risk Amount <span class="zh">单笔风险金额 (USD)</span></label>
+        <input type="number" id="riskAmt" value="50" min="0.01" step="any">
+      </div>
+
+      <div class="row2">
+        <div class="field">
+          <label>Leverage <span class="zh">杠杆</span></label>
+          <select id="lev">
+            <option value="20">1:20</option>
+            <option value="30">1:30</option>
+            <option value="50">1:50</option>
+            <option value="100" selected>1:100</option>
+            <option value="200">1:200</option>
+            <option value="500">1:500</option>
+            <option value="1000">1:1000</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Lot Step <span class="zh">最小手数</span></label>
+          <select id="step">
+            <option value="0.01" selected>0.01 · Micro</option>
+            <option value="0.1">0.10 · Mini</option>
+            <option value="1">1.00 · Standard</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Trade · 交易设定</h2>
+      <div class="h-zh">止损放在「分析被证明错误」的位置，不是你想亏多少</div>
+
+      <div class="field">
+        <label>Instrument <span class="zh">交易品种</span></label>
+        <select id="sym"></select>
+      </div>
+
+      <div class="field">
+        <label>Direction <span class="zh">方向</span></label>
+        <div class="seg" id="dir">
+          <button data-d="buy" class="on buy">Buy · 做多</button>
+          <button data-d="sell">Sell · 做空</button>
+        </div>
+      </div>
+
+      <div class="row2">
+        <div class="field">
+          <label>Entry Price <span class="zh">进场价</span></label>
+          <input type="number" id="entry" value="2650.00" step="any">
+        </div>
+        <div class="field">
+          <label>Stop Loss <span class="zh">止损价</span></label>
+          <input type="number" id="stop" value="2645.00" step="any">
+        </div>
+      </div>
+
+      <div class="row2" id="customBox" style="display:none">
+        <div class="field">
+          <label>Contract Size <span class="zh">合约大小 / lot</span></label>
+          <input type="number" id="cSize" value="100" step="any">
+        </div>
+        <div class="field">
+          <label>Pip Size <span class="zh">1 pip 价格</span></label>
+          <input type="number" id="cPip" value="0.1" step="any">
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Account Rules · 帐户风控</h2>
+      <div class="h-zh">三道防线：单笔 → 每日 → 每月</div>
+
+      <div class="row2">
+        <div class="field">
+          <label>Daily Stop <span class="zh">每日停损 %</span></label>
+          <input type="number" id="dayStop" value="3" min="0.1" step="0.5">
+        </div>
+        <div class="field">
+          <label>Max Drawdown <span class="zh">最大回撤 %</span></label>
+          <input type="number" id="maxDD" value="10" min="1" step="1">
+        </div>
+      </div>
+      <div id="rulesOut"></div>
+    </div>
+  </div>
+
+  <!-- ============ OUTPUTS ============ -->
+  <div>
+    <div class="card">
+      <h2>Position Size · 建议仓位</h2>
+      <div class="h-zh">依你的风险与止损距离算出</div>
+
+      <div class="result">
+        <div class="rl">Recommended Lot Size</div>
+        <div class="lots" id="oLots">0.10</div>
+        <div class="unit" id="oUnit">Lots · 手</div>
+        <div class="exact" id="oExact"></div>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><div class="k">Risk Amount <span class="zh">风险金额</span></div><div class="v gold" id="oRisk">—</div><div class="s" id="oRiskPct"></div></div>
+        <div class="stat"><div class="k">Stop Distance <span class="zh">止损距离</span></div><div class="v" id="oDist">—</div><div class="s" id="oPips"></div></div>
+        <div class="stat"><div class="k">Value / Pip <span class="zh">每点价值</span></div><div class="v cyan" id="oPipVal">—</div><div class="s" id="oPipNote"></div></div>
+        <div class="stat"><div class="k">Notional <span class="zh">仓位名目价值</span></div><div class="v" id="oNotional">—</div><div class="s" id="oNotionalNote"></div></div>
+        <div class="stat"><div class="k">Margin Used <span class="zh">占用保证金</span></div><div class="v" id="oMargin">—</div><div class="s" id="oMarginPct"></div></div>
+        <div class="stat"><div class="k">Free Margin <span class="zh">剩余可用</span></div><div class="v" id="oFree">—</div><div class="s"></div></div>
+      </div>
+
+      <div class="warns" id="warns"></div>
+    </div>
+
+    <div class="card">
+      <h2>Take Profit Targets · 目标价</h2>
+      <div class="h-zh">用 R 思考 —— 1R 就是你的单笔风险</div>
+      <table class="tptable">
+        <thead><tr><th>R : R</th><th>Target 目标价</th><th>Profit 获利</th><th>Win% 需胜率</th></tr></thead>
+        <tbody id="tpBody"></tbody>
+      </table>
+      <div class="note">// 最低胜率 = 1 ÷ (1 + R:R)。低于这个胜率，长期就是亏的。
+        <span class="zh">这解释了为什么高胜率系统不一定赚钱 —— 盈亏比太差照样是负期望值。</span></div>
+    </div>
+
+    <div class="card">
+      <h2>Survival Test · 连亏承受度</h2>
+      <div class="h-zh">连续亏损是必然，不是意外</div>
+      <div class="surv">
+        <div class="lbl"><span>Consecutive Losses 连亏次数</span><span id="survHead"></span></div>
+        <div class="survbar" id="survBar"></div>
+        <div class="cap" id="survCap"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="foot">
+  <i>定位：</i>本工具只做仓位与风险计算，不提供任何交易建议，也不会下单。<br>
+  <i>注意：</i>点值与合约规格因券商而异（尤其黄金、白银与指数），下单前请以你的券商规格为准。<br>
+  <i>红线：</i>算得出仓位不代表这笔该做。风控保证你活得久，不保证你赚钱。
+  <div class="brand">
+    <img src="data:image/png;base64,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" alt="Make Trades Journey">
+    <div><b>Make Trades Journey</b>
+      <span>By XRs Trading Lab · Position Size Calculator</span></div>
+  </div>
+</div>
+
+</div>
+
+<script>
+/* ---------------- instrument specs ----------------
+   contract : units per 1.00 lot
+   pip      : price increment counted as "1 pip"
+   base     : base currency (left side)
+   quote    : quote currency (right side)
+   dp       : price decimals shown
+------------------------------------------------- */
+const SYMS = {
+  XAUUSD:{label:"XAUUSD · 黄金",      contract:100,    pip:0.1,    base:"XAU", quote:"USD", dp:2, dflt:[2650,2645]},
+  XAGUSD:{label:"XAGUSD · 白银",      contract:5000,   pip:0.01,   base:"XAG", quote:"USD", dp:3, dflt:[31.50,31.10]},
+  EURUSD:{label:"EURUSD",             contract:100000, pip:0.0001, base:"EUR", quote:"USD", dp:5, dflt:[1.08500,1.08200]},
+  GBPUSD:{label:"GBPUSD",             contract:100000, pip:0.0001, base:"GBP", quote:"USD", dp:5, dflt:[1.27000,1.26650]},
+  AUDUSD:{label:"AUDUSD",             contract:100000, pip:0.0001, base:"AUD", quote:"USD", dp:5, dflt:[0.65400,0.65150]},
+  NZDUSD:{label:"NZDUSD",             contract:100000, pip:0.0001, base:"NZD", quote:"USD", dp:5, dflt:[0.59800,0.59570]},
+  USDJPY:{label:"USDJPY",             contract:100000, pip:0.01,   base:"USD", quote:"JPY", dp:3, dflt:[150.500,150.050]},
+  USDCHF:{label:"USDCHF",             contract:100000, pip:0.0001, base:"USD", quote:"CHF", dp:5, dflt:[0.88000,0.87700]},
+  USDCAD:{label:"USDCAD",             contract:100000, pip:0.0001, base:"USD", quote:"CAD", dp:5, dflt:[1.36000,1.35650]},
+  CUSTOM:{label:"自订 · Custom",       contract:100,    pip:0.1,    base:"XXX", quote:"USD", dp:4, dflt:[100,99]}
+};
+
+const $ = id => document.getElementById(id);
+let riskMode = 'pct', dirVal = 'buy';
+
+/* build symbol dropdown */
+const symSel = $('sym');
+Object.keys(SYMS).forEach(k=>{
+  const o=document.createElement('option'); o.value=k; o.textContent=SYMS[k].label; symSel.appendChild(o);
+});
+symSel.value='XAUUSD';
+
+/* segmented controls */
+document.querySelectorAll('#riskMode button').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('#riskMode button').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on'); riskMode=b.dataset.m;
+  $('fRiskPct').style.display = riskMode==='pct' ? '' : 'none';
+  $('fRiskAmt').style.display = riskMode==='fix' ? '' : 'none';
+  calc();
+}));
+document.querySelectorAll('#dir button').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('#dir button').forEach(x=>{x.classList.remove('on','buy','sell');});
+  b.classList.add('on', b.dataset.d); dirVal=b.dataset.d; calc();
+}));
+
+/* symbol change -> reset sensible prices */
+symSel.addEventListener('change',()=>{
+  const s=SYMS[symSel.value];
+  $('customBox').style.display = symSel.value==='CUSTOM' ? '' : 'none';
+  const [e,st]=s.dflt;
+  $('entry').value = e.toFixed(s.dp);
+  $('stop').value  = (dirVal==='buy'? st : e + (e-st)).toFixed(s.dp);
+  calc();
+});
+
+const num = id => { const v=parseFloat($(id).value); return isFinite(v)?v:0; };
+const money = v => (v<0?'-':'') + '$' + Math.abs(v).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+const fmtLot = v => v.toFixed(2);
+
+function calc(){
+  const s   = SYMS[symSel.value];
+  const contract = symSel.value==='CUSTOM' ? num('cSize') : s.contract;
+  const pip      = symSel.value==='CUSTOM' ? num('cPip')  : s.pip;
+  const bal  = num('bal');
+  const lev  = parseFloat($('lev').value);
+  const step = parseFloat($('step').value);
+  const entry= num('entry');
+  const stop = num('stop');
+
+  const riskAmt = riskMode==='pct' ? bal * num('riskPct')/100 : num('riskAmt');
+  const riskPctEff = bal>0 ? riskAmt/bal*100 : 0;
+
+  const dist = Math.abs(entry - stop);
+  const pips = pip>0 ? dist/pip : 0;
+
+  /* quote-currency -> USD conversion.
+     XXX/USD  : quote is USD            -> rate 1
+     USD/XXX  : quote is XXX, USD is base -> rate 1/price          */
+  const quoteIsUsd = s.quote === 'USD';
+  const qToUsd = quoteIsUsd ? 1 : (entry>0 ? 1/entry : 0);
+
+  /* money lost per 1.00 lot if price travels `dist` */
+  const lossPerLot = contract * dist * qToUsd;
+  const pipValPerLot = contract * pip * qToUsd;
+
+  const warns = [];
+  let lots = 0, lotsExact = 0, ok = true;
+
+  if (bal <= 0)              { warns.push(['err','Account balance must be greater than zero.','帐户余额必须大于 0。']); ok=false; }
+  if (dist === 0)            { warns.push(['err','Entry and stop loss cannot be the same price.','进场价和止损价不能相同。']); ok=false; }
+  if (riskAmt <= 0)          { warns.push(['err','Risk must be greater than zero.','风险金额必须大于 0。']); ok=false; }
+
+  /* stop on the wrong side of entry */
+  if (dist > 0) {
+    if (dirVal==='buy'  && stop > entry) warns.push(['cau','Buy: stop loss is ABOVE entry — check your direction.','做多：止损在进场价上方，方向可能设反了。']);
+    if (dirVal==='sell' && stop < entry) warns.push(['cau','Sell: stop loss is BELOW entry — check your direction.','做空：止损在进场价下方，方向可能设反了。']);
+  }
+
+  if (ok && lossPerLot > 0){
+    lotsExact = riskAmt / lossPerLot;
+    lots = Math.floor(lotsExact / step) * step;
+    lots = parseFloat(lots.toFixed(4));
+  }
+
+  const actualRisk  = lots * lossPerLot;
+  const notionalUsd = s.base==='USD' ? contract*lots : contract*entry*lots*(quoteIsUsd?1:qToUsd);
+  const margin      = lev>0 ? notionalUsd/lev : 0;
+  const marginPct   = bal>0 ? margin/bal*100 : 0;
+
+  /* ---- render ---- */
+  const lotsEl = $('oLots');
+  if (!ok){
+    lotsEl.textContent = '—'; lotsEl.classList.remove('bad');
+    $('oExact').textContent = '';
+  } else if (lots < step){
+    lotsEl.textContent = '0.00'; lotsEl.classList.add('bad');
+    $('oExact').textContent = 'exact ' + lotsExact.toFixed(4) + ' — below minimum lot step';
+    warns.push(['err',
+      'Position too small to trade. Your stop is too wide for this account and risk %.',
+      '算出来的仓位低于最小手数 —— 以这个帐户和风险%，这个止损距离做不了。请缩小止损距离、降低品种规格，或提高帐户资金。']);
+  } else {
+    lotsEl.textContent = fmtLot(lots); lotsEl.classList.remove('bad');
+    $('oExact').textContent = 'exact ' + lotsExact.toFixed(4) + ' → rounded down to ' + fmtLot(lots)
+      + '  ·  actual risk ' + money(actualRisk);
+  }
+
+  $('oRisk').textContent    = ok ? money(riskAmt) : '—';
+  $('oRiskPct').textContent = ok ? riskPctEff.toFixed(2) + '% of balance' : '';
+  $('oDist').textContent    = ok ? dist.toFixed(s.dp) : '—';
+  $('oPips').textContent    = ok ? pips.toFixed(1) + ' pips' : '';
+  $('oPipVal').textContent  = ok && lots>=step ? money(pipValPerLot*lots) : '—';
+  $('oPipNote').textContent = ok ? money(pipValPerLot) + ' per 1.00 lot' : '';
+  $('oNotional').textContent= ok && lots>=step ? money(notionalUsd) : '—';
+  $('oNotionalNote').textContent = ok && lots>=step ? (notionalUsd/Math.max(bal,1)).toFixed(1)+'× account' : '';
+  $('oMargin').textContent  = ok && lots>=step ? money(margin) : '—';
+  $('oMarginPct').textContent = ok && lots>=step ? marginPct.toFixed(1)+'% of balance' : '';
+  $('oFree').textContent    = ok && lots>=step ? money(bal-margin) : '—';
+
+  /* risk-level warnings */
+  if (ok && lots>=step){
+    if (riskPctEff > 5)       warns.push(['err','Risk above 5% per trade. Ten losses in a row would take roughly 40% of the account.','单笔风险超过 5% —— 连亏十次会失去约四成本金。这不是交易，是赌博。']);
+    else if (riskPctEff > 2)  warns.push(['cau','Risk above 2% per trade. Most professional guidelines cap single-trade risk at 1–2%.','单笔风险超过 2%。多数专业建议把单笔风险控制在 1–2% 以内。']);
+    else                      warns.push(['ok','Risk per trade is within the conventional 1–2% range.','单笔风险在常见的 1–2% 区间内。']);
+
+    if (marginPct > 50)       warns.push(['err','Margin use above 50% of balance — very little room before a margin call.','保证金占用超过帐户 50%，距离强制平仓的缓冲极小。']);
+    else if (marginPct > 30)  warns.push(['cau','Margin use above 30% of balance.','保证金占用超过帐户 30%，建议降低仓位或提高杠杆容忍度。']);
+  }
+
+  const wrap = $('warns'); wrap.innerHTML='';
+  warns.forEach(([cls,en,zh])=>{
+    const d=document.createElement('div'); d.className='warn '+cls;
+    d.innerHTML = en + '<span class="zh">' + zh + '</span>';
+    wrap.appendChild(d);
+  });
+
+  /* ---- take-profit table ---- */
+  const tb = $('tpBody'); tb.innerHTML='';
+  [1,1.5,2,3].forEach(r=>{
+    const tgt = dirVal==='buy' ? entry + dist*r : entry - dist*r;
+    const profit = actualRisk * r;
+    const needWin = 100/(1+r);
+    const tr=document.createElement('tr');
+    tr.innerHTML = '<td>1 : '+r+'</td>'
+      + '<td>' + (ok? tgt.toFixed(s.dp) : '—') + '</td>'
+      + '<td class="win">' + (ok && lots>=step ? money(profit) : '—') + '</td>'
+      + '<td>' + needWin.toFixed(1) + '%</td>';
+    tb.appendChild(tr);
+  });
+
+  /* ---- survival bar (consecutive losses) ---- */
+  const N = 12, bar = $('survBar'); bar.innerHTML='';
+  const ddLimit = num('maxDD');
+  let eq = 100, hitAt = 0;
+  for (let i=1;i<=N;i++){
+    eq = eq * (1 - riskPctEff/100);
+    const dd = 100 - eq;
+    const el = document.createElement('i');
+    if (dd >= ddLimit){ el.className='hit'; if(!hitAt) hitAt=i; }
+    else el.className='safe';
+    el.title = i + ' losses → equity ' + eq.toFixed(1) + '% (drawdown ' + dd.toFixed(1) + '%)';
+    bar.appendChild(el);
+  }
+  const eq10 = 100*Math.pow(1-riskPctEff/100,10);
+  const recover = eq10>0 ? (100/eq10 - 1)*100 : Infinity;
+  $('survHead').textContent = hitAt ? ('breaches '+ddLimit+'% DD at loss #'+hitAt) : ('survives '+N+' straight losses');
+  $('survCap').innerHTML =
+    'After <b>10 consecutive losses</b> at ' + riskPctEff.toFixed(2) + '% risk, the account sits at <b>'
+    + eq10.toFixed(1) + '%</b> of its starting balance — needing <b>+' + recover.toFixed(1)
+    + '%</b> just to get back to even.'
+    + '<span class="zh">以 ' + riskPctEff.toFixed(2) + '% 风险连亏 10 次，帐户剩下 '
+    + eq10.toFixed(1) + '%，要再赚 ' + recover.toFixed(1) + '% 才回到原点。这就是为什么单笔风险要小。</span>';
+
+  /* ---- account rules ---- */
+  const dayPct = num('dayStop');
+  const tradesToDayStop = riskPctEff>0 ? Math.floor(dayPct/riskPctEff) : 0;
+  const tradesToMaxDD   = riskPctEff>0 ? Math.floor(ddLimit/riskPctEff) : 0;
+  $('rulesOut').innerHTML =
+    '<div class="stats" style="margin-top:14px">'
+    + '<div class="stat"><div class="k">Daily Stop <span class="zh">每日停损</span></div><div class="v bear">'
+      + money(bal*dayPct/100) + '</div><div class="s">' + tradesToDayStop + ' losing trades → stop for the day</div></div>'
+    + '<div class="stat"><div class="k">Max Drawdown <span class="zh">最大回撤</span></div><div class="v bear">'
+      + money(bal*ddLimit/100) + '</div><div class="s">' + tradesToMaxDD + ' losing trades → full review</div></div>'
+    + '</div>'
+    + '<div class="note">// 连亏 ' + tradesToDayStop + ' 单就收工 —— 亏损之后的下一单，是你整天决策品质最差的一单。'
+    + '<span class="zh">每日停损线的作用，是让「事前冷静的你」保护「事后上头的你」。</span></div>';
+}
+
+['bal','riskPct','riskAmt','entry','stop','dayStop','maxDD','cSize','cPip'].forEach(id=>{
+  $(id).addEventListener('input', calc);
+});
+['lev','step','sym'].forEach(id=>$(id).addEventListener('change', calc));
+calc();
+</script>
+</body>
+</html>
