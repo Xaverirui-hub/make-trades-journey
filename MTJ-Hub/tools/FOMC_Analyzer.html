@@ -46,28 +46,38 @@ body{margin:0;background:var(--bg);color:var(--text);
 .hero h1 em{font-style:normal;color:var(--gold-bright);text-shadow:0 0 30px rgba(232,200,119,.35)}
 .hero .zh{color:var(--muted);font-size:clamp(15px,2.2vw,19px);letter-spacing:.1em;margin-bottom:30px}
 .hero p{color:var(--muted);max-width:640px;margin:0 auto;font-size:15px;line-height:1.8}
-.section{padding:34px 0}
-.group-head{display:flex;align-items:center;gap:13px;margin-bottom:24px}
-.group-head .tier{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold);letter-spacing:1px;
-  border:1px solid var(--line);border-radius:8px;padding:5px 12px;background:rgba(232,200,119,.06)}
-.group-head h2{font-size:clamp(20px,3vw,28px);font-weight:700;margin:0}
-.group-head .zh{color:var(--muted);font-size:14px;margin-left:12px}
-.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
-.field{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px}
-.field label{display:block;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--gold);
-  letter-spacing:.15em;text-transform:uppercase;margin-bottom:10px}
-.field input,.field select{width:100%;background:rgba(0,0,0,.35);border:1px solid var(--line-soft);border-radius:8px;
+/* 教育風格 */
+.group-head{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:8px}
+.group-head .tier{font-family:'JetBrains Mono',monospace;font-size:44px;font-weight:700;color:rgba(232,200,119,.16);line-height:1}
+.group-head h2{margin:0;font-size:clamp(22px,3vw,30px);font-weight:700}
+.group-head .zh{color:var(--muted);font-size:14px}
+.pattern{display:grid;grid-template-columns:1fr;gap:22px;padding:30px 0;border-top:1px solid var(--line-soft)}
+.pattern:first-of-type{border-top:none}
+.pattern-head{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.pattern-head .idx{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--gold-deep);letter-spacing:.1em}
+.pattern-head h3{margin:0;font-size:clamp(22px,3vw,30px);font-weight:700}
+.pattern-head h3 .zh{font-family:'Noto Sans SC';font-size:14px;color:var(--muted);font-weight:400;margin-left:10px}
+.pattern-head .tag{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--gold);letter-spacing:.14em;
+  border:1px solid var(--line);border-radius:20px;padding:5px 12px;text-transform:uppercase}
+.card{position:relative;padding:26px 22px;border:1px solid var(--line-soft);border-radius:16px;
+  background:linear-gradient(160deg,rgba(232,200,119,.05),rgba(20,20,26,.35));overflow:hidden;transition:.3s}
+.card:hover{border-color:var(--line)}
+.card .n{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold);letter-spacing:.1em}
+.card label{display:block;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--muted);
+  letter-spacing:.15em;text-transform:uppercase;margin:12px 0 8px}
+.card input,.card select{width:100%;background:rgba(0,0,0,.35);border:1px solid var(--line-soft);border-radius:8px;
   color:var(--text);font-family:'Sora',sans-serif;font-size:15px;padding:11px 14px;outline:none;transition:.2s}
-.field input:focus,.field select:focus{border-color:var(--gold)}
-.field .hint{font-size:12px;color:var(--muted2);margin-top:7px;line-height:1.5}
+.card input:focus,.card select:focus{border-color:var(--gold)}
+.card .hint{font-size:12px;color:var(--muted2);margin-top:7px;line-height:1.5}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
 .btn{display:inline-flex;align-items:center;gap:9px;background:var(--gold);color:#0a0e14;border:none;
   border-radius:30px;padding:14px 34px;font-family:'Sora',sans-serif;font-weight:700;font-size:15px;
   cursor:pointer;letter-spacing:.04em;transition:.25s}
 .btn:hover{box-shadow:0 0 26px rgba(232,200,119,.35);transform:translateY(-1px)}
 .btn-ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
 .btn-ghost:hover{border-color:var(--gold);color:var(--gold);box-shadow:none}
-.result-panel{background:linear-gradient(160deg,rgba(232,200,119,.08),rgba(20,20,26,.5));
-  border:1px solid var(--line);border-radius:18px;padding:28px;margin-top:26px;display:none}
+/* 報告卡(教育風格) */
+.result-panel{display:none;margin-top:30px}
 .result-panel.show{display:block;animation:fadeUp .5s ease}
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 .verdict{display:flex;align-items:center;gap:16px;padding-bottom:20px;border-bottom:1px solid var(--line);margin-bottom:20px}
@@ -82,6 +92,13 @@ body{margin:0;background:var(--bg);color:var(--text);
 .analysis{font-size:14.5px;color:var(--muted);line-height:1.9}
 .analysis b{color:var(--text)}
 .analysis .up{color:var(--bull)} .analysis .dn{color:var(--bear)} .analysis .gd{color:var(--gold-bright)}
+.report-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.report-card{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;transition:.3s}
+.report-card:hover{border-color:var(--gold-deep);transform:translateY(-4px)}
+.report-card img{width:100%;display:block;border-bottom:1px solid var(--line-soft)}
+.report-card .rc-body{padding:14px 18px}
+.report-card .rc-tag{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:.15em}
+.report-card .rc-sub{font-size:13px;color:var(--muted);margin-top:5px;line-height:1.5}
 .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
 .reveal.in{opacity:1;transform:none}
 footer{padding:40px 0 50px;text-align:center;border-top:1px solid var(--line-soft);margin-top:60px}
@@ -103,62 +120,91 @@ footer .l b{color:var(--gold)}
     <div class="tag reveal in">FOMC ANALYZER · 决议分析器</div>
     <h1>Read the Fed,<br><em>Trade the Reaction.</em></h1>
     <div class="zh">读懂美联储 · 交易市场反应</div>
-    <p>输入 FOMC 决议数据，立即获得鹰鸽判定、市场影响分析与黄金方向判断。<br>Enter the decision details and get an instant read on the Fed, the markets and gold.</p>
+    <p>选择 FOMC 决议日期，输入决议数据，立即获得鹰鸽判定、市场影响与黄金方向。<br>Pick a decision date, enter the details, and get an instant read on the Fed and gold.</p>
   </header>
 
   <section class="section">
-    <div class="group-head reveal"><span class="tier">01</span><h2>Enter the Decision<span class="zh">输入决议数据</span></h2></div>
-    <div class="form-grid">
-      <div class="field">
-        <label>Date · 决议日期</label>
-        <input type="text" id="f_date" value="2026.09.16" placeholder="2026.09.16">
-        <div class="hint">FOMC 决议公布日期 (MYT)</div>
+    <div class="group-head reveal"><span class="tier">01</span><h2>Select the Decision<span class="zh">选择决议日期</span></h2></div>
+    <div class="pattern">
+      <div class="pattern-head">
+        <span class="idx">FOMC.01</span>
+        <h3>Which Meeting?<span class="zh">哪一次会议？</span></h3>
+        <span class="tag">Select 选择</span>
       </div>
-      <div class="field">
+      <div class="card" style="max-width:460px;">
+        <div class="n">MEETING DATE · 会议日期</div>
+        <select id="f_date">
+          <option value="2026.09.16" selected>2026.09.16 · September FOMC</option>
+          <option value="2026.11.04">2026.11.04 · November FOMC</option>
+          <option value="2026.12.16">2026.12.16 · December FOMC</option>
+          <option value="2027.01.27">2027.01.27 · January FOMC</option>
+          <option value="custom">Custom · 自定义</option>
+        </select>
+        <div class="hint">选择会议日期 · 下次决议后 12 小时自动发布报告</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="group-head reveal"><span class="tier">02</span><h2>Enter the Data<span class="zh">输入决议数据</span></h2></div>
+    <div class="form-grid">
+      <div class="card">
+        <div class="n">01</div>
         <label>Fed Funds Rate · 利率区间</label>
         <input type="text" id="f_rate" value="3.50–3.75%" placeholder="3.50–3.75%">
       </div>
-      <div class="field">
+      <div class="card">
+        <div class="n">02</div>
         <label>Vote: Hold · 维持票数</label>
         <input type="number" id="f_hold" value="9" min="0" max="12">
       </div>
-      <div class="field">
+      <div class="card">
+        <div class="n">03</div>
         <label>Vote: Hike · 加息票数</label>
         <input type="number" id="f_hike" value="3" min="0" max="12">
       </div>
-      <div class="field">
+      <div class="card">
+        <div class="n">04</div>
         <label>Vote: Cut · 降息票数</label>
         <input type="number" id="f_cut" value="0" min="0" max="12">
       </div>
-      <div class="field">
+      <div class="card">
+        <div class="n">05</div>
         <label>Statement · 声明要点</label>
         <input type="text" id="f_stmt" value="声明精简，删除前瞻指引，保留经济稳步扩张表述">
       </div>
-      <div class="field">
+      <div class="card">
+        <div class="n">06</div>
         <label>DXY · 美元指数反应</label>
         <input type="text" id="f_dxy" value="101.2 → 100.8 (走弱 -0.4%)">
       </div>
-      <div class="field">
+      <div class="card">
+        <div class="n">07</div>
         <label>XAUUSD · 黄金价格</label>
         <input type="text" id="f_gold" value="$4,120">
       </div>
-      <div class="field">
+      <div class="card">
+        <div class="n">08</div>
         <label>Gold Change % · 黄金涨跌%</label>
         <input type="number" id="f_goldchg" value="0.8" step="0.1">
       </div>
-      <div class="field">
+      <div class="card">
+        <div class="n">09</div>
         <label>US10Y · 10年期收益率</label>
         <input type="text" id="f_us10y" value="4.55% ↓ -6bp">
       </div>
-      <div class="field">
+      <div class="card">
+        <div class="n">10</div>
         <label>US Equities · 美股</label>
         <input type="text" id="f_eq" value="+0.9%">
       </div>
-      <div class="field">
+      <div class="card">
+        <div class="n">11</div>
         <label>Gold Timeline · 黄金走势</label>
         <input type="text" id="f_tl" value="决议前 $4,080 → 决议后冲 $4,150 → 收盘 $4,120">
       </div>
-      <div class="field">
+      <div class="card">
+        <div class="n">12</div>
         <label>Next Event · 关注下一事件</label>
         <input type="text" id="f_next" value="11月 FOMC (Nov 4-5) · 10月 NFP · CPI">
       </div>
@@ -173,36 +219,34 @@ footer .l b{color:var(--gold)}
     <div class="result-panel" id="resultPanel"></div>
   </section>
 
-  
   <section class="section" style="padding-top:0;">
-    <div class="group-head reveal"><span class="tier">02</span><h2>Latest Report<span class="zh">最新决议报告</span></h2></div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;">
-      <div style="background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;">
-        <img src="fomc_reports/FOMC_2026_07_29_P1.png" alt="FOMC 2026-07-29 决议核心" style="width:100%;display:block;border-bottom:1px solid var(--line-soft);">
-        <div style="padding:14px 18px;">
-          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:.15em;">FOMC 2026.07.29 · 决议核心</div>
-          <div style="font-size:13px;color:var(--muted);margin-top:5px;">利率维持 3.50–3.75% · 投票 9–3 · 黄金 +0.27%</div>
+    <div class="group-head reveal"><span class="tier">03</span><h2>Latest Report<span class="zh">最新决议报告</span></h2></div>
+    <div class="report-cards">
+      <div class="report-card">
+        <img src="fomc_reports/FOMC_2026_07_29_P1.png" alt="FOMC 2026-07-29 决议核心">
+        <div class="rc-body">
+          <div class="rc-tag">FOMC 2026.07.29 · DECISION CORE 决议核心</div>
+          <div class="rc-sub">利率维持 3.50–3.75% · 投票 9–3 · 黄金 +0.27%</div>
         </div>
       </div>
-      <div style="background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;">
-        <img src="fomc_reports/FOMC_2026_07_29_P2.png" alt="FOMC 2026-07-29 黄金走势" style="width:100%;display:block;border-bottom:1px solid var(--line-soft);">
-        <div style="padding:14px 18px;">
-          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:.15em;">FOMC 2026.07.29 · 黄金走势</div>
-          <div style="font-size:13px;color:var(--muted);margin-top:5px;">决议夜先扬后收 · 冲 $4,100 → 收 $4,049 · MYT 時間線</div>
+      <div class="report-card">
+        <img src="fomc_reports/FOMC_2026_07_29_P2.png" alt="FOMC 2026-07-29 黄金走势">
+        <div class="rc-body">
+          <div class="rc-tag">FOMC 2026.07.29 · GOLD NIGHT 黄金走势</div>
+          <div class="rc-sub">决议夜先扬后收 · 冲 $4,100 → 收 $4,049 · MYT 时间线</div>
         </div>
       </div>
     </div>
     <div class="note" style="max-width:820px;line-height:1.9;margin-top:18px;font-size:13px;color:var(--muted2);">
-    // 新報告將在 FOMC 決議後 12 小時自動發布 · New reports are auto-published 12 hours after each FOMC decision.
+    // 新报告将在 FOMC 决议后 12 小时自动发布 · New reports are auto-published 12 hours after each FOMC decision.
     </div>
   </section>
 
-<footer>
+  <footer>
     <div class="l"><b>MAKETRADES JOURNEY</b> · XRs Trading Lab by Xavier Rui<br>仅供复盘研究，不构成投资建议 · 时间为马来西亚时间 (MYT)</div>
   </footer>
 </div>
 <script>
-document.getElementById('yr') && (document.getElementById('yr').textContent = new Date().getFullYear());
 
 function analyzeFOMC(){
   const d = {
@@ -221,25 +265,25 @@ function analyzeFOMC(){
     next: document.getElementById('f_next').value,
   };
   const p = document.getElementById('resultPanel');
-  // 鷹鴿判定
   let dir='mixed', dirTxt='MIXED 中性', dirClass='mixed';
   const net = d.hike - d.cut;
   if(net >= 3){ dir='hawkish'; dirTxt='HAWKISH 鹰派'; dirClass='hawkish'; }
   else if(net <= -2){ dir='dovish'; dirTxt='DOVISH 鸽派'; dirClass='dovish'; }
   else if(d.hike>0 && d.hold>d.hike){ dir='hawkish'; dirTxt='LEAN HAWKISH 偏鹰'; dirClass='hawkish'; }
   else if(d.cut>0 && d.hold>d.cut){ dir='dovish'; dirTxt='LEAN DOVISH 偏鸽'; dirClass='dovish'; }
-  // 黃金方向
   let goldDir='mixed', goldTxt='NEUTRAL 中性';
   if(d.goldChg>=0.5 && dir==='dovish'){ goldDir='bull'; goldTxt='BULLISH 看涨'; }
   else if(d.goldChg>=0.5){ goldDir='bull'; goldTxt='BULLISH 偏涨'; }
   else if(d.goldChg<=-0.5 && dir==='hawkish'){ goldDir='bear'; goldTxt='BEARISH 看跌'; }
   else if(d.goldChg<=-0.5){ goldDir='bear'; goldTxt='BEARISH 偏跌'; }
-  // 決策摘要
   let summary = '';
   if(dir==='hawkish') summary = '美联储倾向鹰派（' + d.hike + ' 票主张加息）。利率维持 ' + d.rate + '，但鹰派底色压制黄金；美元走强 + 长端利率上行 = 黄金承压。关注' + d.next + '，若继续鹰派则黄金反弹空间受限。';
   else if(dir==='dovish') summary = '美联储倾向鸽派（' + d.cut + ' 票主张降息）。利率维持 ' + d.rate + '，鸽派信号 + 美元走弱 = 黄金获得支撑。关注' + d.next + '，鸽派延续则黄金有望突破前高。';
   else summary = '美联储维持利率 ' + d.rate + '，投票 ' + d.hold + '-' + d.hike + (d.cut?'-'+d.cut:'') + '，方向中性。市场反应' + d.gold + '，黄金' + (d.goldChg>=0?'涨':'跌') + Math.abs(d.goldChg).toFixed(2) + '%。需结合' + d.next + '判断下一步方向。';
-  // 渲染
+  try {
+    const bias = { dir: dir, dirTxt: dirTxt, goldDir: goldDir, goldChg: d.goldChg, date: d.date, ts: Date.now() };
+    localStorage.setItem('mtj_fomc_bias', JSON.stringify(bias));
+  } catch(e){}
   p.innerHTML =
     '<div class="verdict"><div class="dir ' + dirClass + '">' + dirTxt + '</div>' +
     '<div class="meta"><b>' + d.date + ' FOMC 决议</b><br>利率维持 ' + d.rate + ' · 投票 ' + d.hold + ' 维持 / ' + d.hike + ' 加息' + (d.cut?' / '+d.cut+' 降息':'') + '</div></div>' +
@@ -256,20 +300,12 @@ function analyzeFOMC(){
     '<b>决策摘要 · Verdict:</b> ' + summary + '<br><br>' +
     '<b>关注 · Next:</b> ' + d.next + '<br><br>' +
     '<div style="background:rgba(232,200,119,.08);border:1px solid rgba(232,200,119,.25);border-radius:10px;padding:14px 18px;font-size:13.5px;">' +
-    '🔗 已傳送給 <b>Strategy Composer</b>：建議方向 <b style="color:var(--gold-bright);">' + (dir==="hawkish" ? "只做空 SELL" : dir==="dovish" ? "只做多 BUY" : "多空都做 BOTH") + '</b> · 開啟 Composer 時自動套用（可改）' +
-    '</div>'
-    '</div>';
-  // 聯動:存 FOMC bias 供 Strategy Composer 讀取
-  try {
-    const bias = { dir: dir, dirTxt: dirTxt, goldDir: goldDir, goldChg: d.goldChg, date: d.date, ts: Date.now() };
-    localStorage.setItem('mtj_fomc_bias', JSON.stringify(bias));
-    console.log('[FOMC] bias saved:', bias);
-  } catch(e){}
+    '🔗 已传送到 <b>Strategy Composer</b>：建议方向 <b style="color:var(--gold-bright);">' + (dir==="hawkish" ? "只做空 SELL" : dir==="dovish" ? "只做多 BUY" : "多空都做 BOTH") + '</b> · 开启 Composer 时自动套用（可改）' +
+    '</div></div>';
   p.classList.add('show');
   p.scrollIntoView({behavior:'smooth'});
 }
 
-// reveal on scroll
 const io = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }), {threshold:.12});
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 </script>
