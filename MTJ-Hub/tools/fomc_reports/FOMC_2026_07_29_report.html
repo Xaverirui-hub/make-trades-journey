@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FOMC Report · 2026.07.29 · Make Trades Journey</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#060608; --bg2:#0b0b10; --panel:rgba(20,20,26,.55);
+  --gold:#E8C877; --gold-bright:#FCE9A8; --gold-deep:#C9A227;
+  --bull:#2CD98A; --bear:#FF5C63; --cyan:#2FE0D6;
+  --text:#EDEBE2; --muted:#9A968C; --muted2:#6f6c64;
+  --line:rgba(232,200,119,.16); --line-soft:rgba(232,200,119,.09);
+}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);
+  font-family:'Sora','Noto Sans SC',system-ui,sans-serif;line-height:1.6;overflow-x:hidden}
+.bg-glow{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(1100px 700px at 80% -10%,rgba(232,200,119,.10),transparent 60%),
+  radial-gradient(900px 600px at -10% 20%,rgba(201,162,39,.08),transparent 60%)}
+.bg-grid{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.4;
+  background-image:linear-gradient(rgba(232,200,119,.04) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(232,200,119,.04) 1px,transparent 1px);
+  background-size:64px 64px;mask-image:radial-gradient(circle at 50% 30%,#000 0%,transparent 80%);
+  -webkit-mask-image:radial-gradient(circle at 50% 30%,#000 0%,transparent 80%)}
+.wrap{position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:0 24px}
+.topbar{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;align-items:center;justify-content:space-between;
+  padding:14px clamp(16px,4vw,40px);background:linear-gradient(to bottom,rgba(6,6,8,.82),rgba(6,6,8,0));
+  backdrop-filter:blur(6px)}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.brand .bwrap{display:flex;flex-direction:column;line-height:1.1}
+.brand .bn{font-weight:700;font-size:14px;color:var(--text);letter-spacing:.04em}
+.brand .bs{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:.2em;text-transform:uppercase}
+.brand .live{display:inline-flex;align-items:center;gap:6px;margin-left:14px;font-family:'JetBrains Mono',monospace;
+  font-size:10.5px;color:var(--gold);letter-spacing:.14em;text-transform:uppercase}
+.brand .live i{width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px var(--gold);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero{position:relative;padding:clamp(110px,16vh,170px) 0 clamp(40px,6vh,70px);text-align:center}
+.hero .tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--gold);
+  letter-spacing:.3em;text-transform:uppercase;margin-bottom:18px;border:1px solid var(--line);border-radius:30px;padding:8px 20px}
+.hero h1{font-size:clamp(34px,5.5vw,58px);font-weight:800;letter-spacing:-.02em;line-height:1.12;margin:0 0 14px}
+.hero h1 em{font-style:normal;color:var(--gold-bright);text-shadow:0 0 30px rgba(232,200,119,.35)}
+.hero .zh{color:var(--muted);font-size:clamp(14px,2vw,18px);letter-spacing:.1em;margin-bottom:22px}
+.hero .meta{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted2);letter-spacing:.12em}
+.group-head{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin:0 0 8px}
+.group-head .tier{font-family:'JetBrains Mono',monospace;font-size:40px;font-weight:700;color:rgba(232,200,119,.16);line-height:1}
+.group-head h2{margin:0;font-size:clamp(20px,2.8vw,28px);font-weight:700}
+.group-head .zh{color:var(--muted);font-size:14px}
+.section{padding:26px 0}
+.pattern{display:grid;grid-template-columns:1fr;gap:20px;padding:24px 0;border-top:1px solid var(--line-soft)}
+.pattern:first-of-type{border-top:none}
+.card{position:relative;padding:24px 22px;border:1px solid var(--line-soft);border-radius:16px;
+  background:linear-gradient(160deg,rgba(232,200,119,.05),rgba(20,20,26,.35));overflow:hidden;transition:.3s}
+.card:hover{border-color:var(--line)}
+.card .n{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--gold);letter-spacing:.12em;margin-bottom:10px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
+.kpi{background:rgba(0,0,0,.3);border:1px solid var(--line-soft);border-radius:12px;padding:18px}
+.kpi .k{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--muted);letter-spacing:.14em;text-transform:uppercase}
+.kpi .v{font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:700;margin-top:8px}
+.kpi .v.up{color:var(--bull)} .kpi .v.dn{color:var(--bear)} .kpi .v.gd{color:var(--gold-bright)}
+.kpi .d{font-size:12px;color:var(--muted2);margin-top:5px;line-height:1.5}
+.rate-big{font-family:'JetBrains Mono',monospace;font-weight:800;font-size:clamp(40px,6vw,64px);color:var(--gold-bright);
+  letter-spacing:-1px;line-height:1;text-shadow:0 0 30px rgba(232,200,119,.45)}
+.rate-sub{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--muted);margin-top:10px;letter-spacing:.08em}
+.vote-bar{display:flex;height:26px;border-radius:6px;overflow:hidden;border:1px solid rgba(255,255,255,.1);margin:14px 0 8px}
+.vote-bar .hold{flex:9;background:linear-gradient(90deg,var(--gold-deep),var(--gold));box-shadow:0 0 14px rgba(232,200,119,.3)}
+.vote-bar .dis{flex:3;background:linear-gradient(90deg,#7a2530,var(--bear))}
+.vote-nums{display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--muted)}
+.vote-nums .g{color:var(--gold)} .vote-nums .r{color:var(--bear)}
+.timeline{position:relative;padding-left:28px}
+.timeline::before{content:"";position:absolute;left:7px;top:6px;bottom:6px;width:2px;background:linear-gradient(180deg,var(--gold-dim,rgba(201,162,39,.4)),transparent)}
+.titem{position:relative;padding:0 0 26px 0}
+.titem:last-child{padding-bottom:0}
+.tdot{position:absolute;left:-28px;top:5px;width:14px;height:14px;border-radius:50%;background:var(--bg);border:2px solid var(--gold);box-shadow:0 0 10px rgba(232,200,119,.5)}
+.tdot.hot{background:var(--gold)}
+.tt{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+.tm{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold);letter-spacing:.05em;white-space:nowrap}
+.th{font-weight:700;font-size:16px}
+.tp{font-family:'JetBrains Mono',monospace;font-size:13px}
+.tp.u{color:var(--bull)} .tp.d{color:var(--bear)}
+.td2{font-size:13.5px;color:var(--muted);line-height:1.7}
+.delta-row{display:flex;gap:14px;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.05);align-items:flex-start}
+.delta-row:last-child{border-bottom:0}
+.dico{flex:none;width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:15px;margin-top:1px}
+.dico.cut{background:rgba(255,92,99,.14);color:var(--bear);border:1px solid rgba(255,92,99,.32)}
+.dico.keep{background:rgba(47,224,214,.12);color:var(--cyan);border:1px solid rgba(47,224,214,.3)}
+.dico.new{background:rgba(232,200,119,.14);color:var(--gold);border:1px solid rgba(232,200,119,.32)}
+.dtxt{font-size:14.5px;line-height:1.6;color:#d3dbe9}
+.dtxt b{color:var(--text);font-weight:600}
+.dtxt .q{color:var(--gold-bright);font-style:italic}
+.mirror{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.mirror .m{background:rgba(0,0,0,.3);border:1px solid var(--line-soft);border-radius:12px;padding:18px}
+.mirror .m .mk{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px}
+.mirror .m .mv{font-size:13.5px;color:var(--muted);line-height:1.7}
+.mirror .m .mv b{color:var(--text)}
+.mirror .june{border-color:rgba(255,92,99,.25)}
+.mirror .july{border-color:rgba(44,217,138,.25)}
+.concl{background:linear-gradient(160deg,rgba(232,200,119,.08),rgba(20,20,26,.5));border:1px solid var(--line);border-radius:18px;padding:26px}
+.concl .ch{font-weight:700;font-size:17px;margin-bottom:10px;color:var(--gold-bright)}
+.concl p{font-size:14.5px;color:var(--muted);line-height:1.9}
+.concl p b{color:var(--text)}
+.concl p .up{color:var(--bull)} .concl p .dn{color:var(--bear)}
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+footer{padding:40px 0 50px;text-align:center;border-top:1px solid var(--line-soft);margin-top:50px}
+footer .l{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.18em;line-height:2}
+footer .l b{color:var(--gold)}
+</style>
+</head>
+<body>
+<a href="../MakeTradesJourney.html" id="mtjBack" style="position:fixed;left:14px;bottom:14px;z-index:60;display:inline-flex;align-items:center;gap:9px;text-decoration:none;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#7A8699;background:rgba(10,14,20,.85);border:1px solid rgba(232,180,74,.28);border-radius:30px;padding:9px 16px;backdrop-filter:blur(6px);transition:.25s" onmouseover="this.style.color='#E8B44A';this.style.borderColor='#E8B44A'" onmouseout="this.style.color='#7A8699';this.style.borderColor='rgba(232,180,74,.28)'"><span>&#8592;</span>Hub &middot; 返回目录</a>
+<div class="bg-glow"></div><div class="bg-grid"></div>
+<div class="wrap">
+  <div class="topbar">
+    <a class="brand" href="../MakeTradesJourney.html">
+      <div class="bwrap"><span class="bn">Make Trades Journey</span><span class="bs">FOMC Report · 决议报告</span></div>
+      <span class="live"><i></i>Review</span>
+    </a>
+  </div>
+
+  <header class="hero">
+    <div class="tag reveal in">FOMC REPORT · 决议复盘报告</div>
+    <h1>Rate <em>Held</em>, Hawkish <em>Whispers.</em></h1>
+    <div class="zh">利 率 按 兵 不 动 · 鹰 声 渐 起</div>
+    <div class="meta">2026.07.29 · XAUUSD 黄金 · 马来西亚时间 (MYT)</div>
+  </header>
+
+  <!-- 01 利率決議 -->
+  <section class="section">
+    <div class="group-head reveal"><span class="tier">01</span><h2>The Decision<span class="zh">利率决议表决</span></h2></div>
+    <div class="pattern">
+      <div class="card" style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center;">
+        <div>
+          <div class="n">TARGET RANGE · 联邦基金利率</div>
+          <div class="rate-big">3.50<span style="font-size:.5em;color:var(--gold);">–</span>3.75%</div>
+          <div class="rate-sub">HOLD · 连续第 5 次维持 · 自 2025.12 以来未变</div>
+        </div>
+        <div>
+          <div class="n">VOTE · 投票结果</div>
+          <div class="vote-bar"><div class="hold"></div><div class="dis"></div></div>
+          <div class="vote-nums"><span class="g">9 维持</span><span class="r">3 主张加息 +25bp</span></div>
+          <div style="margin-top:14px;font-size:13px;color:var(--muted);line-height:1.6;">
+            <b style="color:var(--text);">CHAIR · 美联储主席</b><br>
+            Kevin Warsh <span style="color:var(--gold);">（第 2 次主持）</span><br>
+            反对：<span style="color:var(--bear);">Hammack · Kashkari · Logan</span> — Warsh 称之为 "family fight"
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 聲明變化 -->
+  <section class="section">
+    <div class="group-head reveal"><span class="tier">02</span><h2>Statement vs June<span class="zh">声明变化（Vs 6月）</span></h2></div>
+    <div class="pattern">
+      <div class="card">
+        <div class="delta-row"><div class="dico cut">−</div><div class="dtxt"><b>大幅精简与删减</b>：删除前瞻指引，剥离宽松倾向 <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted2);">（与 6/17 声明"几乎一致"）</span></div></div>
+        <div class="delta-row"><div class="dico keep">=</div><div class="dtxt">保留：<span class="q">"经济稳步扩张……部分源于中东冲突不确定性"</span></div></div>
+        <div class="delta-row"><div class="dico new">!</div><div class="dtxt">结尾定调改变：<span class="q">"委员会将实现价格稳定"</span> — 暗示维持紧缩或鹰派立场，以换取物价稳定</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 市場反應 -->
+  <section class="section">
+    <div class="group-head reveal"><span class="tier">03</span><h2>Market Reaction<span class="zh">市场即时反应</span></h2></div>
+    <div class="pattern">
+      <div class="kpis">
+        <div class="kpi"><div class="k">DXY 美元指数</div><div class="v dn">走弱 ↓</div><div class="d">自 ~101 回落，决议后承压</div></div>
+        <div class="kpi"><div class="k">US10Y 收益率</div><div class="v dn">4.76% ↑</div><div class="d">10Y +7bp · 2Y −4bp · 曲线"熊陡"</div></div>
+        <div class="kpi"><div class="k">美股</div><div class="v dn">−1.52%</div><div class="d">标普 −1.74% · 道指 −1,153 大幅回调</div></div>
+        <div class="kpi"><div class="k">XAUUSD 黄金</div><div class="v gd">$4,049</div><div class="d">盘中冲 $4,100（<span style="color:var(--bull);">+1%</span>）· 收 <span style="color:var(--bull);">+0.27%</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 黃金時間軸 -->
+  <section class="section">
+    <div class="group-head reveal"><span class="tier">04</span><h2>Gold Night Timeline<span class="zh">黄金决议日走势（MYT）</span></h2></div>
+    <div class="pattern">
+      <div class="card">
+        <div class="n">XAUUSD · 决议夜复盘</div>
+        <div class="timeline">
+          <div class="titem"><div class="tdot hot"></div><div class="tt"><span class="tm">02:00</span><span class="th">决议公布</span><span class="tp">$4,035</span></div>
+            <div class="td2">维持 <b style="color:var(--text);">3.50–3.75%</b>，投票 <b style="color:var(--text);">9–3</b>（三票主张加息），声明精简无前瞻指引。</div></div>
+          <div class="titem"><div class="tdot"></div><div class="tt"><span class="tm">02:00–02:30</span><span class="th">第一波拉升</span><span class="tp u">→ $4,100 (+1%)</span></div>
+            <div class="td2">"未加息"松一口气 + 美元走弱，黄金自 $4,035 快速上冲。</div></div>
+          <div class="titem"><div class="tdot"></div><div class="tt"><span class="tm">02:30 后</span><span class="th">长端收益率飙升</span><span class="tp d">回吐</span></div>
+            <div class="td2">10Y → <span style="color:var(--bear);">4.70%</span>、30Y → <span style="color:var(--bear);">5.2%</span>，"美联储落后于曲线"担忧升温。</div></div>
+          <div class="titem"><div class="tdot hot"></div><div class="tt"><span class="tm">收盘</span><span class="th">高位回落</span><span class="tp u">$4,049 (+0.27%)</span></div>
+            <div class="td2">中东新一轮打击 + 油价 <span style="color:var(--bull);">+7%</span> 提供避险支撑，跌不深。</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 邏輯核心 -->
+  <section class="section">
+    <div class="group-head reveal"><span class="tier">05</span><h2>Core Logic<span class="zh">与 6 月"镜像"对比</span></h2></div>
+    <div class="pattern">
+      <div class="mirror">
+        <div class="m june"><div class="mk">JUNE · 6月</div><div class="mv"><b>鹰派点阵图</b> → 黄金 <span style="color:var(--bear);">大跌 $60</span><br><br>同样维持利率，但点阵图偏鹰，黄金承压。</div></div>
+        <div class="m july"><div class="mk">JULY · 7月</div><div class="mv"><b>同样维持，反应相反</b> → 黄金 <span style="color:var(--bull);">由跌转涨</span><br><br>无新增鹰派点阵 + "未加息"构成宽慰 + 美元走弱。</div></div>
+      </div>
+      <div class="concl">
+        <div class="ch">核心：与 6 月"镜像"，同样维持、反应相反</div>
+        <p>上月因鹰派点阵图，黄金 <b class="dn">跌 $60</b>；本次同样维持却 <b class="up">由跌转涨</b> —— 无新增鹰派点阵、"未加息"构成宽慰、美元走弱。但长端利率上行 + 鹰派底色，仍给反弹戴上"天花板"，收盘仅 <b class="up">+0.27%</b>。观察 <span style="color:var(--cyan);">Q2 GDP / PCE → Jackson Hole → 9 月 FOMC</span>。</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="l"><b>MAKETRADES JOURNEY</b> · XRs Trading Lab by Xavier Rui<br>仅供复盘研究，不构成投资建议 · 截至 2026-07-29 美股收盘 · 时间为马来西亚时间 (MYT)</div>
+  </footer>
+</div>
+<script>
+const io = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }), {threshold:.12});
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
