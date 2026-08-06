@@ -609,14 +609,11 @@ body{max-width:none !important;padding:20px 22px 60px !important}
 </head>
 <body>
 <div id="comingSoon" style="position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(6,8,12,.97);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);font-family:'JetBrains Mono',ui-monospace,monospace;text-align:center;padding:40px;">
-  <div style="font-size:56px;margin-bottom:18px;filter:drop-shadow(0 0 18px rgba(232,180,74,.35));">&#128274;</div>
-  <h1 style="color:#EDEBE2;font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(22px,4vw,34px);letter-spacing:.04em;margin:0 0 10px;">COMING SOON</h1>
-  <div style="color:#E8B44A;font-size:13px;letter-spacing:.3em;text-transform:uppercase;margin-bottom:22px;">策略組合器 · 即將上線</div>
-  <p style="color:#9A968C;max-width:460px;font-size:13.5px;line-height:1.8;margin:0 0 30px;">The Strategy Composer is being rebuilt for our members.<br>This tool unlocks with your free account soon.
-  <br><span style="color:#6f6c64;font-size:12px;">策略组合器正在为会员重建，解锁后免费使用。</span></p>
-  <a href="../MakeTradesJourney.html" style="display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:#0a0e14;background:#E8B44A;border-radius:30px;padding:12px 28px;font-weight:600;font-size:13px;letter-spacing:.05em;transition:.25s;">&#8592; Back to Hub · 返回目录</a>
+  <div style="font-size:56px;margin-bottom:14px;">🔒</div>
+  <h1 style="color:var(--gold);font-size:28px;letter-spacing:.12em;margin-bottom:10px;">COMING SOON</h1>
+  <p style="color:var(--muted);max-width:420px;line-height:1.8;">策略組合器正在為會員重建，解鎖後免費使用。<br>The Strategy Composer is being rebuilt for our members. This tool unlocks with your free account soon.</p>
+  <a href="../MakeTradesJourney.html" style="margin-top:22px;display:inline-block;background:var(--gold);color:#0a0e14;border-radius:30px;padding:11px 30px;text-decoration:none;font-weight:700;">← Back to Hub · 返回目录</a>
 </div>
-
 <div id="xrParticles"></div>
 <div id="odTag">⚡ OVERDRIVE — 毀滅性風險</div>
 <div class="brandbar">
@@ -2119,13 +2116,15 @@ function runBacktest(bars, spec, opt){
     }
   }
 
-  const cut=Math.floor(bars.length*0.7);
+  const cut=Math.floor(bars.length*0.6);   // IS 60%
+  const cutVal=Math.floor(bars.length*0.8); // VAL 20% (60→80%)
   const seg=ts=>{const w=ts.filter(t=>t.pnl>0), l=ts.filter(t=>t.pnl<0);
     const gw=w.reduce((a,t)=>a+t.pnl,0), gl=-l.reduce((a,t)=>a+t.pnl,0);
     let e=0,p=0,dd=0; ts.forEach(t=>{e+=t.pnl;p=Math.max(p,e);dd=Math.max(dd,p-e);});
     return {n:ts.length,win:ts.length?100*w.length/ts.length:0,
       pf: gl>0?gw/gl:(gw>0?9.99:0), net:e, dd};};
-  const all=seg(trades), IS=seg(trades.filter(t=>t.k<cut)), OOS=seg(trades.filter(t=>t.k>=cut));
+  const all=seg(trades), IS=seg(trades.filter(t=>t.k<cut)), OOS=seg(trades.filter(t=>t.k>=cut && t.k<cutVal)), VAL=seg(trades.filter(t=>t.k>=cutVal));
+
   const longs=seg(trades.filter(t=>t.dir==="long")), shorts=seg(trades.filter(t=>t.dir==="short"));
 
   // 成本佔比 = 總成本 / (毛損益絕對值 + 總成本) —— scalping 的死亡指標。
@@ -2145,7 +2144,7 @@ function runBacktest(bars, spec, opt){
   const exitMix={};
   trades.forEach(t=>{exitMix[t.why]=(exitMix[t.why]||0)+1;});
 
-  return {trades,equity,all,IS,OOS,longs,shorts,ror,exitMix,expired,P,
+  return {trades,equity,all,IS,OOS,VAL,longs,shorts,ror,exitMix,expired,P,
     costRatio, cost, mode:opt.mode||"day", tfWarn: !mode.tfOK.includes(tf),
     maxUnit: sz.type==="marti"?Math.pow(sz.params.mult,sz.params.steps):1, sizing:sz.type};
 }
@@ -3029,7 +3028,7 @@ function updMeta(r){
   const days=Math.round(getM1(SYM).length/1440);
   document.getElementById('meta').innerHTML=
     `<b style="color:var(--kengold)">${SYM}</b> · <b style="color:var(--kengold)">${TFKEY}</b>`+
-    ` · ${bars.length.toLocaleString()} 根 · ~${days} 天 · IS/OOS 70/30 · 草圖級,最終判決走 MT5`;
+    ` · ${bars.length.toLocaleString()} 根 · ~${days} 天 · IS/OOS/Val 60/20/20 · 草圖級,最終判決走 MT5`;
   const w=document.getElementById('sampleWarn');
   if(r&&r.all.n>0&&r.OOS.n<30){w.style.display='block';
     w.textContent=`⚠️ OOS 僅 ${r.OOS.n} 筆 — 樣本過小,此分數不可信。換更小週期、放寬條件、或加長歷史。`;}
@@ -3783,40 +3782,40 @@ syncCost(); render(); reload();
 </script>
 
 <script>
-// ===== FOMC Analyzer 聯動 (v2.6.1) =====
-(function(){
-  var bias = null;
-  try { bias = JSON.parse(localStorage.getItem('mtj_fomc_bias') || 'null'); } catch(e){}
-  if(!bias || !bias.dir) return;
-  if(Date.now() - (bias.ts||0) > 48*3600*1000) return;
-  var suggest = (bias.dir === 'hawkish') ? 'short' : (bias.dir === 'dovish') ? 'long' : 'both';
-  var bar = document.createElement('div');
-  bar.style.cssText = "position:relative;z-index:5;display:flex;align-items:center;gap:10px;padding:10px 20px;background:rgba(232,200,119,.08);border-bottom:1px solid rgba(232,200,119,.25);font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#E8B44A;letter-spacing:.05em;";
-  bar.innerHTML = "📡 FOMC LINK &middot; 決議分析已連動 &nbsp;<b>" + (bias.date||'') + "</b> &nbsp;→&nbsp; 建議方向: <b>" + (suggest==='short'?'只做空 SELL':suggest==='long'?'只做多 BUY':'多空都做') + "</b> <span style='opacity:.6'>(可手動改)</span>";
-  var brandbar = document.querySelector('.brandbar');
-  if(brandbar) brandbar.parentNode.insertBefore(bar, brandbar.nextSibling);
-  var dirSel = document.getElementById('dirSel');
-  if(dirSel && (dirSel.value === 'long' || dirSel.value === 'both')) {
-    dirSel.value = suggest;
-    if(typeof recalc === 'function') recalc();
-  }
-})();
-</script>
-
-<script>
 /* ===== MTJ Admin Unlock ===== */
 (function(){
-  var key = "xrs2026";           // admin 密鑰(僅供站主檢查,不公開)
+  var key = "xrs2026";
   var params = new URLSearchParams(window.location.search);
   if(params.get("admin") === key){
     var cs = document.getElementById("comingSoon");
     if(cs) cs.style.display = "none";
-    // 管理標記
     var badge = document.createElement("div");
     badge.style.cssText = "position:fixed;top:8px;right:14px;z-index:200;background:rgba(232,180,74,.15);border:1px solid rgba(232,180,74,.4);color:#E8B44A;border-radius:20px;padding:4px 14px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.15em;";
     badge.textContent = "ADMIN VIEW · 管理員視圖";
     document.body.appendChild(badge);
   }
+})();
+</script>
+
+<script>
+/* ===== FOMC LINK ===== */
+(function(){
+  try{
+    var b = JSON.parse(localStorage.getItem('mtj_fomc_bias')||'null');
+    if(b && b.dir && Date.now() - (b.ts||0) < 48*3600*1000){
+      var dir = b.dir==='hawkish' ? 'short' : (b.dir==='dovish' ? 'long' : '');
+      if(dir){
+        var sel = document.getElementById('dirSel');
+        if(sel && !sel.dataset.userSet){
+          sel.value = (dir==='short') ? '只做空' : '只做多';
+        }
+        var bar = document.createElement('div');
+        bar.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:150;background:rgba(232,180,74,.12);border-bottom:1px solid rgba(232,180,74,.4);color:#E8B44A;padding:10px 18px;font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.1em;text-align:center;";
+        bar.textContent = "📡 FOMC LINK · " + (b.date||'') + " → 建議方向: " + (dir==='short' ? '只做空 SELL' : '只做多 BUY') + " (可手動改)";
+        document.body.appendChild(bar);
+      }
+    }
+  }catch(e){}
 })();
 </script>
 </body>
