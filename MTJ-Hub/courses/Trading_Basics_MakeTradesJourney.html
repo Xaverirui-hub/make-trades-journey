@@ -880,11 +880,11 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
 /* ===== MTJ EXAM MODULE - Module 1 Trading Basics ===== */
 const MTJ_EXAM_KEY = "mtj_exam_pass_1";
 const EXAM_QUESTIONS = [
-  {q:"What does a pip usually represent in most forex pairs?", opts:["0.01 of price","0.0001 of price","1% of price","0.10 of price"], ans:1, why:"A pip is the smallest standard price move - for most pairs it is the 4th decimal place (0.0001).", "why_zh": "点差是最小的标准价格变动单位——多数货币对是第 4 位小数 (0.0001)。"},
-  {q:"Which pair is considered a major currency pair?", opts:["EUR/USD","USD/MXN","EUR/TRY","GBP/NZD"], ans:0, why:"The eight majors are the most-traded pairs against the USD, and EUR/USD is the most liquid of them all.", "why_zh": "八大货币对是与美元交易最活跃的货币对，其中 EUR/USD 流动性最高。"},
-  {q:"If EUR/USD moves from 1.10000 to 1.10020, the move is:", opts:["2 pips","20 pips","200 pips","2,000 points"], ans:1, why:"Each 0.0001 is one pip. 1.10000 to 1.10020 is 0.00020 = 20 pips (each 0.00001 is a fractional point).", "why_zh": "每个 0.0001 = 1 点。1.10000 到 1.10020 是 0.00020 = 20 点（每个 0.00001 是 0.1 点）。"},
-  {q:"In the quote EUR/USD = 1.1000, the base currency is:", opts:["USD","Neither","EUR","Both"], ans:2, why:"The first currency in a pair is the base (EUR); the second is the quote (USD). The pair tells you how much quote currency one base buys.", "why_zh": "货币对中第一个是基准货币（EUR），第二个是报价货币（USD）。这个报价告诉你 1 个基准货币值多少报价货币。"},
-  {q:"What is price action?", opts:["A news indicator","Reading price movement on the chart","A type of order","Fundamental data"], ans:1, why:"Price action is reading the market movement itself - the story the candles and levels tell - without relying on lagging indicators.", "why_zh": "价格行为是直接阅读市场本身的运动——蜡烛与关键位讲述的故事——不依赖滞后指标。"}
+  {q:"What does a pip usually represent in most forex pairs?", q_zh:"在多数货币对中，一个点（pip）通常代表什么？", opts:["0.01 of price","0.0001 of price","1% of price","0.10 of price"], opts_zh:["价格的 0.01", "价格的 0.0001", "价格的 1%", "价格的 0.10"], ans:1, why:"A pip is the smallest standard price move - for most pairs it is the 4th decimal place (0.0001).", "why_zh": "点差是最小的标准价格变动单位——多数货币对是第 4 位小数 (0.0001)。"},
+  {q:"Which pair is considered a major currency pair?", q_zh:"哪个货币对被认为是主要货币对？", opts:["EUR/USD","USD/MXN","EUR/TRY","GBP/NZD"], opts_zh:["EUR/USD", "USD/MXN", "EUR/TRY", "GBP/NZD"], ans:0, why:"The eight majors are the most-traded pairs against the USD, and EUR/USD is the most liquid of them all.", "why_zh": "八大货币对是与美元交易最活跃的货币对，其中 EUR/USD 流动性最高。"},
+  {q:"If EUR/USD moves from 1.10000 to 1.10020, the move is:", q_zh:"如果 EUR/USD 从 1.10000 移动到 1.10020，这是多少点？", opts:["2 pips","20 pips","200 pips","2,000 points"], opts_zh:["2 点", "20 点", "200 点", "2,000 点"], ans:1, why:"Each 0.0001 is one pip. 1.10000 to 1.10020 is 0.00020 = 20 pips (each 0.00001 is a fractional point).", "why_zh": "每个 0.0001 = 1 点。1.10000 到 1.10020 是 0.00020 = 20 点（每个 0.00001 是 0.1 点）。"},
+  {q:"In the quote EUR/USD = 1.1000, the base currency is:", q_zh:"在报价 EUR/USD = 1.1000 中，基准货币是？", opts:["USD","Neither","EUR","Both"], opts_zh:["USD", "都不是", "EUR", "两者都是"], ans:2, why:"The first currency in a pair is the base (EUR); the second is the quote (USD). The pair tells you how much quote currency one base buys.", "why_zh": "货币对中第一个是基准货币（EUR），第二个是报价货币（USD）。这个报价告诉你 1 个基准货币值多少报价货币。"},
+  {q:"What is price action?", q_zh:"什么是价格行为？", opts:["A news indicator","Reading price movement on the chart","A type of order","Fundamental data"], opts_zh:["新闻指标", "直接在图表上阅读价格运动", "一种订单类型", "基本面数据"], ans:1, why:"Price action is reading the market movement itself - the story the candles and levels tell - without relying on lagging indicators.", "why_zh": "价格行为是直接阅读市场本身的运动——蜡烛与关键位讲述的故事——不依赖滞后指标。"}
 ];
 function renderExam(){
   var box = document.getElementById("examBox"); if(!box) return;
@@ -895,11 +895,13 @@ function renderExam(){
     head.style.cssText = "font-family:monospace;font-size:11px;color:var(--gold);letter-spacing:.15em;margin-bottom:8px;";
     head.textContent = "QUESTION " + (qi+1) + " / " + EXAM_QUESTIONS.length;
     card.appendChild(head);
+    var zhMode = document.body.classList.contains('lang-zh');
     var q = document.createElement("div");
     q.style.cssText = "font-weight:600;font-size:15px;color:var(--text);margin-bottom:14px;";
-    q.textContent = item.q;
+    q.textContent = (zhMode && item.q_zh) ? item.q_zh : item.q;
     card.appendChild(q);
-    item.opts.forEach(function(opt, oi){
+    var optsArr = (zhMode && item.opts_zh) ? item.opts_zh : item.opts;
+    optsArr.forEach(function(opt, oi){
       var label = document.createElement("label");
       label.style.cssText = "display:flex;align-items:center;gap:10px;padding:10px 14px;margin:6px 0;border:1px solid var(--line-soft);border-radius:8px;cursor:pointer;font-size:14px;color:var(--text);transition:.2s;";
       var radio = document.createElement("input");
@@ -967,6 +969,9 @@ function setLang(l){
   var off = "background:none;border:1px solid var(--line);color:var(--muted);border-radius:20px;padding:5px 14px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;cursor:pointer;";
   if(en) en.style.cssText = l==='en' ? on : off;
   if(zh) zh.style.cssText = l==='zh' ? on : off;
+  // 重渲染考試(語言切換時)
+  var box = document.getElementById('examBox');
+  if(box && typeof renderExam === 'function'){ box.innerHTML=''; renderExam(); }
 }
 (function(){
   var saved='en'; try{ saved=localStorage.getItem('mtj_lang')||'en'; }catch(e){}
