@@ -828,5 +828,34 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
   requestAnimationFrame(frame);
 })();
 </script>
+
+<script>
+/* ===== MTJ EXAM LOCK — 主頁課程解鎖 ===== */
+(function(){
+  var mods = document.querySelectorAll("a.mod");
+  for(var i = 0; i < mods.length; i++){
+    var a = mods[i];
+    // 從 idx 提取模組號
+    var idxEl = a.querySelector(".idx");
+    if(!idxEl) continue;
+    var m = parseInt((idxEl.textContent||"").replace(/[^0-9]/g,""));
+    if(isNaN(m) || m <= 1) continue;  // Module 1 永遠解鎖
+    // 前一課必須通過
+    var prevKey = "mtj_exam_pass_" + (m-1);
+    var passed = false;
+    try { passed = localStorage.getItem(prevKey) === "1"; } catch(e){}
+    if(!passed){
+      a.style.opacity = "0.45";
+      a.style.pointerEvents = "none";
+      a.style.filter = "grayscale(0.6)";
+      // 加鎖標記
+      var lock = document.createElement("div");
+      lock.style.cssText = "font-size:11px;color:var(--gold);letter-spacing:.12em;margin-top:8px;font-family:'JetBrains Mono',monospace;";
+      lock.textContent = "🔒 PASS MODULE " + (m-1) + " EXAM TO UNLOCK";
+      a.appendChild(lock);
+    }
+  }
+})();
+</script>
 </body>
 </html>
