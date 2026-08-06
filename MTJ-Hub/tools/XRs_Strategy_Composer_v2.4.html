@@ -3802,5 +3802,22 @@ syncCost(); render(); reload();
   }
 })();
 </script>
+
+<script>
+/* ===== MTJ Admin Unlock ===== */
+(function(){
+  var key = "xrs2026";           // admin 密鑰(僅供站主檢查,不公開)
+  var params = new URLSearchParams(window.location.search);
+  if(params.get("admin") === key){
+    var cs = document.getElementById("comingSoon");
+    if(cs) cs.style.display = "none";
+    // 管理標記
+    var badge = document.createElement("div");
+    badge.style.cssText = "position:fixed;top:8px;right:14px;z-index:200;background:rgba(232,180,74,.15);border:1px solid rgba(232,180,74,.4);color:#E8B44A;border-radius:20px;padding:4px 14px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.15em;";
+    badge.textContent = "ADMIN VIEW · 管理員視圖";
+    document.body.appendChild(badge);
+  }
+})();
+</script>
 </body>
 </html>
