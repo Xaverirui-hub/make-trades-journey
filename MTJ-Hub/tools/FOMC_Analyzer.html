@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FOMC Analyzer · Make Trades Journey</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#060608; --bg2:#0b0b10; --panel:rgba(20,20,26,.55);
+  --gold:#E8C877; --gold-bright:#FCE9A8; --gold-deep:#C9A227;
+  --bull:#2CD98A; --bear:#FF5C63; --cyan:#2FE0D6;
+  --text:#EDEBE2; --muted:#9A968C; --muted2:#6f6c64;
+  --line:rgba(232,200,119,.16); --line-soft:rgba(232,200,119,.09);
+}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);
+  font-family:'Sora','Noto Sans SC',system-ui,sans-serif;line-height:1.6;overflow-x:hidden}
+.bg-glow{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(1100px 700px at 80% -10%,rgba(232,200,119,.10),transparent 60%),
+  radial-gradient(900px 600px at -10% 20%,rgba(201,162,39,.08),transparent 60%)}
+.bg-grid{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.4;
+  background-image:linear-gradient(rgba(232,200,119,.04) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(232,200,119,.04) 1px,transparent 1px);
+  background-size:64px 64px;mask-image:radial-gradient(circle at 50% 30%,#000 0%,transparent 80%);
+  -webkit-mask-image:radial-gradient(circle at 50% 30%,#000 0%,transparent 80%)}
+.wrap{position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:0 24px}
+.topbar{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;align-items:center;justify-content:space-between;
+  padding:14px clamp(16px,4vw,40px);background:linear-gradient(to bottom,rgba(6,6,8,.82),rgba(6,6,8,0));
+  backdrop-filter:blur(6px)}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.brand .bwrap{display:flex;flex-direction:column;line-height:1.1}
+.brand .bn{font-weight:700;font-size:14px;color:var(--text);letter-spacing:.04em}
+.brand .bs{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:.2em;text-transform:uppercase}
+.brand .live{display:inline-flex;align-items:center;gap:6px;margin-left:14px;font-family:'JetBrains Mono',monospace;
+  font-size:10.5px;color:var(--gold);letter-spacing:.14em;text-transform:uppercase}
+.brand .live i{width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px var(--gold);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero{position:relative;padding:clamp(120px,18vh,190px) 0 clamp(50px,8vh,90px);text-align:center}
+.hero .tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--gold);
+  letter-spacing:.3em;text-transform:uppercase;margin-bottom:18px;border:1px solid var(--line);border-radius:30px;padding:8px 20px}
+.hero h1{font-size:clamp(36px,6vw,64px);font-weight:800;letter-spacing:-.02em;line-height:1.1;margin:0 0 14px}
+.hero h1 em{font-style:normal;color:var(--gold-bright);text-shadow:0 0 30px rgba(232,200,119,.35)}
+.hero .zh{color:var(--muted);font-size:clamp(15px,2.2vw,19px);letter-spacing:.1em;margin-bottom:30px}
+.hero p{color:var(--muted);max-width:640px;margin:0 auto;font-size:15px;line-height:1.8}
+.section{padding:34px 0}
+.group-head{display:flex;align-items:center;gap:13px;margin-bottom:24px}
+.group-head .tier{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold);letter-spacing:1px;
+  border:1px solid var(--line);border-radius:8px;padding:5px 12px;background:rgba(232,200,119,.06)}
+.group-head h2{font-size:clamp(20px,3vw,28px);font-weight:700;margin:0}
+.group-head .zh{color:var(--muted);font-size:14px;margin-left:12px}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+.field{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px}
+.field label{display:block;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--gold);
+  letter-spacing:.15em;text-transform:uppercase;margin-bottom:10px}
+.field input,.field select{width:100%;background:rgba(0,0,0,.35);border:1px solid var(--line-soft);border-radius:8px;
+  color:var(--text);font-family:'Sora',sans-serif;font-size:15px;padding:11px 14px;outline:none;transition:.2s}
+.field input:focus,.field select:focus{border-color:var(--gold)}
+.field .hint{font-size:12px;color:var(--muted2);margin-top:7px;line-height:1.5}
+.btn{display:inline-flex;align-items:center;gap:9px;background:var(--gold);color:#0a0e14;border:none;
+  border-radius:30px;padding:14px 34px;font-family:'Sora',sans-serif;font-weight:700;font-size:15px;
+  cursor:pointer;letter-spacing:.04em;transition:.25s}
+.btn:hover{box-shadow:0 0 26px rgba(232,200,119,.35);transform:translateY(-1px)}
+.btn-ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold);box-shadow:none}
+.result-panel{background:linear-gradient(160deg,rgba(232,200,119,.08),rgba(20,20,26,.5));
+  border:1px solid var(--line);border-radius:18px;padding:28px;margin-top:26px;display:none}
+.result-panel.show{display:block;animation:fadeUp .5s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.verdict{display:flex;align-items:center;gap:16px;padding-bottom:20px;border-bottom:1px solid var(--line);margin-bottom:20px}
+.verdict .dir{font-size:42px;font-weight:800;letter-spacing:-.02em}
+.verdict .dir.dovish{color:var(--bull)} .verdict .dir.hawkish{color:var(--bear)} .verdict .dir.mixed{color:var(--gold)}
+.verdict .meta{font-size:13.5px;color:var(--muted);line-height:1.7}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:22px}
+.kpi{background:rgba(0,0,0,.3);border:1px solid var(--line-soft);border-radius:12px;padding:16px}
+.kpi .k{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--muted);letter-spacing:.14em;text-transform:uppercase}
+.kpi .v{font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:700;margin-top:7px}
+.kpi .v.up{color:var(--bull)} .kpi .v.dn{color:var(--bear)} .kpi .v.gd{color:var(--gold-bright)}
+.analysis{font-size:14.5px;color:var(--muted);line-height:1.9}
+.analysis b{color:var(--text)}
+.analysis .up{color:var(--bull)} .analysis .dn{color:var(--bear)} .analysis .gd{color:var(--gold-bright)}
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+footer{padding:40px 0 50px;text-align:center;border-top:1px solid var(--line-soft);margin-top:60px}
+footer .l{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.18em;line-height:2}
+footer .l b{color:var(--gold)}
+</style>
+</head>
+<body>
+<a href="../MakeTradesJourney.html" id="mtjBack" style="position:fixed;left:14px;bottom:14px;z-index:60;display:inline-flex;align-items:center;gap:9px;text-decoration:none;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#7A8699;background:rgba(10,14,20,.85);border:1px solid rgba(232,180,74,.28);border-radius:30px;padding:9px 16px;backdrop-filter:blur(6px);transition:.25s" onmouseover="this.style.color='#E8B44A';this.style.borderColor='#E8B44A'" onmouseout="this.style.color='#7A8699';this.style.borderColor='rgba(232,180,74,.28)'"><span>&#8592;</span>Hub &middot; 返回目录</a>
+<div class="bg-glow"></div><div class="bg-grid"></div>
+<div class="wrap">
+  <div class="topbar">
+    <a class="brand" href="../MakeTradesJourney.html">
+      <div class="bwrap"><span class="bn">Make Trades Journey</span><span class="bs">FOMC Analyzer · 决议分析器</span></div>
+      <span class="live"><i></i>Live Tool</span>
+    </a>
+  </div>
+  <header class="hero">
+    <div class="tag reveal in">FOMC ANALYZER · 决议分析器</div>
+    <h1>Read the Fed,<br><em>Trade the Reaction.</em></h1>
+    <div class="zh">读懂美联储 · 交易市场反应</div>
+    <p>输入 FOMC 决议数据，立即获得鹰鸽判定、市场影响分析与黄金方向判断。<br>Enter the decision details and get an instant read on the Fed, the markets and gold.</p>
+  </header>
+
+  <section class="section">
+    <div class="group-head reveal"><span class="tier">01</span><h2>Enter the Decision<span class="zh">输入决议数据</span></h2></div>
+    <div class="form-grid">
+      <div class="field">
+        <label>Date · 决议日期</label>
+        <input type="text" id="f_date" value="2026.09.16" placeholder="2026.09.16">
+        <div class="hint">FOMC 决议公布日期 (MYT)</div>
+      </div>
+      <div class="field">
+        <label>Fed Funds Rate · 利率区间</label>
+        <input type="text" id="f_rate" value="3.50–3.75%" placeholder="3.50–3.75%">
+      </div>
+      <div class="field">
+        <label>Vote: Hold · 维持票数</label>
+        <input type="number" id="f_hold" value="9" min="0" max="12">
+      </div>
+      <div class="field">
+        <label>Vote: Hike · 加息票数</label>
+        <input type="number" id="f_hike" value="3" min="0" max="12">
+      </div>
+      <div class="field">
+        <label>Vote: Cut · 降息票数</label>
+        <input type="number" id="f_cut" value="0" min="0" max="12">
+      </div>
+      <div class="field">
+        <label>Statement · 声明要点</label>
+        <input type="text" id="f_stmt" value="声明精简，删除前瞻指引，保留经济稳步扩张表述">
+      </div>
+      <div class="field">
+        <label>DXY · 美元指数反应</label>
+        <input type="text" id="f_dxy" value="101.2 → 100.8 (走弱 -0.4%)">
+      </div>
+      <div class="field">
+        <label>XAUUSD · 黄金价格</label>
+        <input type="text" id="f_gold" value="$4,120">
+      </div>
+      <div class="field">
+        <label>Gold Change % · 黄金涨跌%</label>
+        <input type="number" id="f_goldchg" value="0.8" step="0.1">
+      </div>
+      <div class="field">
+        <label>US10Y · 10年期收益率</label>
+        <input type="text" id="f_us10y" value="4.55% ↓ -6bp">
+      </div>
+      <div class="field">
+        <label>US Equities · 美股</label>
+        <input type="text" id="f_eq" value="+0.9%">
+      </div>
+      <div class="field">
+        <label>Gold Timeline · 黄金走势</label>
+        <input type="text" id="f_tl" value="决议前 $4,080 → 决议后冲 $4,150 → 收盘 $4,120">
+      </div>
+      <div class="field">
+        <label>Next Event · 关注下一事件</label>
+        <input type="text" id="f_next" value="11月 FOMC (Nov 4-5) · 10月 NFP · CPI">
+      </div>
+    </div>
+    <div style="margin-top:26px;display:flex;gap:14px;flex-wrap:wrap;">
+      <button class="btn" onclick="analyzeFOMC()">Analyze · 开始分析</button>
+      <button class="btn btn-ghost" onclick="document.getElementById('resultPanel').classList.remove('show');document.getElementById('resultPanel').innerHTML=''">Clear · 清空</button>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0;">
+    <div class="result-panel" id="resultPanel"></div>
+  </section>
+
+  <footer>
+    <div class="l"><b>MAKETRADES JOURNEY</b> · XRs Trading Lab by Xavier Rui<br>仅供复盘研究，不构成投资建议 · 时间为马来西亚时间 (MYT)</div>
+  </footer>
+</div>
+<script>
+document.getElementById('yr') && (document.getElementById('yr').textContent = new Date().getFullYear());
+
+function analyzeFOMC(){
+  const d = {
+    date: document.getElementById('f_date').value,
+    rate: document.getElementById('f_rate').value,
+    hold: parseInt(document.getElementById('f_hold').value),
+    hike: parseInt(document.getElementById('f_hike').value),
+    cut: parseInt(document.getElementById('f_cut').value)||0,
+    statement: document.getElementById('f_stmt').value,
+    dxy: document.getElementById('f_dxy').value,
+    gold: document.getElementById('f_gold').value,
+    goldChg: parseFloat(document.getElementById('f_goldchg').value)||0,
+    us10y: document.getElementById('f_us10y').value,
+    equities: document.getElementById('f_eq').value,
+    timeline: document.getElementById('f_tl').value,
+    next: document.getElementById('f_next').value,
+  };
+  const p = document.getElementById('resultPanel');
+  // 鷹鴿判定
+  let dir='mixed', dirTxt='MIXED 中性', dirClass='mixed';
+  const net = d.hike - d.cut;
+  if(net >= 3){ dir='hawkish'; dirTxt='HAWKISH 鹰派'; dirClass='hawkish'; }
+  else if(net <= -2){ dir='dovish'; dirTxt='DOVISH 鸽派'; dirClass='dovish'; }
+  else if(d.hike>0 && d.hold>d.hike){ dir='hawkish'; dirTxt='LEAN HAWKISH 偏鹰'; dirClass='hawkish'; }
+  else if(d.cut>0 && d.hold>d.cut){ dir='dovish'; dirTxt='LEAN DOVISH 偏鸽'; dirClass='dovish'; }
+  // 黃金方向
+  let goldDir='mixed', goldTxt='NEUTRAL 中性';
+  if(d.goldChg>=0.5 && dir==='dovish'){ goldDir='bull'; goldTxt='BULLISH 看涨'; }
+  else if(d.goldChg>=0.5){ goldDir='bull'; goldTxt='BULLISH 偏涨'; }
+  else if(d.goldChg<=-0.5 && dir==='hawkish'){ goldDir='bear'; goldTxt='BEARISH 看跌'; }
+  else if(d.goldChg<=-0.5){ goldDir='bear'; goldTxt='BEARISH 偏跌'; }
+  // 決策摘要
+  let summary = '';
+  if(dir==='hawkish') summary = '美联储倾向鹰派（' + d.hike + ' 票主张加息）。利率维持 ' + d.rate + '，但鹰派底色压制黄金；美元走强 + 长端利率上行 = 黄金承压。关注' + d.next + '，若继续鹰派则黄金反弹空间受限。';
+  else if(dir==='dovish') summary = '美联储倾向鸽派（' + d.cut + ' 票主张降息）。利率维持 ' + d.rate + '，鸽派信号 + 美元走弱 = 黄金获得支撑。关注' + d.next + '，鸽派延续则黄金有望突破前高。';
+  else summary = '美联储维持利率 ' + d.rate + '，投票 ' + d.hold + '-' + d.hike + (d.cut?'-'+d.cut:'') + '，方向中性。市场反应' + d.gold + '，黄金' + (d.goldChg>=0?'涨':'跌') + Math.abs(d.goldChg).toFixed(2) + '%。需结合' + d.next + '判断下一步方向。';
+  // 渲染
+  p.innerHTML =
+    '<div class="verdict"><div class="dir ' + dirClass + '">' + dirTxt + '</div>' +
+    '<div class="meta"><b>' + d.date + ' FOMC 决议</b><br>利率维持 ' + d.rate + ' · 投票 ' + d.hold + ' 维持 / ' + d.hike + ' 加息' + (d.cut?' / '+d.cut+' 降息':'') + '</div></div>' +
+    '<div class="kpis">' +
+    '<div class="kpi"><div class="k">Fed Funds Rate</div><div class="v gd">' + d.rate + '</div></div>' +
+    '<div class="kpi"><div class="k">DXY 美元</div><div class="v ' + (d.dxy.includes("跌")||d.dxy.includes("-")?'dn':'up') + '">' + d.dxy + '</div></div>' +
+    '<div class="kpi"><div class="k">XAUUSD 黄金</div><div class="v ' + (d.goldChg>=0?'up':'dn') + '">' + d.gold + ' (' + (d.goldChg>=0?'+':'') + d.goldChg.toFixed(2) + '%)</div></div>' +
+    '<div class="kpi"><div class="k">US10Y 收益率</div><div class="v ' + (d.us10y.includes("↑")||d.us10y.includes("+")?'dn':'up') + '">' + d.us10y + '</div></div>' +
+    '<div class="kpi"><div class="k">美股</div><div class="v ' + (d.equities.includes("-")?'dn':'up') + '">' + d.equities + '</div></div>' +
+    '</div>' +
+    '<div class="analysis">' +
+    '<b>声明要点 · Statement:</b> ' + d.statement + '<br><br>' +
+    '<b>黄金走势 · Gold:</b> ' + d.timeline + '<br><br>' +
+    '<b>决策摘要 · Verdict:</b> ' + summary + '<br><br>' +
+    '<b>关注 · Next:</b> ' + d.next +
+    '</div>';
+  p.classList.add('show');
+  p.scrollIntoView({behavior:'smooth'});
+}
+
+// reveal on scroll
+const io = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }), {threshold:.12});
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>

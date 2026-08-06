@@ -631,7 +631,36 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
       <div class="zh-t">交 易 日 志</div>
       <p>Log trades by hand or drop in an MT5 report, and it computes expectancy in R, the four process quadrants, breakdowns by setup and session, your cumulative R curve and max drawdown — plus a pre-market checklist.
         <span class="zh">手动记录或直接拖入 MT5 报表，自动算出以 R 为单位的期望值、过程四象限、按 setup 与时段的分类统计、累计 R 曲线与最大回撤，另有开盘前检查清单。</span></p>
-      <div class="tool-feats">
+      
+      <div class="tool-card" style="display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;padding:50px 0;border-top:1px solid rgba(232,200,119,.10);">
+        <div>
+          <div class="eyebrow" style="color:var(--gold);font-size:12px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:14px;">FOMC ANALYZER · 决议分析器</div>
+          <h3 style="font-size:clamp(22px,3vw,30px);font-weight:700;margin:0 0 12px;color:var(--text);">Read the Fed.<br><span style="color:var(--gold-bright);">Trade the Reaction.</span></h3>
+          <p style="color:var(--muted);font-size:14.5px;line-height:1.8;margin:0 0 10px;">Input the decision — rate, votes, statement, market moves — and get an instant read on the Fed and what it means for gold.
+          <span class="zh" style="color:var(--muted2);">输入决议数据——利率、票数、声明、市场反应——立即获得鹰鸽判定与黄金方向分析。</span></p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);">
+            <span style="border:1px solid var(--line);border-radius:20px;padding:6px 14px;">Hawk/Dove 鹰鸽判定</span>
+            <span style="border:1px solid var(--line);border-radius:20px;padding:6px 14px;">Market Impact 市场影响</span>
+            <span style="border:1px solid var(--line);border-radius:20px;padding:6px 14px;">Gold Direction 黄金方向</span>
+          </div>
+          <div class="cta-row" style="justify-content:flex-start;margin-top:28px;">
+            <a class="btn primary" href="tools/FOMC_Analyzer.html">Open the Analyzer <span class="ar">→</span></a>
+          </div>
+        </div>
+        <div class="tool-side" style="background:radial-gradient(600px 300px at 100% 0%,rgba(232,200,119,.08),transparent 65%);">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);letter-spacing:.18em;margin-bottom:16px;">// FED WATCH 美联储观察</div>
+          <div style="background:rgba(20,20,26,.6);border:1px solid rgba(232,200,119,.16);border-radius:16px;padding:26px;">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold);letter-spacing:.1em;margin-bottom:10px;">FED FUNDS RATE</div>
+            <div style="font-family:'JetBrains Mono',monospace;font-weight:800;font-size:34px;color:var(--gold-bright);margin-bottom:6px;">3.50–3.75%</div>
+            <div style="font-size:13px;color:var(--muted);margin-bottom:18px;">HOLD · 连续第 5 次维持</div>
+            <div style="display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);margin-bottom:8px;"><span>VOTE 投票</span><span style="color:var(--text);">9–3</span></div>
+            <div style="height:10px;border-radius:5px;overflow:hidden;background:rgba(255,255,255,.08);margin-bottom:14px;"><div style="width:75%;height:100%;background:linear-gradient(90deg,var(--gold-deep),var(--gold));"></div></div>
+            <div style="font-size:13px;color:var(--muted2);line-height:1.6;">黄金决议日 +0.27% · DXY 走弱 · US10Y +7bp</div>
+          </div>
+        </div>
+      </div>
+
+<div class="tool-feats">
         <div><b>Import 汇入</b>MT5 report · HTML / CSV</div>
         <div><b>Stats 统计</b>Expectancy · PF · drawdown</div>
         <div><b>Quadrants 四象限</b>Rules kept vs. outcome</div>
