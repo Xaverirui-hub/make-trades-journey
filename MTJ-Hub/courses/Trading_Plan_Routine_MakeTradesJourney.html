@@ -941,6 +941,24 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
   </article>
 </section>
 
+
+<!-- ================= EXAM MODULE ================= -->
+<section class="section" id="exam" style="padding-top:70px;">
+  <div class="group-head reveal">
+    <span class="tier">EXAM</span>
+    <div><div class="eyebrow">Final Exam · 毕业考试</div><h2 class="title">Pass the Final Quiz to Graduate<span class="zh">通过最终测验 · 课程毕业</span></h2></div>
+  </div>
+  <div class="note" style="max-width:820px;line-height:1.9;">
+    Answer all 5 questions. You need <b>4 of 5 (70%)</b> to pass. Wrong answers are explained — read them, then retry.
+    <span class="zh">回答全部 5 题。答对 <b>4 题（70%）</b> 即通过。答错的题会给出解析 —— 看完再试。</span>
+  </div>
+  <div id="examBox" style="max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:22px;"></div>
+  <div style="max-width:820px;margin:26px auto 0;text-align:center;">
+    <button id="examSubmit" onclick="gradeExam()" style="background:var(--gold);color:#0a0e14;border:none;border-radius:30px;padding:14px 40px;font-family:'Sora',sans-serif;font-weight:700;font-size:15px;cursor:pointer;letter-spacing:.05em;">Submit Answers · 提交答案</button>
+    <div id="examResult" style="margin-top:22px;"></div>
+  </div>
+</section>
+
 <!-- ================= CLOSING ================= -->
 <section class="closing">
   <p class="quote">A plan you follow for one day is a <em>wish</em>.<br>A plan you follow for thirty days is a <em>system</em>.</p>
@@ -1259,6 +1277,78 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
   requestAnimationFrame(frame);
 })();
 
+</script>
+
+<script>
+/* ===== MTJ EXAM MODULE - Module 17 ===== */
+const MTJ_EXAM_KEY = "mtj_exam_pass_17";
+const EXAM_QUESTIONS = [{"q": "計劃的核心作用是什麼?", "opts": ["預測明天價格走勢", "在「刺激」和「下單」之間插入一個停頓", "讓交易變得更快", "保證每一筆都賺錢"], "ans": 1, "why": "A plan inserts a pause between the stimulus and the click. That pause is the entire difference between a trader and a gambler — one decision per trade, made once before the open."}, {"q": "以下哪一個不屬於計劃的六大組成?", "opts": ["市場(做哪個品種、什麼方向)", "週期(哪裡決策、哪裡執行)", "進場條件(寫到陌生人也能執行)", "止盈後立即加倉的規則"], "ans": 3, "why": "The six blocks are Market, Timeframe, Entry, Exit, Risk and Daily Target. Adding to a winner is not one of them — risk stays a fixed number that never changes."}, {"q": "如果今天不打算交易,盤前十分鐘檢查清單還要做嗎?", "opts": ["不做,反正不下單", "做,而且每天同一時間、同一順序執行", "只做一半,意思一下", "改到盤中再補做"], "ans": 1, "why": "The routine is the job; the trade is optional. You run the checklist at the same time in the same order every day — even on zero-trade days, and especially during the 30-day build."}, {"q": "按連虧應對手冊,距權益高點 -3R 時應該怎麼做?", "opts": ["完全停掉實盤", "手數減半,繼續做同一套形態", "加大手數把虧損賺回來", "立刻修改交易計劃"], "ans": 1, "why": "Stage 1 at -3R: halve the size but keep trading the same setups — the system is untouched, only exposure drops. Plan changes need 30+ trades of evidence, never 5 losses."}, {"q": "連續虧損兩筆之後,冷卻規則要求你做什麼?", "opts": ["馬上做下一單把錢賺回來", "把止損移寬一點再進場", "關掉平台,站起來,離開 30 分鐘", "換一個更激進的策略"], "ans": 2, "why": "Two consecutive losses → close the platform, stand up, walk away for 30 minutes. Cooldown rules must be physical and immediate — I will just watch is not a cooldown."}];
+function renderExam(){
+  var box = document.getElementById("examBox"); if(!box) return;
+  EXAM_QUESTIONS.forEach(function(item, qi){
+    var card = document.createElement("div");
+    card.style.cssText = "background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;";
+    var head = document.createElement("div");
+    head.style.cssText = "font-family:monospace;font-size:11px;color:var(--gold);letter-spacing:.15em;margin-bottom:8px;";
+    head.textContent = "QUESTION " + (qi+1) + " / " + EXAM_QUESTIONS.length;
+    card.appendChild(head);
+    var q = document.createElement("div");
+    q.style.cssText = "font-weight:600;font-size:15px;color:var(--text);margin-bottom:14px;";
+    q.textContent = item.q;
+    card.appendChild(q);
+    item.opts.forEach(function(opt, oi){
+      var label = document.createElement("label");
+      label.style.cssText = "display:flex;align-items:center;gap:10px;padding:10px 14px;margin:6px 0;border:1px solid var(--line-soft);border-radius:8px;cursor:pointer;font-size:14px;color:var(--text);transition:.2s;";
+      var radio = document.createElement("input");
+      radio.type = "radio"; radio.name = "exam_q" + qi; radio.value = oi;
+      radio.style.cssText = "accent-color:var(--gold);";
+      label.appendChild(radio);
+      label.appendChild(document.createTextNode(opt));
+      card.appendChild(label);
+    });
+    var fb = document.createElement("div");
+    fb.id = "exam_fb_" + qi;
+    fb.style.cssText = "margin-top:10px;font-size:13px;line-height:1.7;display:none;";
+    card.appendChild(fb);
+    box.appendChild(card);
+  });
+}
+function gradeExam(){
+  var correct = 0, answered = 0;
+  var total = EXAM_QUESTIONS.length;
+  EXAM_QUESTIONS.forEach(function(item, qi){
+    var sel = document.querySelector("input[name=exam_q" + qi + "]:checked");
+    var fb = document.getElementById("exam_fb_" + qi);
+    if(sel){
+      answered++;
+      var user = parseInt(sel.value);
+      if(user === item.ans){
+        correct++;
+        fb.innerHTML = "<span style='color:var(--bull);font-weight:600;'>✓ Correct 正确</span><br><span style='color:var(--muted);font-size:12.5px;'>" + item.why + "</span>";
+      } else {
+        fb.innerHTML = "<span style='color:var(--bear);font-weight:600;'>✗ Wrong 错误</span><br><span style='color:var(--muted);font-size:12.5px;'>你的答案: <b>" + item.opts[user] + "</b> · 正确答案: <b>" + item.opts[item.ans] + "</b><br>为什么错: " + item.why + "</span>";
+      }
+      fb.style.display = "block";
+    } else {
+      fb.innerHTML = "<span style='color:var(--muted);'>⚠ 未作答</span>";
+      fb.style.display = "block";
+    }
+  });
+  if(answered < total){
+    document.getElementById("examResult").innerHTML = "<span style='color:var(--bear);font-weight:600;'>请回答全部 " + total + " 题再提交。</span>";
+    return;
+  }
+  var res = document.getElementById("examResult");
+  if(correct >= 4){
+    localStorage.setItem(MTJ_EXAM_KEY, "1");
+    res.innerHTML = "<div style='background:rgba(44,217,138,.1);border:1px solid rgba(44,217,138,.4);border-radius:14px;padding:22px;'><div style='color:var(--bull);font-weight:700;font-size:18px;margin-bottom:6px;'>🎉 PASSED - " + correct + "/" + total + " 通过!</div><div style='color:var(--muted);font-size:13.5px;'>课程全部完成!恭喜毕业!回到目录查看你的学习成果。</div><a href='../MakeTradesJourney.html' style='display:inline-block;margin-top:14px;background:var(--gold);color:#0a0e14;border-radius:30px;padding:10px 24px;font-weight:600;font-size:13px;text-decoration:none;'>查看目录 · Back to Catalog</a></div>";
+  } else {
+    res.innerHTML = "<div style='background:rgba(255,92,99,.08);border:1px solid rgba(255,92,99,.35);border-radius:14px;padding:22px;'><div style='color:var(--bear);font-weight:700;font-size:18px;margin-bottom:6px;'>NOT PASSED - " + correct + "/" + total + " (" + Math.round(correct/total*100) + "%)</div><div style='color:var(--muted);font-size:13.5px;'>需要 70% (4/5)。阅读上面的错题解析，然后重试。</div></div>";
+  }
+  document.getElementById("examSubmit").style.display = "none";
+  res.scrollIntoView({behavior:"smooth"});
+}
+renderExam();
 </script>
 </body>
 </html>

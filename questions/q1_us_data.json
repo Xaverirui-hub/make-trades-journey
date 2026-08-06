@@ -1,0 +1,7 @@
+[
+{"q":"What actually creates the price spike when a major US release comes out?","opts":["The previous month's value","The forecast number","The surprise: how far the actual lands from the forecast","The headline number alone"],"ans":2,"why":"The forecast is already priced in. Only the gap between actual and forecast — the surprise — creates the spike."},
+{"q":"Which measure does the Fed officially target at 2%?","opts":["Core PCE year-over-year","Headline CPI","PPI","Retail sales"],"ans":0,"why":"The Fed's policy target is 2% Core PCE YoY — Core PCE is the Fed's preferred inflation gauge."},
+{"q":"When is the NFP (Non-Farm Payrolls) report released each month?","opts":["Every 6 weeks","First Friday of each month, 08:30 ET","Mid-month","The last trading day"],"ans":1,"why":"NFP comes out on the first Friday of every month at 08:30 ET — jobs, unemployment and wages together."},
+{"q":"CPI comes in hotter than expected. What is the typical market reaction?","opts":["USD down, gold up","No reaction at all","USD up, gold down (hawkish)","Yields fall sharply"],"ans":2,"why":"Hotter-than-expected inflation is hawkish — it pushes the Fed toward hikes, lifting USD and yields while weighing on gold."},
+{"q":"Inflation is falling toward 2% and the job market is weakening. The Fed is most likely to…","opts":["Hike rates","Cut rates — USD down, gold up (dovish)","Hold forever","Raise the 2% target"],"ans":1,"why":"Cooling inflation and weak jobs open the door to cuts (dovish), which usually pushes USD down and gold up."}
+]

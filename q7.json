@@ -1,0 +1,7 @@
+[
+{"q":"In the Fibonacci sequence, each number divided by the next is approximately: 斐波那契数列中，每个数除以后一个数约等于？","opts":["0.382","0.5","0.618","0.786"],"ans":2,"why":"In 1,1,2,3,5,8,13... each number divided by the next is about 0.618 - the Golden Ratio."},
+{"q":"Which retracement level do traders watch the most? 交易者最关注哪个回撤位？","opts":["23.6%","61.8%","78.6%","100%"],"ans":1,"why":"61.8% (together with 50%) is the most watched of the standard levels."},
+{"q":"To draw a retracement in an uptrend, you drag the tool: 上涨趋势画回撤时，工具怎么拉？","opts":["From the swing high to the swing low","From the current price to the 200 MA","From the 61.8% level to the 0% level","From the swing low to the swing high"],"ans":3,"why":"In an uptrend, drag from the swing low to the swing high - 100% sits at the low and 0% at the high."},
+{"q":"The golden pocket is the zone between: 黄金口袋是哪个区间？","opts":["0.236 and 0.382","0.382 and 0.5","1.272 and 1.618","0.618 and about 0.65"],"ans":3,"why":"The golden pocket is 0.618 to about 0.65 - where trend pullbacks most often reverse."},
+{"q":"Fibonacci extensions like 127.2% and 161.8% are mainly used for: 斐波那契扩展位主要用来？","opts":["Setting stop losses","Taking profit targets","Finding the entry point","Measuring volume"],"ans":1,"why":"Extensions project where price may go after bouncing from the pocket - common take-profit targets."}
+]

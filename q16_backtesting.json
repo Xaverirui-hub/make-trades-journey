@@ -1,0 +1,7 @@
+[
+{"q":"區分「優勢」與「運氣」的唯一標準是什麼?","opts":["連續十筆盈利","直覺與盤感","正期望值在大量交易中反覆執行","某一年特別好的表現"],"ans":2,"why":"Edge is a statistical property of a sequence, never of one trade. A coin flip can produce ten winners; only positive expectancy repeated over many trades separates skill from luck."},
+{"q":"什麼是前視偏差(lookahead bias)?","opts":["回測時只用當時已公開的數據","規則在實盤中悄悄使用了未來信息,比如「知道」明天的收盤價","只回測趨勢行情,不測震盪","用美元而不是 R 記錄結果"],"ans":1,"why":"Lookahead bias means your rules quietly use information that was not available in real time — impossible live, invisible in the spreadsheet. Define rules before seeing data."},
+{"q":"對波段/趨勢系統來說,回測的實際最小樣本量是多少?","opts":["30 筆,因為勝率已經穩定","100–150 筆,300 筆以上更體面","10 筆,品質比數量重要","永遠不夠,只能靠實盤"],"ans":1,"why":"With 30 trades the 95% range spans roughly 37%-73% — indistinguishable from a coin flip. 100-150 is the practical minimum; 300+ earns a real opinion."},
+{"q":"以下哪個是過擬合(overfitting)的典型特徵?","opts":["最優參數區是一大片寬廣的高原","樣本內與樣本外表現一致","「最優區」是窄尖峰,樣本外明顯縮水","系統只有 3 個參數,樣本 1000 筆"],"ans":2,"why":"A narrow spike sweet spot, in-sample profit that degrades out-of-sample, and too many parameters are the classic tells. A real edge is a plateau, not a spike."},
+{"q":"為什麼回測必須計入點差、佣金和滑點?","opts":["因為買在賣價、賣在買價,點差一來一回要付兩次","因為成本只影響虧損單,不影響盈利單","因為點差越大,系統的毛優勢越大","因為回測軟體無法模擬成交"],"ans":0,"why":"You enter at the ask and exit at the bid, so the spread is paid twice per round trip. A backtest without costs is a fantasy — net R = gross R minus costs."}
+]

@@ -1,0 +1,7 @@
+[
+{"q":"You lose 50% of your account. What gain gets you back to break-even?","opts":["50%","100%","25%","150%"],"ans":1,"why":"Losses are asymmetric: after a 50% loss you need a 100% gain — loss % ÷ (1 − loss %)."},
+{"q":"With a 50% win rate over 100 trades, a run of 5 consecutive losses is…","opts":["Proof the system is broken","Impossible","Close to certain — normal randomness","A signal to double size"],"ans":2,"why":"At a 50% win rate a run of 5 losses is nearly certain over 100 trades. It is what randomness looks like, not a broken system."},
+{"q":"What is the correct order for sizing a trade?","opts":["Pick the lot size, then place the stop","Fix risk %, place the stop where invalidated, then derive lot size","Choose leverage, then lots, then stop","Set the target first, then the risk"],"ans":1,"why":"Fix the risk amount first, place the stop where your analysis is invalidated, then calculate lot size — risk is fixed, lot size is an output."},
+{"q":"For EURUSD, 1.00 standard lot: one pip (0.0001) is worth…","opts":["$1","$100","$0.10","$10"],"ans":3,"why":"A standard forex lot is 100,000 units of base currency; for EURUSD one pip = $10 per lot."},
+{"q":"0.10 lots of gold with a $5 stop at 1:20 vs 1:500 leverage — the loss is…","opts":["$50 in both cases — leverage does not set risk","$50 at 1:20 but $1,250 at 1:500","Larger at higher leverage","Zero at 1:500"],"ans":0,"why":"Risk comes from lot size × stop distance only. Leverage only changes margin — same lots and stop mean the same loss at any leverage."}
+]
