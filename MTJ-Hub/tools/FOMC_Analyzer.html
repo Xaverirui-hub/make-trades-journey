@@ -173,7 +173,31 @@ footer .l b{color:var(--gold)}
     <div class="result-panel" id="resultPanel"></div>
   </section>
 
-  <footer>
+  
+  <section class="section" style="padding-top:0;">
+    <div class="group-head reveal"><span class="tier">02</span><h2>Latest Report<span class="zh">最新决议报告</span></h2></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;">
+      <div style="background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;">
+        <img src="fomc_reports/FOMC_2026_07_29_P1.png" alt="FOMC 2026-07-29 决议核心" style="width:100%;display:block;border-bottom:1px solid var(--line-soft);">
+        <div style="padding:14px 18px;">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:.15em;">FOMC 2026.07.29 · 决议核心</div>
+          <div style="font-size:13px;color:var(--muted);margin-top:5px;">利率维持 3.50–3.75% · 投票 9–3 · 黄金 +0.27%</div>
+        </div>
+      </div>
+      <div style="background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;">
+        <img src="fomc_reports/FOMC_2026_07_29_P2.png" alt="FOMC 2026-07-29 黄金走势" style="width:100%;display:block;border-bottom:1px solid var(--line-soft);">
+        <div style="padding:14px 18px;">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:.15em;">FOMC 2026.07.29 · 黄金走势</div>
+          <div style="font-size:13px;color:var(--muted);margin-top:5px;">决议夜先扬后收 · 冲 $4,100 → 收 $4,049 · MYT 時間線</div>
+        </div>
+      </div>
+    </div>
+    <div class="note" style="max-width:820px;line-height:1.9;margin-top:18px;font-size:13px;color:var(--muted2);">
+    // 新報告將在 FOMC 決議後 12 小時自動發布 · New reports are auto-published 12 hours after each FOMC decision.
+    </div>
+  </section>
+
+<footer>
     <div class="l"><b>MAKETRADES JOURNEY</b> · XRs Trading Lab by Xavier Rui<br>仅供复盘研究，不构成投资建议 · 时间为马来西亚时间 (MYT)</div>
   </footer>
 </div>
