@@ -254,8 +254,17 @@ function analyzeFOMC(){
     '<b>声明要点 · Statement:</b> ' + d.statement + '<br><br>' +
     '<b>黄金走势 · Gold:</b> ' + d.timeline + '<br><br>' +
     '<b>决策摘要 · Verdict:</b> ' + summary + '<br><br>' +
-    '<b>关注 · Next:</b> ' + d.next +
+    '<b>关注 · Next:</b> ' + d.next + '<br><br>' +
+    '<div style="background:rgba(232,200,119,.08);border:1px solid rgba(232,200,119,.25);border-radius:10px;padding:14px 18px;font-size:13.5px;">' +
+    '🔗 已傳送給 <b>Strategy Composer</b>：建議方向 <b style="color:var(--gold-bright);">' + (dir==="hawkish" ? "只做空 SELL" : dir==="dovish" ? "只做多 BUY" : "多空都做 BOTH") + '</b> · 開啟 Composer 時自動套用（可改）' +
+    '</div>'
     '</div>';
+  // 聯動:存 FOMC bias 供 Strategy Composer 讀取
+  try {
+    const bias = { dir: dir, dirTxt: dirTxt, goldDir: goldDir, goldChg: d.goldChg, date: d.date, ts: Date.now() };
+    localStorage.setItem('mtj_fomc_bias', JSON.stringify(bias));
+    console.log('[FOMC] bias saved:', bias);
+  } catch(e){}
   p.classList.add('show');
   p.scrollIntoView({behavior:'smooth'});
 }

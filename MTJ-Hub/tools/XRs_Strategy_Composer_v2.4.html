@@ -2735,6 +2735,28 @@ function syncCost(){
   document.addEventListener('DOMContentLoaded',()=>{});
 });
 
+// ===== FOMC Analyzer 聯動 (v2.4.1) =====
+(function(){
+  var bias = null;
+  try { bias = JSON.parse(localStorage.getItem('mtj_fomc_bias') || 'null'); } catch(e){}
+  if(!bias || !bias.dir) return;
+  // 只建議最近 48h 的 FOMC 分析,過期自動忽略
+  if(Date.now() - (bias.ts||0) > 48*3600*1000) return;
+  var suggest = (bias.dir === 'hawkish') ? 'short' : (bias.dir === 'dovish') ? 'long' : 'both';
+  // 提示條(插在 brandbar 下)
+  var bar = document.createElement('div');
+  bar.style.cssText = "position:relative;z-index:5;display:flex;align-items:center;gap:10px;padding:10px 20px;background:rgba(232,200,119,.08);border-bottom:1px solid rgba(232,200,119,.25);font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--gold);letter-spacing:.05em;";
+  bar.innerHTML = "📡 FOMC LINK &middot; 決議分析已連動 &nbsp;<b>" + (bias.date||'') + "</b> &nbsp;→&nbsp; 建議方向: <b>" + (suggest==='short'?'只做空 SELL':suggest==='long'?'只做多 BUY':'多空都做') + "</b> <span style='opacity:.6'>(可手動改)</span>";
+  var brandbar = document.querySelector('.brandbar');
+  if(brandbar) brandbar.parentNode.insertBefore(bar, brandbar.nextSibling);
+  // 自動套用 dirSel(僅當目前是預設值時,不覆寫用戶設定)
+  var dirSel = document.getElementById('dirSel');
+  if(dirSel && (dirSel.value === 'long' || dirSel.value === 'both')) {
+    dirSel.value = suggest;
+    if(typeof recalc === 'function') recalc();
+  }
+})();
+
 const tfSel=document.getElementById('tfSel');
 Object.keys(TF).forEach(k=>{const o=document.createElement('option');
   o.value=k;o.textContent=k;if(k==='H1')o.selected=true;tfSel.appendChild(o);});
