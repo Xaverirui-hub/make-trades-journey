@@ -1,0 +1,47 @@
+{
+ "In the Fibonacci sequence, each number divided by the next is approximately: 斐波那契数列中，每个数除以后一个数约等于？": [
+  "斐波那契数列中，每个数除以后一个数约等于？",
+  [
+   "0.382",
+   "0.5",
+   "0.618",
+   "0.786"
+  ]
+ ],
+ "Which retracement level do traders watch the most? 交易者最关注哪个回撤位？": [
+  "交易者最关注哪个回撤位？",
+  [
+   "23.6%",
+   "61.8%",
+   "78.6%",
+   "100%"
+  ]
+ ],
+ "To draw a retracement in an uptrend, you drag the tool: 上涨趋势画回撤时，工具怎么拉？": [
+  "上涨趋势画回撤时，工具怎么拉？",
+  [
+   "从摆动高点拉到摆动低点",
+   "从当前价格拉到200均线",
+   "从61.8%位置拉到0%位置",
+   "从摆动低点拉到摆动高点"
+  ]
+ ],
+ "The golden pocket is the zone between: 黄金口袋是哪个区间？": [
+  "黄金口袋是哪个区间？",
+  [
+   "0.236 和 0.382 之间",
+   "0.382 和 0.5 之间",
+   "1.272 和 1.618 之间",
+   "0.618 到约 0.65 之间"
+  ]
+ ],
+ "Fibonacci extensions like 127.2% and 161.8% are mainly used for: 斐波那契扩展位主要用来？": [
+  "斐波那契扩展位主要用来？",
+  [
+   "设置止损",
+   "设定止盈目标",
+   "寻找入场点",
+   "测量成交量"
+  ]
+ ]
+}

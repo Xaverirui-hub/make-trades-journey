@@ -1,0 +1,7 @@
+{
+  "The core idea of multi-timeframe trading is to: 多周期交易的核心是？": ["多周期交易的核心是？", ["用较高周期判断趋势，用较低周期选择入场时机", "在尽可能多的周期上进行交易", "永远只看一个周期", "总是逆着较高周期的方向交易"]],
+  "The recommended timeframes are usually about how far apart? 推荐的时间周期通常相隔多少？": ["推荐的时间周期通常相隔多少？", ["同样大小", "相隔 4-6 倍", "相隔 100 倍", "相隔 1.5 倍"]],
+  "In the top-down workflow, what is the job of the higher timeframe? 自上而下流程中，高周期的任务是什么？": ["自上而下流程中，高周期的任务是什么？", ["确定趋势和方向倾向", "给出精确的入场点位", "设置止损", "确认新闻"]],
+  "If the higher timeframe trend is up, you should: 高周期趋势向上时你应该？": ["高周期趋势向上时你应该？", ["寻找做空机会", "只寻找做多机会", "两个方向都交易", "停止交易"]],
+  "What is the lower timeframe used for? 低周期用来做什么？": ["低周期用来做什么？", ["判断趋势", "确定方向倾向", "用触发信号把握入场时机", "忽略它"]]
+}

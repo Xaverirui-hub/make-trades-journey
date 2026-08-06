@@ -817,7 +817,7 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
 <script>
 /* ===== MTJ EXAM MODULE - Module 02 ===== */
 const MTJ_EXAM_KEY = "mtj_exam_pass_2";
-const EXAM_QUESTIONS = [{"q": "Technical analysis studies: 技术分析研究什么？", "opts": ["The price chart itself", "Central bank policies", "Trader emotions", "Economic growth"], "ans": 0, "why": "Technical analysis reads the price chart directly - everything important is assumed to be reflected in price.", "why_zh": "技术分析直接读取价格图表——所有重要信息都假定已反映在价格中。"}, {"q": "Which is a fundamental factor that can strengthen a currency? 哪个基本面因素可能使货币走强？", "opts": ["A single green candlestick", "A strong economy and rising interest rates", "High social media buzz", "A Fibonacci retracement"], "ans": 1, "why": "Real-world forces such as a strong economy and rising rates change the supply and demand of a currency - fundamental analysis.", "why_zh": "强劲经济与加息等现实力量会改变货币的供需——这就是基本面分析。"}, {"q": "Sentiment analysis is mainly about: 情绪分析主要关注什么？", "opts": ["Exact price levels", "Company earnings", "How traders feel and where the crowd is positioned", "Chart patterns"], "ans": 2, "why": "Sentiment reads fear and greed - when almost everyone is on one side, the market can be primed to turn.", "why_zh": "情绪分析解读恐惧与贪婪——当几乎所有人都站在同一侧时，市场往往已酝酿反转。"}, {"q": "Which tool belongs to sentiment analysis? 哪个工具属于情绪分析？", "opts": ["Moving averages", "GDP reports", "Support and resistance", "Fear and Greed index"], "ans": 3, "why": "The Fear and Greed index, positioning data and social buzz are sentiment tools.", "why_zh": "恐惧与贪婪指数、持仓数据以及社交媒体热度都属于情绪分析工具。"}, {"q": "A common way to combine the three types is: 三种分析常用的组合方式是？", "opts": ["Use them one at a time in separate trades", "Use only fundamentals", "Technicals for entry, fundamentals for direction, sentiment for timing", "Only technical analysis"], "ans": 2, "why": "Many traders lead with one and confirm with the others: technicals for the entry, fundamentals for the direction, sentiment for the timing of turns.", "why_zh": "许多交易者以一种分析为主导、用其他分析来确认：技术面找入场点，基本面定方向，情绪面择反转时机。"}];
+const EXAM_QUESTIONS = [{"q": "Technical analysis studies: 技术分析研究什么？", "opts": ["The price chart itself", "Central bank policies", "Trader emotions", "Economic growth"], "opts_zh": ["价格图表本身", "中央银行政策", "交易者情绪", "经济增长"], "ans": 0, "why": "Technical analysis reads the price chart directly - everything important is assumed to be reflected in price.", "why_zh": "技术分析直接读取价格图表——所有重要信息都假定已反映在价格中。"}, {"q": "Which is a fundamental factor that can strengthen a currency? 哪个基本面因素可能使货币走强？", "opts": ["A single green candlestick", "A strong economy and rising interest rates", "High social media buzz", "A Fibonacci retracement"], "opts_zh": ["一根绿色K线", "强劲的经济和上升的利率", "社交媒体上的高热度", "斐波那契回撤"], "ans": 1, "why": "Real-world forces such as a strong economy and rising rates change the supply and demand of a currency - fundamental analysis.", "why_zh": "强劲经济与加息等现实力量会改变货币的供需——这就是基本面分析。"}, {"q": "Sentiment analysis is mainly about: 情绪分析主要关注什么？", "opts": ["Exact price levels", "Company earnings", "How traders feel and where the crowd is positioned", "Chart patterns"], "opts_zh": ["精确的价格水平", "公司盈利", "交易者的感受以及大众的持仓方向", "图表形态"], "ans": 2, "why": "Sentiment reads fear and greed - when almost everyone is on one side, the market can be primed to turn.", "why_zh": "情绪分析解读恐惧与贪婪——当几乎所有人都站在同一侧时，市场往往已酝酿反转。"}, {"q": "Which tool belongs to sentiment analysis? 哪个工具属于情绪分析？", "opts": ["Moving averages", "GDP reports", "Support and resistance", "Fear and Greed index"], "opts_zh": ["移动平均线", "GDP报告", "支撑与阻力", "恐惧与贪婪指数"], "ans": 3, "why": "The Fear and Greed index, positioning data and social buzz are sentiment tools.", "why_zh": "恐惧与贪婪指数、持仓数据以及社交媒体热度都属于情绪分析工具。"}, {"q": "A common way to combine the three types is: 三种分析常用的组合方式是？", "opts": ["Use them one at a time in separate trades", "Use only fundamentals", "Technicals for entry, fundamentals for direction, sentiment for timing", "Only technical analysis"], "opts_zh": ["在不同交易中一次只使用一种", "只使用基本面分析", "技术面找入场点，基本面定方向，情绪面择时机", "只使用技术分析"], "ans": 2, "why": "Many traders lead with one and confirm with the others: technicals for the entry, fundamentals for the direction, sentiment for the timing of turns.", "why_zh": "许多交易者以一种分析为主导、用其他分析来确认：技术面找入场点，基本面定方向，情绪面择反转时机。"}];
 function renderExam(){
   var box = document.getElementById("examBox"); if(!box) return;
   EXAM_QUESTIONS.forEach(function(item, qi){
@@ -827,11 +827,13 @@ function renderExam(){
     head.style.cssText = "font-family:monospace;font-size:11px;color:var(--gold);letter-spacing:.15em;margin-bottom:8px;";
     head.textContent = "QUESTION " + (qi+1) + " / " + EXAM_QUESTIONS.length;
     card.appendChild(head);
+    var zhMode = document.body.classList.contains('lang-zh');
     var q = document.createElement("div");
     q.style.cssText = "font-weight:600;font-size:15px;color:var(--text);margin-bottom:14px;";
     q.textContent = item.q;
     card.appendChild(q);
-    item.opts.forEach(function(opt, oi){
+    var optsArr = (zhMode && item.opts_zh) ? item.opts_zh : item.opts;
+    optsArr.forEach(function(opt, oi){
       var label = document.createElement("label");
       label.style.cssText = "display:flex;align-items:center;gap:10px;padding:10px 14px;margin:6px 0;border:1px solid var(--line-soft);border-radius:8px;cursor:pointer;font-size:14px;color:var(--text);transition:.2s;";
       var radio = document.createElement("input");
@@ -898,6 +900,8 @@ function setLang(l){
   var off = "background:none;border:1px solid var(--line);color:var(--muted);border-radius:20px;padding:5px 14px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;cursor:pointer;";
   if(en) en.style.cssText = l==='en' ? on : off;
   if(zh) zh.style.cssText = l==='zh' ? on : off;
+  var box = document.getElementById('examBox');
+  if(box && typeof renderExam === 'function'){ box.innerHTML=''; renderExam(); }
 }
 (function(){
   var saved='en'; try{ saved=localStorage.getItem('mtj_lang')||'en'; }catch(e){}

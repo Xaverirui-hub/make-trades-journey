@@ -1,0 +1,47 @@
+{
+ "What does the body of a candlestick show? 蜡烛实体表示什么？": [
+  "蜡烛实体表示什么？",
+  [
+   "开盘到收盘的区间",
+   "当日的最高价和最低价",
+   "总成交量",
+   "仅收盘价"
+  ]
+ ],
+ "A doji has almost no body. What does it signal? 几乎无实体的十字星代表什么？": [
+  "几乎无实体的十字星代表什么？",
+  [
+   "强烈的买盘压力",
+   "多空双方力量均衡、犹豫不决",
+   "必定反转",
+   "巨大成交量"
+  ]
+ ],
+ "Which pattern is a bullish reversal signal after a downtrend? 下跌末端哪个是看涨反转信号？": [
+  "下跌末端哪个是看涨反转信号？",
+  [
+   "吊颈线",
+   "射击之星",
+   "三只乌鸦",
+   "锤子线"
+  ]
+ ],
+ "In a bullish engulfing pattern, which candle swallows which? 看涨吞没中谁吞谁？": [
+  "看涨吞没中谁吞谁？",
+  [
+   "一根小的阳线吞没一根大的阴线",
+   "一根大的阴线吞没一根小的阳线",
+   "一根大的阳线完全吞没前一根小的阴线",
+   "两根大小相同的K线相互重叠"
+  ]
+ ],
+ "A marubozu candle has no shadows at all. What does that tell you? 无影线的光头光脚线说明什么？": [
+  "无影线的光头光脚线说明什么？",
+  [
+   "多空双方犹豫不决",
+   "强劲的单边动能",
+   "必定反转",
+   "极低的成交量"
+  ]
+ ]
+}

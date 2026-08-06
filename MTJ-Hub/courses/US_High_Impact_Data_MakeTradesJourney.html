@@ -910,7 +910,7 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
 <script>
 /* ===== MTJ EXAM MODULE - Module 09 ===== */
 const MTJ_EXAM_KEY = "mtj_exam_pass_9";
-const EXAM_QUESTIONS = [{"q": "What actually creates the price spike when a major US release comes out?", "opts": ["The previous month's value", "The forecast number", "The surprise: how far the actual lands from the forecast", "The headline number alone"], "ans": 2, "why": "The forecast is already priced in. Only the gap between actual and forecast — the surprise — creates the spike.", "why_zh": "市场已提前消化预期值。只有实际值与预期值之间的差距——即意外值——才会制造价格飙升。"}, {"q": "Which measure does the Fed officially target at 2%?", "opts": ["Core PCE year-over-year", "Headline CPI", "PPI", "Retail sales"], "ans": 0, "why": "The Fed's policy target is 2% Core PCE YoY — Core PCE is the Fed's preferred inflation gauge.", "why_zh": "美联储的政策目标是核心 PCE 年率 2%——核心 PCE 是美联储最看重的通胀指标。"}, {"q": "When is the NFP (Non-Farm Payrolls) report released each month?", "opts": ["Every 6 weeks", "First Friday of each month, 08:30 ET", "Mid-month", "The last trading day"], "ans": 1, "why": "NFP comes out on the first Friday of every month at 08:30 ET — jobs, unemployment and wages together.", "why_zh": "非农数据在每月第一个周五美东时间 08:30 发布——就业、失业率和薪资数据同时公布。"}, {"q": "CPI comes in hotter than expected. What is the typical market reaction?", "opts": ["USD down, gold up", "No reaction at all", "USD up, gold down (hawkish)", "Yields fall sharply"], "ans": 2, "why": "Hotter-than-expected inflation is hawkish — it pushes the Fed toward hikes, lifting USD and yields while weighing on gold.", "why_zh": "通胀高于预期属于鹰派信号——会推动美联储加息，提振美元和收益率，同时打压黄金。"}, {"q": "Inflation is falling toward 2% and the job market is weakening. The Fed is most likely to…", "opts": ["Hike rates", "Cut rates — USD down, gold up (dovish)", "Hold forever", "Raise the 2% target"], "ans": 1, "why": "Cooling inflation and weak jobs open the door to cuts (dovish), which usually pushes USD down and gold up.", "why_zh": "通胀降温加上就业疲软为降息打开大门（鸽派），通常会使美元走低、黄金走高。"}];
+const EXAM_QUESTIONS = [{"q": "What actually creates the price spike when a major US release comes out?", "opts": ["The previous month's value", "The forecast number", "The surprise: how far the actual lands from the forecast", "The headline number alone"], "opts_zh": ["前一个月的数值", "预测值", "意外程度：实际值与预测值之间的差距", "仅看标题数字本身"], "ans": 2, "why": "The forecast is already priced in. Only the gap between actual and forecast — the surprise — creates the spike.", "why_zh": "市场已提前消化预期值。只有实际值与预期值之间的差距——即意外值——才会制造价格飙升。"}, {"q": "Which measure does the Fed officially target at 2%?", "opts": ["Core PCE year-over-year", "Headline CPI", "PPI", "Retail sales"], "opts_zh": ["核心 PCE 同比", "整体 CPI", "PPI（生产者物价指数）", "零售销售"], "ans": 0, "why": "The Fed's policy target is 2% Core PCE YoY — Core PCE is the Fed's preferred inflation gauge.", "why_zh": "美联储的政策目标是核心 PCE 年率 2%——核心 PCE 是美联储最看重的通胀指标。"}, {"q": "When is the NFP (Non-Farm Payrolls) report released each month?", "opts": ["Every 6 weeks", "First Friday of each month, 08:30 ET", "Mid-month", "The last trading day"], "opts_zh": ["每 6 周一次", "每月第一个周五，美东时间 08:30", "月中", "最后一个交易日"], "ans": 1, "why": "NFP comes out on the first Friday of every month at 08:30 ET — jobs, unemployment and wages together.", "why_zh": "非农数据在每月第一个周五美东时间 08:30 发布——就业、失业率和薪资数据同时公布。"}, {"q": "CPI comes in hotter than expected. What is the typical market reaction?", "opts": ["USD down, gold up", "No reaction at all", "USD up, gold down (hawkish)", "Yields fall sharply"], "opts_zh": ["美元下跌，黄金上涨", "完全没有反应", "美元上涨，黄金下跌（鹰派）", "收益率大幅下跌"], "ans": 2, "why": "Hotter-than-expected inflation is hawkish — it pushes the Fed toward hikes, lifting USD and yields while weighing on gold.", "why_zh": "通胀高于预期属于鹰派信号——会推动美联储加息，提振美元和收益率，同时打压黄金。"}, {"q": "Inflation is falling toward 2% and the job market is weakening. The Fed is most likely to…", "opts": ["Hike rates", "Cut rates — USD down, gold up (dovish)", "Hold forever", "Raise the 2% target"], "opts_zh": ["加息", "降息——美元下跌，黄金上涨（鸽派）", "永远按兵不动", "上调 2% 的目标"], "ans": 1, "why": "Cooling inflation and weak jobs open the door to cuts (dovish), which usually pushes USD down and gold up.", "why_zh": "通胀降温加上就业疲软为降息打开大门（鸽派），通常会使美元走低、黄金走高。"}];
 function renderExam(){
   var box = document.getElementById("examBox"); if(!box) return;
   EXAM_QUESTIONS.forEach(function(item, qi){
@@ -920,11 +920,13 @@ function renderExam(){
     head.style.cssText = "font-family:monospace;font-size:11px;color:var(--gold);letter-spacing:.15em;margin-bottom:8px;";
     head.textContent = "QUESTION " + (qi+1) + " / " + EXAM_QUESTIONS.length;
     card.appendChild(head);
+    var zhMode = document.body.classList.contains('lang-zh');
     var q = document.createElement("div");
     q.style.cssText = "font-weight:600;font-size:15px;color:var(--text);margin-bottom:14px;";
     q.textContent = item.q;
     card.appendChild(q);
-    item.opts.forEach(function(opt, oi){
+    var optsArr = (zhMode && item.opts_zh) ? item.opts_zh : item.opts;
+    optsArr.forEach(function(opt, oi){
       var label = document.createElement("label");
       label.style.cssText = "display:flex;align-items:center;gap:10px;padding:10px 14px;margin:6px 0;border:1px solid var(--line-soft);border-radius:8px;cursor:pointer;font-size:14px;color:var(--text);transition:.2s;";
       var radio = document.createElement("input");
@@ -991,6 +993,8 @@ function setLang(l){
   var off = "background:none;border:1px solid var(--line);color:var(--muted);border-radius:20px;padding:5px 14px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;cursor:pointer;";
   if(en) en.style.cssText = l==='en' ? on : off;
   if(zh) zh.style.cssText = l==='zh' ? on : off;
+  var box = document.getElementById('examBox');
+  if(box && typeof renderExam === 'function'){ box.innerHTML=''; renderExam(); }
 }
 (function(){
   var saved='en'; try{ saved=localStorage.getItem('mtj_lang')||'en'; }catch(e){}

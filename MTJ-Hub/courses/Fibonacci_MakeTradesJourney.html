@@ -755,7 +755,7 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
 <script>
 /* ===== MTJ EXAM MODULE - Module 07 ===== */
 const MTJ_EXAM_KEY = "mtj_exam_pass_7";
-const EXAM_QUESTIONS = [{"q": "In the Fibonacci sequence, each number divided by the next is approximately: 斐波那契数列中，每个数除以后一个数约等于？", "opts": ["0.382", "0.5", "0.618", "0.786"], "ans": 2, "why": "In 1,1,2,3,5,8,13... each number divided by the next is about 0.618 - the Golden Ratio.", "why_zh": "在 1,1,2,3,5,8,13… 数列中，每个数除以后一个数都约等于 0.618——即黄金比例。"}, {"q": "Which retracement level do traders watch the most? 交易者最关注哪个回撤位？", "opts": ["23.6%", "61.8%", "78.6%", "100%"], "ans": 1, "why": "61.8% (together with 50%) is the most watched of the standard levels.", "why_zh": "61.8%（连同 50%）是标准回撤位中最受关注的。"}, {"q": "To draw a retracement in an uptrend, you drag the tool: 上涨趋势画回撤时，工具怎么拉？", "opts": ["From the swing high to the swing low", "From the current price to the 200 MA", "From the 61.8% level to the 0% level", "From the swing low to the swing high"], "ans": 3, "why": "In an uptrend, drag from the swing low to the swing high - 100% sits at the low and 0% at the high.", "why_zh": "上涨趋势中，从摆动低点拖到摆动高点——100% 在低点，0% 在高点。"}, {"q": "The golden pocket is the zone between: 黄金口袋是哪个区间？", "opts": ["0.236 and 0.382", "0.382 and 0.5", "1.272 and 1.618", "0.618 and about 0.65"], "ans": 3, "why": "The golden pocket is 0.618 to about 0.65 - where trend pullbacks most often reverse.", "why_zh": "黄金口袋是 0.618 到约 0.65 的区间——趋势回撤最常在此反转。"}, {"q": "Fibonacci extensions like 127.2% and 161.8% are mainly used for: 斐波那契扩展位主要用来？", "opts": ["Setting stop losses", "Taking profit targets", "Finding the entry point", "Measuring volume"], "ans": 1, "why": "Extensions project where price may go after bouncing from the pocket - common take-profit targets.", "why_zh": "扩展位投射价格从黄金口袋反弹后可能到达的位置——常用作止盈目标。"}];
+const EXAM_QUESTIONS = [{"q": "In the Fibonacci sequence, each number divided by the next is approximately: 斐波那契数列中，每个数除以后一个数约等于？", "opts": ["0.382", "0.5", "0.618", "0.786"], "opts_zh": ["0.382", "0.5", "0.618", "0.786"], "ans": 2, "why": "In 1,1,2,3,5,8,13... each number divided by the next is about 0.618 - the Golden Ratio.", "why_zh": "在 1,1,2,3,5,8,13… 数列中，每个数除以后一个数都约等于 0.618——即黄金比例。"}, {"q": "Which retracement level do traders watch the most? 交易者最关注哪个回撤位？", "opts": ["23.6%", "61.8%", "78.6%", "100%"], "opts_zh": ["23.6%", "61.8%", "78.6%", "100%"], "ans": 1, "why": "61.8% (together with 50%) is the most watched of the standard levels.", "why_zh": "61.8%（连同 50%）是标准回撤位中最受关注的。"}, {"q": "To draw a retracement in an uptrend, you drag the tool: 上涨趋势画回撤时，工具怎么拉？", "opts": ["From the swing high to the swing low", "From the current price to the 200 MA", "From the 61.8% level to the 0% level", "From the swing low to the swing high"], "opts_zh": ["从摆动高点拉到摆动低点", "从当前价格拉到200均线", "从61.8%位置拉到0%位置", "从摆动低点拉到摆动高点"], "ans": 3, "why": "In an uptrend, drag from the swing low to the swing high - 100% sits at the low and 0% at the high.", "why_zh": "上涨趋势中，从摆动低点拖到摆动高点——100% 在低点，0% 在高点。"}, {"q": "The golden pocket is the zone between: 黄金口袋是哪个区间？", "opts": ["0.236 and 0.382", "0.382 and 0.5", "1.272 and 1.618", "0.618 and about 0.65"], "opts_zh": ["0.236 和 0.382 之间", "0.382 和 0.5 之间", "1.272 和 1.618 之间", "0.618 到约 0.65 之间"], "ans": 3, "why": "The golden pocket is 0.618 to about 0.65 - where trend pullbacks most often reverse.", "why_zh": "黄金口袋是 0.618 到约 0.65 的区间——趋势回撤最常在此反转。"}, {"q": "Fibonacci extensions like 127.2% and 161.8% are mainly used for: 斐波那契扩展位主要用来？", "opts": ["Setting stop losses", "Taking profit targets", "Finding the entry point", "Measuring volume"], "opts_zh": ["设置止损", "设定止盈目标", "寻找入场点", "测量成交量"], "ans": 1, "why": "Extensions project where price may go after bouncing from the pocket - common take-profit targets.", "why_zh": "扩展位投射价格从黄金口袋反弹后可能到达的位置——常用作止盈目标。"}];
 function renderExam(){
   var box = document.getElementById("examBox"); if(!box) return;
   EXAM_QUESTIONS.forEach(function(item, qi){
@@ -765,11 +765,13 @@ function renderExam(){
     head.style.cssText = "font-family:monospace;font-size:11px;color:var(--gold);letter-spacing:.15em;margin-bottom:8px;";
     head.textContent = "QUESTION " + (qi+1) + " / " + EXAM_QUESTIONS.length;
     card.appendChild(head);
+    var zhMode = document.body.classList.contains('lang-zh');
     var q = document.createElement("div");
     q.style.cssText = "font-weight:600;font-size:15px;color:var(--text);margin-bottom:14px;";
     q.textContent = item.q;
     card.appendChild(q);
-    item.opts.forEach(function(opt, oi){
+    var optsArr = (zhMode && item.opts_zh) ? item.opts_zh : item.opts;
+    optsArr.forEach(function(opt, oi){
       var label = document.createElement("label");
       label.style.cssText = "display:flex;align-items:center;gap:10px;padding:10px 14px;margin:6px 0;border:1px solid var(--line-soft);border-radius:8px;cursor:pointer;font-size:14px;color:var(--text);transition:.2s;";
       var radio = document.createElement("input");
@@ -836,6 +838,8 @@ function setLang(l){
   var off = "background:none;border:1px solid var(--line);color:var(--muted);border-radius:20px;padding:5px 14px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;cursor:pointer;";
   if(en) en.style.cssText = l==='en' ? on : off;
   if(zh) zh.style.cssText = l==='zh' ? on : off;
+  var box = document.getElementById('examBox');
+  if(box && typeof renderExam === 'function'){ box.innerHTML=''; renderExam(); }
 }
 (function(){
   var saved='en'; try{ saved=localStorage.getItem('mtj_lang')||'en'; }catch(e){}

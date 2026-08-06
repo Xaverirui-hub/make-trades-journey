@@ -785,7 +785,7 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
 <script>
 /* ===== MTJ EXAM MODULE - Module 06 ===== */
 const MTJ_EXAM_KEY = "mtj_exam_pass_6";
-const EXAM_QUESTIONS = [{"q": "What is the main difference between an SMA and an EMA? SMA 与 EMA 的主要区别？", "opts": ["SMA weighs every candle equally; EMA gives more weight to recent prices and reacts faster", "EMA is always slower than SMA", "SMA uses only the highest price", "EMA ignores closing prices"], "ans": 0, "why": "SMA weights all candles equally, while EMA favors recent prices - so the EMA turns faster and hugs price more closely.", "why_zh": "SMA 对所有蜡烛一视同仁，EMA 则更看重近期价格——因此 EMA 转向更快、更贴近价格。"}, {"q": "A golden cross happens when: 金叉发生在？", "opts": ["The fast MA crosses above the slow MA", "The slow MA crosses above the fast MA", "Price touches the 200 MA", "The 50 MA goes flat"], "ans": 0, "why": "Golden Cross = fast MA crossing above the slow MA - a bullish momentum shift. The Death Cross is the reverse.", "why_zh": "金叉 = 快线上穿慢线——看涨动能转变。死叉则相反。"}, {"q": "In an uptrend, a rising moving average acts as: 上涨中上升的均线扮演什么角色？", "opts": ["Dynamic resistance", "Dynamic support", "A volume indicator", "A guaranteed sell signal"], "ans": 1, "why": "Price keeps dipping back to the rising MA and bouncing - each pullback is a potential long entry.", "why_zh": "价格不断回踩上升的均线并反弹——每一次回踩都是潜在的多头入场点。"}, {"q": "When a support level breaks and price returns to it, the old support usually becomes: 支撑跌破后回踩时，旧支撑通常变成？", "opts": ["Resistance (role reversal)", "Stronger support", "A double bottom", "A gap"], "ans": 0, "why": "Role reversal - once broken, support flips into resistance. The retest is the clean entry zone.", "why_zh": "角色互换——一旦跌破，支撑就变成阻力。回踩测试就是干净的入场区域。"}, {"q": "How should support and resistance levels be treated? 支撑阻力应如何对待？", "opts": ["As exact prices to the tick", "As zones, not lines", "As permanent levels", "As only valid on daily charts"], "ans": 1, "why": "Price rarely respects an exact price - treat levels as zones and read how price behaves inside them.", "why_zh": "价格很少精确到某个价位——把支撑阻力当作区域而非线条，观察价格在区域内的表现。"}];
+const EXAM_QUESTIONS = [{"q": "What is the main difference between an SMA and an EMA? SMA 与 EMA 的主要区别？", "opts": ["SMA weighs every candle equally; EMA gives more weight to recent prices and reacts faster", "EMA is always slower than SMA", "SMA uses only the highest price", "EMA ignores closing prices"], "opts_zh": ["SMA 对每根K线一视同仁；EMA 更侧重近期价格，反应更快", "EMA 总是比 SMA 慢", "SMA 只使用最高价", "EMA 忽略收盘价"], "ans": 0, "why": "SMA weights all candles equally, while EMA favors recent prices - so the EMA turns faster and hugs price more closely.", "why_zh": "SMA 对所有蜡烛一视同仁，EMA 则更看重近期价格——因此 EMA 转向更快、更贴近价格。"}, {"q": "A golden cross happens when: 金叉发生在？", "opts": ["The fast MA crosses above the slow MA", "The slow MA crosses above the fast MA", "Price touches the 200 MA", "The 50 MA goes flat"], "opts_zh": ["快线上穿慢线", "慢线上穿快线", "价格触及200均线", "50均线走平"], "ans": 0, "why": "Golden Cross = fast MA crossing above the slow MA - a bullish momentum shift. The Death Cross is the reverse.", "why_zh": "金叉 = 快线上穿慢线——看涨动能转变。死叉则相反。"}, {"q": "In an uptrend, a rising moving average acts as: 上涨中上升的均线扮演什么角色？", "opts": ["Dynamic resistance", "Dynamic support", "A volume indicator", "A guaranteed sell signal"], "opts_zh": ["动态阻力", "动态支撑", "成交量指标", "确定的卖出信号"], "ans": 1, "why": "Price keeps dipping back to the rising MA and bouncing - each pullback is a potential long entry.", "why_zh": "价格不断回踩上升的均线并反弹——每一次回踩都是潜在的多头入场点。"}, {"q": "When a support level breaks and price returns to it, the old support usually becomes: 支撑跌破后回踩时，旧支撑通常变成？", "opts": ["Resistance (role reversal)", "Stronger support", "A double bottom", "A gap"], "opts_zh": ["阻力（角色互换）", "更强的支撑", "双底", "跳空缺口"], "ans": 0, "why": "Role reversal - once broken, support flips into resistance. The retest is the clean entry zone.", "why_zh": "角色互换——一旦跌破，支撑就变成阻力。回踩测试就是干净的入场区域。"}, {"q": "How should support and resistance levels be treated? 支撑阻力应如何对待？", "opts": ["As exact prices to the tick", "As zones, not lines", "As permanent levels", "As only valid on daily charts"], "opts_zh": ["精确到每个点的价格", "视为区域而非线条", "视为永久有效的水平位", "只在日线图上有效"], "ans": 1, "why": "Price rarely respects an exact price - treat levels as zones and read how price behaves inside them.", "why_zh": "价格很少精确到某个价位——把支撑阻力当作区域而非线条，观察价格在区域内的表现。"}];
 function renderExam(){
   var box = document.getElementById("examBox"); if(!box) return;
   EXAM_QUESTIONS.forEach(function(item, qi){
@@ -795,11 +795,13 @@ function renderExam(){
     head.style.cssText = "font-family:monospace;font-size:11px;color:var(--gold);letter-spacing:.15em;margin-bottom:8px;";
     head.textContent = "QUESTION " + (qi+1) + " / " + EXAM_QUESTIONS.length;
     card.appendChild(head);
+    var zhMode = document.body.classList.contains('lang-zh');
     var q = document.createElement("div");
     q.style.cssText = "font-weight:600;font-size:15px;color:var(--text);margin-bottom:14px;";
     q.textContent = item.q;
     card.appendChild(q);
-    item.opts.forEach(function(opt, oi){
+    var optsArr = (zhMode && item.opts_zh) ? item.opts_zh : item.opts;
+    optsArr.forEach(function(opt, oi){
       var label = document.createElement("label");
       label.style.cssText = "display:flex;align-items:center;gap:10px;padding:10px 14px;margin:6px 0;border:1px solid var(--line-soft);border-radius:8px;cursor:pointer;font-size:14px;color:var(--text);transition:.2s;";
       var radio = document.createElement("input");
@@ -866,6 +868,8 @@ function setLang(l){
   var off = "background:none;border:1px solid var(--line);color:var(--muted);border-radius:20px;padding:5px 14px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;cursor:pointer;";
   if(en) en.style.cssText = l==='en' ? on : off;
   if(zh) zh.style.cssText = l==='zh' ? on : off;
+  var box = document.getElementById('examBox');
+  if(box && typeof renderExam === 'function'){ box.innerHTML=''; renderExam(); }
 }
 (function(){
   var saved='en'; try{ saved=localStorage.getItem('mtj_lang')||'en'; }catch(e){}

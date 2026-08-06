@@ -1,0 +1,7 @@
+{
+  "Without a journal, at month-end you know…": ["没有交易日志，到月底你只知道……", ["确切知道哪个策略赚钱", "每个策略的期望值", "只有余额——赚没赚钱，但不知道为什么", "你的规则遵守率"]],
+  "Which field is the most important column in a journal entry?": ["日志记录中最重要的字段是哪个？", ["策略名称", "是否遵守规则——遵守或违反（是/否）", "入场时间", "以美元计的盈亏"]],
+  "You kept every rule but the trade lost. Which quadrant is this, and what do you do?": ["你遵守了所有规则但交易亏损了。这属于哪个象限，你应该怎么做？", ["遵守规则 + 亏损——好的亏损；不做任何改变", "违反规则 + 亏损——活该；加倍下注", "遵守规则 + 盈利——永远重复", "违反规则 + 盈利——锁定这个结果"]],
+  "Which quadrant is called the most expensive box on the page?": ["哪个象限被称为页面上最昂贵的一格？", ["遵守规则 + 亏损", "遵守规则 + 盈利", "违反规则 + 盈利——市场奖励了违反规则的行为", "违反规则 + 亏损"]],
+  "Your true 50% win-rate system just lost 10 in a row. With under 30 trades, the right response is…": ["你真实胜率 50% 的系统刚刚连亏 10 笔。在交易不足 30 笔的情况下，正确的做法是……", ["立即修改核心规则", "只做记录——不做任何改变；否则就是在追逐噪音", "果断砍掉最差的策略", "加倍风险以更快回本"]]
+}
