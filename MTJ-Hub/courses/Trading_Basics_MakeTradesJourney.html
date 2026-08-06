@@ -355,11 +355,19 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
   mask-image:radial-gradient(closest-side at 50% 47%,#000 48%,transparent 100%);}
 @media(max-width:720px){.bg-logo{background-size:92vw auto;opacity:.055;}}
 @media(prefers-reduced-motion:reduce){.bg-logo{opacity:.05;}}
+
+body.lang-en .zh{display:none !important;}
+body.lang-zh .zh{display:block !important;}
 </style>
 </head>
 <body>
 <div id="progress"></div>
-<a href="../MakeTradesJourney.html" id="mtjBack" style="position:fixed;left:14px;bottom:14px;z-index:60;display:inline-flex;align-items:center;gap:9px;text-decoration:none;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#9A968C;background:rgba(6,6,8,.8);border:1px solid rgba(232,200,119,.22);border-radius:30px;padding:9px 16px;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:.25s" onmouseover="this.style.color='#FCE9A8';this.style.borderColor='#E8C877';this.style.boxShadow='0 0 22px rgba(232,200,119,.18)'" onmouseout="this.style.color='#9A968C';this.style.borderColor='rgba(232,200,119,.22)';this.style.boxShadow='none'"><span>&#8592;</span>Hub &middot; &#36820;&#22238;&#30446;&#24405;</a>
+<a href="../MakeTradesJourney.html" id="mtjBack"
+  <div style="display:flex;align-items:center;gap:6px;margin-left:14px;">
+    <button onclick="setLang('en')" id="langEn" style="background:none;border:1px solid var(--line);color:var(--muted);border-radius:20px;padding:5px 14px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;cursor:pointer;">EN</button>
+    <button onclick="setLang('zh')" id="langZh" style="background:none;border:1px solid var(--line);color:var(--muted);border-radius:20px;padding:5px 14px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;cursor:pointer;">中</button>
+  </div>
+ style="position:fixed;left:14px;bottom:14px;z-index:60;display:inline-flex;align-items:center;gap:9px;text-decoration:none;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#9A968C;background:rgba(6,6,8,.8);border:1px solid rgba(232,200,119,.22);border-radius:30px;padding:9px 16px;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:.25s" onmouseover="this.style.color='#FCE9A8';this.style.borderColor='#E8C877';this.style.boxShadow='0 0 22px rgba(232,200,119,.18)'" onmouseout="this.style.color='#9A968C';this.style.borderColor='rgba(232,200,119,.22)';this.style.boxShadow='none'"><span>&#8592;</span>Hub &middot; &#36820;&#22238;&#30446;&#24405;</a>
 <canvas id="particles"></canvas>
 <div class="bg-glow"></div>
 <div class="bg-grid"></div>
@@ -872,11 +880,11 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
 /* ===== MTJ EXAM MODULE - Module 1 Trading Basics ===== */
 const MTJ_EXAM_KEY = "mtj_exam_pass_1";
 const EXAM_QUESTIONS = [
-  {q:"What does a pip usually represent in most forex pairs?", opts:["0.01 of price","0.0001 of price","1% of price","0.10 of price"], ans:1, why:"A pip is the smallest standard price move - for most pairs it is the 4th decimal place (0.0001)."},
-  {q:"Which pair is considered a major currency pair?", opts:["EUR/USD","USD/MXN","EUR/TRY","GBP/NZD"], ans:0, why:"The eight majors are the most-traded pairs against the USD, and EUR/USD is the most liquid of them all."},
-  {q:"If EUR/USD moves from 1.10000 to 1.10020, the move is:", opts:["2 pips","20 pips","200 pips","2,000 points"], ans:1, why:"Each 0.0001 is one pip. 1.10000 to 1.10020 is 0.00020 = 20 pips (each 0.00001 is a fractional point)."},
-  {q:"In the quote EUR/USD = 1.1000, the base currency is:", opts:["USD","Neither","EUR","Both"], ans:2, why:"The first currency in a pair is the base (EUR); the second is the quote (USD). The pair tells you how much quote currency one base buys."},
-  {q:"What is price action?", opts:["A news indicator","Reading price movement on the chart","A type of order","Fundamental data"], ans:1, why:"Price action is reading the market movement itself - the story the candles and levels tell - without relying on lagging indicators."}
+  {q:"What does a pip usually represent in most forex pairs?", opts:["0.01 of price","0.0001 of price","1% of price","0.10 of price"], ans:1, why:"A pip is the smallest standard price move - for most pairs it is the 4th decimal place (0.0001).", "why_zh": "点差是最小的标准价格变动单位——多数货币对是第 4 位小数 (0.0001)。"},
+  {q:"Which pair is considered a major currency pair?", opts:["EUR/USD","USD/MXN","EUR/TRY","GBP/NZD"], ans:0, why:"The eight majors are the most-traded pairs against the USD, and EUR/USD is the most liquid of them all.", "why_zh": "八大货币对是与美元交易最活跃的货币对，其中 EUR/USD 流动性最高。"},
+  {q:"If EUR/USD moves from 1.10000 to 1.10020, the move is:", opts:["2 pips","20 pips","200 pips","2,000 points"], ans:1, why:"Each 0.0001 is one pip. 1.10000 to 1.10020 is 0.00020 = 20 pips (each 0.00001 is a fractional point).", "why_zh": "每个 0.0001 = 1 点。1.10000 到 1.10020 是 0.00020 = 20 点（每个 0.00001 是 0.1 点）。"},
+  {q:"In the quote EUR/USD = 1.1000, the base currency is:", opts:["USD","Neither","EUR","Both"], ans:2, why:"The first currency in a pair is the base (EUR); the second is the quote (USD). The pair tells you how much quote currency one base buys.", "why_zh": "货币对中第一个是基准货币（EUR），第二个是报价货币（USD）。这个报价告诉你 1 个基准货币值多少报价货币。"},
+  {q:"What is price action?", opts:["A news indicator","Reading price movement on the chart","A type of order","Fundamental data"], ans:1, why:"Price action is reading the market movement itself - the story the candles and levels tell - without relying on lagging indicators.", "why_zh": "价格行为是直接阅读市场本身的运动——蜡烛与关键位讲述的故事——不依赖滞后指标。"}
 ];
 function renderExam(){
   var box = document.getElementById("examBox"); if(!box) return;
@@ -917,11 +925,13 @@ function gradeExam(){
     if(sel){
       answered++;
       var user = parseInt(sel.value);
+      var zhMode = document.body.classList.contains('lang-zh');
+      var whyTxt = (zhMode && item.why_zh) ? item.why_zh : item.why;
       if(user === item.ans){
         correct++;
-        fb.innerHTML = "<span style='color:var(--bull);font-weight:600;'>✓ Correct 正确</span><br><span style='color:var(--muted);font-size:12.5px;'>" + item.why + "</span>";
+        fb.innerHTML = "<span style='color:var(--bull);font-weight:600;'>✓ Correct 正确</span><br><span style='color:var(--muted);font-size:12.5px;'>" + whyTxt + "</span>";
       } else {
-        fb.innerHTML = "<span style='color:var(--bear);font-weight:600;'>✗ Wrong 错误</span><br><span style='color:var(--muted);font-size:12.5px;'>你的答案: <b>" + item.opts[user] + "</b> · 正确答案: <b>" + item.opts[item.ans] + "</b><br>为什么错: " + item.why + "</span>";
+        fb.innerHTML = "<span style='color:var(--bear);font-weight:600;'>✗ Wrong 错误</span><br><span style='color:var(--muted);font-size:12.5px;'>你的答案: <b>" + item.opts[user] + "</b> · 正确答案: <b>" + item.opts[item.ans] + "</b><br>为什么错: " + whyTxt + "</span>";
       }
       fb.style.display = "block";
     } else {
@@ -945,5 +955,24 @@ function gradeExam(){
 }
 renderExam();
 </script>
+
+<script>
+/* ===== MTJ Language Toggle (course) ===== */
+function setLang(l){
+  document.body.classList.remove('lang-en','lang-zh');
+  document.body.classList.add('lang-'+l);
+  try{ localStorage.setItem('mtj_lang', l); }catch(e){}
+  var en=document.getElementById('langEn'), zh=document.getElementById('langZh');
+  var on = "background:var(--gold);color:#0a0e14;border-color:var(--gold);border-radius:20px;padding:5px 14px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;cursor:pointer;font-weight:700;";
+  var off = "background:none;border:1px solid var(--line);color:var(--muted);border-radius:20px;padding:5px 14px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;cursor:pointer;";
+  if(en) en.style.cssText = l==='en' ? on : off;
+  if(zh) zh.style.cssText = l==='zh' ? on : off;
+}
+(function(){
+  var saved='en'; try{ saved=localStorage.getItem('mtj_lang')||'en'; }catch(e){}
+  setLang(saved);
+})();
+</script>
+
 </body>
 </html>
