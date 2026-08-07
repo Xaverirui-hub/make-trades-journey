@@ -43,6 +43,30 @@
 
 ## P1 — 主頁結構（taste-skill audit）
 
+### 5.5 語言切換：中英互斥顯示 + 全域持久（2026-08-08 用戶要求）
+
+**現況問題**：
+- 中文模式下**英文原文和中文翻譯同時顯示**（CSS 只處理了 `lang-en .zh{display:none}`，沒有隱藏英文文本）→ 切到中文還是滿頁英文，切換不分明
+- `localStorage.mtj_lang` + 每頁載入 `setLang(saved)` 機制已存在，但需確認**全站 24 頁（20 課 + 3 工具 + 主頁）都有**這段恢復代碼，且互斥顯示要做到位
+
+**需求**：
+1. **中文模式 = 只顯示中文字**；英文模式 = 只顯示英文字。兩個模式互斥，不再混排
+2. **切一次語言，之後打開的所有頁面都是該語言**——不需要每進一個頁面就重切一次
+
+**實現方向（方案 Claude 定，以下是約束）**：
+- 現況結構：英文是元素文本（如 `<p>An education-first trading community...</p>`），中文是後綴 `<span class="zh">`。CSS 無法隱藏純文本節點，需方案之一：
+  - a) 英文文本包 `<span class="en">`，CSS：`body.lang-en .zh{display:none}` + `body.lang-zh .en{display:none}`（全站批量標記）
+  - b) JS 方案：setLang 時遍歷 DOM 隱藏/顯示（但 text node 不能 display:none，需包節點）
+  - c) 元素級標記：給含雙語的容器加 class，CSS 用子選擇器
+- **禁止改**：EXAM 考試邏輯、SVG 圖表、localStorage key（mtj_lang 沿用）、admin 解鎖
+- 全站 24 頁是模板複製，優先改模板源再批量同步（同 P0 批量策略）
+
+**驗收**：
+- [ ] `body.lang-zh` 下頁面可見文本 = 全中文（無英文殘留）
+- [ ] `body.lang-en` 下頁面可見文本 = 全英文（無中文殘留）
+- [ ] 切到中文 → 打開另一頁（課程/工具/主頁）→ 自動中文，無需重切
+- [ ] 刷新後語言保持
+
 ### 6. Scroll cue
 - **位置**：主頁 + 課程頁 hero 底部 `.scroll-hint`（「SCROLL」+ mouse icon）
 - **修法**：刪除整個 `.scroll-hint` 區塊（banned: users know what scroll is）
