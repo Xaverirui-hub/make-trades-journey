@@ -607,19 +607,19 @@ body.lang-zh.lang-strict .en{display:none !important;}
 
 
 
-@media(max-width:560px){.navbar{gap:2px;top:62px;padding:6px 4px;}}
+@media(max-width:560px){.navbar{gap:2px;top:0;padding:6px 4px;}}
 
-@media(max-width:560px){.navbar{gap:2px;top:62px;padding:6px 4px;}}
+@media(max-width:560px){.navbar{gap:2px;top:0;padding:6px 4px;}}
 
 /* ===== Global navbar (appended, original untouched) ===== */
-.navbar{position:fixed;top:62px;left:0;right:0;z-index:39;display:flex;align-items:center;justify-content:center;
+.navbar{position:fixed;top:0;left:0;right:0;z-index:39;display:flex;align-items:center;justify-content:center;
   gap:clamp(8px,2vw,20px);padding:8px 20px;background:linear-gradient(to bottom,rgba(6,6,8,.9),rgba(6,6,8,.45) 75%,transparent);
   backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
 .navbar a{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;
   color:var(--muted);text-decoration:none;padding:5px 14px;border-radius:18px;transition:.25s;white-space:nowrap;}
 .navbar a:hover{color:var(--gold-bright);background:rgba(232,200,119,.08);}
 .navbar a.active{color:var(--gold-bright);border:1px solid rgba(232,200,119,.35);background:rgba(232,200,119,.1);}
-@media(max-width:560px){.navbar{gap:2px;top:62px;padding:6px 4px;}.navbar a{font-size:9px;letter-spacing:.1em;padding:4px 7px;}}
+@media(max-width:560px){.navbar{gap:2px;top:0;padding:6px 4px;}.navbar a{font-size:9px;letter-spacing:.1em;padding:4px 7px;}}
 </style>
 <script src="gate_config.js"></script><!-- v2.6:可選,由 gate_config.json 生成 -->
 <script src="real_data.js"></script>
@@ -627,19 +627,41 @@ body.lang-zh.lang-strict .en{display:none !important;}
 </head>
 <body>
 <!-- ===== Global navbar ===== -->
-<nav class="navbar" id="globalNav">
+<nav class="navbar" id="globalNav" style="display:none;">
   <a href="../MakeTradesJourney.html#top" data-sec="home">Home <span class="zh">· 首页</span></a>
   <a href="../MakeTradesJourney.html#courses" data-sec="courses">Courses <span class="zh">· 课程</span></a>
   <a href="../MakeTradesJourney.html#tools" data-sec="tools" class="active">Tools <span class="zh">· 工具</span></a>
   <a href="../MakeTradesJourney.html#about" data-sec="about">About <span class="zh">· 关于</span></a>
 </nav>
 
-<div id="comingSoon"  style="position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(6,8,12,.97);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);font-family:'JetBrains Mono',ui-monospace,monospace;text-align:center;padding:40px;">
-  <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#E8B44A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:16px;"><rect x="4" y="10.5" width="16" height="10.5" rx="2"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/><circle cx="12" cy="15.7" r="1.1" fill="#E8B44A" stroke="none"/></svg>
-  <h1 style="color:#E8B44A;font-size:28px;letter-spacing:.12em;margin-bottom:10px;">MEMBERS ONLY</h1>
-  <p style="color:#9A9384;max-width:420px;line-height:1.8;">策略拼陣台是 Make Trades Journey 的會員工具，訂閱後開放使用。<br>The Strategy Composer is a members tool. Access opens with a Make Trades Journey subscription.</p>
-  <a href="../MakeTradesJourney.html" style="margin-top:22px;display:inline-block;background:#E8B44A;color:#0a0e14;border-radius:30px;padding:11px 30px;text-decoration:none;font-weight:700;">← Back to Hub · 返回目录</a>
-</div>
+<div id="comingSoon" style="position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(1000px 600px at 50% 0%,rgba(232,180,74,.08),transparent 60%),rgba(6,8,12,.97);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);font-family:'JetBrains Mono',ui-monospace,monospace;text-align:center;padding:32px 20px;overflow-y:auto;">
+  <div style="display:inline-flex;align-items:center;gap:8px;font-size:10px;letter-spacing:.3em;color:#E8B44A;border:1px solid rgba(232,180,74,.35);border-radius:30px;padding:7px 18px;margin-bottom:18px;">MEMBERS ONLY · 會員專屬</div>
+  <div style="font-size:11px;letter-spacing:.22em;color:#6f6c64;margin-bottom:6px;">XR-DRIVE // STRATEGY LAB</div>
+  <h1 style="color:#FCE9A8;font-size:clamp(26px,4vw,40px);letter-spacing:.06em;margin:0 0 8px;font-weight:800;">XRs Strategy Composer</h1>
+  <div style="color:#9A9384;font-size:13px;letter-spacing:.05em;margin-bottom:26px;max-width:540px;line-height:1.7;">拖積木拼出你的交易策略 — 自動回測評分，<b style="color:#E8B44A;">一鍵匯出 MQL5 EA</b>。<br><span style="color:#6f6c64;font-size:11px;">Build strategies visually, backtest with rigor, export as a working EA.</span></div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;max-width:760px;width:100%;margin-bottom:28px;">
+    <div style="background:linear-gradient(180deg,rgba(232,180,74,.07),rgba(16,12,8,.6));border:1px solid rgba(232,180,74,.25);border-radius:12px;padding:18px 16px;text-align:left;clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px);">
+      <div style="margin-bottom:10px;"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#E8B44A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-3 3A5 5 0 0 0 10 13Z"/><path d="M9.5 14.5 4 20"/><path d="M14 4 20 10"/><path d="m14 4-1.5 1.5"/><path d="m10 10-1.5 1.5"/><path d="m20 10-1.5-1.5"/></svg></div>
+      <div style="color:#E8B44A;font-size:11px;letter-spacing:.16em;margin-bottom:6px;">VISUAL BUILD · 視覺化拼裝</div>
+      <div style="color:#9A9384;font-size:11px;line-height:1.6;">70 塊策略積木 — 進場、過濾、出場、風控，拖曳組合你的交易邏輯。</div>
+    </div>
+    <div style="background:linear-gradient(180deg,rgba(232,180,74,.07),rgba(16,12,8,.6));border:1px solid rgba(232,180,74,.25);border-radius:12px;padding:18px 16px;text-align:left;clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px);">
+      <div style="margin-bottom:10px;"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#E8B44A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="20" x2="20" y2="20"/><rect x="5" y="13" width="3" height="7" rx="0.5"/><rect x="10.5" y="8" width="3" height="12" rx="0.5"/><rect x="16" y="4" width="3" height="16" rx="0.5"/></svg></div>
+      <div style="color:#E8B44A;font-size:11px;letter-spacing:.16em;margin-bottom:6px;">BACKTEST SCORE · 回測評分</div>
+      <div style="color:#9A9384;font-size:11px;line-height:1.6;">IS / OOS / Val 三段驗證，客觀分數把關 — 好策略不是感覺，是數據。</div>
+    </div>
+    <div style="background:linear-gradient(180deg,rgba(232,180,74,.07),rgba(16,12,8,.6));border:1px solid rgba(232,180,74,.35);border-radius:12px;padding:18px 16px;text-align:left;clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px);">
+      <div style="margin-bottom:10px;"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#E8B44A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg></div>
+      <div style="color:#E8B44A;font-size:11px;letter-spacing:.16em;margin-bottom:6px;">EA EXPORT · 生成 EA</div>
+      <div style="color:#9A9384;font-size:11px;line-height:1.6;">把策略直接匯出成 <b style="color:#E8B44A;">MQL5 EA 源碼</b> — 從拼陣到實盤，一鍵完成。</div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:14px;flex-wrap:wrap;justify-content:center;align-items:center;">
+    <span style="color:#6f6c64;font-size:11px;letter-spacing:.1em;">訂閱後開放使用 · Access with membership</span>
+    <a href="../MakeTradesJourney.html" style="display:inline-block;background:#E8B44A;color:#0a0e14;border-radius:30px;padding:11px 30px;text-decoration:none;font-weight:700;font-size:12px;letter-spacing:.08em;">&larr; Back to Hub · 返回目录</a>
+  </div>
 <div id="xrParticles"></div>
 <div id="odTag">⚡ OVERDRIVE — 毀滅性風險</div>
 <div class="brandbar">
@@ -3815,6 +3837,8 @@ syncCost(); render(); reload();
   if(params.get("admin") === key){
     var cs = document.getElementById("comingSoon");
     if(cs) cs.style.display = "none";
+    var nav2 = document.getElementById("globalNav");
+    if(nav2) nav2.style.display = "flex";
     var badge = document.createElement("div");
     badge.style.cssText = "position:fixed;top:8px;right:14px;z-index:200;background:rgba(232,180,74,.15);border:1px solid rgba(232,180,74,.4);color:#E8B44A;border-radius:20px;padding:4px 14px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.15em;";
     badge.textContent = "ADMIN VIEW · 管理員視圖";
