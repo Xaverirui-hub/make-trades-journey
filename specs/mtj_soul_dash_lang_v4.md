@@ -161,3 +161,33 @@ document.body.innerText.match(/[\u4e00-\u9fff]/g)  // null（除白名單）
 - 全站 24 檔是模板複製：**先改模板源再批量同步**，或提供批量腳本
 - 每檔改完 `node --check`（抽 JS）+ 瀏覽器實測
 - 一個 commit 一個 Part（A/B/C 分開 commit，方便 review 對照）
+
+---
+
+## Appendix — Gold Daily Digest（評估項，非必做）
+
+**背景**：Hermes 每日 21:00 生成「黃金日報」（XAUUSD 新聞驅動因子摘要），目前只供內部 EA 用。是否以 LITE 形式加入 MTJ 網站，**請 Claude 評估必要性**（用戶會再問），不一定要做。
+
+**候選格式（LITE，無交易信號）**：
+
+```markdown
+📊  GOLD DAILY DIGEST — {Weekday} Mon DD, YYYY
+
+**XAUUSD:** ${price} ({change}% today)
+
+🔻 **BEARISH DRIVERS** ({N} events)
+▸ {Event} — {Brief 1-line with source}. {Data}.
+
+🟢 **BULLISH DRIVERS** ({N} events)
+▸ {Event} — {Brief 1-line with source}. {Data}.
+```
+
+**候選整合方式**（如 Claude 認為值得做）：
+- 每日一檔 HTML（教育風，同 fomc_reports 排版）→ `tools/gold_digest_reports/` → 主頁工具區加卡
+- 或僅做樣板 + 說明日報，不自動化
+- **約束**：只放 LITE 內容（無 Raiser scores / 無交易分析 / 無倉位建議）；網站 PUBLIC；需標日期（靜態頁 = 昨日摘要）；emoji 用 taste-skill 政策評估（`🔻🟢` 可接受為狀態符號，但與全站風格統一）
+
+**Claude 評估要點**：
+1. 每日更新 vs 教育網站定位是否相符
+2. 會員制下適合哪一層（公開/會員）
+3. 維護成本（每日 push）vs 價值
