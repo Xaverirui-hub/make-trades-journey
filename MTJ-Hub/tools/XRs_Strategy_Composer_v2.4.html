@@ -2473,10 +2473,6 @@ const TREND_BLOCKS={
 };
 Object.assign(BLOCKS, TREND_BLOCKS);   // v2.3
 
-const EA_GATE=(window.GATE_CONFIG&&window.GATE_CONFIG.tier_a)?
-  {score:window.GATE_CONFIG.tier_a.score, oosPF:window.GATE_CONFIG.tier_a.oos_pf,
-   oosTrades:window.GATE_CONFIG.tier_a.oos_trades}
-  : {score:60, oosPF:1.15, oosTrades:30};   // v2.6:優先讀 gate_config.js(唯一真相來源),否則用預設
 
 function genMQL5(G){
   const sp=G.spec, todos=[];
