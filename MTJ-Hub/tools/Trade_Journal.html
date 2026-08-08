@@ -954,6 +954,27 @@ load(); renderTrades(); renderCl();
   else boot();
 })();
 
+
+/* ===== Reveal on scroll (fix: mobile blank page) ===== */
+(function(){
+  var els = document.querySelectorAll('.reveal');
+  if(!els.length) return;
+  if(!('IntersectionObserver' in window)){
+    els.forEach(function(el){ el.classList.add('in'); });
+    return;
+  }
+  var vh = window.innerHeight || document.documentElement.clientHeight;
+  els.forEach(function(el){
+    var r = el.getBoundingClientRect();
+    if(r.top < vh + 600 && r.bottom > -600){ el.classList.add('in'); }
+  });
+  var io = new IntersectionObserver(function(ents){
+    ents.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  },{threshold:.05, rootMargin:'0px 0px 40% 0px'});
+  els.forEach(function(el){ if(!el.classList.contains('in')) io.observe(el); });
+})();
 </script>
 </body>
 </html>

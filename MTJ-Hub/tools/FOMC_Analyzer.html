@@ -610,6 +610,29 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
   else boot();
 })();
 
+/* ===== Reveal on scroll (fix: mobile blank page) ===== */
+(function(){
+  var els = document.querySelectorAll('.reveal');
+  if(!els.length) return;
+  if(!('IntersectionObserver' in window)){
+    els.forEach(function(el){ el.classList.add('in'); });
+    return;
+  }
+  /* 首屏立即顯示：視口內或視口上方 600px 內的元素直接顯示 */
+  var vh = window.innerHeight || document.documentElement.clientHeight;
+  els.forEach(function(el){
+    var r = el.getBoundingClientRect();
+    if(r.top < vh + 600 && r.bottom > -600){ el.classList.add('in'); }
+  });
+  /* 其餘交給 scroll 觀察 */
+  var io = new IntersectionObserver(function(ents){
+    ents.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  },{threshold:.05, rootMargin:'0px 0px 40% 0px'});
+  els.forEach(function(el){ if(!el.classList.contains('in')) io.observe(el); });
+})();
+
 </script>
 </body>
 </html>
