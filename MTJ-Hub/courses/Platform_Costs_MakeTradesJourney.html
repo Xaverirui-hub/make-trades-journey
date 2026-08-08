@@ -1156,27 +1156,27 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
 /* ===== MTJ EXAM MODULE - Module 21 ===== */
 const MTJ_EXAM_KEY = "mtj_exam_pass_21";
 const EXAM_QUESTIONS = [
- {"q":"LIMIT and STOP pending orders differ how? LIMIT 与 STOP 挂单的差别是？",
+ {"q": "LIMIT and STOP pending orders differ how?"IT?", "q_zh": "LIMIT 与 STOP 挂单的差别是？",
   "opts":["LIMIT is for buying, STOP is for selling","LIMIT waits for a better price; STOP waits for a breakout","STOP orders execute instantly","There is no difference"],
   "ans":1,
   "why":"LIMIT = wait for a better price (a pullback). STOP = wait for price to break through a level.",
   "why_zh":"LIMIT = 等更好的价格（回撤进场）；STOP = 等价格突破某个价位才进场。"},
- {"q":"A Buy Stop order is placed where? Buy Stop 挂在哪里？",
+ {"q": "A Buy Stop order is placed where?", "q_zh": "Buy Stop 挂在哪里？",
   "opts":["Below the current price","Above the current price","At the current price","At the stop loss level"],
   "ans":1,
   "why":"A Buy Stop sits ABOVE the current price - you only want to be long once price breaks resistance.",
   "why_zh":"Buy Stop 放在现价上方 —— 你只想在价格突破阻力、证明自己之后才做多。"},
- {"q":"When should the Stop Loss be filled in? 止损应该什么时候填？",
+ {"q": "When should the Stop Loss be filled in?", "q_zh": "止损应该什么时候填？",
   "opts":["After the trade moves against you","Before sending the order","Only if the trade is large","It is optional on MT5"],
   "ans":1,
   "why":"Fill it BEFORE sending. MT5 will happily send an order with the stop blank - that is how planned trades become unplanned ones.",
   "why_zh":"在送出订单之前就要填好。MT5 允许你不填止损直接送出 —— 计画好的交易就是这样变成没计画的。"},
- {"q":"Which cost do you pay on every single trade, guaranteed? 哪一项成本每笔交易都一定付？",
+ {"q": "Which cost do you pay on every single trade, guaranteed?", "q_zh": "哪一项成本每笔交易都一定付？",
   "opts":["Swap","Slippage","Spread","Overnight financing"],
   "ans":2,
   "why":"You buy at Ask and sell at Bid, so the spread is paid on entry every time. Swap only applies if you hold overnight; slippage varies.",
   "why_zh":"你用 Ask 买、用 Bid 卖，所以点差每一笔进场就付掉了。隔夜费只有持仓过夜才收，滑点则时有时无。"},
- {"q":"The same fixed cost hurts which style most? 同样的固定成本，对哪种风格伤害最大？",
+ {"q": "The same fixed cost hurts which style most?", "q_zh": "同样的固定成本，对哪种风格伤害最大？",
   "opts":["Wide-stop swing trading","Tight-stop scalping","It affects both equally","Neither - costs are negligible"],
   "ans":1,
   "why":"Cost is a share of your 1R. A round-trip cost worth one dollar of price eats the whole of a one-dollar stop, but only five percent of a twenty-dollar stop. The tighter you trade, the more of your edge goes to costs.",
@@ -1193,7 +1193,7 @@ function renderExam(){
     card.appendChild(head);
     var q = document.createElement("div");
     q.style.cssText = "font-weight:600;font-size:15px;color:var(--text);margin-bottom:14px;";
-    q.textContent = item.q;
+    q.textContent = (zhMode && item.q_zh) ? item.q_zh : item.q;
     card.appendChild(q);
     item.opts.forEach(function(opt, oi){
       var label = document.createElement("label");
