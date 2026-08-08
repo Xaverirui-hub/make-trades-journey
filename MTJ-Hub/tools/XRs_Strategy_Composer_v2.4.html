@@ -2480,8 +2480,9 @@ const EA_GATE=(window.GATE_CONFIG&&window.GATE_CONFIG.tier_a)?
 
 function genMQL5(G){
   const sp=G.spec, todos=[];
-  if(sp.size.some(b=>b.type==="marti"||b.type==="antim"))
-    return {refused:"倉位是馬丁/反馬丁 — 生成的 EA 不做序列加倉(破產風險),請改固定手數再匯出。"};
+  const seqBlock=sp.size.find(b=>b.type==='marti'||b.type==='antim');   // v2.7:馬丁/反馬丁允許匯出(破產風險如實保留)
+  const hasSeq=!!seqBlock, hasMarti=sp.size.some(b=>b.type==='marti'), hasAntim=sp.size.some(b=>b.type==='antim');
+  if(seqBlock) todos.push('馬丁/反馬丁已生成 — 破產風險如實保留在 readme');
   const emode=(sp.emode[0]||{type:"e_mkt"}).type;
   if(emode!=="e_mkt") todos.push(`進場方式 ${emode} 未實作,骨架退回市價進場`);
 
@@ -2538,18 +2539,18 @@ function genMQL5(G){
 //| ${"$"}{NAME} — Composer v2.5 生成骨架                                 |
 //| 生成時間: ${new Date().toISOString()}                               |
 //| 來源: XRs Strategy Composer v2.6(score ${G.score} / OOS PF ${G.r.OOS.pf.toFixed(2)})|
-//| 鐵律: 單倉·無序列加倉·未實作進場=false·編譯+Tester+Demo 後才可 live |
+//| 鐵律: 未實作進場=false·編譯+Tester+Demo 後才可 live |
 //+------------------------------------------------------------------+
 #property strict
-#include "DaikenjaLog.mqh"
 
 input group "=== Trade Settings ==="
 input ulong  Magic              = 903001;
 input double FixedLotSize       = 0.01;
+${hasSeq?`input double SizingMult       = ${seqBlock.params.mult};      // 馬丁/反馬丁倍率
+input int    SizingSteps       = ${seqBlock.params.steps};    // 最大加倉步數`:''}
 input int    SlippagePoints     = 20;
 input int    MaxSpreadPoints    = 60;      // 實測點差 48,>60 不進場
 input int    TradeDirection     = ${sp.dir==="long"?1:sp.dir==="short"?2:0};  // 0=both 1=long 2=short
-input bool   EnableDaikenjaLog  = true;
 
 input group "=== Strategy Params(由 Composer 積木映射)==="
 ${inputs}
@@ -2559,17 +2560,17 @@ ${mode==="day"?`input int    EODCloseHourSrv    = 23;      // 日內模式:伺�
 ${tsB?`input int    TimeStopBars       = ${tsB.params.n};`:""}
 ${tslB?`input double TrailATRmult       = ${tslB.params.m};   // Chandelier`:""}
 
-int g_db=INVALID_HANDLE;
 datetime g_lastBar=0;
 int g_entryBarCount=0;
 double g_extreme=0;
+${hasSeq?`int g_loseStreak=0, g_winStreak=0;               // 馬丁/反馬丁序列計數
+struct PosRec{ ulong ticket; double profit; };
+PosRec g_known[];                                          // 追蹤被 broker SL/TP 平掉的倉位`:''}
 
 int OnInit(){
-  if(EnableDaikenjaLog){ g_db=DaikenjaOpenDb("raiser_twin.db"); EventSetTimer(300); }
   return(INIT_SUCCEEDED);
 }
-void OnDeinit(const int r){ if(g_db!=INVALID_HANDLE) DatabaseClose(g_db); EventKillTimer(); }
-void OnTimer(){ if(EnableDaikenjaLog) DaikenjaLogEquity(g_db); }
+void OnDeinit(const int r){}
 
 bool IsNewBar(){ datetime t=iTime(_Symbol,PERIOD_CURRENT,0);
   if(t==g_lastBar) return false; g_lastBar=t; return true; }
@@ -2619,6 +2620,19 @@ bool EntryLong(){ return (${mkSide("long")||"false"})
 bool EntryShort(){ return (${mkSide("short")||"false"})
   && (${filtSide("short")}); }
 
+${hasSeq?`
+//--- 序列手數(馬丁:連敗加倍 / 反馬丁:連勝加倍)-----------------------
+void UpdateStreak(double prof){ if(prof<0){ g_loseStreak++; g_winStreak=0; } else { g_winStreak++; g_loseStreak=0; } }
+double CalcLot(bool isBuy){
+  double lot=FixedLotSize;
+  ${hasMarti?`int streak=(isBuy? g_loseStreak : g_winStreak);        // 方向相關:多單看連敗(馬丁)`:''}
+  int n = ${hasMarti?`streak`:(hasAntim?`g_winStreak`:`0`)};   // 馬丁:連敗加倍;反馬丁:連勝加倍
+  n = MathMin(n, SizingSteps);
+  lot = FixedLotSize * MathPow(SizingMult, n);
+  // 工具不設上限 — 手數與風險由使用者自行管理
+  return NormalizeDouble(lot,2);
+}
+`:''}
 int CountMine(){ int c=0; for(int i=PositionsTotal()-1;i>=0;i--){ ulong tk=PositionGetTicket(i);
   if(PositionSelectByTicket(tk)&&PositionGetInteger(POSITION_MAGIC)==(long)Magic
      &&PositionGetString(POSITION_SYMBOL)==_Symbol) c++; } return c; }
@@ -2633,18 +2647,31 @@ void OpenPos(bool isBuy){
   ${tpp?`tp = req + dirn*In_${tpp.id}_pips*10*pt;`:""}
   ${rrB?`if(sl>0) tp = req + dirn*In_${rrB.id}_r*MathAbs(req-sl);`:""}
   MqlTradeRequest r; MqlTradeResult res; ZeroMemory(r); ZeroMemory(res);
-  r.action=TRADE_ACTION_DEAL; r.symbol=_Symbol; r.volume=FixedLotSize; r.magic=Magic;
+  r.action=TRADE_ACTION_DEAL; r.symbol=_Symbol; r.volume=${hasSeq?`CalcLot(isBuy)`:`FixedLotSize`}; r.magic=Magic;
   r.type=isBuy?ORDER_TYPE_BUY:ORDER_TYPE_SELL; r.price=req; r.deviation=SlippagePoints;
   r.sl=NormalizeDouble(sl,_Digits); r.tp=NormalizeDouble(tp,_Digits);
   r.type_filling=ORDER_FILLING_IOC;
   if(!OrderSend(r,res)||res.retcode!=TRADE_RETCODE_DONE){
     PrintFormat("[Gen] OrderSend 失敗 ret=%d err=%d",res.retcode,GetLastError()); return; }
   g_entryBarCount=0; g_extreme= isBuy? iHigh(_Symbol,PERIOD_CURRENT,0): iLow(_Symbol,PERIOD_CURRENT,0);
-  if(EnableDaikenjaLog) DaikenjaLogTradeOpen(g_db,res.order,_Symbol,isBuy?"buy":"sell",
-      res.price,req,FixedLotSize,r.sl,r.tp,(long)Magic,"gen");
 }
 
 void ManagePos(){
+  ${hasSeq?`// ① 偵測被 broker SL/TP 平掉的倉位(未經 ClosePos)→ 更新 streak
+  for(int i=ArraySize(g_known)-1;i>=0;i--){
+    bool alive=false;
+    for(int j=PositionsTotal()-1;j>=0;j--){ ulong tk=PositionGetTicket(j);
+      if(PositionSelectByTicket(tk)&&tk==g_known[i].ticket){alive=true;break;} }
+    if(!alive) UpdateStreak(g_known[i].profit);
+  }
+  ArrayResize(g_known,0);
+  for(int i=PositionsTotal()-1;i>=0;i--){ ulong tk=PositionGetTicket(i);
+    if(PositionSelectByTicket(tk)&&PositionGetInteger(POSITION_MAGIC)==(long)Magic
+       &&PositionGetString(POSITION_SYMBOL)==_Symbol){
+      int n2=ArraySize(g_known); ArrayResize(g_known,n2+1);
+      g_known[n2].ticket=tk; g_known[n2].profit=PositionGetDouble(POSITION_PROFIT);
+    } }
+`:''}
   if(CountMine()==0) return;
   g_entryBarCount++;
   for(int i=PositionsTotal()-1;i>=0;i--){ ulong tk=PositionGetTicket(i);
@@ -3420,6 +3447,7 @@ function exportEAPack(){
 
   const gen=genMQL5(G);
   if(gen.refused){alert("❌ 拒絕生成:"+gen.refused);return;}
+  const hasSeq=G.spec.size.some(b=>b.type==='marti'||b.type==='antim');
 
   const name=`XRs_Gen_${G.sym}_${G.tf}_S${G.score}_${new Date().toISOString().slice(0,10)}`;
   const spec={
@@ -3434,7 +3462,7 @@ function exportEAPack(){
     disclaimer:"回測(含OOS)不保證未來;live 前必過 demo forward;本包由機器生成,編譯與掛機前需人工審閱。"
   };
   const readme=
-`# ${name}\n\n由 Composer v2.6 生成(score ${G.score} / OOS PF ${G.r.OOS.pf.toFixed(2)} / OOS ${G.r.OOS.n} 筆)。工具只生成不評判,品質請自行在 MT5 驗證。\n\n## 內容\n- ${name}.mq5 - house-style 骨架(單倉、無序列加倉、market 進場)\n- strategy_spec.json — 機器可讀規格 + 回測結果 + 成本模型\n\n## 上機前必做\n1. MetaEditor 編譯(骨架未經編譯器驗證,有 error 回報 Fable)\n2. 檢查 TODO 清單:${gen.todos.length?gen.todos.join(";"):"無"}\n3. Strategy Tester 12個月回測(對照 spec 裡的 OOS 數字,偏差大要回報)\n4. Demo forward ≥ 4 週後才考慮 live\n\n## 紅線\n未實作的進場積木一律 return false(寧可不交易);馬丁類倉位拒絕生成;\n回測分數不保證未來。`;
+`# ${name}\n\n由 Composer v2.6 生成(score ${G.score} / OOS PF ${G.r.OOS.pf.toFixed(2)} / OOS ${G.r.OOS.n} 筆)。工具只生成不評判,品質請自行在 MT5 驗證。\n\n## 內容\n- ${name}.mq5 - house-style 骨架(單倉、market 進場${hasSeq?',含馬丁/反馬丁序列加倉':''})\n- strategy_spec.json — 機器可讀規格 + 回測結果 + 成本模型\n\n## 上機前必做\n1. MetaEditor 編譯(骨架未經編譯器驗證,有 error 回報 Fable)\n2. 檢查 TODO 清單:${gen.todos.length?gen.todos.join(";"):"無"}\n3. Strategy Tester 12個月回測(對照 spec 裡的 OOS 數字,偏差大要回報)\n4. Demo forward ≥ 4 週後才考慮 live\n\n## 紅線\n未實作的進場積木一律 return false(寧可不交易);馬丁/反馬丁已支持 — 破產風險如實提示,上機前自行評估;\n回測分數不保證未來。${hasSeq?'\n\n⚠️ 本 EA 含馬丁/反馬丁序列加倉,存在爆倉風險,請以極小初始手數在 Demo 測試。':''}`;
   dlText(name+".mq5", gen.code);
   dlText("strategy_spec.json", JSON.stringify(spec,null,2));
   dlText("README_"+name+".md", readme);
@@ -3485,7 +3513,7 @@ ${NEWSON.length? '高影響數據:'+NEWSON.map(k=>NEWS[k].name).join('、') : ''
 
 ## 給 Claude 的實現要求
 1. MQL5,單持倉;magic number 用 input;所有參數做成 input
-2. 接 Daikenja 橋:開倉記錄含 requested_price,權益快照含 margin(DaikenjaLog.mqh)
+2. 日誌:如需開倉/權益記錄,自行擴充(本骨架不綁任何日誌庫)
 3. 帳戶級熔斷:日虧 3% 停(讀 risk_params)
 4. 先 demo 驗證,本報告的回測數字不作為上實盤依據——最終判決走 MT5 Strategy Tester + IS/OOS
 `;
