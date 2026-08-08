@@ -569,9 +569,47 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 @media(max-width:720px){.bg-logo{background-size:92vw auto;opacity:.055;}}
 body.lang-en .zh{display:none !important;}
 body.lang-zh.lang-strict .en{display:none !important;}
+
+
+.navbar{position:fixed;top:62px;left:0;right:0;z-index:39;display:flex;align-items:center;justify-content:center;
+  gap:clamp(8px,2vw,20px);padding:8px 20px;background:linear-gradient(to bottom,rgba(6,6,8,.9),rgba(6,6,8,.45) 75%,transparent);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
+.navbar a{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;padding:5px 14px;border-radius:18px;transition:.25s;white-space:nowrap;}
+.navbar a:hover{color:var(--gold-bright);background:rgba(232,200,119,.08);}
+.navbar a.active{color:var(--gold-bright);border:1px solid rgba(232,200,119,.35);background:rgba(232,200,119,.1);}
+@media(max-width:560px){.navbar{gap:2px;top:52px;padding:6px 4px;}.navbar a{font-size:9px;letter-spacing:.1em;padding:4px 7px;}}
+
+
+.navbar{position:fixed;top:62px;left:0;right:0;z-index:39;display:flex;align-items:center;justify-content:center;
+  gap:clamp(8px,2vw,20px);padding:8px 20px;background:linear-gradient(to bottom,rgba(6,6,8,.9),rgba(6,6,8,.45) 75%,transparent);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
+.navbar a{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;padding:5px 14px;border-radius:18px;transition:.25s;white-space:nowrap;}
+.navbar a:hover{color:var(--gold-bright);background:rgba(232,200,119,.08);}
+.navbar a.active{color:var(--gold-bright);border:1px solid rgba(232,200,119,.35);background:rgba(232,200,119,.1);}
+@media(max-width:560px){.navbar{gap:2px;top:52px;padding:6px 4px;}.navbar a{font-size:9px;letter-spacing:.1em;padding:4px 7px;}}
+
+/* ===== Global navbar (appended, original untouched) ===== */
+.navbar{position:fixed;top:62px;left:0;right:0;z-index:39;display:flex;align-items:center;justify-content:center;
+  gap:clamp(8px,2vw,20px);padding:8px 20px;background:linear-gradient(to bottom,rgba(6,6,8,.9),rgba(6,6,8,.45) 75%,transparent);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
+.navbar a{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;padding:5px 14px;border-radius:18px;transition:.25s;white-space:nowrap;}
+.navbar a:hover{color:var(--gold-bright);background:rgba(232,200,119,.08);}
+.navbar a.active{color:var(--gold-bright);border:1px solid rgba(232,200,119,.35);background:rgba(232,200,119,.1);}
+@media(max-width:560px){.navbar{gap:2px;top:52px;padding:6px 4px;}.navbar a{font-size:9px;letter-spacing:.1em;padding:4px 7px;}}
 </style>
 </head>
 <body>
+<!-- ===== Global navbar ===== -->
+<nav class="navbar" id="globalNav">
+  <a href="../MakeTradesJourney.html#top" data-sec="home">Home <span class="zh">· 首页</span></a>
+  <a href="../MakeTradesJourney.html#courses" data-sec="courses" class="active">Courses <span class="zh">· 课程</span></a>
+  <a href="../MakeTradesJourney.html#tools" data-sec="tools">Tools <span class="zh">· 工具</span></a>
+  <a href="../MakeTradesJourney.html#about" data-sec="about">About <span class="zh">· 关于</span></a>
+</nav>
+
 <div id="progress"></div>
 <a href="../MakeTradesJourney.html" id="mtjBack" style="position:fixed;left:14px;bottom:14px;z-index:60;display:inline-flex;align-items:center;gap:9px;text-decoration:none;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#9A968C;background:rgba(6,6,8,.8);border:1px solid rgba(232,200,119,.22);border-radius:30px;padding:9px 16px;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:.25s" onmouseover="this.style.color='#FCE9A8';this.style.borderColor='#E8C877';this.style.boxShadow='0 0 22px rgba(232,200,119,.18)'" onmouseout="this.style.color='#9A968C';this.style.borderColor='rgba(232,200,119,.22)';this.style.boxShadow='none'"><span>&#8592;</span>Hub &middot; &#36820;&#22238;&#30446;&#24405;</a>
 <canvas id="particles"></canvas>
@@ -967,7 +1005,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
             <span class="zh">趁理由还新鲜时把每笔都记下来，诚实标注守规则或破规则 —— 尤其是赚钱的那几笔。然后关掉平台。今天不要看统计，那是每週复盘的工作。</span></p>
         </div>
       </div>
-      <div class="note">// The whole routine costs about 20 minutes a day. It is the cheapest edge in this entire curriculum.
+      <div class="note">// The whole routine costs about 20 minutes a day. It is the cheapest edge in this entire course.
         整套流程一天大约 20 分钟，是这套课程里成本最低的一个优势。</div>
     </div>
   </article>
@@ -1486,6 +1524,29 @@ renderExam();
   else boot();
 })();
 
+</script>
+
+
+
+<script>
+/* ===== Global navbar scroll spy ===== */
+(function(){
+  var nav = document.getElementById('globalNav'); if(!nav) return;
+  var links = nav.querySelectorAll('a[data-sec]');
+  var secs = {};
+  links.forEach(function(a){ var id = a.getAttribute('data-sec'); var el = document.getElementById(id); if(el) secs[id]=el; });
+  function spy(){
+    var cur = links.length ? links[0].getAttribute('data-sec') : '';
+    var y = window.scrollY + 140;
+    for(var id in secs){
+      var el = secs[id];
+      if(el.offsetTop <= y) cur = id;
+    }
+    links.forEach(function(a){ a.classList.toggle('active', a.getAttribute('data-sec')===cur); });
+  }
+  window.addEventListener('scroll', spy, {passive:true});
+  spy();
+})();
 </script>
 </body>
 </html>

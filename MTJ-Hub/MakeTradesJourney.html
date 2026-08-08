@@ -267,9 +267,47 @@ body.lang-zh .zh-t{display:block !important;}
   text-transform:uppercase;padding:8px 14px;border-radius:24px;white-space:nowrap;align-self:center;}
 .acc-open{color:var(--bull);border:1px solid rgba(44,217,138,.32);background:rgba(44,217,138,.06);}
 .acc-mem{color:var(--gold);border:1px solid rgba(232,200,119,.32);background:rgba(232,200,119,.06);}
+
+
+.navbar{position:fixed;top:62px;left:0;right:0;z-index:39;display:flex;align-items:center;justify-content:center;
+  gap:clamp(8px,2vw,20px);padding:8px 20px;background:linear-gradient(to bottom,rgba(6,6,8,.9),rgba(6,6,8,.45) 75%,transparent);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
+.navbar a{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;padding:5px 14px;border-radius:18px;transition:.25s;white-space:nowrap;}
+.navbar a:hover{color:var(--gold-bright);background:rgba(232,200,119,.08);}
+.navbar a.active{color:var(--gold-bright);border:1px solid rgba(232,200,119,.35);background:rgba(232,200,119,.1);}
+@media(max-width:560px){.navbar{gap:2px;top:52px;padding:6px 4px;}.navbar a{font-size:9px;letter-spacing:.1em;padding:4px 7px;}}
+
+
+.navbar{position:fixed;top:62px;left:0;right:0;z-index:39;display:flex;align-items:center;justify-content:center;
+  gap:clamp(8px,2vw,20px);padding:8px 20px;background:linear-gradient(to bottom,rgba(6,6,8,.9),rgba(6,6,8,.45) 75%,transparent);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
+.navbar a{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;padding:5px 14px;border-radius:18px;transition:.25s;white-space:nowrap;}
+.navbar a:hover{color:var(--gold-bright);background:rgba(232,200,119,.08);}
+.navbar a.active{color:var(--gold-bright);border:1px solid rgba(232,200,119,.35);background:rgba(232,200,119,.1);}
+@media(max-width:560px){.navbar{gap:2px;top:52px;padding:6px 4px;}.navbar a{font-size:9px;letter-spacing:.1em;padding:4px 7px;}}
+
+/* ===== Global navbar (appended, original untouched) ===== */
+.navbar{position:fixed;top:62px;left:0;right:0;z-index:39;display:flex;align-items:center;justify-content:center;
+  gap:clamp(8px,2vw,20px);padding:8px 20px;background:linear-gradient(to bottom,rgba(6,6,8,.9),rgba(6,6,8,.45) 75%,transparent);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
+.navbar a{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;padding:5px 14px;border-radius:18px;transition:.25s;white-space:nowrap;}
+.navbar a:hover{color:var(--gold-bright);background:rgba(232,200,119,.08);}
+.navbar a.active{color:var(--gold-bright);border:1px solid rgba(232,200,119,.35);background:rgba(232,200,119,.1);}
+@media(max-width:560px){.navbar{gap:2px;top:52px;padding:6px 4px;}.navbar a{font-size:9px;letter-spacing:.1em;padding:4px 7px;}}
 </style>
 </head>
 <body>
+<!-- ===== Global navbar ===== -->
+<nav class="navbar" id="globalNav">
+  <a href="#top" data-sec="home" class="active">Home <span class="zh">· 首页</span></a>
+  <a href="#courses" data-sec="courses">Courses <span class="zh">· 课程</span></a>
+  <a href="#tools" data-sec="tools">Tools <span class="zh">· 工具</span></a>
+  <a href="#about" data-sec="about">About <span class="zh">· 关于</span></a>
+</nav>
+
 <div id="progress"></div>
 <canvas id="particles"></canvas>
 <div class="bg-glow"></div>
@@ -311,7 +349,7 @@ body.lang-zh .zh-t{display:block !important;}
     <span class="zh">以教育为核心的交易社群 —— 把图表变成你真正读得懂的语言。</span></p>
 
   <div class="cta-row">
-    <a class="btn primary" href="#courses">Enter the Curriculum <span class="ar">→</span></a>
+    <a class="btn primary" href="#courses">Enter the Courses <span class="ar">→</span></a>
   </div>
 </header>
 
@@ -334,7 +372,7 @@ body.lang-zh .zh-t{display:block !important;}
   <div class="pillars">
     <div class="pil reveal">
       <div class="ico">STRUCTURE</div>
-      <h3>A Real Curriculum</h3>
+      <h3>A Real Course Path</h3>
       <div class="zh">系统化课程</div>
       <p>Twenty-one modules in a deliberate order - from what a currency pair even is, all the way to reading the Fed. No random tips, no scattered videos.</p>
     </div>
@@ -407,7 +445,7 @@ body.lang-zh .zh-t{display:block !important;}
 <!-- ================= COURSES ================= -->
 <section class="divider">
   <div class="rail reveal">Library · 课程库</div>
-  <h2 class="reveal">The Curriculum</h2>
+  <h2 class="reveal">The Courses</h2>
   <div class="zh reveal">课 程 目 录</div>
 </section>
 
@@ -1047,6 +1085,29 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
   else boot();
 })();
 
+</script>
+
+
+
+<script>
+/* ===== Global navbar scroll spy ===== */
+(function(){
+  var nav = document.getElementById('globalNav'); if(!nav) return;
+  var links = nav.querySelectorAll('a[data-sec]');
+  var secs = {};
+  links.forEach(function(a){ var id = a.getAttribute('data-sec'); var el = document.getElementById(id); if(el) secs[id]=el; });
+  function spy(){
+    var cur = links.length ? links[0].getAttribute('data-sec') : '';
+    var y = window.scrollY + 140;
+    for(var id in secs){
+      var el = secs[id];
+      if(el.offsetTop <= y) cur = id;
+    }
+    links.forEach(function(a){ a.classList.toggle('active', a.getAttribute('data-sec')===cur); });
+  }
+  window.addEventListener('scroll', spy, {passive:true});
+  spy();
+})();
 </script>
 </body>
 </html>
