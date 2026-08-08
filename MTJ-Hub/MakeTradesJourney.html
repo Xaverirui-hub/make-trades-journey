@@ -263,6 +263,10 @@ body.lang-en .zh{display:none !important;}
 body.lang-zh.lang-strict .en{display:none !important;}
 body.lang-zh .zh-t{display:block !important;}
 
+.acc-open,.acc-mem{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;
+  text-transform:uppercase;padding:8px 14px;border-radius:24px;white-space:nowrap;align-self:center;}
+.acc-open{color:var(--bull);border:1px solid rgba(44,217,138,.32);background:rgba(44,217,138,.06);}
+.acc-mem{color:var(--gold);border:1px solid rgba(232,200,119,.32);background:rgba(232,200,119,.06);}
 </style>
 </head>
 <body>
@@ -673,6 +677,8 @@ body.lang-zh .zh-t{display:block !important;}
   <p class="lead reveal">Once you can read a chart, the next question is whether your idea survives contact with data - and whether the position behind it is sized to survive being wrong. That's what the lab is for.
     <span class="zh">当你能读懂图表，下一个问题是：你的想法经得起数据检验吗？而这笔仓位，扛得住你判断错误吗？这就是实验室的用途。</span></p>
 
+  <div class="note reveal" style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--gold-deep);border-left:2px solid var(--line);padding-left:13px;margin-top:22px;line-height:1.9;max-width:760px;">// The lab is part of the membership. Two tools are open while the member system is being built.<span class="zh" style="font-family:'Noto Sans SC';display:block;color:var(--muted-2);margin-top:3px;">实验室属于会员权益。会员系统建置期间，其中两个工具暂时开放。</span></div>
+
   <div class="tool reveal">
     <div class="tool-body">
       <span class="tag" style="color:var(--bull);border-color:rgba(44,217,138,.35);background:rgba(44,217,138,.06);">Review Tool · 复盘工具</span>
@@ -681,35 +687,7 @@ body.lang-zh .zh-t{display:block !important;}
       <p>Log trades by hand or drop in an MT5 report, and it computes expectancy in R, the four process quadrants, breakdowns by setup and session, your cumulative R curve and max drawdown - plus a pre-market checklist.
         <span class="zh">手动记录或直接拖入 MT5 报表，自动算出以 R 为单位的期望值、过程四象限、按 setup 与时段的分类统计、累计 R 曲线与最大回撤，另有开盘前检查清单。</span></p>
       
-      <div class="tool-card" style="display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;padding:50px 0;border-top:1px solid rgba(232,200,119,.10);">
-        <div>
-          <div class="eyebrow" style="color:var(--gold);font-size:12px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:14px;">FOMC ANALYZER · 决议分析器</div>
-          <h3 style="font-size:clamp(22px,3vw,30px);font-weight:700;margin:0 0 12px;color:var(--text);">Read the Fed.<br><span style="color:var(--gold-bright);">Trade the Reaction.</span></h3>
-          <p style="color:var(--muted);font-size:14.5px;line-height:1.8;margin:0 0 10px;">Input the decision - rate, votes, statement, market moves - and get an instant read on the Fed and what it means for gold.
-          <span class="zh" style="color:var(--muted2);">输入决议数据——利率、票数、声明、市场反应——立即获得鹰鸽判定与黄金方向分析。</span></p>
-          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);">
-            <span style="border:1px solid var(--line);border-radius:20px;padding:6px 14px;">Hawk/Dove 鹰鸽判定</span>
-            <span style="border:1px solid var(--line);border-radius:20px;padding:6px 14px;">Market Impact 市场影响</span>
-            <span style="border:1px solid var(--line);border-radius:20px;padding:6px 14px;">Gold Direction 黄金方向</span>
-          </div>
-          <div class="cta-row" style="justify-content:flex-start;margin-top:28px;">
-            <a class="btn primary" href="tools/FOMC_Analyzer.html">Open the Analyzer <span class="ar">→</span></a>
-          </div>
-        </div>
-        <div class="tool-side" style="background:radial-gradient(600px 300px at 100% 0%,rgba(232,200,119,.08),transparent 65%);">
-          <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);letter-spacing:.18em;margin-bottom:16px;">// FED WATCH 美联储观察</div>
-          <div style="background:rgba(20,20,26,.6);border:1px solid rgba(232,200,119,.16);border-radius:16px;padding:26px;">
-            <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold);letter-spacing:.1em;margin-bottom:10px;">FED FUNDS RATE</div>
-            <div style="font-family:'JetBrains Mono',monospace;font-weight:800;font-size:34px;color:var(--gold-bright);margin-bottom:6px;">3.50–3.75%</div>
-            <div style="font-size:13px;color:var(--muted);margin-bottom:18px;">HOLD · 连续第 5 次维持</div>
-            <div style="display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);margin-bottom:8px;"><span>VOTE 投票</span><span style="color:var(--text);">9–3</span></div>
-            <div style="height:10px;border-radius:5px;overflow:hidden;background:rgba(255,255,255,.08);margin-bottom:14px;"><div style="width:75%;height:100%;background:linear-gradient(90deg,var(--gold-deep),var(--gold));"></div></div>
-            <div style="font-size:13px;color:var(--muted2);line-height:1.6;">黄金决议日 +0.27% · DXY 走弱 · US10Y +7bp</div>
-          </div>
-        </div>
-      </div>
-
-<div class="tool-feats">
+      <div class="tool-feats">
         <div><b>Import 汇入</b>MT5 report · HTML / CSV</div>
         <div><b>Stats 统计</b>Expectancy · PF · drawdown</div>
         <div><b>Quadrants 四象限</b>Rules kept vs. outcome</div>
@@ -717,12 +695,38 @@ body.lang-zh .zh-t{display:block !important;}
       </div>
       <div class="cta-row" style="justify-content:flex-start;margin-top:28px;">
         <a class="btn primary" href="tools/Trade_Journal.html">Open the Journal <span class="ar">→</span></a>
+        <span class="acc-open">OPEN FOR NOW &middot; 暂时开放</span>
       </div>
     </div>
     <div class="tool-side" style="background:radial-gradient(600px 300px at 100% 0%,rgba(44,217,138,.06),transparent 65%);">
       <div class="warnline"><b style="color:var(--bull);">// PROCESS FIRST 过程优先</b><br>Chase the rule-following rate, not the P&amp;L.<br>去追守规则比率，不要追损益。</div>
       <div class="warnline"><b style="color:var(--bull);">// YOUR DEVICE 只在你电脑</b><br>Nothing is uploaded. Export a CSV backup regularly.<br>资料不上传，请定期汇出 CSV 备份。</div>
       <div class="warnline"><b>// SAMPLE SIZE 样本数</b><br>Under 30 trades, the statistics are still noise.<br>不足 30 笔时，统计数字还只是噪音。</div>
+    </div>
+  </div>
+
+  <div class="tool reveal" style="margin-top:16px;">
+    <div class="tool-body">
+      <span class="tag" style="color:var(--cyan);border-color:rgba(47,224,214,.35);background:rgba(47,224,214,.06);">Macro Tool &middot; 宏观工具</span>
+      <h3>FOMC Analyzer</h3>
+      <div class="zh-t">决 议 分 析 器</div>
+      <p>Record what the Fed actually did and what the market actually did, in one fixed structure, so each meeting becomes a data point in your journal instead of a headline.
+        <span class="zh">用一套固定结构记录：美联储实际做了什么、市场实际怎么反应，让每次会议变成你日志里的一个资料点，而不是一条新闻标题。</span></p>
+      <div class="tool-feats">
+        <div><b>Vote 投票结构</b>Hold / hike / cut composition</div>
+        <div><b>Market 市场反应</b>DXY &middot; US10Y &middot; gold &middot; equities</div>
+        <div><b>Archive 决议存档</b>Native report, no screenshots</div>
+        <div><b>Handoff 连动</b>Research tag to the Composer</div>
+      </div>
+      <div class="cta-row" style="justify-content:flex-start;margin-top:28px;">
+        <a class="btn primary" href="tools/FOMC_Analyzer.html">Open the Analyzer <span class="ar">&rarr;</span></a>
+        <span class="acc-open">OPEN FOR NOW &middot; 暂时开放</span>
+      </div>
+    </div>
+    <div class="tool-side" style="background:radial-gradient(600px 300px at 100% 0%,rgba(47,224,214,.06),transparent 65%);">
+      <div class="warnline"><b style="color:var(--cyan);">// NOT A FORECAST 不预测</b><br>It classifies what you enter. It does not predict prices.<br>它只把你输入的内容分类排版，不预测价格。</div>
+      <div class="warnline"><b style="color:var(--cyan);">// NOT ADVICE 非建议</b><br>Hawkish / dovish describes the vote, not a trade direction.<br>鹰派／鸽派描述的是投票结构，不是进场方向。</div>
+      <div class="warnline"><b>// MEMBERS SOON 即将转会员</b><br>Open while we finish the member system.<br>会员系统完成前暂时开放。</div>
     </div>
   </div>
 
@@ -740,7 +744,8 @@ body.lang-zh .zh-t{display:block !important;}
         <div><b>Rules 风控</b>Daily stop &amp; max drawdown</div>
       </div>
       <div class="cta-row" style="justify-content:flex-start;margin-top:28px;">
-        <span class="btn primary" style="opacity:.55;cursor:not-allowed;pointer-events:none;">COMING SOON <span class="ar">&#183;</span></span>
+        <span class="btn primary" style="opacity:.55;cursor:not-allowed;pointer-events:none;">MEMBERS ONLY <span class="ar">&#183;</span></span>
+        <span class="acc-mem">会员专属</span>
       </div>
     </div>
     <div class="tool-side" style="background:radial-gradient(600px 300px at 100% 0%,rgba(232,200,119,.08),transparent 65%);">
@@ -752,7 +757,7 @@ body.lang-zh .zh-t{display:block !important;}
 
   <div class="tool reveal" style="margin-top:16px;">
     <div class="tool-body">
-      <span class="tag">XR-DRIVE · v2.4</span>
+      <span class="tag" style="color:var(--bear);border-color:rgba(255,92,99,.32);background:rgba(255,92,99,.05);">Strategy Lab &middot; 策略实验室</span>
       <h3>XRs Strategy Composer</h3>
       <div class="zh-t">策 略 拼 阵 台</div>
       <p>Drag entry, filter, exit and sizing blocks into a zone and the engine assembles them into a testable strategy - then scores it, sketches an equity curve, and tells you where it breaks.
@@ -764,7 +769,8 @@ body.lang-zh .zh-t{display:block !important;}
         <div><b>Real Data 实盘数据</b>Accepts MT5 H1 export 支持导入</div>
       </div>
       <div class="cta-row" style="justify-content:flex-start;margin-top:28px;">
-        <span class="btn primary" style="opacity:.55;cursor:not-allowed;pointer-events:none;">COMING SOON <span class="ar">&#183;</span></span>
+        <span class="btn primary" style="opacity:.55;cursor:not-allowed;pointer-events:none;">MEMBERS ONLY <span class="ar">&#183;</span></span>
+        <span class="acc-mem">会员专属</span>
       </div>
     </div>
     <div class="tool-side">

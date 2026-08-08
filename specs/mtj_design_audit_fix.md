@@ -241,3 +241,34 @@ Position Calculator 的同款遮罩沒有這個問題（該檔有定義 `--gold`
 
 > 給 Hermes：跨檔案複製 UI 區塊時，記得確認用到的 CSS 變數在目標檔案裡有定義。
 > 這幾個工具檔的調色盤變數名稱並不一致（`--gold` vs `--kengold`）。
+
+## 商業模式定調（2026-08-08 用戶確認）
+
+**所有工具最終都是付費會員權益，沒有免費層。**
+
+原文案「解鎖後免費使用 / unlocks with your free account」與商業模式衝突，已全站移除。
+
+| 工具 | 類別標籤 | 目前狀態 |
+|---|---|---|
+| Trade Journal | `Review Tool · 复盘工具` | OPEN FOR NOW 暫時開放 |
+| FOMC Analyzer | `Macro Tool · 宏观工具` | OPEN FOR NOW 暫時開放 |
+| Position Size Calculator | `Risk Tool · 风控工具` | MEMBERS ONLY 會員專屬 |
+| XRs Strategy Composer | `Strategy Lab · 策略实验室` | MEMBERS ONLY 會員專屬 |
+
+- 遮罩標題 `COMING SOON` → `MEMBERS ONLY`
+- 遮罩內文改為「是 Make Trades Journey 的會員工具，訂閱後開放使用」
+- 主頁工具卡加上取用狀態 pill（`.acc-open` 綠 / `.acc-mem` 金）
+- 工具區開頭加一句：實驗室屬於會員權益，會員系統建置期間兩個工具暫時開放
+
+> 給 Hermes：之後新增工具一律預設 `MEMBERS ONLY`，文案不要出現 free / 免費。
+
+## 結構修正：FOMC Analyzer 原本被巢狀在 Trade Journal 卡片裡
+
+主頁工具區原本只有 3 張 `.tool` 卡，FOMC Analyzer 的整個 `.tool-card` 區塊被塞在
+**Trade Journal 的 `.tool-body` 內部**（夾在日誌描述與 `.tool-feats` 之間），
+所以 FOMC 沒有自己的類別、自己的側欄，視覺上像是日誌的附屬功能。
+
+已抽出成獨立 `.tool` 卡，四個工具各有各的類別標籤與側欄警語。
+
+> 給 Hermes：新工具請複製既有 `.tool` 卡的完整結構（tool-body + tool-side），
+> 不要插進別張卡的 body 裡。
