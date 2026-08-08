@@ -41,12 +41,6 @@ body{
     radial-gradient(900px 600px at -10% 20%, rgba(201,162,39,.08), transparent 60%),
     radial-gradient(1200px 900px at 50% 120%, rgba(232,200,119,.06), transparent 55%);
 }
-.bg-grid{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.4;
-  background-image:linear-gradient(rgba(232,200,119,.04) 1px,transparent 1px),
-                   linear-gradient(90deg,rgba(232,200,119,.04) 1px,transparent 1px);
-  background-size:64px 64px;
-  mask-image:radial-gradient(circle at 50% 30%,#000 0%,transparent 80%);
-  -webkit-mask-image:radial-gradient(circle at 50% 30%,#000 0%,transparent 80%);}
 .wrap{position:relative;z-index:2;}
 
 /* ---------- top bar ---------- */
@@ -99,10 +93,7 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 .hero .course-tag{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.34em;
   text-transform:uppercase;color:var(--gold);margin:8px 0 4px;
   padding:6px 16px;border:1px solid var(--line);border-radius:30px;background:rgba(232,200,119,.04);}
-.hero h1{font-size:clamp(46px,11vw,124px);font-weight:800;line-height:.94;margin:18px 0 6px;letter-spacing:-.03em;
-  background:linear-gradient(180deg,#fff 0%,var(--gold-bright) 45%,var(--gold-deep) 100%);
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-  text-shadow:0 0 60px rgba(232,200,119,.18);}
+.hero h1{font-size:clamp(46px,11vw,124px);font-weight:800;line-height:.94;margin:18px 0 6px;letter-spacing:-.03em;color:var(--gold-bright);}
 .hero .h-zh{font-family:'Noto Sans SC';font-weight:300;font-size:clamp(16px,3vw,26px);letter-spacing:.5em;
   color:var(--muted);margin-bottom:20px;text-indent:.5em;}
 .hero .h-sub{max-width:560px;color:var(--muted);font-size:clamp(14px,2vw,17px);margin:0 auto;}
@@ -110,12 +101,6 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 .hero-chart{position:absolute;left:0;right:0;bottom:0;height:34vh;min-height:180px;width:100%;z-index:1;
   -webkit-mask-image:linear-gradient(to right,transparent,#000 12%,#000 88%,transparent);
   mask-image:linear-gradient(to right,transparent,#000 12%,#000 88%,transparent);opacity:.9;}
-.scroll-hint{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);z-index:3;
-  font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.24em;color:var(--muted-2);
-  text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:8px;}
-.scroll-hint .m{width:20px;height:32px;border:1px solid var(--line);border-radius:12px;position:relative;}
-.scroll-hint .m::after{content:"";position:absolute;top:6px;left:50%;transform:translateX(-50%);
-  width:3px;height:6px;border-radius:2px;background:var(--gold);animation:mwheel 1.8s ease infinite;}
 @keyframes mwheel{0%{opacity:0;top:5px}30%{opacity:1}70%{opacity:1}100%{opacity:0;top:16px}}
 
 /* ---------- agenda ---------- */
@@ -137,7 +122,7 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 .points li{position:relative;padding:16px 0 16px 40px;border-top:1px solid var(--line-soft);}
 .points li:last-child{border-bottom:1px solid var(--line-soft);}
 .points li::before{content:"";position:absolute;left:8px;top:22px;width:10px;height:10px;border-radius:2px;
-  background:var(--gold);box-shadow:0 0 12px rgba(232,200,119,.6);transform:rotate(45deg);}
+  background:var(--gold);transform:rotate(45deg);}
 .points li b{color:var(--text);font-weight:600;}
 .points li .zh{display:block;font-family:'Noto Sans SC';color:var(--muted);font-size:13.5px;margin-top:3px;}
 
@@ -149,7 +134,7 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 /* ---------- pattern groups ---------- */
 .divider{position:relative;text-align:center;padding:clamp(90px,14vh,150px) 20px;overflow:hidden;}
 .divider h2{font-size:clamp(38px,9vw,96px);font-weight:800;letter-spacing:-.02em;margin:0;
-  background:linear-gradient(180deg,var(--gold-bright),var(--gold-deep));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  color:var(--gold-bright);}
 .divider .zh{font-family:'Noto Sans SC';font-weight:300;letter-spacing:.5em;color:var(--muted);
   font-size:clamp(14px,2.4vw,20px);margin-top:14px;text-indent:.5em;}
 .divider .rail{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.3em;color:var(--gold-deep);
@@ -479,7 +464,6 @@ body.lang-zh.lang-strict .en{display:none !important;}
 <a href="../MakeTradesJourney.html" id="mtjBack" style="position:fixed;left:14px;bottom:14px;z-index:60;display:inline-flex;align-items:center;gap:9px;text-decoration:none;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#9A968C;background:rgba(6,6,8,.8);border:1px solid rgba(232,200,119,.22);border-radius:30px;padding:9px 16px;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:.25s" onmouseover="this.style.color='#FCE9A8';this.style.borderColor='#E8C877';this.style.boxShadow='0 0 22px rgba(232,200,119,.18)'" onmouseout="this.style.color='#9A968C';this.style.borderColor='rgba(232,200,119,.22)';this.style.boxShadow='none'"><span>&#8592;</span>Hub &middot; &#36820;&#22238;&#30446;&#24405;</a>
 <canvas id="particles"></canvas>
 <div class="bg-glow"></div>
-<div class="bg-grid"></div>
 <div class="bg-logo"></div>
 
 <!-- top bar -->
@@ -524,7 +508,6 @@ body.lang-zh.lang-strict .en{display:none !important;}
   <p class="h-sub">The market rewards preparation and punishes improvisation. Every impulse trade is a
     decision you outsourced to your emotions.
     <span class="zh">市场奖励准备，惩罚即兴。每一笔冲动交易，都是你把决定外包给了情绪。</span></p>
-  <div class="scroll-hint"><span class="m"></span>Scroll</div>
 </header>
 
 <!-- ================= AGENDA ================= -->
@@ -544,7 +527,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
 <section class="section reveal" style="padding-top:20px;padding-bottom:20px;">
   <div class="note" style="max-width:820px;line-height:1.9;">// The uncomfortable truth 一个不太舒服的事实：
     most traders do not lose because their entries are bad. They lose because they never decided, in advance,
-    what they would do. A plan is not paperwork — it is the <b>only</b> thing standing between you and your impulses.
+    what they would do. A plan is not paperwork - it is the <b>only</b> thing standing between you and your impulses.
     <span class="zh">多数交易者亏钱不是因为进场不好，而是因为他们从未提前决定自己要做什么。计划不是文书工作——它是挡在你和冲动之间的<b>唯一</b>防线。</span></div>
 </section>
 
@@ -563,7 +546,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
     <div class="pattern-head"><span class="idx">P.01</span><h3>Impulse vs. Discipline<span class="zh">冲动 vs. 纪律</span></h3><span class="tag bear">Critical 关键</span></div>
     <div class="pattern-desc">
       <p>Without a plan, every trade is a reaction. Price moves up and you feel the pull to buy; price drops and you feel
-        the need to "fix" it. The chart is not talking to you — your emotions are.
+        the need to "fix" it. The chart is not talking to you - your emotions are.
         <span class="zh">没有计划，每一笔交易都是反应。价格涨，你想追；价格跌，你想「补救」。跟你说话的不是图表，是你的情绪。</span></p>
       <p>A plan inserts a pause between the stimulus and the click. That pause is the entire difference between a trader
         and a gambler.
@@ -577,7 +560,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
             <li>Moves the stop to avoid the loss<span class="zh">移动止损逃避亏损</span></li>
             <li>Doubles down after a loss<span class="zh">亏了之后加倍下注</span></li>
           </ol>
-          <div class="verdict">One decision per trade — made twice: at entry, and again at the first sign of pain. 每笔交易做两次决定：进场一次，遇到疼痛时又一次。</div>
+          <div class="verdict">One decision per trade - made twice: at entry, and again at the first sign of pain. 每笔交易做两次决定：进场一次，遇到疼痛时又一次。</div>
         </div>
         <div class="col good">
           <div class="ch">Plan · 按计划交易</div>
@@ -587,7 +570,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
             <li>The stop is sacred<span class="zh">止损神圣不可动</span></li>
             <li>After a loss: same plan, same size<span class="zh">亏损之后：同样的计划，同样的手数</span></li>
           </ol>
-          <div class="verdict">One decision per trade — made once, calmly, before the open. 每笔交易只做一次决定：开盘前，冷静地。</div>
+          <div class="verdict">One decision per trade - made once, calmly, before the open. 每笔交易只做一次决定：开盘前，冷静地。</div>
         </div>
       </div>
       <div class="note">// You don't need a plan to make money once. You need one to make money consistently.
@@ -625,7 +608,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
     <div class="pattern-head"><span class="idx">P.03</span><h3>The Six Building Blocks<span class="zh">计划的六大组成</span></h3><span class="tag neu">Structure 结构</span></div>
     <div class="pattern-desc">
       <p>Every trading plan answers six questions before the market opens. If a question has no answer, the plan has a
-        hole — and the market will find it.
+        hole - and the market will find it.
         <span class="zh">每份交易计划都要在市场开盘前回答六个问题。只要有一个问题没有答案，计划就有洞——而市场一定会找到那个洞。</span></p>
       <div class="terms">
         <div class="term"><div class="th">01 · Market <span class="ar">→</span></div><p style="margin:10px 0 0;font-size:13px;color:var(--muted);line-height:1.7;">Which instrument, which direction bias. One market, not three.</p><div class="zh">做哪个品种、什么方向倾向。一个市场，不是三个。</div></div>
@@ -633,9 +616,9 @@ body.lang-zh.lang-strict .en{display:none !important;}
         <div class="term"><div class="th">03 · Entry <span class="ar">→</span></div><p style="margin:10px 0 0;font-size:13px;color:var(--muted);line-height:1.7;">The exact condition that triggers a trade. Written so a stranger could execute it.</p><div class="zh">触发交易的确切条件。写到陌生人也能照着执行。</div></div>
         <div class="term"><div class="th">04 · Exit <span class="ar">→</span></div><p style="margin:10px 0 0;font-size:13px;color:var(--muted);line-height:1.7;">Stop placement plus target. Both decided before the entry, never after.</p><div class="zh">止损位置加目标位。两者都在进场前决定，绝不在进场后。</div></div>
         <div class="term"><div class="th">05 · Risk <span class="ar">→</span></div><p style="margin:10px 0 0;font-size:13px;color:var(--muted);line-height:1.7;">Fixed % per trade and per day. The number never changes.</p><div class="zh">单笔与每日固定的风险比例。这个数字永远不变。</div></div>
-        <div class="term"><div class="th">06 · Daily Target <span class="ar">→</span></div><p style="margin:10px 0 0;font-size:13px;color:var(--muted);line-height:1.7;">A number that ends your day — in profit or in loss.</p><div class="zh">一个结束你一天的数字，无论当天是赚是亏。</div></div>
+        <div class="term"><div class="th">06 · Daily Target <span class="ar">→</span></div><p style="margin:10px 0 0;font-size:13px;color:var(--muted);line-height:1.7;">A number that ends your day - in profit or in loss.</p><div class="zh">一个结束你一天的数字，无论当天是赚是亏。</div></div>
       </div>
-      <div class="note">// Six blanks. Fill them before the open, or the market will fill them for you — with your money.
+      <div class="note">// Six blanks. Fill them before the open, or the market will fill them for you - with your money.
         六个空格。开盘前填好，否则市场会替你来填——用你的钱。</div>
     </div>
   </article>
@@ -646,7 +629,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
       <p>Most traders set a daily profit target and then chase it. The correct daily target is a rule that ends your
         session: +2R and you're done; −1R and you're done. Both are wins for the plan.
         <span class="zh">多数人设定每日盈利目标然后去追。正确的每日目标是一条结束你一天的规则：+2R 收工，−1R 也收工。对计划来说两者都是胜利。</span></p>
-      <p>Chasing a target turns a good day into a bad one — you keep trading after the plan is satisfied and give the
+      <p>Chasing a target turns a good day into a bad one - you keep trading after the plan is satisfied and give the
         profit back.
         <span class="zh">追目标会把好日子变成坏日子——计划已经完成你还继续交易，然后把利润还回去。</span></p>
       <div class="calcbox">
@@ -702,7 +685,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
       <p>A plan that only says what you'll buy is a wish list. A real plan also says what you won't do: no news trading,
         no averaging down, no chasing breakouts after 3 PM.
         <span class="zh">只写「要买什么」的计划是愿望清单。真正的计划还会写「不做什么」：不做数据行情、不摊平、下午三点后不追突破。</span></p>
-      <p>Write your personal "no" list from your actual history — the mistakes you repeat are the rules you never wrote down.
+      <p>Write your personal "no" list from your actual history - the mistakes you repeat are the rules you never wrote down.
         <span class="zh">从你自己的交易历史里写一份「不做」清单——你反复犯的错，就是那些你从没写下来的规则。</span></p>
       <div class="note">// Every rule you break is a rule you never wrote. 每条被你违反的规则，都是你从没写下来的规则。</div>
     </div>
@@ -723,12 +706,12 @@ body.lang-zh.lang-strict .en{display:none !important;}
   <article class="pattern reveal">
     <div class="pattern-head"><span class="idx">P.07</span><h3>Pre-Market Routine<span class="zh">盘前检查清单</span></h3><span class="tag bull">SOP 标准流程</span></div>
     <figure class="chart-fig wide"><div class="rchart" data-r="checklist"></div>
-      <figcaption>Ten minutes before the open — no pass, no trade<span class="zh">开盘前十分钟 —— 不过关，不下单</span></figcaption></figure>
+      <figcaption>Ten minutes before the open - no pass, no trade<span class="zh">开盘前十分钟 —— 不过关，不下单</span></figcaption></figure>
     <div class="pattern-desc">
       <p>The pre-market routine is the highest-leverage ten minutes of your day. It converts yesterday's review into
         today's plan.
         <span class="zh">盘前流程是你一天里杠杆率最高的十分钟。它把昨天的复盘变成今天的计划。</span></p>
-      <p>Do it at the same time, in the same order, every day — even on days you don't plan to trade. The routine is the
+      <p>Do it at the same time, in the same order, every day - even on days you don't plan to trade. The routine is the
         job; the trade is optional.
         <span class="zh">每天同一时间、同一顺序执行，哪怕那天不打算交易。流程才是工作，交易只是可选项。</span></p>
       <div class="note">// If you can't pass your own checklist, you can't take the trade.
@@ -744,7 +727,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
   <article class="pattern reveal">
     <div class="pattern-head"><span class="idx">P.08</span><h3>The Session Flow<span class="zh">盘中执行流程</span></h3><span class="tag neu">Flow 流程</span></div>
     <figure class="chart-fig wide"><div class="rchart" data-r="routine"></div>
-      <figcaption>One loop with two traps — FOMO and revenge<span class="zh">一条主回路，两个陷阱 —— 冲动追价与报复交易</span></figcaption></figure>
+      <figcaption>One loop with two traps - FOMO and revenge<span class="zh">一条主回路，两个陷阱 —— 冲动追价与报复交易</span></figcaption></figure>
     <div class="pattern-desc">
       <p>During the session your only job is to check the chart against the checklist. Setup present → execute exactly
         as written. Setup absent → do nothing, and call it a successful day.
@@ -759,7 +742,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
     <div class="pattern-head"><span class="idx">P.09</span><h3>FOMO and Revenge Are the Same Trade<span class="zh">FOMO 和报复交易是同一笔交易</span></h3><span class="tag bear">Critical 关键</span></div>
     <div class="pattern-desc">
       <p>FOMO is buying because the move is happening. Revenge is buying because you just lost. Both are trades taken
-        because of the last event, not the setup — which makes them the same trade.
+        because of the last event, not the setup - which makes them the same trade.
         <span class="zh">FOMO 是因为行情正在发生而买；报复是因为刚亏了而买。两者都是因为「上一个事件」而不是因为形态而下单——所以它们是同一笔交易。</span></p>
       <div class="cmp">
         <div class="col bad">
@@ -800,7 +783,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
         questions are enough.
         <span class="zh">复盘只有一个目的：趁当天记忆还新鲜时提取教训，然后合上档案。五个问题就够了。</span></p>
       <ul class="points">
-        <li><b>01 · Did I follow the plan?</b> 100% or not — no partial credit.<span class="zh">我遵守计划了吗？要么 100%，没有部分得分。</span></li>
+        <li><b>01 · Did I follow the plan?</b> 100% or not - no partial credit.<span class="zh">我遵守计划了吗？要么 100%，没有部分得分。</span></li>
         <li><b>02 · Did I trade only my setup?</b> Every trade maps to a written condition.<span class="zh">我只做了自己的形态吗？每一笔都能对应到写下来的条件。</span></li>
         <li><b>03 · Were entry / stop / target where I wrote them?</b><span class="zh">进 / 止 / 目标位和我写的一致吗？</span></li>
         <li><b>04 · Given the same chart, what would I do differently?</b> One sentence.<span class="zh">同样的图表重来一次，我会改什么？一句话。</span></li>
@@ -829,7 +812,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
       <p>Feelings are useless data. These numbers, tracked weekly, tell you whether the plan is actually working.
         <span class="zh">感觉是没用的数据。这些数字按周追踪，告诉你计划到底有没有在运作。</span></p>
       <div class="defense">
-        <div class="dline"><div class="dn">01</div><div class="dv">≥90%</div><h4>Adherence 守规率</h4><div class="zh">按计划执行的交易 ÷ 总交易</div><p>Trades that followed the plan ÷ all trades. This number comes first — if it's low, nothing else matters.<span style="display:block;font-family:'Noto Sans SC';color:var(--muted-2);margin-top:6px;">这个数字优先；它低的话，其他数字都没意义。</span></p></div>
+        <div class="dline"><div class="dn">01</div><div class="dv">≥90%</div><h4>Adherence 守规率</h4><div class="zh">按计划执行的交易 ÷ 总交易</div><p>Trades that followed the plan ÷ all trades. This number comes first - if it's low, nothing else matters.<span style="display:block;font-family:'Noto Sans SC';color:var(--muted-2);margin-top:6px;">这个数字优先；它低的话，其他数字都没意义。</span></p></div>
         <div class="dline"><div class="dn">02</div><div class="dv">+0.2R</div><h4>Expectancy 期望值</h4><div class="zh">最近 20 笔的平均 R</div><p>Average R per trade over the last 20. Positive and stable beats big and random.<span style="display:block;font-family:'Noto Sans SC';color:var(--muted-2);margin-top:6px;">稳定为正，好过大起大落。</span></p></div>
         <div class="dline"><div class="dn">03</div><div class="dv">≤6R</div><h4>Max Drawdown 最大回撤</h4><div class="zh">期间最深的权益低谷</div><p>Worst equity valley in the period. If it exceeds your plan's assumption, the size is wrong.<span style="display:block;font-family:'Noto Sans SC';color:var(--muted-2);margin-top:6px;">超过计划的假设，说明手数错了。</span></p></div>
       </div>
@@ -851,7 +834,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
   <article class="pattern reveal">
     <div class="pattern-head"><span class="idx">P.12</span><h3>Losing Streaks Are Part of the Schedule<span class="zh">连亏本来就排在日程表上</span></h3><span class="tag bear">Expect it 要有预期</span></div>
     <figure class="chart-fig wide"><div class="rchart" data-r="drawdown"></div>
-      <figcaption>With plan vs. without plan — same streak, different outcome<span class="zh">有计划 vs. 没计划 —— 同样的连亏，不同的结局</span></figcaption></figure>
+      <figcaption>With plan vs. without plan - same streak, different outcome<span class="zh">有计划 vs. 没计划 —— 同样的连亏，不同的结局</span></figcaption></figure>
     <div class="pattern-desc">
       <p>If your system has a 50% win rate, five losses in a row will happen roughly every 30 trades. It is not a signal
         to change anything.
@@ -865,10 +848,10 @@ body.lang-zh.lang-strict .en{display:none !important;}
   <article class="pattern reveal">
     <div class="pattern-head"><span class="idx">P.13</span><h3>The Drawdown Playbook<span class="zh">连亏应对手册</span></h3><span class="tag neu">Protocol 流程</span></div>
     <div class="pattern-desc">
-      <p>The playbook has three stages, keyed to your equity — never to your mood.
+      <p>The playbook has three stages, keyed to your equity - never to your mood.
         <span class="zh">手册分三个阶段，以权益为触发条件，永远不看心情。</span></p>
       <div class="steps">
-        <div class="step"><div class="sn">Stage 01 · 阶段一</div><h4>−3R from peak</h4><div class="zh">距高点 −3R</div><p>Halve the size. Keep trading the same setups — the system is untouched, only the exposure drops.<span style="display:block;font-family:'Noto Sans SC';color:var(--muted);font-size:12.5px;margin-top:6px;">手数减半，形态照做——系统不动，只降暴露。</span></p><div class="out">→ Halve size 手数减半</div></div>
+        <div class="step"><div class="sn">Stage 01 · 阶段一</div><h4>−3R from peak</h4><div class="zh">距高点 −3R</div><p>Halve the size. Keep trading the same setups - the system is untouched, only the exposure drops.<span style="display:block;font-family:'Noto Sans SC';color:var(--muted);font-size:12.5px;margin-top:6px;">手数减半，形态照做——系统不动，只降暴露。</span></p><div class="out">→ Halve size 手数减半</div></div>
         <div class="step"><div class="sn">Stage 02 · 阶段二</div><h4>−6R from peak</h4><div class="zh">距高点 −6R</div><p>Stop live trading entirely. Review the last 30 journal entries before the next live trade.<span style="display:block;font-family:'Noto Sans SC';color:var(--muted);font-size:12.5px;margin-top:6px;">完全停掉实盘。下一笔实盘前，先复盘最近 30 笔日志。</span></p><div class="out">→ Stop &amp; review 停机复盘</div></div>
         <div class="step"><div class="sn">Stage 03 · 阶段三</div><h4>Plan change?</h4><div class="zh">要改计划吗？</div><p>Only with 30+ trades of evidence, never after 5 losses. The streak is data; the sample is the verdict.<span style="display:block;font-family:'Noto Sans SC';color:var(--muted);font-size:12.5px;margin-top:6px;">只有 30 笔以上的证据才能改计划，五笔亏损永远不够。连亏是数据，样本才是判决。</span></p><div class="out">→ Evidence only 只看证据</div></div>
       </div>
@@ -923,10 +906,10 @@ body.lang-zh.lang-strict .en{display:none !important;}
   <article class="pattern reveal">
     <div class="pattern-head"><span class="idx">P.15</span><h3>The 30-Day Build<span class="zh">30 天养成曲线</span></h3><span class="tag bull">Formation 养成</span></div>
     <figure class="chart-fig wide"><div class="rchart" data-r="habit"></div>
-      <figcaption>Effort falls, consistency compounds — 30 days to automatic<span class="zh">意志力递减，坚持复利 —— 30 天走向自动执行</span></figcaption></figure>
+      <figcaption>Effort falls, consistency compounds - 30 days to automatic<span class="zh">意志力递减，坚持复利 —— 30 天走向自动执行</span></figcaption></figure>
     <div class="pattern-desc">
       <p>The first week feels like effort, the second week feels like routine, the third week feels strange when you
-        skip it. That is the curve — effort high, then falling, then automatic.
+        skip it. That is the curve - effort high, then falling, then automatic.
         <span class="zh">第一周像努力，第二周像日常，第三周没做反而浑身不自在。这就是那条曲线——意志力先高后降，最后自动化。</span></p>
       <p>For 30 days, protect the routine above the trades. Even a day with zero trades must include the checklist and
         the review.
@@ -957,7 +940,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
     <div><div class="eyebrow">Final Exam · 毕业考试</div><h2 class="title">Pass the Final Quiz to Graduate<span class="zh">通过最终测验 · 课程毕业</span></h2></div>
   </div>
   <div class="note" style="max-width:820px;line-height:1.9;">
-    Answer all 5 questions. You need <b>4 of 5 (70%)</b> to pass. Wrong answers are explained — read them, then retry.
+    Answer all 5 questions. You need <b>4 of 5 (70%)</b> to pass. Wrong answers are explained - read them, then retry.
     <span class="zh">回答全部 5 题。答对 <b>4 题（70%）</b> 即通过。答错的题会给出解析 —— 看完再试。</span>
   </div>
   <div id="examBox" style="max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:22px;"></div>
@@ -974,7 +957,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
   <div class="verbs">
     <span>Plan</span><span class="sep">·</span><span>Check</span><span class="sep">·</span><span>Execute</span><span class="sep">·</span><span>Review</span><span class="sep">·</span><span>Repeat</span>
   </div>
-  <div class="once">Once hope it possible — start tomorrow morning, same time.</div>
+  <div class="once">Once hope it possible - start tomorrow morning, same time.</div>
 </section>
 
 <!-- ================= FOOTER ================= -->
@@ -983,7 +966,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
     <div class="disc-title reveal">Disclaimer · 免责声明</div>
     <p class="disc reveal">This document is for educational purposes only and does not constitute financial, investment, or legal advice. All figures, prices and examples are illustrative.
       <span class="zh">本文件仅供教育用途，不构成任何财务、投资或法律建议。文中所有数字、价格与案例均为示意。</span></p>
-    <p class="disc reveal">Contract specifications, pip values and margin requirements differ between brokers — particularly for metals, indices and CFDs. Always confirm the specification of your own account before sizing a position.
+    <p class="disc reveal">Contract specifications, pip values and margin requirements differ between brokers - particularly for metals, indices and CFDs. Always confirm the specification of your own account before sizing a position.
       <span class="zh">合约规格、点值与保证金要求因券商而异，金属、指数与差价合约尤其如此。计算仓位前，请务必确认你自己帐户的规格。</span></p>
     <p class="disc reveal">Trading involves substantial risk. Risk management improves your chance of survival; it does not guarantee profit, and no position sizing method can eliminate the risk of loss.
       <span class="zh">交易存在重大风险。风险管理能提高你活下来的机率，但不保证获利；没有任何仓位计算方法能消除亏损风险。</span></p>
@@ -1290,7 +1273,7 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
 <script>
 /* ===== MTJ EXAM MODULE - Module 17 ===== */
 const MTJ_EXAM_KEY = "mtj_exam_pass_17";
-const EXAM_QUESTIONS = [{"q": "計劃的核心作用是什麼?", "opts": ["預測明天價格走勢", "在「刺激」和「下單」之間插入一個停頓", "讓交易變得更快", "保證每一筆都賺錢"], "opts_zh": ["預測明天價格走勢", "在「刺激」和「下單」之間插入一個停頓", "讓交易變得更快", "保證每一筆都賺錢"], "ans": 1, "why": "A plan inserts a pause between the stimulus and the click. That pause is the entire difference between a trader and a gambler — one decision per trade, made once before the open.", "why_zh": "计划在「刺激」和「下单」之间插入一个停顿。这个停顿就是交易者与赌徒的全部区别——每笔交易只有一个决策，而且在开盘前只做一次。"}, {"q": "以下哪一個不屬於計劃的六大組成?", "opts": ["市場(做哪個品種、什麼方向)", "週期(哪裡決策、哪裡執行)", "進場條件(寫到陌生人也能執行)", "止盈後立即加倉的規則"], "opts_zh": ["預測明天價格走勢", "在「刺激」和「下單」之間插入一個停頓", "讓交易變得更快", "保證每一筆都賺錢"], "ans": 3, "why": "The six blocks are Market, Timeframe, Entry, Exit, Risk and Daily Target. Adding to a winner is not one of them — risk stays a fixed number that never changes.", "why_zh": "六大组成是市场、周期、进场、出场、风险与每日目标。盈利后加仓不在其中——风险始终是一个固定不变的数字。"}, {"q": "如果今天不打算交易,盤前十分鐘檢查清單還要做嗎?", "opts": ["不做,反正不下單", "做,而且每天同一時間、同一順序執行", "只做一半,意思一下", "改到盤中再補做"], "opts_zh": ["預測明天價格走勢", "在「刺激」和「下單」之間插入一個停頓", "讓交易變得更快", "保證每一筆都賺錢"], "ans": 1, "why": "The routine is the job; the trade is optional. You run the checklist at the same time in the same order every day — even on zero-trade days, and especially during the 30-day build.", "why_zh": "例行程序才是工作；交易只是可选项。每天在同一时间、按同一顺序执行检查清单——即使是不交易的日子，尤其是 30 天养成期。"}, {"q": "按連虧應對手冊,距權益高點 -3R 時應該怎麼做?", "opts": ["完全停掉實盤", "手數減半,繼續做同一套形態", "加大手數把虧損賺回來", "立刻修改交易計劃"], "opts_zh": ["預測明天價格走勢", "在「刺激」和「下單」之間插入一個停頓", "讓交易變得更快", "保證每一筆都賺錢"], "ans": 1, "why": "Stage 1 at -3R: halve the size but keep trading the same setups — the system is untouched, only exposure drops. Plan changes need 30+ trades of evidence, never 5 losses.", "why_zh": "-3R 属于第一阶段：手数减半，但继续做同一套形态——系统本身不变，只是敞口降低。修改计划需要 30 笔以上的证据，绝不是亏 5 笔就改。"}, {"q": "連續虧損兩筆之後,冷卻規則要求你做什麼?", "opts": ["馬上做下一單把錢賺回來", "把止損移寬一點再進場", "關掉平台,站起來,離開 30 分鐘", "換一個更激進的策略"], "opts_zh": ["預測明天價格走勢", "在「刺激」和「下單」之間插入一個停頓", "讓交易變得更快", "保證每一筆都賺錢"], "ans": 2, "why": "Two consecutive losses → close the platform, stand up, walk away for 30 minutes. Cooldown rules must be physical and immediate — I will just watch is not a cooldown.", "why_zh": "连续亏损两笔 → 关掉平台，站起来，离开 30 分钟。冷却规则必须是身体力行、立即执行的——「我就看看」不算冷却。"}];
+const EXAM_QUESTIONS = [{"q": "計劃的核心作用是什麼?", "opts": ["預測明天價格走勢", "在「刺激」和「下單」之間插入一個停頓", "讓交易變得更快", "保證每一筆都賺錢"], "opts_zh": ["預測明天價格走勢", "在「刺激」和「下單」之間插入一個停頓", "讓交易變得更快", "保證每一筆都賺錢"], "ans": 1, "why": "A plan inserts a pause between the stimulus and the click. That pause is the entire difference between a trader and a gambler - one decision per trade, made once before the open.", "why_zh": "计划在「刺激」和「下单」之间插入一个停顿。这个停顿就是交易者与赌徒的全部区别——每笔交易只有一个决策，而且在开盘前只做一次。"}, {"q": "以下哪一個不屬於計劃的六大組成?", "opts": ["市場(做哪個品種、什麼方向)", "週期(哪裡決策、哪裡執行)", "進場條件(寫到陌生人也能執行)", "止盈後立即加倉的規則"], "opts_zh": ["預測明天價格走勢", "在「刺激」和「下單」之間插入一個停頓", "讓交易變得更快", "保證每一筆都賺錢"], "ans": 3, "why": "The six blocks are Market, Timeframe, Entry, Exit, Risk and Daily Target. Adding to a winner is not one of them - risk stays a fixed number that never changes.", "why_zh": "六大组成是市场、周期、进场、出场、风险与每日目标。盈利后加仓不在其中——风险始终是一个固定不变的数字。"}, {"q": "如果今天不打算交易,盤前十分鐘檢查清單還要做嗎?", "opts": ["不做,反正不下單", "做,而且每天同一時間、同一順序執行", "只做一半,意思一下", "改到盤中再補做"], "opts_zh": ["預測明天價格走勢", "在「刺激」和「下單」之間插入一個停頓", "讓交易變得更快", "保證每一筆都賺錢"], "ans": 1, "why": "The routine is the job; the trade is optional. You run the checklist at the same time in the same order every day - even on zero-trade days, and especially during the 30-day build.", "why_zh": "例行程序才是工作；交易只是可选项。每天在同一时间、按同一顺序执行检查清单——即使是不交易的日子，尤其是 30 天养成期。"}, {"q": "按連虧應對手冊,距權益高點 -3R 時應該怎麼做?", "opts": ["完全停掉實盤", "手數減半,繼續做同一套形態", "加大手數把虧損賺回來", "立刻修改交易計劃"], "opts_zh": ["預測明天價格走勢", "在「刺激」和「下單」之間插入一個停頓", "讓交易變得更快", "保證每一筆都賺錢"], "ans": 1, "why": "Stage 1 at -3R: halve the size but keep trading the same setups - the system is untouched, only exposure drops. Plan changes need 30+ trades of evidence, never 5 losses.", "why_zh": "-3R 属于第一阶段：手数减半，但继续做同一套形态——系统本身不变，只是敞口降低。修改计划需要 30 笔以上的证据，绝不是亏 5 笔就改。"}, {"q": "連續虧損兩筆之後,冷卻規則要求你做什麼?", "opts": ["馬上做下一單把錢賺回來", "把止損移寬一點再進場", "關掉平台,站起來,離開 30 分鐘", "換一個更激進的策略"], "opts_zh": ["預測明天價格走勢", "在「刺激」和「下單」之間插入一個停頓", "讓交易變得更快", "保證每一筆都賺錢"], "ans": 2, "why": "Two consecutive losses → close the platform, stand up, walk away for 30 minutes. Cooldown rules must be physical and immediate - I will just watch is not a cooldown.", "why_zh": "连续亏损两笔 → 关掉平台，站起来，离开 30 分钟。冷却规则必须是身体力行、立即执行的——「我就看看」不算冷却。"}];
 function renderExam(){
   var box = document.getElementById("examBox"); if(!box) return;
   EXAM_QUESTIONS.forEach(function(item, qi){

@@ -41,12 +41,6 @@ body{
     radial-gradient(900px 600px at -10% 20%, rgba(201,162,39,.08), transparent 60%),
     radial-gradient(1200px 900px at 50% 120%, rgba(232,200,119,.06), transparent 55%);
 }
-.bg-grid{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.4;
-  background-image:linear-gradient(rgba(232,200,119,.04) 1px,transparent 1px),
-                   linear-gradient(90deg,rgba(232,200,119,.04) 1px,transparent 1px);
-  background-size:64px 64px;
-  mask-image:radial-gradient(circle at 50% 30%,#000 0%,transparent 80%);
-  -webkit-mask-image:radial-gradient(circle at 50% 30%,#000 0%,transparent 80%);}
 .wrap{position:relative;z-index:2;}
 
 /* ---------- top bar ---------- */
@@ -99,10 +93,7 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 .hero .course-tag{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.34em;
   text-transform:uppercase;color:var(--gold);margin:8px 0 4px;
   padding:6px 16px;border:1px solid var(--line);border-radius:30px;background:rgba(232,200,119,.04);}
-.hero h1{font-size:clamp(46px,11vw,124px);font-weight:800;line-height:.94;margin:18px 0 6px;letter-spacing:-.03em;
-  background:linear-gradient(180deg,#fff 0%,var(--gold-bright) 45%,var(--gold-deep) 100%);
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-  text-shadow:0 0 60px rgba(232,200,119,.18);}
+.hero h1{font-size:clamp(46px,11vw,124px);font-weight:800;line-height:.94;margin:18px 0 6px;letter-spacing:-.03em;color:var(--gold-bright);}
 .hero .h-zh{font-family:'Noto Sans SC';font-weight:300;font-size:clamp(16px,3vw,26px);letter-spacing:.5em;
   color:var(--muted);margin-bottom:20px;text-indent:.5em;}
 .hero .h-sub{max-width:560px;color:var(--muted);font-size:clamp(14px,2vw,17px);margin:0 auto;}
@@ -110,12 +101,6 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 .hero-chart{position:absolute;left:0;right:0;bottom:0;height:34vh;min-height:180px;width:100%;z-index:1;
   -webkit-mask-image:linear-gradient(to right,transparent,#000 12%,#000 88%,transparent);
   mask-image:linear-gradient(to right,transparent,#000 12%,#000 88%,transparent);opacity:.9;}
-.scroll-hint{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);z-index:3;
-  font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.24em;color:var(--muted-2);
-  text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:8px;}
-.scroll-hint .m{width:20px;height:32px;border:1px solid var(--line);border-radius:12px;position:relative;}
-.scroll-hint .m::after{content:"";position:absolute;top:6px;left:50%;transform:translateX(-50%);
-  width:3px;height:6px;border-radius:2px;background:var(--gold);animation:mwheel 1.8s ease infinite;}
 @keyframes mwheel{0%{opacity:0;top:5px}30%{opacity:1}70%{opacity:1}100%{opacity:0;top:16px}}
 
 /* ---------- agenda ---------- */
@@ -137,7 +122,7 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 .points li{position:relative;padding:16px 0 16px 40px;border-top:1px solid var(--line-soft);}
 .points li:last-child{border-bottom:1px solid var(--line-soft);}
 .points li::before{content:"";position:absolute;left:8px;top:22px;width:10px;height:10px;border-radius:2px;
-  background:var(--gold);box-shadow:0 0 12px rgba(232,200,119,.6);transform:rotate(45deg);}
+  background:var(--gold);transform:rotate(45deg);}
 .points li b{color:var(--text);font-weight:600;}
 .points li .zh{display:block;font-family:'Noto Sans SC';color:var(--muted);font-size:13.5px;margin-top:3px;}
 
@@ -149,7 +134,7 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 /* ---------- pattern groups ---------- */
 .divider{position:relative;text-align:center;padding:clamp(90px,14vh,150px) 20px;overflow:hidden;}
 .divider h2{font-size:clamp(38px,9vw,96px);font-weight:800;letter-spacing:-.02em;margin:0;
-  background:linear-gradient(180deg,var(--gold-bright),var(--gold-deep));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  color:var(--gold-bright);}
 .divider .zh{font-family:'Noto Sans SC';font-weight:300;letter-spacing:.5em;color:var(--muted);
   font-size:clamp(14px,2.4vw,20px);margin-top:14px;text-indent:.5em;}
 .divider .rail{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.3em;color:var(--gold-deep);
@@ -479,7 +464,6 @@ body.lang-zh.lang-strict .en{display:none !important;}
 <a href="../MakeTradesJourney.html" id="mtjBack" style="position:fixed;left:14px;bottom:14px;z-index:60;display:inline-flex;align-items:center;gap:9px;text-decoration:none;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#9A968C;background:rgba(6,6,8,.8);border:1px solid rgba(232,200,119,.22);border-radius:30px;padding:9px 16px;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:.25s" onmouseover="this.style.color='#FCE9A8';this.style.borderColor='#E8C877';this.style.boxShadow='0 0 22px rgba(232,200,119,.18)'" onmouseout="this.style.color='#9A968C';this.style.borderColor='rgba(232,200,119,.22)';this.style.boxShadow='none'"><span>&#8592;</span>Hub &middot; &#36820;&#22238;&#30446;&#24405;</a>
 <canvas id="particles"></canvas>
 <div class="bg-glow"></div>
-<div class="bg-grid"></div>
 <div class="bg-logo"></div>
 
 <!-- top bar -->
@@ -520,9 +504,8 @@ body.lang-zh.lang-strict .en{display:none !important;}
   <div class="course-tag">Module 20 · Trading Course</div>
   <h1>MACD<br>Indicator</h1>
   <div class="h-zh">移 动 平 均 收 敛 散 发</div>
-  <p class="h-sub">One line. One signal. One histogram. The momentum engine every charting platform ships by default — and the most misread.
+  <p class="h-sub">One line. One signal. One histogram. The momentum engine every charting platform ships by default - and the most misread.
     <span class="zh">一条线、一条信号线、一组红绿柱。每个看盘软件默认自带的动能引擎——也是被误读最多的指标。</span></p>
-  <div class="scroll-hint"><span class="m"></span>Scroll</div>
 </header>
 
 <!-- ================= AGENDA ================= -->
@@ -540,7 +523,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
 </section>
 
 <section class="section reveal" style="padding-top:20px;padding-bottom:20px;">
-  <div class="note" style="max-width:820px;line-height:1.9;">// MACD is the most-installed indicator on MT5 — and the most misread 为什么单独开一课讲 MACD：
+  <div class="note" style="max-width:820px;line-height:1.9;">// MACD is the most-installed indicator on MT5 - and the most misread 为什么单独开一课讲 MACD：
     it measures <b>momentum</b>, not direction. Read correctly it tells you who is winning; read carelessly
     it fabricates signals inside every range. This module is about the second reading.
     <span class="zh">MACD 是 MT5 上安装率最高的指标，也是被误读最多的指标。它度量的是<b>动能</b>，不是方向。读对了，它告诉你谁在赢；读错了，它在每个震荡区间里给你造假信号。这一课讲的就是「怎么读对」。</span></div>
@@ -585,7 +568,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
     <div><div class="eyebrow">The intuition · 公式直觉</div><h2 class="title">Three Averages, Stacked Twice</h2></div></div>
 
   <article class="pattern reveal">
-    <div class="pattern-head"><span class="idx">M.02</span><h3>Fast Minus Slow — Twice<span class="zh">快减慢，减两次</span></h3><span class="tag neu">Formula 公式</span></div>
+    <div class="pattern-head"><span class="idx">M.02</span><h3>Fast Minus Slow - Twice<span class="zh">快减慢，减两次</span></h3><span class="tag neu">Formula 公式</span></div>
     <figure class="chart-fig wide"><div class="rchart" data-r="macdformula"></div>
       <figcaption>Step 1: EMA(12) − EMA(26) → MACD line. Step 2: line − signal → histogram<span class="zh">第一步：EMA(12) − EMA(26) = MACD 线；第二步：线 − 信号 = 柱状图</span></figcaption></figure>
     <div class="pattern-desc">
@@ -593,7 +576,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
         average runs above the slow one, so the difference is positive and growing. When momentum stalls,
         the gap narrows toward zero.
         <span class="zh">MACD 用<b>慢</b> EMA(26) 减去<b>快</b> EMA(12)。价格快速上涨时，快均线跑在慢均线上方，差值为正且不断变大；动能一停，差距就朝零收窄。</span></p>
-      <p>The histogram then subtracts the signal — an EMA(9) of the line itself — from the MACD line.
+      <p>The histogram then subtracts the signal - an EMA(9) of the line itself - from the MACD line.
         It measures the <b>acceleration</b> of the line, not its level.
         <span class="zh">柱状图再用 MACD 线减去信号线（线的 9 期 EMA）。它度量的是 MACD 线的<b>加速度</b>，不是它的水平。</span></p>
       <div class="calcbox">
@@ -601,7 +584,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
         <div class="fx"><b>Signal</b><span class="op">=</span><b>EMA(9)</b> of MACD Line<span class="op">·</span><b>Histogram</b><span class="op">=</span><b>MACD Line</b><span class="op">−</span><b>Signal</b></div>
         <div class="cap">MACD 线 = EMA(12) − EMA(26)；信号线 = MACD 线的 EMA(9)；柱 = 线 − 信号</div>
       </div>
-      <div class="note">// You never compute this by hand. But knowing the order — line, then signal, then histogram — tells you which piece reacts first. 你永远不用手算。但知道顺序——先有线、再有信号、最后有柱——你就知道谁先动。</div>
+      <div class="note">// You never compute this by hand. But knowing the order - line, then signal, then histogram - tells you which piece reacts first. 你永远不用手算。但知道顺序——先有线、再有信号、最后有柱——你就知道谁先动。</div>
     </div>
   </article>
 </section>
@@ -622,10 +605,10 @@ body.lang-zh.lang-strict .en{display:none !important;}
     <figure class="chart-fig wide"><div class="rchart" data-r="macdcross"></div>
       <figcaption>Golden cross (bull) vs. death cross (bear)<span class="zh">金叉（多）vs. 死叉（空）</span></figcaption></figure>
     <div class="pattern-desc">
-      <p>A <b>golden cross</b> happens when the MACD line cuts <b>up through</b> the signal line — momentum is
+      <p>A <b>golden cross</b> happens when the MACD line cuts <b>up through</b> the signal line - momentum is
         picking up. A <b>death cross</b> is the mirror image: the line cuts down through the signal.
         <span class="zh"><b>金叉</b>是 MACD 线<b>向上穿过</b>信号线——动能正在增强。<b>死叉</b>正好相反：线向下穿过信号线。</span></p>
-      <p>The crosses are the most-used MACD signal — and the most abused. They are <b>lagging</b>: both lines
+      <p>The crosses are the most-used MACD signal - and the most abused. They are <b>lagging</b>: both lines
         are averages, so a cross always confirms a move that has already started.
         <span class="zh">交叉是 MACD 最常用的信号——也是被滥用得最狠的。它们是<b>滞后的</b>：两条线都是均线，交叉发生永远是在行情已经启动之后。</span></p>
       <ul class="points">
@@ -633,7 +616,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
         <li><b>Golden cross below zero</b> — a rebound inside a downtrend. Weaker.<span class="zh">零轴下方的金叉——下跌趋势中的反弹，较弱。</span></li>
         <li><b>Crosses inside a range</b> — they fire back and forth. Noise.<span class="zh">震荡区间里的交叉——来回触发，是噪音。</span></li>
       </ul>
-      <div class="note">// A cross is a starting gun, not a finish line. It says momentum changed — it does not say the trade will win. 交叉是发令枪，不是终点线。它只说明动能变了，不保证这笔交易会赢。</div>
+      <div class="note">// A cross is a starting gun, not a finish line. It says momentum changed - it does not say the trade will win. 交叉是发令枪，不是终点线。它只说明动能变了，不保证这笔交易会赢。</div>
     </div>
   </article>
 </section>
@@ -645,10 +628,10 @@ body.lang-zh.lang-strict .en{display:none !important;}
   <article class="pattern reveal">
     <div class="pattern-head"><span class="idx">M.04</span><h3>Read the Size of the Bars, Not Just Their Color<span class="zh">看柱子大小，别只看颜色</span></h3><span class="tag bear">Warning 预警</span></div>
     <figure class="chart-fig wide"><div class="rchart" data-r="macdhist"></div>
-      <figcaption>Histogram peaks, then contracts before the cross — momentum dies before the lines cross<span class="zh">柱状图见顶后先收缩，交叉还没发生动能就先熄火</span></figcaption></figure>
+      <figcaption>Histogram peaks, then contracts before the cross - momentum dies before the lines cross<span class="zh">柱状图见顶后先收缩，交叉还没发生动能就先熄火</span></figcaption></figure>
     <div class="pattern-desc">
       <p>The histogram is the difference between line and signal. When the bars <b>shrink toward zero</b>,
-        the two lines are converging — the move is losing fuel <em>before</em> the lines actually cross.
+        the two lines are converging - the move is losing fuel <em>before</em> the lines actually cross.
         <span class="zh">柱是线与信号的差。当柱子<b>朝零收缩</b>时，两条线正在靠拢——在真正交叉之前，这波行情就已经在失去燃料了。</span></p>
       <p>Shrinking histogram on the same side as your trade is the earliest exit warning MACD gives you.
         It does not mean "reverse now" — it means the push is over; the follow-through is gone.
@@ -665,14 +648,14 @@ body.lang-zh.lang-strict .en{display:none !important;}
 
 <section class="section" id="zero">
   <div class="group-head reveal"><span class="tier">05</span>
-    <div><div class="eyebrow">The zero axis · 零轴</div><h2 class="title">Above Zero, Below Zero — Who Is Winning</h2></div></div>
+    <div><div class="eyebrow">The zero axis · 零轴</div><h2 class="title">Above Zero, Below Zero - Who Is Winning</h2></div></div>
 
   <article class="pattern reveal">
     <div class="pattern-head"><span class="idx">M.05</span><h3>The Zero Line Is the Bull/Bear Border<span class="zh">零轴就是多空分界</span></h3><span class="tag neu">Context 背景</span></div>
     <figure class="chart-fig wide"><div class="rchart" data-r="macdzero"></div>
       <figcaption>MACD above zero = bulls in control · below zero = bears in control<span class="zh">零轴上方=多方控盘 · 零轴下方=空方控盘</span></figcaption></figure>
     <div class="pattern-desc">
-      <p>When the MACD line is <b>above zero</b>, the fast EMA is above the slow EMA — recent average price
+      <p>When the MACD line is <b>above zero</b>, the fast EMA is above the slow EMA - recent average price
         sits above the older average, so the market is net bullish. Below zero is the mirror.
         <span class="zh">MACD 线在<b>零轴上方</b>时，快 EMA 高于慢 EMA——近期均价高于长期均价，市场整体偏多。零轴下方正好相反。</span></p>
       <p>Zero is the <b>context filter</b> for everything else: a golden cross above zero is a trend pullback
@@ -705,7 +688,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
       <figcaption>Top divergence: price higher high + MACD lower high · bottom divergence: price lower low + MACD higher low<span class="zh">顶背离：价格更高高点配 MACD 更低高点 · 底背离：价格更低低点配 MACD 更高低点</span></figcaption></figure>
     <div class="pattern-desc">
       <p><b>Top divergence</b>: price prints a higher high, but MACD prints a lower high. Price is moving
-        forward on fumes — the momentum behind the new high is weaker than the one before it.
+        forward on fumes - the momentum behind the new high is weaker than the one before it.
         <span class="zh"><b>顶背离</b>：价格创出更高的高点，MACD 却走出更低的高点。价格是靠余气在冲——支撑新高点的动能比上一波弱。</span></p>
       <p><b>Bottom divergence</b> is the mirror at lows: price makes a lower low, MACD makes a higher low —
         sellers are exhausting. Both are <b>warnings, not triggers</b>: divergence tells you a move is
@@ -730,26 +713,26 @@ body.lang-zh.lang-strict .en{display:none !important;}
 
 <section class="section" id="params">
   <div class="group-head reveal"><span class="tier">07</span>
-    <div><div class="eyebrow">MT5 settings · 参数设置</div><h2 class="title">12/26/9 vs 5/35/5 — What the Numbers Do</h2></div></div>
+    <div><div class="eyebrow">MT5 settings · 参数设置</div><h2 class="title">12/26/9 vs 5/35/5 - What the Numbers Do</h2></div></div>
 
   <article class="pattern reveal">
-    <div class="pattern-head"><span class="idx">M.07</span><h3>Fast, Slow, Signal — Three Knobs<span class="zh">快线、慢线、信号——三个旋钮</span></h3><span class="tag neu">Settings 参数</span></div>
+    <div class="pattern-head"><span class="idx">M.07</span><h3>Fast, Slow, Signal - Three Knobs<span class="zh">快线、慢线、信号——三个旋钮</span></h3><span class="tag neu">Settings 参数</span></div>
     <figure class="chart-fig wide"><div class="rchart" data-r="macdparams"></div>
       <figcaption>Default (12,26,9) vs. more sensitive (5,35,5) on the same market<span class="zh">同一段行情：默认(12,26,9) vs. 更敏感(5,35,5)</span></figcaption></figure>
     <div class="pattern-desc">
       <p>The three numbers are <b>fast EMA period, slow EMA period, signal period</b>. Smaller fast/slow
-        numbers track price more tightly — more crosses, more noise. Larger numbers smooth more — fewer,
+        numbers track price more tightly - more crosses, more noise. Larger numbers smooth more - fewer,
         later, cleaner signals.
         <span class="zh">三个数字分别是<b>快线 EMA 周期、慢线 EMA 周期、信号线周期</b>。快慢线周期越小越贴价格——交叉更多、噪音更多；周期越大越平滑——信号更少、更晚、更干净。</span></p>
       <p>(5,35,5) reacts faster to reversals and produces far more crosses; (12,26,9) is the platform default
-        for a reason — it sits between noise and lag. Changing parameters changes the <b>meaning</b> of every
+        for a reason - it sits between noise and lag. Changing parameters changes the <b>meaning</b> of every
         cross; backtest the pair you actually trade.
         <span class="zh">(5,35,5) 对反转反应更快，但交叉数量暴增；(12,26,9) 是平台默认值是有道理的——它正好在噪音与滞后之间。改参数等于改每个交叉的<b>含义</b>；用你真正交易的组合去回测。</span></p>
       <div class="cmp">
         <div class="col good">
           <div class="ch">✓ Default 12/26/9 · 默认参数</div>
           <ol>
-            <li>Balanced — moderate cross count<span class="zh">均衡——交叉数量适中</span></li>
+            <li>Balanced - moderate cross count<span class="zh">均衡——交叉数量适中</span></li>
             <li>Works on H1 and above<span class="zh">适合 H1 及以上周期</span></li>
             <li>Fewer false crosses in ranges<span class="zh">震荡区假交叉较少</span></li>
           </ol>
@@ -757,13 +740,13 @@ body.lang-zh.lang-strict .en{display:none !important;}
         <div class="col bad">
           <div class="ch">⚠ Custom 5/35/5 · 自调参数</div>
           <ol>
-            <li>Fast line hugs price — many crosses<span class="zh">快线贴价格——交叉很多</span></li>
+            <li>Fast line hugs price - many crosses<span class="zh">快线贴价格——交叉很多</span></li>
             <li>Better on scalping timeframes<span class="zh">适合超短周期</span></li>
             <li>More noise, needs a filter<span class="zh">噪音更大，必须配过滤器</span></li>
           </ol>
         </div>
       </div>
-      <div class="note">// Changing only the signal period only changes the histogram's smoothing — it does not change the MACD line itself. 只改信号周期只影响柱状图的平滑，MACD 线本身不变。</div>
+      <div class="note">// Changing only the signal period only changes the histogram's smoothing - it does not change the MACD line itself. 只改信号周期只影响柱状图的平滑，MACD 线本身不变。</div>
     </div>
   </article>
 </section>
@@ -777,7 +760,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
     <figure class="chart-fig wide"><div class="rchart" data-r="macdtrend"></div>
       <figcaption>The same golden cross: valid in an uptrend, false inside a range<span class="zh">同一个金叉：上升趋势里有效，震荡区间里是假的</span></figcaption></figure>
     <div class="pattern-desc">
-      <p>MACD is a <b>momentum</b> indicator — it has no opinion about trend until you add one. The single
+      <p>MACD is a <b>momentum</b> indicator - it has no opinion about trend until you add one. The single
         biggest upgrade: only take golden crosses that agree with the higher-timeframe trend, and death
         crosses that agree with a downtrend. Counter-trend crosses are lottery tickets.
         <span class="zh">MACD 是<b>动能</b>指标——你不给它背景，它自己对趋势没有任何看法。最大的一次升级：只做与更大周期趋势一致的金叉、与下跌趋势一致的死叉。逆势交叉等于买彩票。</span></p>
@@ -806,7 +789,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
         and every oscillation produces a cross. A sideways market can generate <b>dozens of golden and death
         crosses</b> in a week, each one a losing trade if you act on it.
         <span class="zh">震荡市里价格围绕一个中枢来回摆，MACD 也围绕零轴来回摆——每一次摆动都会产生一个交叉。横盘一周可以制造<b>几十个金叉死叉</b>，每一个都照着做就是一笔亏损。</span></p>
-      <p>The fix is never a better MACD setting — it is <b>identifying the regime first</b>. If the market is
+      <p>The fix is never a better MACD setting - it is <b>identifying the regime first</b>. If the market is
         ranging, MACD cross signals are noise by construction. Trade ranges with range tools, not momentum crosses.
         <span class="zh">解法从来不是调更好的参数，而是<b>先识别市场状态</b>。市场在震荡时，MACD 交叉信号从构造上就是噪音。震荡就用震荡工具，别用动能交叉。</span></p>
       <div class="cmp">
@@ -843,7 +826,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
     <div><div class="eyebrow">Final Exam · 毕业考试</div><h2 class="title">Pass the Final Quiz to Graduate<span class="zh">通过最终测验 · 课程毕业</span></h2></div>
   </div>
   <div class="note" style="max-width:820px;line-height:1.9;">
-    Answer all 5 questions. You need <b>4 of 5 (70%)</b> to pass. Wrong answers are explained — read them, then retry.
+    Answer all 5 questions. You need <b>4 of 5 (70%)</b> to pass. Wrong answers are explained - read them, then retry.
     <span class="zh">回答全部 5 题。答对 <b>4 题（70%）</b> 即通过。答错的题会给出解析 —— 看完再试。</span>
   </div>
   <div id="examBox" style="max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:22px;"></div>
@@ -870,7 +853,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
     <div class="disc-title reveal">Disclaimer · 免责声明</div>
     <p class="disc reveal">This document is for educational purposes only and does not constitute financial, investment, or legal advice. All figures, prices and examples are illustrative.
       <span class="zh">本文件仅供教育用途，不构成任何财务、投资或法律建议。文中所有数字、价格与案例均为示意。</span></p>
-    <p class="disc reveal">Contract specifications, pip values and margin requirements differ between brokers — particularly for metals, indices and CFDs. Always confirm the specification of your own account before sizing a position.
+    <p class="disc reveal">Contract specifications, pip values and margin requirements differ between brokers - particularly for metals, indices and CFDs. Always confirm the specification of your own account before sizing a position.
       <span class="zh">合约规格、点值与保证金要求因券商而异，金属、指数与差价合约尤其如此。计算仓位前，请务必确认你自己帐户的规格。</span></p>
     <p class="disc reveal">Trading involves substantial risk. Risk management improves your chance of survival; it does not guarantee profit, and no position sizing method can eliminate the risk of loss.
       <span class="zh">交易存在重大风险。风险管理能提高你活下来的机率，但不保证获利；没有任何仓位计算方法能消除亏损风险。</span></p>
@@ -1073,7 +1056,7 @@ function drawMACDHist(box){
   txt(s,X(peak),T+16,'PEAK 动能顶峰',{'text-anchor':'middle','font-size':9.5,fill:C.goldB,'font-weight':700,class:'rlbl',style:'--i:22'});
   txt(s,(X(peak)+X(crossIdx))/2,T+34,'MOMENTUM DECAY 动能衰减区',{'text-anchor':'middle','font-size':9.5,fill:C.bear,'font-weight':700,'font-family':"'Noto Sans SC',sans-serif",class:'rlbl',style:'--i:23'});
   txt(s,X(crossIdx),zeroY-12,'CROSS 交叉',{'text-anchor':'middle','font-size':9.5,fill:C.cyan,'font-weight':700,class:'rlbl',style:'--i:24'});
-  txt(s,L+plotW/2,H-6,'Bars shrink toward zero before the lines cross — momentum dies first. 柱子先朝零收缩，线才交叉——动能先熄火。',
+  txt(s,L+plotW/2,H-6,'Bars shrink toward zero before the lines cross - momentum dies first. 柱子先朝零收缩，线才交叉——动能先熄火。',
     {'text-anchor':'middle','font-size':10,fill:C.muted2,'font-family':"'Noto Sans SC',sans-serif"});
 }
 
@@ -1191,7 +1174,7 @@ function drawMACDParams(box){
   txt(s,L+286,16,'FAST 快速 5/35/5',{'font-size':10.5,fill:C.cyan,'font-weight':700,'letter-spacing':'.08em'});
   el('line',{x1:L+410,x2:L+428,y1:12,y2:12,stroke:C.cyan,'stroke-width':2.4},s);
   txt(s,L+432,16,c2+' crosses 次交叉 · dots=每叉',{'font-size':9.5,fill:C.muted,'font-family':"'Noto Sans SC',sans-serif"});
-  txt(s,L+plotW/2,H-8,'Same market, two settings — smaller periods cross more and earlier. 同一段行情、两套参数——周期越小交叉越多越早。',
+  txt(s,L+plotW/2,H-8,'Same market, two settings - smaller periods cross more and earlier. 同一段行情、两套参数——周期越小交叉越多越早。',
     {'text-anchor':'middle','font-size':10,fill:C.muted2,'font-family':"'Noto Sans SC',sans-serif"});
 }
 
@@ -1234,7 +1217,7 @@ function drawMACDTrend(box){
   const ug=el('g',{style:'--i:14'},s);
   el('circle',{cx:upX(ui),cy:upY(upM[ui]),r:5,fill:C.bull,'fill-opacity':.3,stroke:C.bull,'stroke-width':2,class:'rlbl'},ug);
   txt(s,upX(ui),upY(upM[ui])-12,'✓',{'text-anchor':'middle','font-size':14,fill:C.bull,'font-weight':700,class:'rlbl'});
-  txt(s,L+pw/2,T+272,'VALID — WITH THE TREND 顺势有效',{'text-anchor':'middle','font-size':10,fill:C.bull,'font-weight':700,'letter-spacing':'.08em',class:'rlbl',style:'--i:15'});
+  txt(s,L+pw/2,T+272,'VALID - WITH THE TREND 顺势有效',{'text-anchor':'middle','font-size':10,fill:C.bull,'font-weight':700,'letter-spacing':'.08em',class:'rlbl',style:'--i:15'});
   txt(s,L+pw/2,T+288,'golden cross above zero 零轴上方金叉',{'text-anchor':'middle','font-size':9,fill:C.muted2,'font-family':"'Noto Sans SC',sans-serif",class:'rlbl',style:'--i:15'});
   /* right: range */
   const rP=[100,101,99.5,100.8,99.2,101.2,99,100.6,99.4,101,99.3,100.8,99.5,101.1,99.4,100.5];
@@ -1361,7 +1344,7 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
 <script>
 /* ===== MTJ EXAM MODULE - Module 20 ===== */
 const MTJ_EXAM_KEY = "mtj_exam_pass_20";
-const EXAM_QUESTIONS = [{"q": "What does MT5's MACD (12, 26, 9) actually draw?", "opts": ["Two moving-average lines overlaid on the price chart", "A separate window with one MACD line, one signal line and a red/green histogram", "A single line that predicts future price", "Three oscillators stacked in one panel"], "opts_zh": ["叠加在价格图表上的两条移动平均线", "一个独立窗口，包含一条 MACD 线、一条信号线和红/绿柱状图", "一条能预测未来价格的单线", "堆叠在一个面板中的三个震荡指标"], "ans": 1, "why": "MT5's MACD is a single-window indicator: the MACD line (EMA12 − EMA26), the signal line (EMA9 of the line) and the red/green histogram, drawn below price in an accessory window.", "why_zh": "MT5 的 MACD 是单窗口指标：一条 MACD 线（EMA12 − EMA26）、一条信号线（线的 9 期 EMA）和红绿柱状图，画在价格下方的附属窗口里。"}, {"q": "The histogram bar of MT5's MACD equals…", "opts": ["EMA(26) − EMA(12)", "MACD line − Signal line", "Close price − EMA(12)", "Signal line − Close price"], "opts_zh": ["EMA(26) − EMA(12)", "MACD 线 − 信号线", "收盘价 − EMA(12)", "信号线 − 收盘价"], "ans": 1, "why": "Histogram = MACD line − Signal line. It measures the gap (acceleration) between the two lines — when the gap shrinks, momentum is decaying.", "why_zh": "柱状图 = MACD 线 − 信号线。它度量两条线之间的差距（加速度）——差距收缩时，动能正在衰减。"}, {"q": "A golden cross happens when…", "opts": ["Price makes a new high", "The MACD line cuts up through the signal line", "The histogram turns green", "The MACD line crosses the zero line upward"], "opts_zh": ["价格创出新高", "MACD 线向上穿越信号线", "柱状图变绿", "MACD 线向上穿越零轴"], "ans": 1, "why": "A golden cross is the MACD line crossing up through the signal line — momentum picking up. A zero-line cross is a completely different signal.", "why_zh": "金叉是 MACD 线向上穿过信号线——动能增强。穿越零轴是另一个完全不同的信号。"}, {"q": "The histogram bars shrink toward zero while you are long. What does this mean?", "opts": ["The move is accelerating — add size", "Momentum is decaying — start managing the trade", "Nothing; only crosses matter", "Reverse the position immediately"], "opts_zh": ["行情正在加速——加仓", "动能正在衰减——开始管理这笔交易", "没什么；只有交叉才有意义", "立即反转仓位"], "ans": 1, "why": "Shrinking bars mean line and signal are converging — the push is losing fuel. It is the earliest exit warning, not an instant reverse signal.", "why_zh": "柱子收缩意味着线与信号线正在靠拢——这波推力正在失去燃料。这是最早的离场预警，不是立刻反手信号。"}, {"q": "In a ranging market, most MACD crosses are…", "opts": ["Reliable reversal signals", "False signals — noise produced by the oscillation itself", "Stronger than in trends", "Only valid above zero"], "opts_zh": ["可靠的反转信号", "虚假信号——震荡本身产生的噪音", "比趋势行情中更强", "只有在零轴以上才有效"], "ans": 1, "why": "In a range, price oscillates around a value and MACD oscillates around zero — every swing manufactures a cross. Filter by trend and the zero line first.", "why_zh": "震荡市里价格围绕一个中枢摆动，MACD 也围绕零轴摆动——每一次摆动都会制造一个交叉。先用趋势和零轴过滤。"}];
+const EXAM_QUESTIONS = [{"q": "What does MT5's MACD (12, 26, 9) actually draw?", "opts": ["Two moving-average lines overlaid on the price chart", "A separate window with one MACD line, one signal line and a red/green histogram", "A single line that predicts future price", "Three oscillators stacked in one panel"], "opts_zh": ["叠加在价格图表上的两条移动平均线", "一个独立窗口，包含一条 MACD 线、一条信号线和红/绿柱状图", "一条能预测未来价格的单线", "堆叠在一个面板中的三个震荡指标"], "ans": 1, "why": "MT5's MACD is a single-window indicator: the MACD line (EMA12 − EMA26), the signal line (EMA9 of the line) and the red/green histogram, drawn below price in an accessory window.", "why_zh": "MT5 的 MACD 是单窗口指标：一条 MACD 线（EMA12 − EMA26）、一条信号线（线的 9 期 EMA）和红绿柱状图，画在价格下方的附属窗口里。"}, {"q": "The histogram bar of MT5's MACD equals…", "opts": ["EMA(26) − EMA(12)", "MACD line − Signal line", "Close price − EMA(12)", "Signal line − Close price"], "opts_zh": ["EMA(26) − EMA(12)", "MACD 线 − 信号线", "收盘价 − EMA(12)", "信号线 − 收盘价"], "ans": 1, "why": "Histogram = MACD line − Signal line. It measures the gap (acceleration) between the two lines - when the gap shrinks, momentum is decaying.", "why_zh": "柱状图 = MACD 线 − 信号线。它度量两条线之间的差距（加速度）——差距收缩时，动能正在衰减。"}, {"q": "A golden cross happens when…", "opts": ["Price makes a new high", "The MACD line cuts up through the signal line", "The histogram turns green", "The MACD line crosses the zero line upward"], "opts_zh": ["价格创出新高", "MACD 线向上穿越信号线", "柱状图变绿", "MACD 线向上穿越零轴"], "ans": 1, "why": "A golden cross is the MACD line crossing up through the signal line - momentum picking up. A zero-line cross is a completely different signal.", "why_zh": "金叉是 MACD 线向上穿过信号线——动能增强。穿越零轴是另一个完全不同的信号。"}, {"q": "The histogram bars shrink toward zero while you are long. What does this mean?", "opts": ["The move is accelerating - add size", "Momentum is decaying - start managing the trade", "Nothing; only crosses matter", "Reverse the position immediately"], "opts_zh": ["行情正在加速——加仓", "动能正在衰减——开始管理这笔交易", "没什么；只有交叉才有意义", "立即反转仓位"], "ans": 1, "why": "Shrinking bars mean line and signal are converging - the push is losing fuel. It is the earliest exit warning, not an instant reverse signal.", "why_zh": "柱子收缩意味着线与信号线正在靠拢——这波推力正在失去燃料。这是最早的离场预警，不是立刻反手信号。"}, {"q": "In a ranging market, most MACD crosses are…", "opts": ["Reliable reversal signals", "False signals - noise produced by the oscillation itself", "Stronger than in trends", "Only valid above zero"], "opts_zh": ["可靠的反转信号", "虚假信号——震荡本身产生的噪音", "比趋势行情中更强", "只有在零轴以上才有效"], "ans": 1, "why": "In a range, price oscillates around a value and MACD oscillates around zero - every swing manufactures a cross. Filter by trend and the zero line first.", "why_zh": "震荡市里价格围绕一个中枢摆动，MACD 也围绕零轴摆动——每一次摆动都会制造一个交叉。先用趋势和零轴过滤。"}];
 function renderExam(){
   var box = document.getElementById("examBox"); if(!box) return;
   EXAM_QUESTIONS.forEach(function(item, qi){

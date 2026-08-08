@@ -40,12 +40,6 @@ body{
     radial-gradient(900px 600px at -10% 20%, rgba(201,162,39,.08), transparent 60%),
     radial-gradient(1200px 900px at 50% 120%, rgba(232,200,119,.06), transparent 55%);
 }
-.bg-grid{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.4;
-  background-image:linear-gradient(rgba(232,200,119,.04) 1px,transparent 1px),
-                   linear-gradient(90deg,rgba(232,200,119,.04) 1px,transparent 1px);
-  background-size:64px 64px;
-  mask-image:radial-gradient(circle at 50% 30%,#000 0%,transparent 80%);
-  -webkit-mask-image:radial-gradient(circle at 50% 30%,#000 0%,transparent 80%);}
 .wrap{position:relative;z-index:2;}
 
 /* ---------- top bar ---------- */
@@ -98,10 +92,7 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 .hero .course-tag{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.34em;
   text-transform:uppercase;color:var(--gold);margin:8px 0 4px;
   padding:6px 16px;border:1px solid var(--line);border-radius:30px;background:rgba(232,200,119,.04);}
-.hero h1{font-size:clamp(46px,11vw,124px);font-weight:800;line-height:.94;margin:18px 0 6px;letter-spacing:-.03em;
-  background:linear-gradient(180deg,#fff 0%,var(--gold-bright) 45%,var(--gold-deep) 100%);
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-  text-shadow:0 0 60px rgba(232,200,119,.18);}
+.hero h1{font-size:clamp(46px,11vw,124px);font-weight:800;line-height:.94;margin:18px 0 6px;letter-spacing:-.03em;color:var(--gold-bright);}
 .hero .h-zh{font-family:'Noto Sans SC';font-weight:300;font-size:clamp(16px,3vw,26px);letter-spacing:.5em;
   color:var(--muted);margin-bottom:20px;text-indent:.5em;}
 .hero .h-sub{max-width:560px;color:var(--muted);font-size:clamp(14px,2vw,17px);margin:0 auto;}
@@ -109,12 +100,6 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 .hero-chart{position:absolute;left:0;right:0;bottom:0;height:34vh;min-height:180px;width:100%;z-index:1;
   -webkit-mask-image:linear-gradient(to right,transparent,#000 12%,#000 88%,transparent);
   mask-image:linear-gradient(to right,transparent,#000 12%,#000 88%,transparent);opacity:.9;}
-.scroll-hint{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);z-index:3;
-  font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.24em;color:var(--muted-2);
-  text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:8px;}
-.scroll-hint .m{width:20px;height:32px;border:1px solid var(--line);border-radius:12px;position:relative;}
-.scroll-hint .m::after{content:"";position:absolute;top:6px;left:50%;transform:translateX(-50%);
-  width:3px;height:6px;border-radius:2px;background:var(--gold);animation:mwheel 1.8s ease infinite;}
 @keyframes mwheel{0%{opacity:0;top:5px}30%{opacity:1}70%{opacity:1}100%{opacity:0;top:16px}}
 
 /* ---------- agenda ---------- */
@@ -136,7 +121,7 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 .points li{position:relative;padding:16px 0 16px 40px;border-top:1px solid var(--line-soft);}
 .points li:last-child{border-bottom:1px solid var(--line-soft);}
 .points li::before{content:"";position:absolute;left:8px;top:22px;width:10px;height:10px;border-radius:2px;
-  background:var(--gold);box-shadow:0 0 12px rgba(232,200,119,.6);transform:rotate(45deg);}
+  background:var(--gold);transform:rotate(45deg);}
 .points li b{color:var(--text);font-weight:600;}
 .points li .zh{display:block;font-family:'Noto Sans SC';color:var(--muted);font-size:13.5px;margin-top:3px;}
 
@@ -148,7 +133,7 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 /* ---------- pattern groups ---------- */
 .divider{position:relative;text-align:center;padding:clamp(90px,14vh,150px) 20px;overflow:hidden;}
 .divider h2{font-size:clamp(38px,9vw,96px);font-weight:800;letter-spacing:-.02em;margin:0;
-  background:linear-gradient(180deg,var(--gold-bright),var(--gold-deep));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  color:var(--gold-bright);}
 .divider .zh{font-family:'Noto Sans SC';font-weight:300;letter-spacing:.5em;color:var(--muted);
   font-size:clamp(14px,2.4vw,20px);margin-top:14px;text-indent:.5em;}
 .divider .rail{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.3em;color:var(--gold-deep);
@@ -359,7 +344,6 @@ body.lang-zh.lang-strict .en{display:none !important;}
 <a href="../MakeTradesJourney.html" id="mtjBack" style="position:fixed;left:14px;bottom:14px;z-index:60;display:inline-flex;align-items:center;gap:9px;text-decoration:none;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#9A968C;background:rgba(6,6,8,.8);border:1px solid rgba(232,200,119,.22);border-radius:30px;padding:9px 16px;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:.25s" onmouseover="this.style.color='#FCE9A8';this.style.borderColor='#E8C877';this.style.boxShadow='0 0 22px rgba(232,200,119,.18)'" onmouseout="this.style.color='#9A968C';this.style.borderColor='rgba(232,200,119,.22)';this.style.boxShadow='none'"><span>&#8592;</span>Hub &middot; &#36820;&#22238;&#30446;&#24405;</a>
 <canvas id="particles"></canvas>
 <div class="bg-glow"></div>
-<div class="bg-grid"></div>
 <div class="bg-logo"></div>
 
 <!-- top bar -->
@@ -397,7 +381,6 @@ body.lang-zh.lang-strict .en{display:none !important;}
   <div class="h-zh">美 国 高 影 响 数 据</div>
   <p class="h-sub">From the data → to inflation → to the Fed's next move.
     <span class="zh">从数据 → 读通胀 → 预判美联储加息还是减息。</span></p>
-  <div class="scroll-hint"><span class="m"></span>Scroll</div>
 </header>
 
 <!-- ================= AGENDA ================= -->
@@ -410,7 +393,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
     <div class="card reveal"><div class="n">03</div><h3>Reading Inflation</h3><div class="zh">用数据看通胀率</div></div>
     <div class="card reveal"><div class="n">04</div><h3>Predicting the Fed</h3><div class="zh">用通胀预测加息 / 减息</div></div>
   </div>
-  <div class="note" style="max-width:740px;">// This is education, not a forecast — the links below are <b>general tendencies</b>; markets often <b>price expectations in advance</b>. 本课为教学而非预测；以下为<b>一般规律</b>，市场常<b>提前反映预期</b>。</div>
+  <div class="note" style="max-width:740px;">// This is education, not a forecast - the links below are <b>general tendencies</b>; markets often <b>price expectations in advance</b>. 本课为教学而非预测；以下为<b>一般规律</b>，市场常<b>提前反映预期</b>。</div>
 </section>
 
 <section class="divider">
@@ -430,7 +413,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
     <div class="cell act"><div class="lbl">Actual 实际</div><div class="val">3.4%</div><div class="sub">公布数值</div></div>
   </div>
   <div class="surprise">Surprise 意外 = Actual − Forecast = <b>+0.3% hotter 高于预期</b> → hawkish 鹰派 → USD ↑ · Gold ↓</div></div>
-    <div class="pattern-desc"><p>Markets don't move on the number itself — they move on the <b>surprise</b>: how far the <b>actual</b> lands from the <b>forecast</b>. The forecast is already priced in; only the gap creates the spike.<span class="zh">市场波动的不是数字本身，而是<b>意外</b>：<b>实际值</b>与<b>预期值</b>差多远。预期早已被市场反映，只有两者的差距才制造行情。</span></p>
+    <div class="pattern-desc"><p>Markets don't move on the number itself - they move on the <b>surprise</b>: how far the <b>actual</b> lands from the <b>forecast</b>. The forecast is already priced in; only the gap creates the spike.<span class="zh">市场波动的不是数字本身，而是<b>意外</b>：<b>实际值</b>与<b>预期值</b>差多远。预期早已被市场反映，只有两者的差距才制造行情。</span></p>
   <div class="note">// Hotter-than-expected inflation 高于预期的通胀 → hawkish 鹰派 · Cooler-than-expected 低于预期 → dovish 鸽派</div></div>
   </article>
   <article class="pattern reveal">
@@ -440,12 +423,12 @@ body.lang-zh.lang-strict .en{display:none !important;}
     <div class="rel"><span class="imp">HIGH</span><div class="rc">Core PCE</div><div class="rn">核心 PCE 物价</div><div class="rm">The Fed's preferred inflation measure 美联储最看重的通胀 · monthly</div></div>
     <div class="rel"><span class="imp">HIGH</span><div class="rc">NFP</div><div class="rn">非农就业</div><div class="rm">Jobs, unemployment &amp; wages 就业·失业率·薪资 · 1st Friday 每月首个周五</div></div>
     <div class="rel"><span class="imp">HIGH</span><div class="rc">FOMC</div><div class="rn">利率决议 + 记者会</div><div class="rm">The actual rate decision 真正的加减息 · 8× / year 每年 8 次</div></div>
-    <div class="rel"><span class="imp">HIGH</span><div class="rc">PPI</div><div class="rn">生产者物价指数</div><div class="rm">Producer inflation — often leads CPI 生产端通胀，常领先 CPI</div></div>
+    <div class="rel"><span class="imp">HIGH</span><div class="rc">PPI</div><div class="rn">生产者物价指数</div><div class="rm">Producer inflation - often leads CPI 生产端通胀，常领先 CPI</div></div>
     <div class="rel"><span class="imp">MED–HIGH</span><div class="rc">Retail Sales</div><div class="rn">零售销售</div><div class="rm">Consumer spending strength 消费强弱</div></div>
-    <div class="rel"><span class="imp">MED–HIGH</span><div class="rc">ISM PMI</div><div class="rn">采购经理人指数</div><div class="rm">Business activity — a leading gauge 经济活动·领先指标</div></div>
+    <div class="rel"><span class="imp">MED–HIGH</span><div class="rc">ISM PMI</div><div class="rn">采购经理人指数</div><div class="rm">Business activity - a leading gauge 经济活动·领先指标</div></div>
     <div class="rel"><span class="imp">MED</span><div class="rc">Jobless Claims</div><div class="rn">初请失业金</div><div class="rm">Weekly pulse of the job market 每周就业脉搏</div></div>
   </div></div>
-    <div class="pattern-desc"><p>These are the releases that reliably move the dollar, gold and indices. Two families matter most: <b>inflation</b> (CPI, Core PCE, PPI) and <b>jobs</b> (NFP, Claims) — because together they drive the <b>Fed's decision</b>.<span class="zh">这些数据能稳定撼动美元、黄金与股指。其中两大类最关键：<b>通胀</b>(CPI、核心 PCE、PPI)与<b>就业</b>(非农、初请)——因为它们共同决定<b>美联储的选择</b>。</span></p></div>
+    <div class="pattern-desc"><p>These are the releases that reliably move the dollar, gold and indices. Two families matter most: <b>inflation</b> (CPI, Core PCE, PPI) and <b>jobs</b> (NFP, Claims) - because together they drive the <b>Fed's decision</b>.<span class="zh">这些数据能稳定撼动美元、黄金与股指。其中两大类最关键：<b>通胀</b>(CPI、核心 PCE、PPI)与<b>就业</b>(非农、初请)——因为它们共同决定<b>美联储的选择</b>。</span></p></div>
   </article>
   <article class="pattern reveal">
     <div class="pattern-head"><span class="idx">D.02+</span><h3>Each Release in Detail<span class="zh">逐个数据详解</span></h3><span class="tag data">Tap to open</span></div>
@@ -593,7 +576,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
     <div><div class="eyebrow">Module Check · 模块测验</div><h2 class="title">Pass the Quiz to Unlock Module 10<span class="zh">通过测验解锁下一课</span></h2></div>
   </div>
   <div class="note" style="max-width:820px;line-height:1.9;">
-    Answer all 5 questions. You need <b>4 of 5 (70%)</b> to pass. Wrong answers are explained — read them, then retry.
+    Answer all 5 questions. You need <b>4 of 5 (70%)</b> to pass. Wrong answers are explained - read them, then retry.
     <span class="zh">回答全部 5 题。答对 <b>4 题（70%）</b> 即通过。答错的题会给出解析 —— 看完再试。</span>
   </div>
   <div id="examBox" style="max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:22px;"></div>
@@ -910,7 +893,7 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
 <script>
 /* ===== MTJ EXAM MODULE - Module 09 ===== */
 const MTJ_EXAM_KEY = "mtj_exam_pass_9";
-const EXAM_QUESTIONS = [{"q": "What actually creates the price spike when a major US release comes out?", "opts": ["The previous month's value", "The forecast number", "The surprise: how far the actual lands from the forecast", "The headline number alone"], "opts_zh": ["前一个月的数值", "预测值", "意外程度：实际值与预测值之间的差距", "仅看标题数字本身"], "ans": 2, "why": "The forecast is already priced in. Only the gap between actual and forecast — the surprise — creates the spike.", "why_zh": "市场已提前消化预期值。只有实际值与预期值之间的差距——即意外值——才会制造价格飙升。"}, {"q": "Which measure does the Fed officially target at 2%?", "opts": ["Core PCE year-over-year", "Headline CPI", "PPI", "Retail sales"], "opts_zh": ["核心 PCE 同比", "整体 CPI", "PPI（生产者物价指数）", "零售销售"], "ans": 0, "why": "The Fed's policy target is 2% Core PCE YoY — Core PCE is the Fed's preferred inflation gauge.", "why_zh": "美联储的政策目标是核心 PCE 年率 2%——核心 PCE 是美联储最看重的通胀指标。"}, {"q": "When is the NFP (Non-Farm Payrolls) report released each month?", "opts": ["Every 6 weeks", "First Friday of each month, 08:30 ET", "Mid-month", "The last trading day"], "opts_zh": ["每 6 周一次", "每月第一个周五，美东时间 08:30", "月中", "最后一个交易日"], "ans": 1, "why": "NFP comes out on the first Friday of every month at 08:30 ET — jobs, unemployment and wages together.", "why_zh": "非农数据在每月第一个周五美东时间 08:30 发布——就业、失业率和薪资数据同时公布。"}, {"q": "CPI comes in hotter than expected. What is the typical market reaction?", "opts": ["USD down, gold up", "No reaction at all", "USD up, gold down (hawkish)", "Yields fall sharply"], "opts_zh": ["美元下跌，黄金上涨", "完全没有反应", "美元上涨，黄金下跌（鹰派）", "收益率大幅下跌"], "ans": 2, "why": "Hotter-than-expected inflation is hawkish — it pushes the Fed toward hikes, lifting USD and yields while weighing on gold.", "why_zh": "通胀高于预期属于鹰派信号——会推动美联储加息，提振美元和收益率，同时打压黄金。"}, {"q": "Inflation is falling toward 2% and the job market is weakening. The Fed is most likely to…", "opts": ["Hike rates", "Cut rates — USD down, gold up (dovish)", "Hold forever", "Raise the 2% target"], "opts_zh": ["加息", "降息——美元下跌，黄金上涨（鸽派）", "永远按兵不动", "上调 2% 的目标"], "ans": 1, "why": "Cooling inflation and weak jobs open the door to cuts (dovish), which usually pushes USD down and gold up.", "why_zh": "通胀降温加上就业疲软为降息打开大门（鸽派），通常会使美元走低、黄金走高。"}];
+const EXAM_QUESTIONS = [{"q": "What actually creates the price spike when a major US release comes out?", "opts": ["The previous month's value", "The forecast number", "The surprise: how far the actual lands from the forecast", "The headline number alone"], "opts_zh": ["前一个月的数值", "预测值", "意外程度：实际值与预测值之间的差距", "仅看标题数字本身"], "ans": 2, "why": "The forecast is already priced in. Only the gap between actual and forecast - the surprise - creates the spike.", "why_zh": "市场已提前消化预期值。只有实际值与预期值之间的差距——即意外值——才会制造价格飙升。"}, {"q": "Which measure does the Fed officially target at 2%?", "opts": ["Core PCE year-over-year", "Headline CPI", "PPI", "Retail sales"], "opts_zh": ["核心 PCE 同比", "整体 CPI", "PPI（生产者物价指数）", "零售销售"], "ans": 0, "why": "The Fed's policy target is 2% Core PCE YoY - Core PCE is the Fed's preferred inflation gauge.", "why_zh": "美联储的政策目标是核心 PCE 年率 2%——核心 PCE 是美联储最看重的通胀指标。"}, {"q": "When is the NFP (Non-Farm Payrolls) report released each month?", "opts": ["Every 6 weeks", "First Friday of each month, 08:30 ET", "Mid-month", "The last trading day"], "opts_zh": ["每 6 周一次", "每月第一个周五，美东时间 08:30", "月中", "最后一个交易日"], "ans": 1, "why": "NFP comes out on the first Friday of every month at 08:30 ET - jobs, unemployment and wages together.", "why_zh": "非农数据在每月第一个周五美东时间 08:30 发布——就业、失业率和薪资数据同时公布。"}, {"q": "CPI comes in hotter than expected. What is the typical market reaction?", "opts": ["USD down, gold up", "No reaction at all", "USD up, gold down (hawkish)", "Yields fall sharply"], "opts_zh": ["美元下跌，黄金上涨", "完全没有反应", "美元上涨，黄金下跌（鹰派）", "收益率大幅下跌"], "ans": 2, "why": "Hotter-than-expected inflation is hawkish - it pushes the Fed toward hikes, lifting USD and yields while weighing on gold.", "why_zh": "通胀高于预期属于鹰派信号——会推动美联储加息，提振美元和收益率，同时打压黄金。"}, {"q": "Inflation is falling toward 2% and the job market is weakening. The Fed is most likely to…", "opts": ["Hike rates", "Cut rates - USD down, gold up (dovish)", "Hold forever", "Raise the 2% target"], "opts_zh": ["加息", "降息——美元下跌，黄金上涨（鸽派）", "永远按兵不动", "上调 2% 的目标"], "ans": 1, "why": "Cooling inflation and weak jobs open the door to cuts (dovish), which usually pushes USD down and gold up.", "why_zh": "通胀降温加上就业疲软为降息打开大门（鸽派），通常会使美元走低、黄金走高。"}];
 function renderExam(){
   var box = document.getElementById("examBox"); if(!box) return;
   EXAM_QUESTIONS.forEach(function(item, qi){

@@ -30,12 +30,6 @@ body.lang-en .zh{display:none !important;}
 .bg-glow{position:fixed;inset:0;z-index:0;pointer-events:none;
   background:radial-gradient(1100px 700px at 80% -10%,rgba(232,200,119,.10),transparent 60%),
              radial-gradient(900px 600px at -10% 20%,rgba(201,162,39,.08),transparent 60%);}
-.bg-grid{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.4;
-  background-image:linear-gradient(rgba(232,200,119,.04) 1px,transparent 1px),
-                   linear-gradient(90deg,rgba(232,200,119,.04) 1px,transparent 1px);
-  background-size:64px 64px;
-  mask-image:radial-gradient(circle at 50% 30%,#000 0%,transparent 80%);
-  -webkit-mask-image:radial-gradient(circle at 50% 30%,#000 0%,transparent 80%);}
 .bg-logo{position:fixed;inset:0;z-index:0;pointer-events:none;background-image:var(--mtj-mark);
   background-repeat:no-repeat;background-position:center 47%;background-size:min(58vw,620px) auto;
   mix-blend-mode:lighten;opacity:.075;
@@ -88,9 +82,7 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 .hero .tag{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;
   color:var(--gold);margin:14px 0 4px;padding:6px 16px;border:1px solid var(--line);border-radius:30px;
   background:rgba(232,200,119,.04);}
-.hero h1{font-size:clamp(32px,6.4vw,66px);font-weight:800;line-height:1.02;letter-spacing:-.02em;margin:16px 0 0;
-  background:linear-gradient(180deg,#fff 6%,var(--gold-bright) 46%,var(--gold-deep) 100%);
-  -webkit-background-clip:text;background-clip:text;color:transparent;}
+.hero h1{font-size:clamp(32px,6.4vw,66px);font-weight:800;line-height:1.02;letter-spacing:-.02em;margin:16px 0 0;color:var(--gold-bright);}
 .hero .h-zh{font-family:'Noto Sans SC';font-weight:500;font-size:clamp(13px,2.2vw,20px);letter-spacing:.34em;
   color:var(--muted);margin:15px 0 0;padding-left:.34em;}
 .hero p{max-width:660px;color:var(--muted);font-size:clamp(13.5px,1.9vw,16px);margin:20px auto 0;}
@@ -272,7 +264,6 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
 <body>
 <canvas id="particles"></canvas>
 <div class="bg-glow"></div>
-<div class="bg-grid"></div>
 <div class="bg-logo"></div>
 
 <a href="../MakeTradesJourney.html" id="mtjBack" style="position:fixed;left:14px;bottom:14px;z-index:60;display:inline-flex;align-items:center;gap:9px;text-decoration:none;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#9A968C;background:rgba(6,6,8,.8);border:1px solid rgba(232,200,119,.22);border-radius:30px;padding:9px 16px;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:.25s" onmouseover="this.style.color='#FCE9A8';this.style.borderColor='#E8C877'" onmouseout="this.style.color='#9A968C';this.style.borderColor='rgba(232,200,119,.22)'"><span>&#8592;</span>Hub &middot; 返回目录</a>
@@ -296,7 +287,7 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
   <div class="tag">FOMC Analyzer · 决议分析器</div>
   <h1>Read the Fed,<br>Read the Reaction.</h1>
   <div class="h-zh">读 懂 美 联 储 · 读 懂 市 场 反 应</div>
-  <p>A structured way to record what the Fed actually did, what the market actually did, and how the two lined up — so the meeting becomes a data point in your journal instead of a headline.
+  <p>A structured way to record what the Fed actually did, what the market actually did, and how the two lined up - so the meeting becomes a data point in your journal instead of a headline.
     <span class="zh">用一套固定结构记录：美联储实际做了什么、市场实际怎么反应、两者如何对上 —— 让每次会议变成你日志里的一个资料点，而不是一条新闻标题。</span></p>
 </header>
 
@@ -313,7 +304,7 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
       <option value="2026.12.16">2026.12.16 · December FOMC</option>
       <option value="2027.01.27">2027.01.27 · January FOMC</option>
     </select>
-    <div class="hint">// Records are kept in your own journal — nothing here is uploaded.
+    <div class="hint">// Records are kept in your own journal - nothing here is uploaded.
       <span class="zh">纪录只留在你自己的日志里，不会上传。</span></div>
   </div>
 </section>

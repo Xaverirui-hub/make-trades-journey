@@ -126,3 +126,118 @@ grep -c '—' <file>   # = 0
 - **只改 CSS 視覺層 + copy**，**禁止改**：課程 HTML 內容結構、SVG 圖表函數、EXAM JS、localStorage 機制、語言切換邏輯、admin 解鎖
 - 全站 24 個檔案是模板複製的，CSS 在每頁 head 內嵌 —— 優先改 template 源（Risk_Management 模板）再批量同步，或提供批量替換腳本
 - 品牌底子好（非 Inter、單 accent、深色一致），這是 polish 不是 redesign
+
+---
+
+# 執行記錄與設計裁決（Claude，2026-08-08）
+
+主設計 = Claude；Hermes 為助手。以下為本輪實際執行狀況與兩處與原 spec 不同的裁決。
+
+## 已完成
+
+| # | 項目 | 狀態 |
+|---|------|------|
+| 2 | codex-grid-background | ✅ 全站 26 頁移除 `.bg-grid` 規則與元素，保留 glow + particles + logo 浮水印 |
+| 3 | gradient-text | ✅ `.hero h1` 與 `.divider h2` 改 solid `--gold-bright`，連帶移除 60px text-shadow |
+| 4 | layout-transition | ✅ Trade_Journal 進度條改 `transform:scaleX()` |
+| 5.5 | 語言切換 | ✅ 見下方「語言引擎 v2」 |
+| 6 | scroll cue | ✅ `.scroll-hint` CSS + 元素 + `@keyframes wheel` 全數移除 |
+| 7 | 編號 eyebrow | ✅ 主頁 pillar `01 / STRUCTURE` → `STRUCTURE`；課程頁 `PART 01` 保留 |
+| 8 | hero 超載 | ✅ 砍至 logo + h1 + 中文 + 一段文字 + 一個 CTA；stats 移出成獨立 strip；eyebrow 刪除 |
+| 10 | 🔒 emoji | ✅ 改純文字 `LOCKED · PASS MODULE N EXAM TO UNLOCK` |
+| 11 | 過時文案 | ✅ 「Nine modules」→「Twenty-one modules」 |
+
+## 裁決一：dark-glow 不全砍（與 spec #1 不同）
+
+實際掃描後，帶 zero-offset 彩色 glow 的選擇器只有這幾類：
+
+- `.dot` — 即時狀態指示（呼吸燈）
+- `#progress` — 閱讀進度條
+- `.secnav a.active .pt` — 當前區塊高亮
+- `.btn:hover` / `.btn.gold:hover` — CTA 互動回饋
+- `.head img` / `.logo-hero` — 品牌 logo
+
+**這些是狀態語意與品牌識別，不是裝飾**。全部移除會讓即時指示、進度、導航高亮、按鈕回饋一起消失，是功能倒退而非 polish。
+
+**已執行**：只移除純裝飾的 `.points li::before` 光暈。狀態類與品牌類保留。
+
+> 給 Hermes：detector 的 dark-glow 計數不要當作必須歸零的指標。判準是「這個光暈有沒有傳達狀態或品牌」，有就留。
+
+## 裁決二：em-dash 不歸零（與 spec #5 不同）
+
+`——` 是**中文標準標點（破折號）**，不是 AI cadence tell。`grep -c '—' = 0` 這條驗收會把中文標點一起清掉，讀起來會壞。
+
+**已執行**：只替換「ASCII 字元包夾」的 ` — `（純英文語境）→ ` - `。保留：
+- 中文 `——`
+- 中英混排句中的分隔破折號（例：`黄金口袋 — the high-probability entry`），機械替換會更難看
+
+驗收改為：`grep -oE '[A-Za-z0-9] — [A-Za-z0-9]' <file> | wc -l` = 0
+
+## 語言引擎 v2（spec 5.5 的方案）
+
+採方案 (b) 的改良版：**載入時自動包裹，不需要人工標記 24 頁**。
+
+- 掃描所有 `.zh`，把同層的英文兄弟節點包進 `<span class="en">`
+- 只包**文字節點**與**無 class 的行內/標題元素**；數字、圖表標籤、`.idx`/`.tier`/`.n` 等帶 class 區塊不受影響
+- CSS：`body.lang-en .zh{display:none}` + `body.lang-zh.lang-strict .en{display:none}`
+- 全站 26 頁共用同一份引擎；語言跨頁持久（key 沿用 `mtj_lang`）；新訪客預設中文
+
+### ⚠️ 互斥顯示（lang-strict）目前關閉，需要 Hermes 做內容標記
+
+實測：**大量文案把中英文混在同一個文字節點裡**，沒有 `.zh` 標記，任何選擇器都切不開。例如：
+
+```html
+<div class="note">// How to read every chart 每张图怎么看： the gold lines are ...</div>
+<figcaption>Fibonacci retracement levels 回撤比率 · 0 → 100%</figcaption>
+```
+
+單 Fibonacci 一頁就有 53 處英文、16 處中文屬於這類。現在開啟互斥，中文模式會變成「中文 + 零碎英文殘渣」，**比雙語並陳更差**，所以先關著。
+
+**Hermes 的工作（純機械，適合批量）**：把上述混排段落改成標準結構
+
+```html
+<!-- 改前 -->
+<div class="note">// How to read every chart 每张图怎么看： the gold lines are the Fibonacci levels</div>
+
+<!-- 改後 -->
+<div class="note">// How to read every chart: the gold lines are the Fibonacci levels<span class="zh">// 每张图怎么看：金色线是斐波那契回撤位</span></div>
+```
+
+規則：
+1. 一個元素內，英文寫在前（裸文字即可，引擎會自動包 `.en`），中文整段放進 `<span class="zh">`
+2. **不要**把中英文混在同一個句子裡
+3. 優先處理：`.note`、`figcaption`、`.chips span`、`.tags span`、`.hint`
+4. **不要動**：SVG 內的 `<text>`（圖表標籤，語言中性，兩種模式都該顯示）
+
+**完成後**：把各頁語言引擎裡的 `var STRICT = false` 改成 `true`，互斥即生效。
+
+**驗收腳本**：
+```bash
+# 混排殘留（同一元素內中英夾雜且無 .zh 包裹）
+grep -oE '<(div|p|figcaption)[^>]*>[^<]*[A-Za-z]{3,}[^<]*[一-鿿]{2,}[^<]*<' <file> | wc -l   # 目標 0
+```
+
+## 其餘項目
+
+- **#9 middle-dot**：暫緩。`·` 在中英並列標籤（`About · 关于`）是有效分隔符，密度未到干擾程度；等互斥顯示上線後這些標籤會各自單語，屆時再評估
+- **#12 課程卡同構**：依 spec 不動
+- **#13 FOMC 靜態數據**：FOMC Analyzer 已整頁重寫，報告改原生渲染並標注日期；主頁卡片待下一輪
+- **課程分組**：順手修正。模組 13–21（趨勢線/供需區/指標）原本全掛在「Execution & Risk」下，已重整為 7 組，模組編號不變（測驗解鎖鏈依賴編號）
+
+## 順手修掉的線上 bug（不在原 spec 內）
+
+**XRs Strategy Composer 的 COMING SOON 遮罩，返回按鈕是隱形的。**
+
+遮罩用了 `var(--gold)` 與 `var(--muted)`，但這兩個變數**在 Composer 這個檔案裡從未定義**（它的調色盤是 `--kengold` / `--dim`）。結果：
+
+- 「← Back to Hub」按鈕 `background:var(--gold)` 解析失敗 → 透明，看不見
+- 標題與說明文字也拿不到顏色
+
+線上訪客點進 Composer 會撞到一面 COMING SOON 牆，**而且找不到出口**。
+
+已改用實際色碼 `#E8B44A` / `#9A9384`。順帶把 🔒 emoji 換成 inline SVG 鎖圖示（spec #10）。
+
+Position Calculator 的同款遮罩沒有這個問題（該檔有定義 `--gold`）。
+
+> 給 Hermes：跨檔案複製 UI 區塊時，記得確認用到的 CSS 變數在目標檔案裡有定義。
+> 這幾個工具檔的調色盤變數名稱並不一致（`--gold` vs `--kengold`）。

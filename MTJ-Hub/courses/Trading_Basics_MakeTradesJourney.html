@@ -40,12 +40,6 @@ body{
     radial-gradient(900px 600px at -10% 20%, rgba(201,162,39,.08), transparent 60%),
     radial-gradient(1200px 900px at 50% 120%, rgba(232,200,119,.06), transparent 55%);
 }
-.bg-grid{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.4;
-  background-image:linear-gradient(rgba(232,200,119,.04) 1px,transparent 1px),
-                   linear-gradient(90deg,rgba(232,200,119,.04) 1px,transparent 1px);
-  background-size:64px 64px;
-  mask-image:radial-gradient(circle at 50% 30%,#000 0%,transparent 80%);
-  -webkit-mask-image:radial-gradient(circle at 50% 30%,#000 0%,transparent 80%);}
 .wrap{position:relative;z-index:2;}
 
 /* ---------- top bar ---------- */
@@ -98,10 +92,7 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 .hero .course-tag{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.34em;
   text-transform:uppercase;color:var(--gold);margin:8px 0 4px;
   padding:6px 16px;border:1px solid var(--line);border-radius:30px;background:rgba(232,200,119,.04);}
-.hero h1{font-size:clamp(46px,11vw,124px);font-weight:800;line-height:.94;margin:18px 0 6px;letter-spacing:-.03em;
-  background:linear-gradient(180deg,#fff 0%,var(--gold-bright) 45%,var(--gold-deep) 100%);
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-  text-shadow:0 0 60px rgba(232,200,119,.18);}
+.hero h1{font-size:clamp(46px,11vw,124px);font-weight:800;line-height:.94;margin:18px 0 6px;letter-spacing:-.03em;color:var(--gold-bright);}
 .hero .h-zh{font-family:'Noto Sans SC';font-weight:300;font-size:clamp(16px,3vw,26px);letter-spacing:.5em;
   color:var(--muted);margin-bottom:20px;text-indent:.5em;}
 .hero .h-sub{max-width:560px;color:var(--muted);font-size:clamp(14px,2vw,17px);margin:0 auto;}
@@ -109,12 +100,6 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 .hero-chart{position:absolute;left:0;right:0;bottom:0;height:34vh;min-height:180px;width:100%;z-index:1;
   -webkit-mask-image:linear-gradient(to right,transparent,#000 12%,#000 88%,transparent);
   mask-image:linear-gradient(to right,transparent,#000 12%,#000 88%,transparent);opacity:.9;}
-.scroll-hint{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);z-index:3;
-  font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.24em;color:var(--muted-2);
-  text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:8px;}
-.scroll-hint .m{width:20px;height:32px;border:1px solid var(--line);border-radius:12px;position:relative;}
-.scroll-hint .m::after{content:"";position:absolute;top:6px;left:50%;transform:translateX(-50%);
-  width:3px;height:6px;border-radius:2px;background:var(--gold);animation:mwheel 1.8s ease infinite;}
 @keyframes mwheel{0%{opacity:0;top:5px}30%{opacity:1}70%{opacity:1}100%{opacity:0;top:16px}}
 
 /* ---------- agenda ---------- */
@@ -136,7 +121,7 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 .points li{position:relative;padding:16px 0 16px 40px;border-top:1px solid var(--line-soft);}
 .points li:last-child{border-bottom:1px solid var(--line-soft);}
 .points li::before{content:"";position:absolute;left:8px;top:22px;width:10px;height:10px;border-radius:2px;
-  background:var(--gold);box-shadow:0 0 12px rgba(232,200,119,.6);transform:rotate(45deg);}
+  background:var(--gold);transform:rotate(45deg);}
 .points li b{color:var(--text);font-weight:600;}
 .points li .zh{display:block;font-family:'Noto Sans SC';color:var(--muted);font-size:13.5px;margin-top:3px;}
 
@@ -148,7 +133,7 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 /* ---------- pattern groups ---------- */
 .divider{position:relative;text-align:center;padding:clamp(90px,14vh,150px) 20px;overflow:hidden;}
 .divider h2{font-size:clamp(38px,9vw,96px);font-weight:800;letter-spacing:-.02em;margin:0;
-  background:linear-gradient(180deg,var(--gold-bright),var(--gold-deep));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  color:var(--gold-bright);}
 .divider .zh{font-family:'Noto Sans SC';font-weight:300;letter-spacing:.5em;color:var(--muted);
   font-size:clamp(14px,2.4vw,20px);margin-top:14px;text-indent:.5em;}
 .divider .rail{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.3em;color:var(--gold-deep);
@@ -370,7 +355,6 @@ body.lang-zh.lang-strict .en{display:none !important;}
  style="position:fixed;left:14px;bottom:14px;z-index:60;display:inline-flex;align-items:center;gap:9px;text-decoration:none;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#9A968C;background:rgba(6,6,8,.8);border:1px solid rgba(232,200,119,.22);border-radius:30px;padding:9px 16px;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:.25s" onmouseover="this.style.color='#FCE9A8';this.style.borderColor='#E8C877';this.style.boxShadow='0 0 22px rgba(232,200,119,.18)'" onmouseout="this.style.color='#9A968C';this.style.borderColor='rgba(232,200,119,.22)';this.style.boxShadow='none'"><span>&#8592;</span>Hub &middot; &#36820;&#22238;&#30446;&#24405;</a>
 <canvas id="particles"></canvas>
 <div class="bg-glow"></div>
-<div class="bg-grid"></div>
 <div class="bg-logo"></div>
 
 <!-- top bar -->
@@ -402,7 +386,6 @@ body.lang-zh.lang-strict .en{display:none !important;}
   <div class="h-zh">基 礎 交 易 知 识</div>
   <p class="h-sub">The foundation every trader must know before the first trade.
     <span class="zh">下第一单之前，每位交易者都该掌握的基础。</span></p>
-  <div class="scroll-hint"><span class="m"></span>Scroll</div>
 </header>
 
 <!-- ================= AGENDA ================= -->
@@ -451,7 +434,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
     <div class="maj"><div class="cd">NZD</div><div class="nm">纽西兰元</div><div class="cn">New Zealand</div></div>
     <div class="maj"><div class="cd">CAD</div><div class="nm">加拿大元</div><div class="cn">Canada</div></div>
   </div></div>
-    <div class="pattern-desc"><p>These <b>8 major currencies</b> represent the world's strongest economies and carry the market's highest trading volume — most forex activity happens among them.<span class="zh">这 <b>8 大货币</b>代表世界最强的经济体，拥有市场最大的交易量——大部分外汇交易都发生在它们之间。</span></p></div>
+    <div class="pattern-desc"><p>These <b>8 major currencies</b> represent the world's strongest economies and carry the market's highest trading volume - most forex activity happens among them.<span class="zh">这 <b>8 大货币</b>代表世界最强的经济体，拥有市场最大的交易量——大部分外汇交易都发生在它们之间。</span></p></div>
   </article>
 </section>
 
@@ -562,7 +545,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
     <div><div class="eyebrow">Module Check · 模块测验</div><h2 class="title">Pass the Quiz to Unlock Module 02<span class="zh">通过测验解锁下一课</span></h2></div>
   </div>
   <div class="note" style="max-width:820px;line-height:1.9;">
-    Answer all 5 questions. You need <b>4 of 5 (70%)</b> to pass. Wrong answers are explained — read them, then retry.
+    Answer all 5 questions. You need <b>4 of 5 (70%)</b> to pass. Wrong answers are explained - read them, then retry.
     <span class="zh">回答全部 5 题。答对 <b>4 题（70%）</b> 即通过。答错的题会给出解析 —— 看完再试。</span>
   </div>
   <div id="examBox" style="max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:22px;"></div>

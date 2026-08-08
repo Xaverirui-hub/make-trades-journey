@@ -25,12 +25,6 @@ a{color:inherit;}
 .bg-glow{position:fixed;inset:0;z-index:0;pointer-events:none;
   background:radial-gradient(1000px 600px at 82% -12%,rgba(232,200,119,.09),transparent 60%),
              radial-gradient(800px 520px at -8% 30%,rgba(201,162,39,.07),transparent 60%);}
-.bg-grid{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.35;
-  background-image:linear-gradient(rgba(232,200,119,.04) 1px,transparent 1px),
-                   linear-gradient(90deg,rgba(232,200,119,.04) 1px,transparent 1px);
-  background-size:64px 64px;
-  mask-image:radial-gradient(circle at 50% 20%,#000 0%,transparent 78%);
-  -webkit-mask-image:radial-gradient(circle at 50% 20%,#000 0%,transparent 78%);}
 .wrap{position:relative;z-index:2;max-width:var(--maxw);margin:0 auto;padding:22px clamp(14px,4vw,32px) 60px;}
 
 /* header */
@@ -136,9 +130,7 @@ table.tj .pos{color:var(--bull);} table.tj .neg{color:var(--bear);} table.tj .fl
 .hero-stat{border:1px solid var(--line);border-radius:16px;padding:24px 20px;text-align:center;
   background:radial-gradient(520px 220px at 50% 0%,rgba(232,200,119,.12),transparent 70%);margin-bottom:12px;}
 .hero-stat .k{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted-2);}
-.hero-stat .v{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:clamp(38px,9vw,60px);line-height:1;margin:10px 0 4px;
-  background:linear-gradient(180deg,#fff 4%,var(--gold-bright) 46%,var(--gold-deep) 100%);
-  -webkit-background-clip:text;background-clip:text;color:transparent;}
+.hero-stat .v{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:clamp(38px,9vw,60px);line-height:1;margin:10px 0 4px;color:var(--gold-bright);}
 .hero-stat .v.neg{background:none;-webkit-text-fill-color:var(--bear);color:var(--bear);}
 .hero-stat .s{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--muted);}
 .hero-stat .s .zh{font-family:'Noto Sans SC';display:block;color:var(--muted-2);margin-top:5px;font-size:11.5px;}
@@ -186,8 +178,9 @@ table.tj .pos{color:var(--bull);} table.tj .neg{color:var(--bear);} table.tj .fl
 .cl .t .zh{display:block;font-family:'Noto Sans SC';font-size:12px;color:var(--muted-2);margin-top:2px;}
 .cl input:checked + .t{color:var(--muted-2);text-decoration:line-through;text-decoration-color:rgba(232,200,119,.3);}
 .clbar{height:5px;border-radius:3px;background:rgba(255,255,255,.06);overflow:hidden;margin-top:10px;}
-.clbar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold-deep),var(--gold-bright));
-  border-radius:3px;transition:width .35s ease;}
+.clbar i{display:block;height:100%;width:100%;transform-origin:left;transform:scaleX(0);
+  background:linear-gradient(90deg,var(--gold-deep),var(--gold-bright));
+  border-radius:3px;transition:transform .35s ease;}
 
 /* import */
 .drop{border:1px dashed var(--line);border-radius:14px;padding:26px 20px;text-align:center;transition:.24s;
@@ -228,7 +221,6 @@ body.lang-zh.lang-strict .en{display:none !important;}
 </head>
 <body>
 <div class="bg-glow"></div>
-<div class="bg-grid"></div>
 <div class="bg-logo"></div>
 
 <div class="wrap">
@@ -313,7 +305,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
   <div class="hero-stat">
     <div class="k">Expectancy per Trade</div>
     <div class="v" id="s_exp">—</div>
-    <div class="s">R per trade — the only number that matters
+    <div class="s">R per trade - the only number that matters
       <span class="zh">平均每笔交易的期望值。正数才代表这套系统长期是赚的。</span></div>
   </div>
 
@@ -358,7 +350,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
         <div class="h-zh">每天开盘前走一遍 —— 勾完才有资格看图</div></div>
       <div class="btnrow"><button class="btn" id="resetCl">Reset · 重置</button></div>
     </div>
-    <div class="clbar"><i id="clFill" style="width:0%"></i></div>
+    <div class="clbar"><i id="clFill"></i></div>
     <div class="cl" id="clList"></div>
   </div>
 </div>
@@ -411,7 +403,7 @@ let trades=[], dirVal='buy', rulesVal=1;
 
 /* ---------- storage ---------- */
 function load(){ try{ trades=JSON.parse(localStorage.getItem(KEY))||[]; }catch(e){ trades=[]; } }
-function save(){ try{ localStorage.setItem(KEY,JSON.stringify(trades)); }catch(e){ msg('formMsg','err','Could not save — browser storage may be full or blocked.','无法储存，浏览器空间可能已满或被封锁。'); } }
+function save(){ try{ localStorage.setItem(KEY,JSON.stringify(trades)); }catch(e){ msg('formMsg','err','Could not save - browser storage may be full or blocked.','无法储存，浏览器空间可能已满或被封锁。'); } }
 function msg(el,cls,en,zh){ $(el).innerHTML='<div class="msg '+cls+'">'+en+(zh?'<span class="zh">'+zh+'</span>':'')+'</div>'; }
 function clearMsg(el){ $(el).innerHTML=''; }
 
@@ -622,15 +614,15 @@ function drawCurve(chron){
 /* ---------- checklist ---------- */
 const CL=[
   ['Before the session 开盘前',[
-    ['Economic calendar checked — any high-impact news today?','看过财经日历 —— 今天有高影响数据吗？'],
+    ['Economic calendar checked - any high-impact news today?','看过财经日历 —— 今天有高影响数据吗？'],
     ['Higher timeframe direction marked (H4 / D1)','标好大周期方向（H4 / D1）'],
-    ['Key levels drawn — support, resistance, session high/low','画好关键位 —— 支撑、阻力、前高前低'],
+    ['Key levels drawn - support, resistance, session high/low','画好关键位 —— 支撑、阻力、前高前低'],
     ['Which session am I trading, and does my setup work in it?','我要交易哪个时段？我的 setup 在这个时段有效吗？']
   ]],
   ['Before the entry 进场前',[
-    ['My setup is actually present — not "close enough"','我的 setup 真的出现了 —— 不是「差不多」'],
+    ['My setup is actually present - not "close enough"','我的 setup 真的出现了 —— 不是「差不多」'],
     ['Stop placed where the idea is invalidated, with a buffer','止损放在分析失效的位置，并留了缓冲'],
-    ['Lot size calculated from risk % — not chosen by feel','手数是用风险%算出来的 —— 不是凭感觉'],
+    ['Lot size calculated from risk % - not chosen by feel','手数是用风险%算出来的 —— 不是凭感觉'],
     ['Reward at least 1:2 to a realistic target','到合理目标的盈亏比至少 1:2'],
     ['I can write down in one sentence why I am taking this trade','我能用一句话写出为什么要做这笔']
   ]],
@@ -657,7 +649,7 @@ function renderCl(){
   const boxes=$('clList').querySelectorAll('input');
   function upd(){
     const done=[...boxes].filter(b=>b.checked).length;
-    $('clFill').style.width=(done/boxes.length*100)+'%';
+    $('clFill').style.transform='scaleX('+(done/boxes.length)+')';
     const v={}; boxes.forEach(b=>v[b.dataset.k]=b.checked);
     try{ localStorage.setItem(CLKEY,JSON.stringify({date:new Date().toDateString(),v:v})); }catch(e){}
   }
@@ -777,7 +769,7 @@ function parseMt5(file,text){
     const price=ci.price>=0?numOf(r[ci.price]):null;
     const sl=ci.sl>=0?numOf(r[ci.sl]):null;
     const vol=ci.volume>=0?numOf(r[ci.volume]):null;
-    /* MT5 writes 2026.07.01 10:15:03 — normalise to 2026-07-01T10:15 */
+    /* MT5 writes 2026.07.01 10:15:03 - normalise to 2026-07-01T10:15 */
     const t=(r[ci.time]||'').trim().replace(/\./g,'-').replace(/\//g,'-');
     out.push({ raw:r, date:t.replace(' ','T').slice(0,16), symbol:sym,
       dir:/sell|賣|卖/.test(typ)?'sell':'buy', entry:price, stop:sl, lots:vol, pnl:profit });

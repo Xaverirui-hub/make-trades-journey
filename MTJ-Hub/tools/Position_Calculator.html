@@ -24,12 +24,6 @@ a{color:inherit;}
 .bg-glow{position:fixed;inset:0;z-index:0;pointer-events:none;
   background:radial-gradient(1000px 600px at 82% -12%,rgba(232,200,119,.09),transparent 60%),
              radial-gradient(800px 520px at -8% 30%,rgba(201,162,39,.07),transparent 60%);}
-.bg-grid{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.35;
-  background-image:linear-gradient(rgba(232,200,119,.04) 1px,transparent 1px),
-                   linear-gradient(90deg,rgba(232,200,119,.04) 1px,transparent 1px);
-  background-size:64px 64px;
-  mask-image:radial-gradient(circle at 50% 20%,#000 0%,transparent 78%);
-  -webkit-mask-image:radial-gradient(circle at 50% 20%,#000 0%,transparent 78%);}
 .wrap{position:relative;z-index:2;max-width:var(--maxw);margin:0 auto;padding:22px clamp(14px,4vw,32px) 60px;}
 
 /* header */
@@ -93,9 +87,7 @@ input[type=number]{-moz-appearance:textfield;}
 .result .rl{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.3em;
   text-transform:uppercase;color:var(--muted-2);}
 .result .lots{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:clamp(44px,11vw,68px);
-  line-height:1;margin:10px 0 4px;letter-spacing:-.02em;
-  background:linear-gradient(180deg,#fff 4%,var(--gold-bright) 46%,var(--gold-deep) 100%);
-  -webkit-background-clip:text;background-clip:text;color:transparent;}
+  line-height:1;margin:10px 0 4px;letter-spacing:-.02em;color:var(--gold-bright);}
 .result .lots.bad{background:none;color:var(--bear);-webkit-text-fill-color:var(--bear);}
 .result .unit{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.22em;
   text-transform:uppercase;color:var(--gold);}
@@ -185,7 +177,6 @@ body.lang-zh.lang-strict .en{display:none !important;}
 </div>
 
 <div class="bg-glow"></div>
-<div class="bg-grid"></div>
 <div class="bg-logo"></div>
 
 <div class="wrap">
@@ -467,8 +458,8 @@ function calc(){
 
   /* stop on the wrong side of entry */
   if (dist > 0) {
-    if (dirVal==='buy'  && stop > entry) warns.push(['cau','Buy: stop loss is ABOVE entry — check your direction.','做多：止损在进场价上方，方向可能设反了。']);
-    if (dirVal==='sell' && stop < entry) warns.push(['cau','Sell: stop loss is BELOW entry — check your direction.','做空：止损在进场价下方，方向可能设反了。']);
+    if (dirVal==='buy'  && stop > entry) warns.push(['cau','Buy: stop loss is ABOVE entry - check your direction.','做多：止损在进场价上方，方向可能设反了。']);
+    if (dirVal==='sell' && stop < entry) warns.push(['cau','Sell: stop loss is BELOW entry - check your direction.','做空：止损在进场价下方，方向可能设反了。']);
   }
 
   if (ok && lossPerLot > 0){
@@ -517,7 +508,7 @@ function calc(){
     else if (riskPctEff > 2)  warns.push(['cau','Risk above 2% per trade. Most professional guidelines cap single-trade risk at 1–2%.','单笔风险超过 2%。多数专业建议把单笔风险控制在 1–2% 以内。']);
     else                      warns.push(['ok','Risk per trade is within the conventional 1–2% range.','单笔风险在常见的 1–2% 区间内。']);
 
-    if (marginPct > 50)       warns.push(['err','Margin use above 50% of balance — very little room before a margin call.','保证金占用超过帐户 50%，距离强制平仓的缓冲极小。']);
+    if (marginPct > 50)       warns.push(['err','Margin use above 50% of balance - very little room before a margin call.','保证金占用超过帐户 50%，距离强制平仓的缓冲极小。']);
     else if (marginPct > 30)  warns.push(['cau','Margin use above 30% of balance.','保证金占用超过帐户 30%，建议降低仓位或提高杠杆容忍度。']);
   }
 
@@ -560,7 +551,7 @@ function calc(){
   $('survHead').textContent = hitAt ? ('breaches '+ddLimit+'% DD at loss #'+hitAt) : ('survives '+N+' straight losses');
   $('survCap').innerHTML =
     'After <b>10 consecutive losses</b> at ' + riskPctEff.toFixed(2) + '% risk, the account sits at <b>'
-    + eq10.toFixed(1) + '%</b> of its starting balance — needing <b>+' + recover.toFixed(1)
+    + eq10.toFixed(1) + '%</b> of its starting balance - needing <b>+' + recover.toFixed(1)
     + '%</b> just to get back to even.'
     + '<span class="zh">以 ' + riskPctEff.toFixed(2) + '% 风险连亏 10 次，帐户剩下 '
     + eq10.toFixed(1) + '%，要再赚 ' + recover.toFixed(1) + '% 才回到原点。这就是为什么单笔风险要小。</span>';

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>XRs Strategy Composer — XR-DRIVE // MakeTrades Journey</title>
+<title>XRs Strategy Composer - XR-DRIVE // MakeTrades Journey</title>
 <style>
 :root{--void:#0A0E14;--panel:#0E141F;--panel2:#121A28;--line:rgba(210,225,255,.08);
 --kengold:#E8B44A;--spirit:#5FD4E8;--jade:#7FE0A8;--crimson:#FF5A5A;
@@ -610,11 +610,11 @@ body.lang-zh.lang-strict .en{display:none !important;}
 <script src="real_data_m1.js"></script><!-- v2.3: 檔名相容(R1)兩者擇一存在即可 -->
 </head>
 <body>
-<div id="comingSoon" style="position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(6,8,12,.97);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);font-family:'JetBrains Mono',ui-monospace,monospace;text-align:center;padding:40px;">
-  <div style="font-size:56px;margin-bottom:14px;">🔒</div>
-  <h1 style="color:var(--gold);font-size:28px;letter-spacing:.12em;margin-bottom:10px;">COMING SOON</h1>
-  <p style="color:var(--muted);max-width:420px;line-height:1.8;">策略組合器正在為會員重建，解鎖後免費使用。<br>The Strategy Composer is being rebuilt for our members. This tool unlocks with your free account soon.</p>
-  <a href="../MakeTradesJourney.html" style="margin-top:22px;display:inline-block;background:var(--gold);color:#0a0e14;border-radius:30px;padding:11px 30px;text-decoration:none;font-weight:700;">← Back to Hub · 返回目录</a>
+<div id="comingSoon"  style="position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(6,8,12,.97);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);font-family:'JetBrains Mono',ui-monospace,monospace;text-align:center;padding:40px;">
+  <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#E8B44A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:16px;"><rect x="4" y="10.5" width="16" height="10.5" rx="2"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/><circle cx="12" cy="15.7" r="1.1" fill="#E8B44A" stroke="none"/></svg>
+  <h1 style="color:#E8B44A;font-size:28px;letter-spacing:.12em;margin-bottom:10px;">COMING SOON</h1>
+  <p style="color:#9A9384;max-width:420px;line-height:1.8;">策略組合器正在為會員重建，解鎖後免費使用。<br>The Strategy Composer is being rebuilt for our members. This tool unlocks with your free account soon.</p>
+  <a href="../MakeTradesJourney.html" style="margin-top:22px;display:inline-block;background:#E8B44A;color:#0a0e14;border-radius:30px;padding:11px 30px;text-decoration:none;font-weight:700;">← Back to Hub · 返回目录</a>
 </div>
 <div id="xrParticles"></div>
 <div id="odTag">⚡ OVERDRIVE — 毀滅性風險</div>
@@ -3043,7 +3043,7 @@ let egroups=[0], egSeq=0;                       // v2.3:進場 OR 群組
 function addEGroup(){egroups.push(++egSeq); render();}
 function mkChip(type,params,g){const c={id:++seq,type,params:JSON.parse(JSON.stringify(params||BLOCKS[type].params))}; if(g!=null)c.g=g; return c;}
 
-// palette — v2.3:照拼圖流程排:ENTRY → 進場方式 → FILTER → EXIT → LOT SIZE
+// palette - v2.3:照拼圖流程排:ENTRY → 進場方式 → FILTER → EXIT → LOT SIZE
 const pal=document.getElementById('palette');
 const CAT_ORDER=[['entry','▶ ENTRY 進場'],['emode','▶ 進場方式'],['filter','▶ FILTER 過濾'],['exit','▶ EXIT 出場'],['size','▶ LOT SIZE 倉位']];
 CAT_ORDER.forEach(([cat,label])=>{
@@ -3364,7 +3364,7 @@ function exportCSV(){
   dl(new Blob([s],{type:'text/csv'}),'backtest_trades.csv');}
 
 
-// ================= v2.5:Phase 4 — EA 生成 + 合格才匯出 =================
+// ================= v2.5:Phase 4 - EA 生成 + 合格才匯出 =================
 
 function exportEAPack(){
   const G=window.__EAGATE;
@@ -3393,7 +3393,7 @@ function exportEAPack(){
     disclaimer:"回測(含OOS)不保證未來;live 前必過 demo forward;本包由機器生成,編譯與掛機前需人工審閱。"
   };
   const readme=
-`# ${name}\n\n由 Composer v2.5 生成(過閘:score ${G.score} / OOS PF ${G.r.OOS.pf.toFixed(2)} / OOS ${G.r.OOS.n} 筆,真實數據)。\n\n## 內容\n- ${name}.mq5 — house-style 骨架(單倉、無序列加倉、market 進場)\n- strategy_spec.json — 機器可讀規格 + 回測結果 + 成本模型\n\n## 上機前必做\n1. MetaEditor 編譯(骨架未經編譯器驗證,有 error 回報 Fable)\n2. 檢查 TODO 清單:${gen.todos.length?gen.todos.join(";"):"無"}\n3. Strategy Tester 12個月回測(對照 spec 裡的 OOS 數字,偏差大要回報)\n4. Demo forward ≥ 4 週後才考慮 live\n\n## 紅線\n未實作的進場積木一律 return false(寧可不交易);馬丁類倉位拒絕生成;\n回測分數不保證未來。`;
+`# ${name}\n\n由 Composer v2.5 生成(過閘:score ${G.score} / OOS PF ${G.r.OOS.pf.toFixed(2)} / OOS ${G.r.OOS.n} 筆,真實數據)。\n\n## 內容\n- ${name}.mq5 - house-style 骨架(單倉、無序列加倉、market 進場)\n- strategy_spec.json — 機器可讀規格 + 回測結果 + 成本模型\n\n## 上機前必做\n1. MetaEditor 編譯(骨架未經編譯器驗證,有 error 回報 Fable)\n2. 檢查 TODO 清單:${gen.todos.length?gen.todos.join(";"):"無"}\n3. Strategy Tester 12個月回測(對照 spec 裡的 OOS 數字,偏差大要回報)\n4. Demo forward ≥ 4 週後才考慮 live\n\n## 紅線\n未實作的進場積木一律 return false(寧可不交易);馬丁類倉位拒絕生成;\n回測分數不保證未來。`;
   dlText(name+".mq5", gen.code);
   dlText("strategy_spec.json", JSON.stringify(spec,null,2));
   dlText("README_"+name+".md", readme);

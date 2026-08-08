@@ -40,12 +40,6 @@ body{
     radial-gradient(900px 600px at -10% 20%, rgba(201,162,39,.08), transparent 60%),
     radial-gradient(1200px 900px at 50% 120%, rgba(232,200,119,.06), transparent 55%);
 }
-.bg-grid{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.4;
-  background-image:linear-gradient(rgba(232,200,119,.04) 1px,transparent 1px),
-                   linear-gradient(90deg,rgba(232,200,119,.04) 1px,transparent 1px);
-  background-size:64px 64px;
-  mask-image:radial-gradient(circle at 50% 30%,#000 0%,transparent 80%);
-  -webkit-mask-image:radial-gradient(circle at 50% 30%,#000 0%,transparent 80%);}
 .wrap{position:relative;z-index:2;}
 
 /* ---------- top bar ---------- */
@@ -98,10 +92,7 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 .hero .course-tag{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.34em;
   text-transform:uppercase;color:var(--gold);margin:8px 0 4px;
   padding:6px 16px;border:1px solid var(--line);border-radius:30px;background:rgba(232,200,119,.04);}
-.hero h1{font-size:clamp(46px,11vw,124px);font-weight:800;line-height:.94;margin:18px 0 6px;letter-spacing:-.03em;
-  background:linear-gradient(180deg,#fff 0%,var(--gold-bright) 45%,var(--gold-deep) 100%);
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-  text-shadow:0 0 60px rgba(232,200,119,.18);}
+.hero h1{font-size:clamp(46px,11vw,124px);font-weight:800;line-height:.94;margin:18px 0 6px;letter-spacing:-.03em;color:var(--gold-bright);}
 .hero .h-zh{font-family:'Noto Sans SC';font-weight:300;font-size:clamp(16px,3vw,26px);letter-spacing:.5em;
   color:var(--muted);margin-bottom:20px;text-indent:.5em;}
 .hero .h-sub{max-width:560px;color:var(--muted);font-size:clamp(14px,2vw,17px);margin:0 auto;}
@@ -109,12 +100,6 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 .hero-chart{position:absolute;left:0;right:0;bottom:0;height:34vh;min-height:180px;width:100%;z-index:1;
   -webkit-mask-image:linear-gradient(to right,transparent,#000 12%,#000 88%,transparent);
   mask-image:linear-gradient(to right,transparent,#000 12%,#000 88%,transparent);opacity:.9;}
-.scroll-hint{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);z-index:3;
-  font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.24em;color:var(--muted-2);
-  text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:8px;}
-.scroll-hint .m{width:20px;height:32px;border:1px solid var(--line);border-radius:12px;position:relative;}
-.scroll-hint .m::after{content:"";position:absolute;top:6px;left:50%;transform:translateX(-50%);
-  width:3px;height:6px;border-radius:2px;background:var(--gold);animation:mwheel 1.8s ease infinite;}
 @keyframes mwheel{0%{opacity:0;top:5px}30%{opacity:1}70%{opacity:1}100%{opacity:0;top:16px}}
 
 /* ---------- agenda ---------- */
@@ -136,7 +121,7 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 .points li{position:relative;padding:16px 0 16px 40px;border-top:1px solid var(--line-soft);}
 .points li:last-child{border-bottom:1px solid var(--line-soft);}
 .points li::before{content:"";position:absolute;left:8px;top:22px;width:10px;height:10px;border-radius:2px;
-  background:var(--gold);box-shadow:0 0 12px rgba(232,200,119,.6);transform:rotate(45deg);}
+  background:var(--gold);transform:rotate(45deg);}
 .points li b{color:var(--text);font-weight:600;}
 .points li .zh{display:block;font-family:'Noto Sans SC';color:var(--muted);font-size:13.5px;margin-top:3px;}
 
@@ -148,7 +133,7 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 /* ---------- pattern groups ---------- */
 .divider{position:relative;text-align:center;padding:clamp(90px,14vh,150px) 20px;overflow:hidden;}
 .divider h2{font-size:clamp(38px,9vw,96px);font-weight:800;letter-spacing:-.02em;margin:0;
-  background:linear-gradient(180deg,var(--gold-bright),var(--gold-deep));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  color:var(--gold-bright);}
 .divider .zh{font-family:'Noto Sans SC';font-weight:300;letter-spacing:.5em;color:var(--muted);
   font-size:clamp(14px,2.4vw,20px);margin-top:14px;text-indent:.5em;}
 .divider .rail{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.3em;color:var(--gold-deep);
@@ -298,7 +283,6 @@ body.lang-zh.lang-strict .en{display:none !important;}
 <a href="../MakeTradesJourney.html" id="mtjBack" style="position:fixed;left:14px;bottom:14px;z-index:60;display:inline-flex;align-items:center;gap:9px;text-decoration:none;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#9A968C;background:rgba(6,6,8,.8);border:1px solid rgba(232,200,119,.22);border-radius:30px;padding:9px 16px;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:.25s" onmouseover="this.style.color='#FCE9A8';this.style.borderColor='#E8C877';this.style.boxShadow='0 0 22px rgba(232,200,119,.18)'" onmouseout="this.style.color='#9A968C';this.style.borderColor='rgba(232,200,119,.22)';this.style.boxShadow='none'"><span>&#8592;</span>Hub &middot; &#36820;&#22238;&#30446;&#24405;</a>
 <canvas id="particles"></canvas>
 <div class="bg-glow"></div>
-<div class="bg-grid"></div>
 <div class="bg-logo"></div>
 
 <!-- top bar -->
@@ -335,9 +319,8 @@ body.lang-zh.lang-strict .en{display:none !important;}
   <div class="course-tag">Trading Course · Required</div>
   <h1>Candlestick<br>Patterns</h1>
   <div class="h-zh">K &nbsp;线&nbsp; 形&nbsp; 态</div>
-  <p class="h-sub">Read the market's emotion — one candle at a time.
+  <p class="h-sub">Read the market's emotion - one candle at a time.
     <span class="zh">一根一根蜡烛，读懂价格背后的市场情绪。</span></p>
-  <div class="scroll-hint"><span class="m"></span>Scroll</div>
 </header>
 
 <!-- ================= AGENDA ================= -->
@@ -413,8 +396,8 @@ body.lang-zh.lang-strict .en{display:none !important;}
     <div class="pattern-head"><span class="idx">B.01</span><h3>Spinning Tops<span class="zh">陀螺线</span></h3><span class="tag neu">Indecision</span></div>
     <div class="pattern-body">
       <div class="charts"><figure class="chart-fig"><div class="chart" data-pattern="spinning"></div><figcaption>Small body · long wicks<span class="zh">小实体 · 长上下影</span></figcaption></figure></div>
-      <div class="pattern-desc"><p>A small body with long upper and lower shadows — a standoff between buyers and sellers.<span class="zh">小实体加上长上下影线，代表多空双方势均力敌、犹豫不决。</span></p>
-        <div class="note">// Signal: indecision — wait for confirmation 等待确认</div></div>
+      <div class="pattern-desc"><p>A small body with long upper and lower shadows - a standoff between buyers and sellers.<span class="zh">小实体加上长上下影线，代表多空双方势均力敌、犹豫不决。</span></p>
+        <div class="note">// Signal: indecision - wait for confirmation 等待确认</div></div>
     </div>
   </article>
 
@@ -426,7 +409,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
         <figure class="chart-fig"><div class="chart" data-pattern="marubozu_up"></div><figcaption>Up Marubozu<span class="zh">阳线秃线</span></figcaption></figure>
         <figure class="chart-fig"><div class="chart" data-pattern="marubozu_down"></div><figcaption>Down Marubozu<span class="zh">阴线秃线</span></figcaption></figure>
       </div>
-      <div class="pattern-desc"><p>No shadows at all — a "bald head" in Japanese. Pure, one-sided pressure.<span class="zh">完全没有影线，日语意为「光头」，代表单边力量极强。</span></p>
+      <div class="pattern-desc"><p>No shadows at all - a "bald head" in Japanese. Pure, one-sided pressure.<span class="zh">完全没有影线，日语意为「光头」，代表单边力量极强。</span></p>
         <p><b>Up Marubozu</b> — continuation in an uptrend, reversal at the end of a downtrend.<span class="zh">阳线秃线：出现在上涨中为延续，出现在下跌尾端为反转。</span></p>
         <p><b>Down Marubozu</b> — continuation in a downtrend, reversal at the end of an uptrend.<span class="zh">阴线秃线：出现在下跌中为延续，出现在上涨尾端为反转。</span></p></div>
     </div>
@@ -442,8 +425,8 @@ body.lang-zh.lang-strict .en{display:none !important;}
         <figure class="chart-fig"><div class="chart" data-pattern="doji_gravestone"></div><figcaption>Gravestone<span class="zh">墓碑十字</span></figcaption></figure>
         <figure class="chart-fig"><div class="chart" data-pattern="doji_traditional"></div><figcaption>Traditional<span class="zh">标准十字</span></figcaption></figure>
       </div>
-      <div class="pattern-desc"><p>Open and close land at (almost) the same price — total balance between the two sides.<span class="zh">开盘价与收盘价几乎相同，代表多空完全平衡。</span></p>
-        <div class="note">// Four flavours — the shadows tell you where pressure came from 影线位置决定含义</div></div>
+      <div class="pattern-desc"><p>Open and close land at (almost) the same price - total balance between the two sides.<span class="zh">开盘价与收盘价几乎相同，代表多空完全平衡。</span></p>
+        <div class="note">// Four flavours - the shadows tell you where pressure came from 影线位置决定含义</div></div>
     </div>
   </article>
 
@@ -479,7 +462,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
     <div class="pattern-head"><span class="idx">S.02</span><h3>Shooting Star<span class="zh">流星线</span></h3><span class="tag bear">Bearish reversal</span></div>
     <div class="pattern-body">
       <div class="charts"><figure class="chart-fig"><div class="chart" data-pattern="shooting_star"></div><figcaption>After an uptrend<span class="zh">上涨趋势末端</span></figcaption></figure></div>
-      <div class="pattern-desc"><p>A small body at the bottom with a long upper shadow — buyers rushed in, then got rejected hard.<span class="zh">下方小实体、上方长影线：买方冲高后被强力打回，潜在看跌反转。</span></p></div>
+      <div class="pattern-desc"><p>A small body at the bottom with a long upper shadow - buyers rushed in, then got rejected hard.<span class="zh">下方小实体、上方长影线：买方冲高后被强力打回，潜在看跌反转。</span></p></div>
     </div>
   </article>
 
@@ -487,7 +470,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
     <div class="pattern-head"><span class="idx">S.03</span><h3>Inverted Hammer<span class="zh">倒锤线</span></h3><span class="tag bull">Bullish reversal</span></div>
     <div class="pattern-body">
       <div class="charts"><figure class="chart-fig"><div class="chart" data-pattern="inverted_hammer"></div><figcaption>After a downtrend<span class="zh">下跌趋势末端</span></figcaption></figure></div>
-      <div class="pattern-desc"><p>Same shape as a shooting star, but appearing at the bottom of a downtrend — a warning that a bottom may be near.<span class="zh">形态与流星相同，但出现在下跌末端，暗示底部可能临近。</span></p></div>
+      <div class="pattern-desc"><p>Same shape as a shooting star, but appearing at the bottom of a downtrend - a warning that a bottom may be near.<span class="zh">形态与流星相同，但出现在下跌末端，暗示底部可能临近。</span></p></div>
     </div>
   </article>
 
@@ -495,7 +478,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
     <div class="pattern-head"><span class="idx">S.04</span><h3>Hanging Man<span class="zh">上吊线</span></h3><span class="tag bear">Bearish reversal</span></div>
     <div class="pattern-body">
       <div class="charts"><figure class="chart-fig"><div class="chart" data-pattern="hanging_man"></div><figcaption>After an uptrend<span class="zh">上涨趋势末端</span></figcaption></figure></div>
-      <div class="pattern-desc"><p>Same shape as a hammer, but at the top of an uptrend — the rally may be losing its grip.<span class="zh">形态与锤子相同，但出现在上涨末端，暗示涨势可能见顶。</span></p></div>
+      <div class="pattern-desc"><p>Same shape as a hammer, but at the top of an uptrend - the rally may be losing its grip.<span class="zh">形态与锤子相同，但出现在上涨末端，暗示涨势可能见顶。</span></p></div>
     </div>
   </article>
 </section>
@@ -542,8 +525,8 @@ body.lang-zh.lang-strict .en{display:none !important;}
         <figure class="chart-fig"><div class="chart" data-pattern="soldiers"></div><figcaption>Three Green Soldiers<span class="zh">红三兵</span></figcaption></figure>
         <figure class="chart-fig"><div class="chart" data-pattern="crows"></div><figcaption>Three Red Crows<span class="zh">三只乌鸦</span></figcaption></figure>
       </div>
-      <div class="pattern-desc"><p><b>Three Green Soldiers:</b> three rising green candles — strong, sustained buying pressure.<span class="zh">红三兵：连续三根上升阳线，代表买方力量强劲且持续。</span></p>
-        <p><b>Three Red Crows:</b> three falling red candles — strong, sustained selling pressure.<span class="zh">三只乌鸦：连续三根下降阴线，代表卖方力量强劲且持续。</span></p></div>
+      <div class="pattern-desc"><p><b>Three Green Soldiers:</b> three rising green candles - strong, sustained buying pressure.<span class="zh">红三兵：连续三根上升阳线，代表买方力量强劲且持续。</span></p>
+        <p><b>Three Red Crows:</b> three falling red candles - strong, sustained selling pressure.<span class="zh">三只乌鸦：连续三根下降阴线，代表卖方力量强劲且持续。</span></p></div>
     </div>
   </article>
 
@@ -580,7 +563,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
     <div><div class="eyebrow">Module Check · 模块测验</div><h2 class="title">Pass the Quiz to Unlock Module 05<span class="zh">通过测验解锁下一课</span></h2></div>
   </div>
   <div class="note" style="max-width:820px;line-height:1.9;">
-    Answer all 5 questions. You need <b>4 of 5 (70%)</b> to pass. Wrong answers are explained — read them, then retry.
+    Answer all 5 questions. You need <b>4 of 5 (70%)</b> to pass. Wrong answers are explained - read them, then retry.
     <span class="zh">回答全部 5 题。答对 <b>4 题（70%）</b> 即通过。答错的题会给出解析 —— 看完再试。</span>
   </div>
   <div id="examBox" style="max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:22px;"></div>

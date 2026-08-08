@@ -40,12 +40,6 @@ body{
     radial-gradient(900px 600px at -10% 20%, rgba(201,162,39,.08), transparent 60%),
     radial-gradient(1200px 900px at 50% 120%, rgba(232,200,119,.06), transparent 55%);
 }
-.bg-grid{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.4;
-  background-image:linear-gradient(rgba(232,200,119,.04) 1px,transparent 1px),
-                   linear-gradient(90deg,rgba(232,200,119,.04) 1px,transparent 1px);
-  background-size:64px 64px;
-  mask-image:radial-gradient(circle at 50% 30%,#000 0%,transparent 80%);
-  -webkit-mask-image:radial-gradient(circle at 50% 30%,#000 0%,transparent 80%);}
 .wrap{position:relative;z-index:2;}
 
 /* ---------- top bar ---------- */
@@ -98,10 +92,7 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 .hero .course-tag{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.34em;
   text-transform:uppercase;color:var(--gold);margin:8px 0 4px;
   padding:6px 16px;border:1px solid var(--line);border-radius:30px;background:rgba(232,200,119,.04);}
-.hero h1{font-size:clamp(46px,11vw,124px);font-weight:800;line-height:.94;margin:18px 0 6px;letter-spacing:-.03em;
-  background:linear-gradient(180deg,#fff 0%,var(--gold-bright) 45%,var(--gold-deep) 100%);
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-  text-shadow:0 0 60px rgba(232,200,119,.18);}
+.hero h1{font-size:clamp(46px,11vw,124px);font-weight:800;line-height:.94;margin:18px 0 6px;letter-spacing:-.03em;color:var(--gold-bright);}
 .hero .h-zh{font-family:'Noto Sans SC';font-weight:300;font-size:clamp(16px,3vw,26px);letter-spacing:.5em;
   color:var(--muted);margin-bottom:20px;text-indent:.5em;}
 .hero .h-sub{max-width:560px;color:var(--muted);font-size:clamp(14px,2vw,17px);margin:0 auto;}
@@ -109,12 +100,6 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 .hero-chart{position:absolute;left:0;right:0;bottom:0;height:34vh;min-height:180px;width:100%;z-index:1;
   -webkit-mask-image:linear-gradient(to right,transparent,#000 12%,#000 88%,transparent);
   mask-image:linear-gradient(to right,transparent,#000 12%,#000 88%,transparent);opacity:.9;}
-.scroll-hint{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);z-index:3;
-  font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.24em;color:var(--muted-2);
-  text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:8px;}
-.scroll-hint .m{width:20px;height:32px;border:1px solid var(--line);border-radius:12px;position:relative;}
-.scroll-hint .m::after{content:"";position:absolute;top:6px;left:50%;transform:translateX(-50%);
-  width:3px;height:6px;border-radius:2px;background:var(--gold);animation:mwheel 1.8s ease infinite;}
 @keyframes mwheel{0%{opacity:0;top:5px}30%{opacity:1}70%{opacity:1}100%{opacity:0;top:16px}}
 
 /* ---------- agenda ---------- */
@@ -136,7 +121,7 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 .points li{position:relative;padding:16px 0 16px 40px;border-top:1px solid var(--line-soft);}
 .points li:last-child{border-bottom:1px solid var(--line-soft);}
 .points li::before{content:"";position:absolute;left:8px;top:22px;width:10px;height:10px;border-radius:2px;
-  background:var(--gold);box-shadow:0 0 12px rgba(232,200,119,.6);transform:rotate(45deg);}
+  background:var(--gold);transform:rotate(45deg);}
 .points li b{color:var(--text);font-weight:600;}
 .points li .zh{display:block;font-family:'Noto Sans SC';color:var(--muted);font-size:13.5px;margin-top:3px;}
 
@@ -148,7 +133,7 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 /* ---------- pattern groups ---------- */
 .divider{position:relative;text-align:center;padding:clamp(90px,14vh,150px) 20px;overflow:hidden;}
 .divider h2{font-size:clamp(38px,9vw,96px);font-weight:800;letter-spacing:-.02em;margin:0;
-  background:linear-gradient(180deg,var(--gold-bright),var(--gold-deep));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  color:var(--gold-bright);}
 .divider .zh{font-family:'Noto Sans SC';font-weight:300;letter-spacing:.5em;color:var(--muted);
   font-size:clamp(14px,2.4vw,20px);margin-top:14px;text-indent:.5em;}
 .divider .rail{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.3em;color:var(--gold-deep);
@@ -343,7 +328,6 @@ body.lang-zh.lang-strict .en{display:none !important;}
 <a href="../MakeTradesJourney.html" id="mtjBack" style="position:fixed;left:14px;bottom:14px;z-index:60;display:inline-flex;align-items:center;gap:9px;text-decoration:none;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#9A968C;background:rgba(6,6,8,.8);border:1px solid rgba(232,200,119,.22);border-radius:30px;padding:9px 16px;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:.25s" onmouseover="this.style.color='#FCE9A8';this.style.borderColor='#E8C877';this.style.boxShadow='0 0 22px rgba(232,200,119,.18)'" onmouseout="this.style.color='#9A968C';this.style.borderColor='rgba(232,200,119,.22)';this.style.boxShadow='none'"><span>&#8592;</span>Hub &middot; &#36820;&#22238;&#30446;&#24405;</a>
 <canvas id="particles"></canvas>
 <div class="bg-glow"></div>
-<div class="bg-grid"></div>
 <div class="bg-logo"></div>
 
 <!-- top bar -->
@@ -377,9 +361,8 @@ body.lang-zh.lang-strict .en{display:none !important;}
   <div class="course-tag">Analysis · 分析方法</div>
   <h1>Three Types<br>of Analysis</h1>
   <div class="h-zh">三 种 分 析 方 法</div>
-  <p class="h-sub">The red pill, the green pill, or the blue pill — which lens will you take?
+  <p class="h-sub">The red pill, the green pill, or the blue pill - which lens will you take?
     <span class="zh">红色、绿色，还是蓝色药丸？你会选哪一种看盘视角？</span></p>
-  <div class="scroll-hint"><span class="m"></span>Scroll</div>
 </header>
 
 <!-- ================= AGENDA ================= -->
@@ -394,7 +377,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
     </div>
     <div class="dgm-cap">Same market, three different lenses 同一个市场，三种不同的视角</div>
   </div>
-  <div class="note" style="max-width:720px;">// There's no single "right" pill — each answers a different question. Great traders learn to read all three. 没有唯一「正确」的药丸，每一种回答不同的问题；高手三种都会看。</div>
+  <div class="note" style="max-width:720px;">// There's no single "right" pill - each answers a different question. Great traders learn to read all three. 没有唯一「正确」的药丸，每一种回答不同的问题；高手三种都会看。</div>
 </section>
 
 <section class="divider">
@@ -446,7 +429,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
     <div class="chip">News &amp; Politics<span class="zh">新闻·政治</span></div>
   </div>
   <div class="flow"><b>Supply &amp; Demand 供需</b><span class="ar">→</span><span>Currency Value 货币价值</span><span class="ar">→</span><span>Price 价格</span></div></div>
-    <div class="pattern-desc"><p><b>Fundamental analysis</b> looks at the <b>real-world forces</b> — economic, social and political — that change a currency's supply and demand. Strong economy and rising interest rates tend to strengthen a currency; weak data tends to weaken it.<span class="zh"><b>基本面分析</b>关注影响货币<b>供需</b>的<b>现实力量</b>——经济、社会与政治因素。经济强劲、利率上升往往令货币走强；数据疲弱则往往走弱。</span></p>
+    <div class="pattern-desc"><p><b>Fundamental analysis</b> looks at the <b>real-world forces</b> — economic, social and political - that change a currency's supply and demand. Strong economy and rising interest rates tend to strengthen a currency; weak data tends to weaken it.<span class="zh"><b>基本面分析</b>关注影响货币<b>供需</b>的<b>现实力量</b>——经济、社会与政治因素。经济强劲、利率上升往往令货币走强；数据疲弱则往往走弱。</span></p>
   <p>Watch 关注：central-bank decisions 央行决议 · inflation &amp; jobs reports 通胀与就业数据 · GDP · major news 重大新闻.</p><div class="note">// Suits you if 适合你如果：you enjoy economics and news, and think in weeks-to-months 你喜欢研究经济与新闻，偏中长线思考。</div></div>
   </article>
 </section>
@@ -467,7 +450,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
     <div class="row"><span class="b1">▲ Bulls 多头 62%</span><span class="b2">Bears 空头 38% ▼</span></div>
     <div class="cap">Fear &amp; Greed · who is positioned where 恐惧与贪婪 · 多空持仓分布</div>
   </div></div>
-    <div class="pattern-desc"><p><b>Sentiment analysis</b> isn't about the numbers — it's about how traders <b>feel</b> and where the crowd is <b>positioned</b>. When almost everyone is on one side, the market can be primed to turn. Reading fear and greed helps you avoid following the herd off a cliff.<span class="zh"><b>情绪分析</b>看的不是数字，而是交易者的<b>感受</b>与人群的<b>持仓方向</b>。当几乎所有人都站在同一边，市场往往就要反转。读懂恐惧与贪婪，能帮你避免盲目跟随人群。</span></p>
+    <div class="pattern-desc"><p><b>Sentiment analysis</b> isn't about the numbers - it's about how traders <b>feel</b> and where the crowd is <b>positioned</b>. When almost everyone is on one side, the market can be primed to turn. Reading fear and greed helps you avoid following the herd off a cliff.<span class="zh"><b>情绪分析</b>看的不是数字，而是交易者的<b>感受</b>与人群的<b>持仓方向</b>。当几乎所有人都站在同一边，市场往往就要反转。读懂恐惧与贪婪，能帮你避免盲目跟随人群。</span></p>
   <p>Look at 参考：market positioning 多空持仓 · Fear &amp; Greed index 恐惧贪婪指数 · news &amp; social buzz 新闻与社群情绪.</p><div class="note">// Suits you if 适合你如果：you like reading the mood and thinking like a contrarian 你善于读情绪，喜欢逆向思考。</div></div>
   </article>
 </section>
@@ -500,7 +483,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
     <div><div class="eyebrow">Module Check · 模块测验</div><h2 class="title">Pass the Quiz to Unlock Module 03<span class="zh">通过测验解锁下一课</span></h2></div>
   </div>
   <div class="note" style="max-width:820px;line-height:1.9;">
-    Answer all 5 questions. You need <b>4 of 5 (70%)</b> to pass. Wrong answers are explained — read them, then retry.
+    Answer all 5 questions. You need <b>4 of 5 (70%)</b> to pass. Wrong answers are explained - read them, then retry.
     <span class="zh">回答全部 5 题。答对 <b>4 题（70%）</b> 即通过。答错的题会给出解析 —— 看完再试。</span>
   </div>
   <div id="examBox" style="max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:22px;"></div>
