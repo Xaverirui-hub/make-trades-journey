@@ -13,3 +13,6 @@ $RECYCLE.BIN/
 *.tmp
 *.bak
 ~$*
+
+# 审阅用暂存副本
+_review_tmp/

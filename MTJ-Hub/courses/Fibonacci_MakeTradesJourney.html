@@ -333,7 +333,7 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 @media(max-width:720px){.bg-logo{background-size:92vw auto;opacity:.055;}}
 @media(prefers-reduced-motion:reduce){.bg-logo{opacity:.05;}}
 body.lang-en .zh{display:none !important;}
-body.lang-zh .zh{display:block !important;}
+body.lang-zh.lang-strict .en{display:none !important;}
 </style>
 </head>
 <body>
@@ -827,25 +827,111 @@ function gradeExam(){
 }
 renderExam();
 </script>
-<script>
-/* ===== MTJ Language Toggle (course) ===== */
-function setLang(l){
-  document.body.classList.remove('lang-en','lang-zh');
-  document.body.classList.add('lang-'+l);
-  try{ localStorage.setItem('mtj_lang', l); }catch(e){}
-  var en=document.getElementById('langEn'), zh=document.getElementById('langZh');
-  var on = "background:var(--gold);color:#0a0e14;border-color:var(--gold);border-radius:20px;padding:5px 14px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;cursor:pointer;font-weight:700;";
-  var off = "background:none;border:1px solid var(--line);color:var(--muted);border-radius:20px;padding:5px 14px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;cursor:pointer;";
-  if(en) en.style.cssText = l==='en' ? on : off;
-  if(zh) zh.style.cssText = l==='zh' ? on : off;
-  var box = document.getElementById('examBox');
-  if(box && typeof renderExam === 'function'){ box.innerHTML=''; renderExam(); }
-}
-(function(){
-  var saved='en'; try{ saved=localStorage.getItem('mtj_lang')||'en'; }catch(e){}
-  setLang(saved);
-})();
-</script>
 
+
+<script>
+/* ===== MTJ Language Engine v2 =====================================
+   Bilingual pages mark Chinese with <span class="zh">. English lives
+   as bare text nodes, and CSS cannot target a text node. So on load we
+   wrap each run of English siblings in <span class="en">, which makes
+   the two languages mutually excludable with pure CSS.
+
+   Only text nodes and unclassed inline tags are wrapped, so numbers,
+   chart labels and classed blocks (.n, .idx, .tier ...) stay visible
+   in both modes. Language choice persists across every page.
+   ================================================================== */
+(function(){
+  var INLINE = {B:1,I:1,EM:1,STRONG:1,U:1,SMALL:1,CODE:1,SUP:1,SUB:1,BR:1,A:1,SPAN:1,Q:1};
+  /* unclassed headings/paragraphs that sit as siblings of a .zh block are the
+     English half of a bilingual pair (agenda cards, section dividers)        */
+  var BLOCK  = {H1:1,H2:1,H3:1,H4:1,H5:1,H6:1,P:1,LI:1,TD:1,FIGCAPTION:1};
+
+  function wrappable(n){
+    if(n.nodeType === 3) return true;                       /* text node   */
+    if(n.nodeType !== 1) return false;
+    if(n.className) return false;                           /* classed: skip */
+    return !!(INLINE[n.tagName] || BLOCK[n.tagName]);
+  }
+
+  function wrapHost(host){
+    if(host.getAttribute('data-bi') === '1') return;
+    host.setAttribute('data-bi','1');
+    var kids = Array.prototype.slice.call(host.childNodes), run = [];
+
+    function flush(){
+      if(!run.length){ return; }
+      var hasText = run.some(function(n){
+        return (n.nodeType === 3 ? n.nodeValue : n.textContent).trim().length > 0;
+      });
+      if(hasText){
+        var s = document.createElement('span');
+        s.className = 'en';
+        host.insertBefore(s, run[0]);
+        run.forEach(function(n){ s.appendChild(n); });
+      }
+      run = [];
+    }
+
+    kids.forEach(function(n){
+      if(n.nodeType === 1 && n.classList && n.classList.contains('zh')) flush();
+      else if(wrappable(n)) run.push(n);
+      else flush();
+    });
+    flush();
+  }
+
+  function markup(){
+    var hosts = [], seen = [];
+    document.querySelectorAll('.zh').forEach(function(z){
+      var p = z.parentNode;
+      if(p && p.nodeType === 1 && seen.indexOf(p) < 0){ seen.push(p); hosts.push(p); }
+    });
+    hosts.forEach(wrapHost);
+  }
+
+  /* ---- public API ---- */
+  /* Strict mode hides the other language outright. It stays off until the
+     content pass is finished: a lot of copy still mixes both languages
+     inside one text node (".note", figcaption), which no selector can
+     split. Turning it on early leaves English fragments stranded in the
+     Chinese view. Flip STRICT to true once that pass lands.            */
+  var STRICT = false;
+
+  window.setLang = function(l){
+    if(l !== 'en' && l !== 'zh') l = 'zh';
+    document.body.classList.remove('lang-en','lang-zh','lang-strict');
+    document.body.classList.add('lang-' + l);
+    if(STRICT) document.body.classList.add('lang-strict');
+    try{ localStorage.setItem('mtj_lang', l); }catch(e){}
+    var en = document.getElementById('langEn'), zh = document.getElementById('langZh');
+    var on  = "background:var(--gold);color:#0a0a0e;border:1px solid var(--gold);border-radius:20px;padding:5px 14px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;cursor:pointer;font-weight:700;";
+    var off = "background:none;border:1px solid var(--line);color:var(--muted);border-radius:20px;padding:5px 14px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;cursor:pointer;";
+    if(en) en.style.cssText = (l === 'en') ? on : off;
+    if(zh) zh.style.cssText = (l === 'zh') ? on : off;
+    /* exam explanations re-render in the active language */
+    if(typeof renderExam === 'function' && document.getElementById('examBox')){
+      var box = document.getElementById('examBox');
+      var picked = [];
+      box.querySelectorAll('input[type=radio]:checked').forEach(function(r){ picked.push([r.name, r.value]); });
+      box.innerHTML = '';
+      renderExam();
+      picked.forEach(function(p){
+        var r = box.querySelector('input[name="' + p[0] + '"][value="' + p[1] + '"]');
+        if(r) r.checked = true;
+      });
+    }
+  };
+
+  function boot(){
+    markup();
+    var saved = 'zh';
+    try{ saved = localStorage.getItem('mtj_lang') || 'zh'; }catch(e){}
+    window.setLang(saved);
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
+})();
+
+</script>
 </body>
 </html>
