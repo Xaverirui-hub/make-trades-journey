@@ -25,7 +25,7 @@ NAVBAR_CSS = """
   color:var(--muted);text-decoration:none;padding:5px 14px;border-radius:18px;transition:.25s;white-space:nowrap;}
 .navbar a:hover{color:var(--gold-bright);background:rgba(232,200,119,.08);}
 .navbar a.active{color:var(--gold-bright);border:1px solid rgba(232,200,119,.35);background:rgba(232,200,119,.1);}
-@media(max-width:560px){.navbar{gap:2px;top:52px;padding:6px 4px;}.navbar a{font-size:9px;letter-spacing:.1em;padding:4px 7px;}}
+@media(max-width:560px){.navbar{gap:2px;top:62px;padding:6px 4px;}.navbar a{font-size:9px;letter-spacing:.1em;padding:4px 7px;}}
 """
 
 NAVBAR_SPY = """
@@ -36,12 +36,16 @@ NAVBAR_SPY = """
   var links = nav.querySelectorAll('a[data-sec]');
   var secs = {};
   links.forEach(function(a){ var id = a.getAttribute('data-sec'); var el = document.getElementById(id); if(el) secs[id]=el; });
+  var secList = [];
+  for(var id in secs){ secList.push({id:id, top:secs[id].offsetTop}); }
+  secList.sort(function(a,b){ return a.top - b.top; }); /* 依頁面位置排序 */
+  var hasSecs = secList.length > 0;
   function spy(){
-    var cur = links.length ? links[0].getAttribute('data-sec') : '';
+    if(!hasSecs) return; /* 無對應 section（課程/工具頁）→ 保持初始 active */
+    var cur = links.length ? links[0].getAttribute('data-sec') : ''; /* 初始 = 首項(home) */
     var y = window.scrollY + 140;
-    for(var id in secs){
-      var el = secs[id];
-      if(el.offsetTop <= y) cur = id;
+    for(var i=0;i<secList.length;i++){
+      if(secList[i].top <= y) cur = secList[i].id;
     }
     links.forEach(function(a){ a.classList.toggle('active', a.getAttribute('data-sec')===cur); });
   }
