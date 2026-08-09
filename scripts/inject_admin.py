@@ -36,6 +36,9 @@ ADMIN_JS = """<script>
       document.querySelectorAll(".comingSoon, #comingSoon, [id*='comingSoon'], .memberGate, #memberGate").forEach(function(el){
         el.style.display = "none";
       });
+      /* 恢復 navbar（Composer 訪客隱藏, admin 顯示） */
+      var gn = document.getElementById("globalNav");
+      if(gn){ gn.style.display = "flex"; }
       /* 課程卡解除鎖定 */
       document.querySelectorAll("a.mod, .mod, .locked, [class*='lock']").forEach(function(el){
         el.style.opacity = "1";
