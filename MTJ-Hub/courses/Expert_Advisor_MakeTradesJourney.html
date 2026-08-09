@@ -414,6 +414,13 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
   text-transform:uppercase;color:var(--cyan);border:1px solid rgba(47,224,214,.3);border-radius:20px;
   padding:5px 12px;background:rgba(47,224,214,.05);}
 .toolcta h4{margin:14px 0 4px;font-size:23px;font-weight:800;}
+.toolcta{position:relative;}
+.toolcta .tlock{position:absolute;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
+  background:rgba(6,6,8,.88);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);border-radius:14px;
+  font-family:'JetBrains Mono',monospace;text-align:center;padding:20px;}
+.toolcta .tlock .lk-ic{font-size:22px;}
+.toolcta .tlock .lk-t{color:var(--gold);font-size:11px;letter-spacing:.22em;}
+.toolcta .tlock .lk-s{color:var(--muted);font-size:10.5px;letter-spacing:.1em;max-width:280px;line-height:1.7;}
 .toolcta .zh{font-family:'Noto Sans SC';font-size:13.5px;color:var(--muted);letter-spacing:.14em;}
 .toolcta p{margin:12px 0 0;font-size:13.5px;color:var(--muted);line-height:1.75;}
 .toolcta .btn{display:inline-flex;align-items:center;gap:10px;text-decoration:none;white-space:nowrap;
@@ -846,6 +853,11 @@ body.lang-zh.lang-strict .en{display:none !important;}
         把你的书面规则拼成一个能跑的 EA：进场、出场、仓位、风控，全部用积木连接，不需要写代码。</span></p>
     </div>
     <a class="btn" href="../tools/XRs_Strategy_Composer_v2.4.html">Open Composer <span class="ar">→</span></a>
+    <div class="tlock" id="composerLock">
+      <div class="lk-ic">&#128274;</div>
+      <div class="lk-t">MEMBERS ONLY · 会员专属</div>
+      <div class="lk-s">Strategy Composer 是订阅制工具 · Members tool, unlock with a subscription</div>
+    </div>
   </div>
 
   <article class="pattern reveal">
@@ -1386,6 +1398,10 @@ renderExam();
       /* 恢復 navbar（Composer 訪客隱藏, admin 顯示） */
       var gn = document.getElementById("globalNav");
       if(gn){ gn.style.display = "flex"; }
+      /* 課程內會員工具 overlay 解鎖 */
+      document.querySelectorAll(".tlock, [id*='composerLock'], .member-overlay").forEach(function(el){
+        el.style.display = "none";
+      });
       /* 課程卡解除鎖定 */
       document.querySelectorAll("a.mod, .mod, .locked, [class*='lock']").forEach(function(el){
         el.style.opacity = "1";

@@ -39,6 +39,10 @@ ADMIN_JS = """<script>
       /* 恢復 navbar（Composer 訪客隱藏, admin 顯示） */
       var gn = document.getElementById("globalNav");
       if(gn){ gn.style.display = "flex"; }
+      /* 課程內會員工具 overlay 解鎖 */
+      document.querySelectorAll(".tlock, [id*='composerLock'], .member-overlay").forEach(function(el){
+        el.style.display = "none";
+      });
       /* 課程卡解除鎖定 */
       document.querySelectorAll("a.mod, .mod, .locked, [class*='lock']").forEach(function(el){
         el.style.opacity = "1";
