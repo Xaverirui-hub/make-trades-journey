@@ -651,7 +651,13 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
   var nav = document.getElementById('globalNav'); if(!nav) return;
   var links = nav.querySelectorAll('a[data-sec]');
   var secs = {};
-  links.forEach(function(a){ var id = a.getAttribute('data-sec'); var el = document.getElementById(id); if(el) secs[id]=el; });
+  links.forEach(function(a){
+    var href = a.getAttribute('href') || '';
+    if(href.charAt(0) !== '#') return; /* 外頁連結（courses.html 等）不參與 scroll-spy */
+    var id = a.getAttribute('data-sec');
+    var el = document.getElementById(id) || (id === 'home' ? document.getElementById('top') : null);
+    if(el) secs[id]=el;
+  });
   var secList = [];
   for(var id in secs){ secList.push({id:id, top:secs[id].offsetTop}); }
   secList.sort(function(a,b){ return a.top - b.top; }); /* 依頁面位置排序 */
