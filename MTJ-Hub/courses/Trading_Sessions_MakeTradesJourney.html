@@ -998,5 +998,49 @@ renderExam();
   spy();
 })();
 </script>
+<script>
+/* ===== MTJ Global Admin Mode ===== */
+(function(){
+  var KEY = "xrs2026";
+  var STORE = "mtj_admin";
+  try{
+    /* 1. URL 參數登入 */
+    var p = new URLSearchParams(window.location.search);
+    if(p.get("admin") === KEY){
+      localStorage.setItem(STORE, "1");
+      p.delete("admin");
+      var q = p.toString();
+      window.location.replace(window.location.pathname + (q ? "?" + q : ""));
+      return;
+    }
+    /* 2. 已登入狀態 → 全站解鎖 */
+    if(localStorage.getItem(STORE) === "1"){
+      /* 隱藏所有遮罩 */
+      document.querySelectorAll(".comingSoon, #comingSoon, [id*='comingSoon'], .memberGate, #memberGate").forEach(function(el){
+        el.style.display = "none";
+      });
+      /* 課程卡解除鎖定 */
+      document.querySelectorAll("a.mod, .mod, .locked, [class*='lock']").forEach(function(el){
+        el.style.opacity = "1";
+        el.style.pointerEvents = "auto";
+        el.classList.remove("locked");
+      });
+      /* 考試直接通過（讀頁面的 MTJ_EXAM_KEY 或猜 key） */
+      try{
+        if(typeof MTJ_EXAM_KEY !== "undefined" && MTJ_EXAM_KEY){ localStorage.setItem(MTJ_EXAM_KEY, "1"); }
+        else{
+          var m = window.location.pathname.match(/Module_(\d+)_/i) || window.location.pathname.match(/_M(\d+)_/i);
+          if(m){ localStorage.setItem("mtj_exam_pass_" + m[1], "1"); }
+        }
+      }catch(e){}
+      /* ADMIN VIEW badge */
+      var b = document.createElement("div");
+      b.style.cssText = "position:fixed;bottom:14px;right:14px;z-index:999;background:rgba(232,180,74,.15);border:1px solid rgba(232,180,74,.5);color:#E8B44A;border-radius:20px;padding:5px 14px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.15em;";
+      b.textContent = "ADMIN VIEW · 全站管理員";
+      document.body.appendChild(b);
+    }
+  }catch(e){}
+})();
+</script>
 </body>
 </html>
