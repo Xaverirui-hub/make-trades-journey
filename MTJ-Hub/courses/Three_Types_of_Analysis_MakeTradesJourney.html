@@ -434,7 +434,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
 
 <section class="section" id="technical">
   <div class="group-head reveal"><span class="tier">01</span>
-    <div><div class="eyebrow"><span class="en">The green pill</span><span class="zh">看图</span></div><h2 class="title">Studying Price Itself</h2></div></div>
+    <div><div class="eyebrow"><span class="en">The green pill</span><span class="zh">看图</span></div><h2 class="title"><span class="en">Studying Price Itself</span></h2></div></div>
   <article class="pattern reveal">
     <div class="pattern-head"><span class="idx">A.01</span><h3>Technical Analysis<span class="zh">技术分析</span></h3><span class="tag green">The chart</span></div>
     <div class="dgm"><svg viewBox="0 0 460 170" class="mini-svg" xmlns="http://www.w3.org/2000/svg">
@@ -464,7 +464,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
 
 <section class="section" id="fundamental">
   <div class="group-head reveal"><span class="tier">02</span>
-    <div><div class="eyebrow"><span class="en">The red pill</span><span class="zh">看经济</span></div><h2 class="title">The Forces Behind Price</h2></div></div>
+    <div><div class="eyebrow"><span class="en">The red pill</span><span class="zh">看经济</span></div><h2 class="title"><span class="en">The Forces Behind Price</span></h2></div></div>
   <article class="pattern reveal">
     <div class="pattern-head"><span class="idx">A.02</span><h3>Fundamental Analysis<span class="zh">基本面分析</span></h3><span class="tag red">The economy</span></div>
     <div class="dgm"><div class="factors">
@@ -488,7 +488,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
 
 <section class="section" id="sentiment">
   <div class="group-head reveal"><span class="tier">03</span>
-    <div><div class="eyebrow"><span class="en">The blue pill</span><span class="zh">看人心</span></div><h2 class="title">How the Crowd Feels</h2></div></div>
+    <div><div class="eyebrow"><span class="en">The blue pill</span><span class="zh">看人心</span></div><h2 class="title"><span class="en">How the Crowd Feels</span></h2></div></div>
   <article class="pattern reveal">
     <div class="pattern-head"><span class="idx">A.03</span><h3>Sentiment Analysis<span class="zh">情绪分析</span></h3><span class="tag blue">The crowd</span></div>
     <div class="dgm"><div class="meter">
@@ -503,7 +503,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
 
 <section class="section">
   <div class="group-head reveal"><span class="tier">★</span>
-    <div><div class="eyebrow"><span class="en">Which one are you?</span><span class="zh">你是哪一种</span></div><h2 class="title">Side by Side</h2></div></div>
+    <div><div class="eyebrow"><span class="en">Which one are you?</span><span class="zh">你是哪一种</span></div><h2 class="title"><span class="en">Side by Side</span></h2></div></div>
   <div class="dgm reveal">
     <div class="cmp-wrap"><table class="cmp">
       <thead><tr><th class="rlbl"></th><th class="c1"><span class="en">Technical</span><span class="zh">技术面</span></th><th class="c2"><span class="en">Fundamental</span><span class="zh">基本面</span></th><th class="c3"><span class="en">Sentiment</span><span class="zh">情绪面</span></th></tr></thead>
@@ -528,10 +528,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
     <span class="tier">EXAM</span>
     <div><div class="eyebrow"><span class="en">Module Check</span><span class="zh">模块测验</span></div><h2 class="title">Pass the Quiz to Unlock Module 03<span class="zh">通过测验解锁下一课</span></h2></div>
   </div>
-  <div class="note" style="max-width:820px;line-height:1.9;">
-    Answer all 5 questions. You need <b>4 of 5 (70%)</b> to pass. Wrong answers are explained - read them, then retry.
-    <span class="zh">回答全部 5 题。答对 <b>4 题（70%）</b> 即通过。答错的题会给出解析 —— 看完再试。</span>
-  </div>
+<div class="note" style="max-width:820px;line-height:1.9;"><span class="en">Answer all 5 questions. You need 4 of 5 (70%) to pass. Wrong answers are explained - read them, then retry.</span><span class="zh">回答全部 5 题。答对 4 题（70%） 即通过。答错的题会给出解析 —— 看完再试。</span></div>
   <div id="examBox" style="max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:22px;"></div>
   <div style="max-width:820px;margin:26px auto 0;text-align:center;">
     <button id="examSubmit" onclick="gradeExam()" style="background:var(--gold);color:#0a0e14;border:none;border-radius:30px;padding:14px 40px;font-family:'Sora',sans-serif;font-weight:700;font-size:15px;cursor:pointer;letter-spacing:.05em;"><span class="en">Submit Answers</span><span class="zh">提交答案</span></button>
@@ -986,7 +983,7 @@ renderExam();
      inside one text node (".note", figcaption), which no selector can
      split. Turning it on early leaves English fragments stranded in the
      Chinese view. Flip STRICT to true once that pass lands.            */
-  var STRICT = false;
+  var STRICT = true;
 
   window.setLang = function(l){
     if(l !== 'en' && l !== 'zh') l = 'zh';

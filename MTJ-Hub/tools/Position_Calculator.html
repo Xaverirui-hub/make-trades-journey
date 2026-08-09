@@ -721,7 +721,7 @@ calc();
      inside one text node (".note", figcaption), which no selector can
      split. Turning it on early leaves English fragments stranded in the
      Chinese view. Flip STRICT to true once that pass lands.            */
-  var STRICT = false;
+  var STRICT = true;
 
   window.setLang = function(l){
     if(l !== 'en' && l !== 'zh') l = 'zh';

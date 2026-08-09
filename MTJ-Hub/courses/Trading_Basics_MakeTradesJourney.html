@@ -510,7 +510,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
     <div class="cell ask"><div class="lbl"><span class="en">Ask</span><span class="zh">卖价</span></div><div class="val">1.10500</div><div class="sub">你买入的价格<br>broker sells 经纪商卖出</div></div>
   </div></div>
     <div class="pattern-desc"><p><b><span class="en">Bid</span><span class="zh">买价</span></b> — the price you can <b>sell</b> the base at (the broker buys from you). <b><span class="en">Ask</span><span class="zh">卖价</span></b> — the price you can <b>buy</b> at (the broker sells to you). The Ask is <b>always higher</b> than the Bid, and the gap between them is the <b>Spread</b> — effectively your cost to trade.<span class="zh"><b>买价 Bid</b>——你能<b>卖出</b>主要货币的价格(经纪商向你买)。<b>卖价 Ask</b>——你能<b>买入</b>的价格(经纪商卖给你)。卖价<b>永远高于</b>买价，两者之差就是<b>点差 Spread</b>，也就是你的交易成本。</span></p>
-  <div class="note">// Spread 点差 = Ask 卖价 − Bid 买价 · always ≥ 0 永远为正</div></div>
+<div class="note"><span class="en">// Spread</span><span class="zh">点差 = Ask 卖价 − Bid 买价 · always ≥ 0 永远为正</span></div></div>
   </article>
 </section>
 
@@ -554,7 +554,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
        <div class="row sell"><div class="rt"><span class="en">▼ Sell / Short</span><span class="zh">卖出</span></div><div class="calc">Entry 进场 1.1000 → Exit 出场 1.0990<br>= +10 pips × $10 × 1 lot</div><div class="res">= +$100</div></div>
      </div></div>
     <div class="pattern-desc"><p>Your profit is simply <b>how many pips</b> you captured, times the <b>pip value</b>, times your <b>lot size</b>. Buying profits when price rises; selling profits when price falls.<span class="zh">盈亏就是你抓到的<b>点数</b>，乘以<b>每点价值</b>，再乘以<b>手数</b>。买入在上涨中获利，卖出在下跌中获利。</span></p>
-  <div class="note">// Pip value depends on lot size &amp; pair — $10/pip per standard lot shown here 每点价值取决于手数与货币对，此处以标准手 $10/点 为例</div></div>
+<div class="note"><span class="en">// Pip value depends on lot size &amp; pair — $10/pip per standard lot shown here</span><span class="zh">每点价值取决于手数与货币对，此处以标准手 $10/点 为例</span></div></div>
   </article>
   <article class="pattern reveal">
     <div class="pattern-head"><span class="idx">B.08</span><h3>Why Price Moves<span class="zh">市场为何涨跌</span></h3><span class="tag neu">Supply &amp; demand</span></div>
@@ -589,10 +589,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
     <span class="tier">EXAM</span>
     <div><div class="eyebrow"><span class="en">Module Check</span><span class="zh">模块测验</span></div><h2 class="title">Pass the Quiz to Unlock Module 02<span class="zh">通过测验解锁下一课</span></h2></div>
   </div>
-  <div class="note" style="max-width:820px;line-height:1.9;">
-    Answer all 5 questions. You need <b>4 of 5 (70%)</b> to pass. Wrong answers are explained - read them, then retry.
-    <span class="zh">回答全部 5 题。答对 <b>4 题（70%）</b> 即通过。答错的题会给出解析 —— 看完再试。</span>
-  </div>
+<div class="note" style="max-width:820px;line-height:1.9;"><span class="en">Answer all 5 questions. You need 4 of 5 (70%) to pass. Wrong answers are explained - read them, then retry.</span><span class="zh">回答全部 5 题。答对 4 题（70%） 即通过。答错的题会给出解析 —— 看完再试。</span></div>
   <div id="examBox" style="max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:22px;"></div>
   <div style="max-width:820px;margin:26px auto 0;text-align:center;">
     <button id="examSubmit" onclick="gradeExam()" style="background:var(--gold);color:#0a0e14;border:none;border-radius:30px;padding:14px 40px;font-family:'Sora',sans-serif;font-weight:700;font-size:15px;cursor:pointer;letter-spacing:.05em;"><span class="en">Submit Answers</span><span class="zh">提交答案</span></button>
