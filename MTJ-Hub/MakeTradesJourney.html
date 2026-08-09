@@ -258,8 +258,8 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 @media(prefers-reduced-motion:reduce){.bg-logo{opacity:.05;}}
 
 /* ===== Language Toggle ===== */
-body.lang-en .zh{display:none !important;}
-body.lang-zh.lang-strict .en{display:none !important;}
+body.lang-en .zh,body.lang-en .zh-t,body.lang-en .h-zh{display:none !important;}
+body.lang-zh .en{display:none !important;}
 body.lang-zh .zh-t{display:block !important;}
 
 .acc-open,.acc-mem{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;
@@ -329,8 +329,8 @@ body.lang-zh .zh-t{display:block !important;}
     </div>
   </div>
 </nav>
-<nav class="secnav"><a href="about.html"><span class="lbl">About · 关于</span><span class="pt"></span></a>
-<a href="#close"><span class="lbl">Start · 开始</span><span class="pt"></span></a>
+<nav class="secnav"><a href="about.html"><span class="lbl"><span class="en">About</span><span class="zh">关于</span></span><span class="pt"></span></a>
+<a href="#close"><span class="lbl"><span class="en">Start</span><span class="zh">开始</span></span><span class="pt"></span></a>
 </nav>
 
 
@@ -356,13 +356,13 @@ body.lang-zh .zh-t{display:block !important;}
     <span class="zh">以教育为核心的交易社群 —— 把图表变成你真正读得懂的语言。</span></p>
 
   <div class="cta-row">
-    <a class="btn primary" href="courses.html">Enter the Courses <span class="ar">→</span></a>
+    <a class="btn primary" href="courses.html"><span class="en">Enter the Courses</span><span class="zh">进入课程</span> <span class="ar">→</span></a>
   </div>
 </header>
 <div class="hero-stats">
-    <div class="st"><b>22</b><span>Modules 课程</span></div>
+    <div class="st"><b>22</b><span><span class="en">Modules</span><span class="zh">课程</span></span></div>
 <section class="section" id="about" style="text-align:center;">
-  <div class="eyebrow reveal" style="justify-content:center;">Who we are · 关于我们</div>
+  <div class="eyebrow reveal" style="justify-content:center;"><span class="en">Who we are</span><span class="zh">关于我们</span></div>
   <h2 class="title reveal">We build traders,<br>not shortcuts.<span class="zh">我们教的不是捷径，是成为专业交易者的路。</span></h2>
   <div class="manifesto reveal" style="max-width:860px;margin:48px auto 0;text-align:center;border-top:1px solid var(--line-soft);padding-top:40px;">
     <p style="font-size:clamp(19px,2.6vw,26px);font-weight:700;line-height:1.7;color:var(--text);letter-spacing:-.01em;">The shortcut trader chases the win and loses the craft.<br>
@@ -370,24 +370,24 @@ body.lang-zh .zh-t{display:block !important;}
       <span class="zh" style="display:block;font-family:'Noto Sans SC';font-weight:500;font-size:clamp(14px,1.9vw,18px);color:var(--muted);margin-top:14px;">走捷径的人，追着盈利跑，最后丢掉了手艺；<br>守纪律的人，先把手艺练成，盈利自会到来。</span></p>
   </div>
   <div class="cta-row reveal" style="justify-content:center;margin-top:40px;">
-    <a class="btn primary" href="about.html">More About Us <span class="ar">→</span></a>
+    <a class="btn primary" href="about.html"><span class="en">More About Us</span><span class="zh">了解更多</span> <span class="ar">→</span></a>
   </div>
 </section>
 <section class="section closing" id="close">
-  <div class="eyebrow reveal" style="justify-content:center;">Begin · 开始</div>
+  <div class="eyebrow reveal" style="justify-content:center;"><span class="en">Begin</span><span class="zh">开始</span></div>
   <h2 class="title reveal">Start at Module 01.<span class="zh">从第一课开始。</span></h2>
   <p class="lead reveal" style="margin-left:auto;margin-right:auto;">You don't need to be ready. You need to start, and then stay consistent long enough for the charts to start making sense.
     <span class="zh">你不需要准备好才开始，你需要开始，然后坚持到图表开始说得通的那一天。</span></p>
   <div class="cta-row reveal">
-    <a class="btn primary" href="courses/Trading_Basics_MakeTradesJourney.html">Start: Trading Basics <span class="ar">→</span></a>
-    <a class="btn" href="courses.html">Browse All Modules</a>
+    <a class="btn primary" href="courses/Trading_Basics_MakeTradesJourney.html"><span class="en">Start: Trading Basics</span><span class="zh">开始：基础交易</span> <span class="ar">→</span></a>
+    <a class="btn" href="courses.html"><span class="en">Browse All Modules</span><span class="zh">浏览全部课程</span></a>
   </div>
-  <div class="quote reveal">学 习 · 交 易 · 盈 利 · 享 受</div>
-  <div class="qsub reveal">Once hope it possible</div>
+  <div class="quote reveal zh">学 习 · 交 易 · 盈 利 · 享 受</div>
+  <div class="qsub reveal en">Once hope it possible</div>
 </section>
 <footer class="footer">
   <div class="footer-in">
-    <div class="disc-title reveal">Disclaimer · 免责声明</div>
+    <div class="disc-title reveal"><span class="en">Disclaimer</span><span class="zh">免责声明</span></div>
     <p class="disc reveal">This site is for educational purposes only and does not constitute financial, investment, or legal advice. The individuals appearing in these materials, if any, are depicted for illustrative purposes only.
       <span class="zh">本网站仅供教育用途，不构成任何财务、投资或法律建议。材料中如有出现人物，仅作示意用途。</span></p>
     <p class="disc reveal">Trading involves substantial risk. Past patterns and performance do not guarantee future results. Always do your own research and manage your risk.
@@ -599,7 +599,7 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
      inside one text node (".note", figcaption), which no selector can
      split. Turning it on early leaves English fragments stranded in the
      Chinese view. Flip STRICT to true once that pass lands.            */
-  var STRICT = false;
+  var STRICT = true;
 
   window.setLang = function(l){
     if(l !== 'en' && l !== 'zh') l = 'zh';

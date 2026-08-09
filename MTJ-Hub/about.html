@@ -258,8 +258,8 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 @media(prefers-reduced-motion:reduce){.bg-logo{opacity:.05;}}
 
 /* ===== Language Toggle ===== */
-body.lang-en .zh{display:none !important;}
-body.lang-zh.lang-strict .en{display:none !important;}
+body.lang-en .zh,body.lang-en .zh-t,body.lang-en .h-zh{display:none !important;}
+body.lang-zh .en{display:none !important;}
 body.lang-zh .zh-t{display:block !important;}
 
 .acc-open,.acc-mem{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;
@@ -329,9 +329,9 @@ body.lang-zh .zh-t{display:block !important;}
     </div>
   </div>
 </nav>
-<nav class="secnav"><a href="#about"><span class="lbl">Who We Are · 关于我们</span><span class="pt"></span></a>
-<a href="#vision"><span class="lbl">Vision · 愿景</span><span class="pt"></span></a>
-<a href="#values"><span class="lbl">Values · 价值观</span><span class="pt"></span></a>
+<nav class="secnav"><a href="#about"><span class="lbl"><span class="en">Who We Are</span><span class="zh">关于我们</span></span><span class="pt"></span></a>
+<a href="#vision"><span class="lbl"><span class="en">Vision</span><span class="zh">愿景</span></span><span class="pt"></span></a>
+<a href="#values"><span class="lbl"><span class="en">Values</span><span class="zh">价值观</span></span><span class="pt"></span></a>
 </nav>
 
 
@@ -349,19 +349,19 @@ body.lang-zh .zh-t{display:block !important;}
 
 <div class="wrap" style="padding-top:57px;">
 <section class="section" id="about">
-  <div class="eyebrow reveal">Who we are · 关于我们</div>
-  <h2 class="title reveal">About Make Trades Journey<span class="zh">关于我们</span></h2>
+  <div class="eyebrow reveal"><span class="en">Who we are</span><span class="zh">关于我们</span></div>
+  <h2 class="title reveal"><span class="en">About Make Trades Journey</span><span class="zh">关于 Make Trades Journey</span></h2>
   <p class="lead reveal" style="max-width:860px;">Make Trades Journey was founded in 2022 - born from one belief: that trading can be taught properly, or not at all. This is not a place that promises easy money or a shortcut to comfort. It is a place where discipline is built, chart by chart, decision by decision, until the trader you become is the trader you respect.
     <span class="zh">Make Trades Journey 创立于 2022 年，始于一个信念：交易可以被认真教会，也可以一败涂地。这里不承诺轻松获利，也不贩卖一夜暴富的捷径。这里只用一张张图表、一次次决策，把纪律一寸寸练成你的本能——直到你成为自己都尊重的那位交易者。</span></p>
 
 <div class="vm-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:44px;max-width:860px;">
     <div class="vm-card reveal" style="border:1px solid var(--line-soft);border-radius:14px;padding:22px 24px;background:linear-gradient(180deg,rgba(232,200,119,.05),transparent);">
-      <div class="vm-tag" style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.24em;color:var(--gold);text-transform:uppercase;">Vision · 愿景</div>
+      <div class="vm-tag" style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.24em;color:var(--gold);text-transform:uppercase;"><span class="en">Vision</span><span class="zh">愿景</span></div>
       <p style="margin:12px 0 0;font-size:14px;color:var(--text);line-height:1.8;">A world where anyone who truly wants to trade can be taught properly - and chooses discipline over shortcuts.
         <span class="zh" style="display:block;font-family:'Noto Sans SC';font-size:13px;color:var(--muted);margin-top:6px;">让每一个真正想交易的人，都有机会被正确地教会——并且选择纪律，而非捷径。</span></p>
     </div>
     <div class="vm-card reveal" style="border:1px solid var(--line-soft);border-radius:14px;padding:22px 24px;background:linear-gradient(180deg,rgba(232,200,119,.05),transparent);">
-      <div class="vm-tag" style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.24em;color:var(--gold);text-transform:uppercase;">Mission · 使命</div>
+      <div class="vm-tag" style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.24em;color:var(--gold);text-transform:uppercase;"><span class="en">Mission</span><span class="zh">使命</span></div>
       <p style="margin:12px 0 0;font-size:14px;color:var(--text);line-height:1.8;">To build professional traders through structured, bilingual, visual education - one concept, one chart, one disciplined decision at a time.
         <span class="zh" style="display:block;font-family:'Noto Sans SC';font-size:13px;color:var(--muted);margin-top:6px;">通过系统化、双语、图解式的教育培养专业交易者——一个概念、一张图、一次有纪律的决策。</span></p>
     </div>
@@ -370,21 +370,21 @@ body.lang-zh .zh-t{display:block !important;}
 
   <div class="pillars" style="margin-top:16px;">
     <div class="pil reveal">
-      <div class="ico">RESPECT</div>
+      <div class="ico"><span class="en">RESPECT</span></div>
       <h3>Respect the Market</h3>
       <div class="zh">敬畏市场</div>
       <p>The market owes you nothing. Every edge is borrowed, every win is rented - humility is not a virtue here, it is survival.
         <span class="zh" style="display:block;">市场不欠你任何东西。每一分优势都是借来的，每一次盈利都是租来的——敬畏不是美德，是生存。</span></p>
     </div>
     <div class="pil reveal">
-      <div class="ico">DISCIPLINE</div>
+      <div class="ico"><span class="en">DISCIPLINE</span></div>
       <h3>Discipline Over Shortcuts</h3>
       <div class="zh">纪律胜过捷径</div>
       <p>There is no secret indicator, no holy grail, no overnight formula. There is only the slow, boring, repeatable process that works.
         <span class="zh" style="display:block;">没有秘密指标，没有圣杯，没有一夜暴富的公式。只有那个缓慢、枯燥、可以重复执行的过程。</span></p>
     </div>
     <div class="pil reveal">
-      <div class="ico">RISK FIRST</div>
+      <div class="ico"><span class="en">RISK FIRST</span></div>
       <h3>Risk Before Reward</h3>
       <div class="zh">风控优先</div>
       <p>How much you can lose matters more than how much you can win. Protect the account first, and the profits will have somewhere to live.
@@ -400,20 +400,20 @@ body.lang-zh .zh-t{display:block !important;}
 
 </section>
 <section class="section closing" id="close">
-  <div class="eyebrow reveal" style="justify-content:center;">Begin · 开始</div>
+  <div class="eyebrow reveal" style="justify-content:center;"><span class="en">Begin</span><span class="zh">开始</span></div>
   <h2 class="title reveal">Start at Module 01.<span class="zh">从第一课开始。</span></h2>
   <p class="lead reveal" style="margin-left:auto;margin-right:auto;">You don't need to be ready. You need to start, and then stay consistent long enough for the charts to start making sense.
     <span class="zh">你不需要准备好才开始，你需要开始，然后坚持到图表开始说得通的那一天。</span></p>
   <div class="cta-row reveal">
-    <a class="btn primary" href="courses.html">Start: Trading Basics <span class="ar">→</span></a>
-    <a class="btn" href="courses.html">Browse All Modules</a>
+    <a class="btn primary" href="courses.html"><span class="en">Start: Trading Basics</span><span class="zh">开始：基础交易</span> <span class="ar">→</span></a>
+    <a class="btn" href="courses.html"><span class="en">Browse All Modules</span><span class="zh">浏览全部课程</span></a>
   </div>
-  <div class="quote reveal">学 习 · 交 易 · 盈 利 · 享 受</div>
-  <div class="qsub reveal">Once hope it possible</div>
+  <div class="quote reveal zh">学 习 · 交 易 · 盈 利 · 享 受</div>
+  <div class="qsub reveal en">Once hope it possible</div>
 </section>
 <footer class="footer">
   <div class="footer-in">
-    <div class="disc-title reveal">Disclaimer · 免责声明</div>
+    <div class="disc-title reveal"><span class="en">Disclaimer</span><span class="zh">免责声明</span></div>
     <p class="disc reveal">This site is for educational purposes only and does not constitute financial, investment, or legal advice. The individuals appearing in these materials, if any, are depicted for illustrative purposes only.
       <span class="zh">本网站仅供教育用途，不构成任何财务、投资或法律建议。材料中如有出现人物，仅作示意用途。</span></p>
     <p class="disc reveal">Trading involves substantial risk. Past patterns and performance do not guarantee future results. Always do your own research and manage your risk.
@@ -625,7 +625,7 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
      inside one text node (".note", figcaption), which no selector can
      split. Turning it on early leaves English fragments stranded in the
      Chinese view. Flip STRICT to true once that pass lands.            */
-  var STRICT = false;
+  var STRICT = true;
 
   window.setLang = function(l){
     if(l !== 'en' && l !== 'zh') l = 'zh';
