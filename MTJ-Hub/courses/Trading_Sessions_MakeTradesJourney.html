@@ -69,7 +69,7 @@ body{
   text-transform:uppercase;color:var(--gold-deep);display:flex;align-items:center;gap:12px;margin-bottom:18px;}
 .eyebrow::before{content:"";width:26px;height:1px;background:linear-gradient(90deg,var(--gold),transparent);}
 h2.title{font-size:clamp(30px,5vw,54px);font-weight:800;line-height:1.05;margin:0 0 6px;letter-spacing:-.01em;}
-h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:.42em;letter-spacing:.06em;color:var(--muted);margin-top:10px;}
+h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:0.54em;letter-spacing:.06em;color:inherit;margin-top:10px;}
 .lead{max-width:640px;color:var(--muted);font-size:clamp(15px,2vw,17px);}
 
 .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1);}
@@ -90,7 +90,7 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 .hero .h-zh{font-family:'Noto Sans SC';font-weight:300;font-size:clamp(16px,3vw,26px);letter-spacing:.5em;
   color:var(--muted);margin-bottom:20px;text-indent:.5em;}
 .hero .h-sub{max-width:560px;color:var(--muted);font-size:clamp(14px,2vw,17px);margin:0 auto;}
-.hero .h-sub .zh{display:block;font-family:'Noto Sans SC';color:var(--muted-2);font-size:.9em;margin-top:4px;}
+.hero .h-sub .zh{display:block;font-family:'Noto Sans SC';color:inherit;font-size:1.02em;margin-top:4px;}
 .hero-chart{position:absolute;left:0;right:0;bottom:0;height:34vh;min-height:180px;width:100%;z-index:1;
   -webkit-mask-image:linear-gradient(to right,transparent,#000 12%,#000 88%,transparent);
   mask-image:linear-gradient(to right,transparent,#000 12%,#000 88%,transparent);opacity:.9;}
@@ -103,7 +103,7 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 .agenda .card:hover{border-color:var(--line);transform:translateY(-4px);}
 .agenda .card .n{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--gold-deep);letter-spacing:.1em;}
 .agenda .card h3{margin:12px 0 4px;font-size:19px;font-weight:700;}
-.agenda .card .zh{font-family:'Noto Sans SC';color:var(--muted);font-size:13px;}
+.agenda .card .zh{font-family:'Noto Sans SC';color:inherit;font-size:14.5px;}
 .agenda .card .sub{margin-top:14px;display:flex;flex-wrap:wrap;gap:6px;}
 .agenda .card .sub span{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.05em;
   padding:4px 9px;border:1px solid var(--line-soft);border-radius:20px;color:var(--gold);}
@@ -117,7 +117,7 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 .points li::before{content:"";position:absolute;left:8px;top:22px;width:10px;height:10px;border-radius:2px;
   background:var(--gold);transform:rotate(45deg);}
 .points li b{color:var(--text);font-weight:600;}
-.points li .zh{display:block;font-family:'Noto Sans SC';color:var(--muted);font-size:13.5px;margin-top:3px;}
+.points li .zh{display:block;font-family:'Noto Sans SC';color:inherit;font-size:15.0px;margin-top:3px;}
 
 /* ---------- anatomy ---------- */
 .anatomy-box{border:1px solid var(--line-soft);border-radius:20px;padding:24px;
@@ -128,7 +128,7 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 .divider{position:relative;text-align:center;padding:clamp(90px,14vh,150px) 20px;overflow:hidden;}
 .divider h2{font-size:clamp(38px,9vw,96px);font-weight:800;letter-spacing:-.02em;margin:0;
   color:var(--gold-bright);}
-.divider .zh{font-family:'Noto Sans SC';font-weight:300;letter-spacing:.5em;color:var(--muted);
+.divider .zh{font-family:'Noto Sans SC';font-weight:300;letter-spacing:.5em;color:inherit;
   font-size:clamp(14px,2.4vw,20px);margin-top:14px;text-indent:.5em;}
 .divider .rail{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.3em;color:var(--gold-deep);
   text-transform:uppercase;margin-bottom:20px;}
@@ -142,7 +142,7 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 .pattern-head{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
 .pattern-head .idx{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--gold-deep);letter-spacing:.1em;}
 .pattern-head h3{margin:0;font-size:clamp(22px,3vw,30px);font-weight:700;}
-.pattern-head h3 .zh{font-family:'Noto Sans SC';font-weight:400;color:var(--muted);font-size:.6em;margin-left:10px;}
+.pattern-head h3 .zh{font-family:'Noto Sans SC';font-weight:400;color:inherit;font-size:0.72em;margin-left:10px;}
 .tag{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
   padding:5px 12px;border-radius:20px;border:1px solid;}
 .tag.bull{color:var(--bull);border-color:rgba(44,217,138,.4);background:rgba(44,217,138,.07);}
@@ -158,9 +158,9 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 .chart svg{width:100%;height:auto;display:block;}
 .chart-fig figcaption{margin-top:8px;text-align:center;font-family:'JetBrains Mono',monospace;
   font-size:10.5px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;}
-.chart-fig figcaption .zh{font-family:'Noto Sans SC';display:block;letter-spacing:0;text-transform:none;color:var(--muted-2);margin-top:2px;font-size:11px;}
+.chart-fig figcaption .zh{font-family:'Noto Sans SC';display:block;letter-spacing:0;text-transform:none;color:inherit;margin-top:2px;font-size:12.5px;}
 .pattern-desc p{margin:0 0 12px;color:var(--text);font-size:15.5px;}
-.pattern-desc p .zh{display:block;font-family:'Noto Sans SC';color:var(--muted);font-size:13.5px;margin-top:3px;}
+.pattern-desc p .zh{display:block;font-family:'Noto Sans SC';color:inherit;font-size:15.0px;margin-top:3px;}
 .pattern-desc .note{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold-deep);letter-spacing:.06em;
   border-left:2px solid var(--line);padding-left:12px;margin-top:14px;}
 
@@ -243,7 +243,7 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 .foot-brand img{height:44px;width:auto;mix-blend-mode:lighten;filter:drop-shadow(0 0 10px rgba(232,200,119,.25));}
 .foot-brand .txt b{display:block;font-size:15px;color:var(--gold-bright);letter-spacing:.02em;}
 .foot-brand .txt span{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;color:var(--muted);text-transform:uppercase;}
-.foot-brand .txt .zh{font-family:'Noto Sans SC';letter-spacing:.05em;text-transform:none;color:var(--muted-2);font-size:12px;}
+.foot-brand .txt .zh{font-family:'Noto Sans SC';letter-spacing:.05em;text-transform:none;color:inherit;font-size:13.5px;}
 .copy{margin-top:26px;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;color:var(--muted-2);}
 
 @media(prefers-reduced-motion:reduce){
