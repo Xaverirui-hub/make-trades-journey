@@ -527,16 +527,16 @@ body.lang-zh.lang-strict .en{display:none !important;}
 
 <!-- section nav -->
 <nav class="secnav">
-  <a href="#agenda-sec"><span class="lbl">Overview · 总览</span><span class="pt"></span></a>
-  <a href="#layout"><span class="lbl">Anatomy · 结构</span><span class="pt"></span></a>
-  <a href="#formula"><span class="lbl">Formula · 公式</span><span class="pt"></span></a>
-  <a href="#cross"><span class="lbl">Crosses · 金叉死叉</span><span class="pt"></span></a>
-  <a href="#hist"><span class="lbl">Histogram · 柱状图</span><span class="pt"></span></a>
-  <a href="#zero"><span class="lbl">Zero Line · 零轴</span><span class="pt"></span></a>
-  <a href="#divergence"><span class="lbl">Divergence · 背离</span><span class="pt"></span></a>
-  <a href="#params"><span class="lbl">Parameters · 参数</span><span class="pt"></span></a>
-  <a href="#trend"><span class="lbl">Trend · 趋势</span><span class="pt"></span></a>
-  <a href="#misuse"><span class="lbl">Misuse · 误用</span><span class="pt"></span></a>
+  <a href="#agenda-sec"><span class="lbl"><span class="en">Overview</span><span class="zh">总览</span></span><span class="pt"></span></a>
+  <a href="#layout"><span class="lbl"><span class="en">Anatomy</span><span class="zh">结构</span></span><span class="pt"></span></a>
+  <a href="#formula"><span class="lbl"><span class="en">Formula</span><span class="zh">公式</span></span><span class="pt"></span></a>
+  <a href="#cross"><span class="lbl"><span class="en">Crosses</span><span class="zh">金叉死叉</span></span><span class="pt"></span></a>
+  <a href="#hist"><span class="lbl"><span class="en">Histogram</span><span class="zh">柱状图</span></span><span class="pt"></span></a>
+  <a href="#zero"><span class="lbl"><span class="en">Zero Line</span><span class="zh">零轴</span></span><span class="pt"></span></a>
+  <a href="#divergence"><span class="lbl"><span class="en">Divergence</span><span class="zh">背离</span></span><span class="pt"></span></a>
+  <a href="#params"><span class="lbl"><span class="en">Parameters</span><span class="zh">参数</span></span><span class="pt"></span></a>
+  <a href="#trend"><span class="lbl"><span class="en">Trend</span><span class="zh">趋势</span></span><span class="pt"></span></a>
+  <a href="#misuse"><span class="lbl"><span class="en">Misuse</span><span class="zh">误用</span></span><span class="pt"></span></a>
 </nav>
 
 <div class="wrap">
@@ -554,7 +554,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
 
 <!-- ================= AGENDA ================= -->
 <section class="section" id="agenda-sec">
-  <div class="eyebrow reveal">Content · 目录</div>
+  <div class="eyebrow reveal"><span class="en">Content</span><span class="zh">目录</span></div>
   <h2 class="title reveal">What we'll cover<span class="zh">本课涵盖内容</span></h2>
   <div class="agenda">
     <div class="card reveal"><div class="n">01</div><h3>MT5 MACD Anatomy</h3><div class="zh">附属窗长什么样 · 线+柱</div></div>
@@ -575,24 +575,24 @@ body.lang-zh.lang-strict .en{display:none !important;}
 
 <!-- ================= PART 01 · ANATOMY ================= -->
 <section class="divider">
-  <div class="rail reveal">Part 01 · 第一部分</div>
-  <h2 class="reveal">The Anatomy</h2>
+  <div class="rail reveal"><span class="en">Part 01</span><span class="zh">第一部分</span></div>
+  <h2 class="reveal"><span class="en">The Anatomy</span></h2>
   <div class="zh reveal">长 什 么 样</div>
 </section>
 
 <section class="section" id="layout">
   <div class="group-head reveal"><span class="tier">01</span>
-    <div><div class="eyebrow">MT5 accessory window · 附属窗口</div><h2 class="title">What MT5's MACD Actually Draws</h2></div></div>
+    <div><div class="eyebrow"><span class="en">MT5 accessory window</span><span class="zh">附属窗口</span></div><h2 class="title">What MT5's MACD Actually Draws</h2></div></div>
 
   <article class="pattern reveal">
-    <div class="pattern-head"><span class="idx">M.01</span><h3>One Line, One Signal, One Histogram<span class="zh">一条线 · 一条信号线 · 一组红绿柱</span></h3><span class="tag neu">MT5 layout MT5 界面</span></div>
+    <div class="pattern-head"><span class="idx">M.01</span><h3>One Line, One Signal, One Histogram<span class="zh">一条线 · 一条信号线 · 一组红绿柱</span></h3><span class="tag neu"><span class="en">MT5 layout MT5</span><span class="zh">界面</span></span></div>
     <figure class="chart-fig wide"><div class="rchart" data-r="macdlayout"></div>
       <figcaption>MT5 MACD (12, 26, 9) in its accessory window<span class="zh">MT5 MACD(12,26,9) 附属窗口全景</span></figcaption></figure>
     <div class="pattern-desc">
       <p>On MT5, MACD lives in a <b>separate window below the price chart</b>. It draws exactly three things:
         the <b>MACD line</b> (fast EMA minus slow EMA), the <b>Signal line</b> (a smoothed MACD line), and
         red/green <b>histogram bars</b> growing around a horizontal zero axis.
-        <span class="zh">在 MT5 上，MACD 显示在<b>价格图下方的独立附属窗口</b>里。它只画三样东西：<b>MACD 线</b>（快 EMA 减 慢 EMA）、<b>信号线</b>（MACD 线的平滑值）、以及围绕水平<b>零轴</b>生长的红绿<b>柱状图</b>。</span></p>
+        <span class="zh">在 MT5 上，MACD 显示在<b>价格图下方的独立附属窗口</b>里。它只画三样东西：<b><span class="en">MACD</span><span class="zh">线</span></b>（快 EMA 减 慢 EMA）、<b>信号线</b>（MACD 线的平滑值）、以及围绕水平<b>零轴</b>生长的红绿<b>柱状图</b>。</span></p>
       <p>Because it has its own window, MACD has its <b>own scale</b> — a reading of +0.0035 is meaningless in
         dollars. It only matters relative to the indicator's own recent history.
         <span class="zh">因为有自己的窗口，MACD 有<b>自己的刻度</b>——+0.0035 换成美元毫无意义，它只有与指标自身近期历史比较时才有意义。</span></p>
@@ -609,10 +609,10 @@ body.lang-zh.lang-strict .en{display:none !important;}
 
 <section class="section" id="formula">
   <div class="group-head reveal"><span class="tier">02</span>
-    <div><div class="eyebrow">The intuition · 公式直觉</div><h2 class="title">Three Averages, Stacked Twice</h2></div></div>
+    <div><div class="eyebrow"><span class="en">The intuition</span><span class="zh">公式直觉</span></div><h2 class="title">Three Averages, Stacked Twice</h2></div></div>
 
   <article class="pattern reveal">
-    <div class="pattern-head"><span class="idx">M.02</span><h3>Fast Minus Slow - Twice<span class="zh">快减慢，减两次</span></h3><span class="tag neu">Formula 公式</span></div>
+    <div class="pattern-head"><span class="idx">M.02</span><h3>Fast Minus Slow - Twice<span class="zh">快减慢，减两次</span></h3><span class="tag neu"><span class="en">Formula</span><span class="zh">公式</span></span></div>
     <figure class="chart-fig wide"><div class="rchart" data-r="macdformula"></div>
       <figcaption>Step 1: EMA(12) − EMA(26) → MACD line. Step 2: line − signal → histogram<span class="zh">第一步：EMA(12) − EMA(26) = MACD 线；第二步：线 − 信号 = 柱状图</span></figcaption></figure>
     <div class="pattern-desc">
@@ -628,24 +628,24 @@ body.lang-zh.lang-strict .en{display:none !important;}
         <div class="fx"><b>Signal</b><span class="op">=</span><b>EMA(9)</b> of MACD Line<span class="op">·</span><b>Histogram</b><span class="op">=</span><b>MACD Line</b><span class="op">−</span><b>Signal</b></div>
         <div class="cap">MACD 线 = EMA(12) − EMA(26)；信号线 = MACD 线的 EMA(9)；柱 = 线 − 信号</div>
       </div>
-      <div class="note">// You never compute this by hand. But knowing the order - line, then signal, then histogram - tells you which piece reacts first. 你永远不用手算。但知道顺序——先有线、再有信号、最后有柱——你就知道谁先动。</div>
+      <div class="note"><span class="en">// You never compute this by hand. But knowing the order - line, then signal, then histogram - tells you which piece reacts first</span><span class="zh">你永远不用手算。但知道顺序——先有线、再有信号、最后有柱——你就知道谁先动。</span></div>
     </div>
   </article>
 </section>
 
 <!-- ================= PART 02 · THE SIGNALS ================= -->
 <section class="divider">
-  <div class="rail reveal">Part 02 · 第二部分</div>
-  <h2 class="reveal">The Signals</h2>
+  <div class="rail reveal"><span class="en">Part 02</span><span class="zh">第二部分</span></div>
+  <h2 class="reveal"><span class="en">The Signals</span></h2>
   <div class="zh reveal">交 叉 与 柱</div>
 </section>
 
 <section class="section" id="cross">
   <div class="group-head reveal"><span class="tier">03</span>
-    <div><div class="eyebrow">Crossovers · 交叉</div><h2 class="title">Golden Cross, Death Cross</h2></div></div>
+    <div><div class="eyebrow"><span class="en">Crossovers</span><span class="zh">交叉</span></div><h2 class="title">Golden Cross, Death Cross</h2></div></div>
 
   <article class="pattern reveal">
-    <div class="pattern-head"><span class="idx">M.03</span><h3>The Line Crossing the Signal<span class="zh">线穿过信号线</span></h3><span class="tag bull">Golden 金叉</span></div>
+    <div class="pattern-head"><span class="idx">M.03</span><h3>The Line Crossing the Signal<span class="zh">线穿过信号线</span></h3><span class="tag bull"><span class="en">Golden</span><span class="zh">金叉</span></span></div>
     <figure class="chart-fig wide"><div class="rchart" data-r="macdcross"></div>
       <figcaption>Golden cross (bull) vs. death cross (bear)<span class="zh">金叉（多）vs. 死叉（空）</span></figcaption></figure>
     <div class="pattern-desc">
@@ -660,17 +660,17 @@ body.lang-zh.lang-strict .en{display:none !important;}
         <li><b>Golden cross below zero</b> — a rebound inside a downtrend. Weaker.<span class="zh">零轴下方的金叉——下跌趋势中的反弹，较弱。</span></li>
         <li><b>Crosses inside a range</b> — they fire back and forth. Noise.<span class="zh">震荡区间里的交叉——来回触发，是噪音。</span></li>
       </ul>
-      <div class="note">// A cross is a starting gun, not a finish line. It says momentum changed - it does not say the trade will win. 交叉是发令枪，不是终点线。它只说明动能变了，不保证这笔交易会赢。</div>
+      <div class="note"><span class="en">// A cross is a starting gun, not a finish line. It says momentum changed - it does not say the trade will win</span><span class="zh">交叉是发令枪，不是终点线。它只说明动能变了，不保证这笔交易会赢。</span></div>
     </div>
   </article>
 </section>
 
 <section class="section" id="hist">
   <div class="group-head reveal"><span class="tier">04</span>
-    <div><div class="eyebrow">Momentum decay · 动能衰减</div><h2 class="title">Shrinking Bars Are a Warning</h2></div></div>
+    <div><div class="eyebrow"><span class="en">Momentum decay</span><span class="zh">动能衰减</span></div><h2 class="title">Shrinking Bars Are a Warning</h2></div></div>
 
   <article class="pattern reveal">
-    <div class="pattern-head"><span class="idx">M.04</span><h3>Read the Size of the Bars, Not Just Their Color<span class="zh">看柱子大小，别只看颜色</span></h3><span class="tag bear">Warning 预警</span></div>
+    <div class="pattern-head"><span class="idx">M.04</span><h3>Read the Size of the Bars, Not Just Their Color<span class="zh">看柱子大小，别只看颜色</span></h3><span class="tag bear"><span class="en">Warning</span><span class="zh">预警</span></span></div>
     <figure class="chart-fig wide"><div class="rchart" data-r="macdhist"></div>
       <figcaption>Histogram peaks, then contracts before the cross - momentum dies before the lines cross<span class="zh">柱状图见顶后先收缩，交叉还没发生动能就先熄火</span></figcaption></figure>
     <div class="pattern-desc">
@@ -685,17 +685,17 @@ body.lang-zh.lang-strict .en{display:none !important;}
         <li><b>Shrinking bars</b> — momentum decaying. Start managing the trade.<span class="zh">柱子变小——动能衰减，开始管理持仓。</span></li>
         <li><b>Bars flipping color</b> — the cross has happened. Old trend, new context.<span class="zh">柱子变色——交叉已经发生，趋势换挡。</span></li>
       </ul>
-      <div class="note">// Treat shrinking bars as "the trend is getting tired", not as an instant sell signal. 把柱子收缩理解为「趋势累了」，而不是「立刻卖出」。</div>
+      <div class="note"><span class="en">// Treat shrinking bars as "the trend is getting tired", not as an instant sell signal</span><span class="zh">把柱子收缩理解为「趋势累了」，而不是「立刻卖出」。</span></div>
     </div>
   </article>
 </section>
 
 <section class="section" id="zero">
   <div class="group-head reveal"><span class="tier">05</span>
-    <div><div class="eyebrow">The zero axis · 零轴</div><h2 class="title">Above Zero, Below Zero - Who Is Winning</h2></div></div>
+    <div><div class="eyebrow"><span class="en">The zero axis</span><span class="zh">零轴</span></div><h2 class="title">Above Zero, Below Zero - Who Is Winning</h2></div></div>
 
   <article class="pattern reveal">
-    <div class="pattern-head"><span class="idx">M.05</span><h3>The Zero Line Is the Bull/Bear Border<span class="zh">零轴就是多空分界</span></h3><span class="tag neu">Context 背景</span></div>
+    <div class="pattern-head"><span class="idx">M.05</span><h3>The Zero Line Is the Bull/Bear Border<span class="zh">零轴就是多空分界</span></h3><span class="tag neu"><span class="en">Context</span><span class="zh">背景</span></span></div>
     <figure class="chart-fig wide"><div class="rchart" data-r="macdzero"></div>
       <figcaption>MACD above zero = bulls in control · below zero = bears in control<span class="zh">零轴上方=多方控盘 · 零轴下方=空方控盘</span></figcaption></figure>
     <div class="pattern-desc">
@@ -710,24 +710,24 @@ body.lang-zh.lang-strict .en{display:none !important;}
         <li><b>Below zero</b> — favor shorts. Crosses down are meaningful, crosses up are bounces.<span class="zh">零轴下方——偏空。下叉有意义，上叉只是反弹。</span></li>
         <li><b>Around zero</b> — no side has control. Choppy. Stand aside.<span class="zh">贴着零轴——没有一方控盘，来回拉锯，观望。</span></li>
       </ul>
-      <div class="note">// Zero answers "who is winning?". The crosses answer "when to act?". Never swap the two questions. 零轴回答「谁在赢」，交叉回答「何时动手」。别把这两个问题搞混。</div>
+      <div class="note"><span class="en">// Zero answers "who is winning?". The crosses answer "when to act?". Never swap the two questions</span><span class="zh">零轴回答「谁在赢」，交叉回答「何时动手」。别把这两个问题搞混。</span></div>
     </div>
   </article>
 </section>
 
 <!-- ================= PART 03 · DIVERGENCE ================= -->
 <section class="divider">
-  <div class="rail reveal">Part 03 · 第三部分</div>
-  <h2 class="reveal">Divergence</h2>
+  <div class="rail reveal"><span class="en">Part 03</span><span class="zh">第三部分</span></div>
+  <h2 class="reveal"><span class="en">Divergence</span></h2>
   <div class="zh reveal">背 离</div>
 </section>
 
 <section class="section" id="divergence">
   <div class="group-head reveal"><span class="tier">06</span>
-    <div><div class="eyebrow">Divergence · 背离</div><h2 class="title">Price Says One Thing, MACD Says Another</h2></div></div>
+    <div><div class="eyebrow"><span class="en">Divergence</span><span class="zh">背离</span></div><h2 class="title">Price Says One Thing, MACD Says Another</h2></div></div>
 
   <article class="pattern reveal">
-    <div class="pattern-head"><span class="idx">M.06</span><h3>Top &amp; Bottom Divergence<span class="zh">顶背离与底背离</span></h3><span class="tag bear">Warning 预警</span></div>
+    <div class="pattern-head"><span class="idx">M.06</span><h3>Top &amp; Bottom Divergence<span class="zh">顶背离与底背离</span></h3><span class="tag bear"><span class="en">Warning</span><span class="zh">预警</span></span></div>
     <figure class="chart-fig wide"><div class="rchart" data-r="macddiv"></div>
       <figcaption>Top divergence: price higher high + MACD lower high · bottom divergence: price lower low + MACD higher low<span class="zh">顶背离：价格更高高点配 MACD 更低高点 · 底背离：价格更低低点配 MACD 更高低点</span></figcaption></figure>
     <div class="pattern-desc">
@@ -743,24 +743,24 @@ body.lang-zh.lang-strict .en{display:none !important;}
         <li><b>Hidden divergence</b> — price higher low + MACD lower low: trend continuation, not reversal.<span class="zh">隐藏背离——价格更高的低点配 MACD 更低的低点：趋势延续，不是反转。</span></li>
         <li><b>In strong trends</b> — divergence can stay "wrong" for a long time. Context first.<span class="zh">强趋势里背离可以「错」很久，先看背景。</span></li>
       </ul>
-      <div class="note">// Divergence on higher timeframes is worth far more than the same pattern on M5. 大周期的背离比 M5 上的同一个形态值钱得多。</div>
+      <div class="note"><span class="en">// Divergence on higher timeframes is worth far more than the same pattern on M5</span><span class="zh">大周期的背离比 M5 上的同一个形态值钱得多。</span></div>
     </div>
   </article>
 </section>
 
 <!-- ================= PART 04 · CONTEXT & MISUSE ================= -->
 <section class="divider">
-  <div class="rail reveal">Part 04 · 第四部分</div>
-  <h2 class="reveal">Context &amp; Misuse</h2>
+  <div class="rail reveal"><span class="en">Part 04</span><span class="zh">第四部分</span></div>
+  <h2 class="reveal"><span class="en">Context &amp; Misuse</span></h2>
   <div class="zh reveal">背 景 与 误 用</div>
 </section>
 
 <section class="section" id="params">
   <div class="group-head reveal"><span class="tier">07</span>
-    <div><div class="eyebrow">MT5 settings · 参数设置</div><h2 class="title">12/26/9 vs 5/35/5 - What the Numbers Do</h2></div></div>
+    <div><div class="eyebrow"><span class="en">MT5 settings</span><span class="zh">参数设置</span></div><h2 class="title">12/26/9 vs 5/35/5 - What the Numbers Do</h2></div></div>
 
   <article class="pattern reveal">
-    <div class="pattern-head"><span class="idx">M.07</span><h3>Fast, Slow, Signal - Three Knobs<span class="zh">快线、慢线、信号——三个旋钮</span></h3><span class="tag neu">Settings 参数</span></div>
+    <div class="pattern-head"><span class="idx">M.07</span><h3>Fast, Slow, Signal - Three Knobs<span class="zh">快线、慢线、信号——三个旋钮</span></h3><span class="tag neu"><span class="en">Settings</span><span class="zh">参数</span></span></div>
     <figure class="chart-fig wide"><div class="rchart" data-r="macdparams"></div>
       <figcaption>Default (12,26,9) vs. more sensitive (5,35,5) on the same market<span class="zh">同一段行情：默认(12,26,9) vs. 更敏感(5,35,5)</span></figcaption></figure>
     <div class="pattern-desc">
@@ -774,7 +774,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
         <span class="zh">(5,35,5) 对反转反应更快，但交叉数量暴增；(12,26,9) 是平台默认值是有道理的——它正好在噪音与滞后之间。改参数等于改每个交叉的<b>含义</b>；用你真正交易的组合去回测。</span></p>
       <div class="cmp">
         <div class="col good">
-          <div class="ch">✓ Default 12/26/9 · 默认参数</div>
+          <div class="ch"><span class="en">✓ Default 12/26/9</span><span class="zh">默认参数</span></div>
           <ol>
             <li>Balanced - moderate cross count<span class="zh">均衡——交叉数量适中</span></li>
             <li>Works on H1 and above<span class="zh">适合 H1 及以上周期</span></li>
@@ -782,7 +782,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
           </ol>
         </div>
         <div class="col bad">
-          <div class="ch">⚠ Custom 5/35/5 · 自调参数</div>
+          <div class="ch"><span class="en">⚠ Custom 5/35/5</span><span class="zh">自调参数</span></div>
           <ol>
             <li>Fast line hugs price - many crosses<span class="zh">快线贴价格——交叉很多</span></li>
             <li>Better on scalping timeframes<span class="zh">适合超短周期</span></li>
@@ -790,17 +790,17 @@ body.lang-zh.lang-strict .en{display:none !important;}
           </ol>
         </div>
       </div>
-      <div class="note">// Changing only the signal period only changes the histogram's smoothing - it does not change the MACD line itself. 只改信号周期只影响柱状图的平滑，MACD 线本身不变。</div>
+      <div class="note"><span class="en">// Changing only the signal period only changes the histogram's smoothing - it does not change the MACD line itself</span><span class="zh">只改信号周期只影响柱状图的平滑，MACD 线本身不变。</span></div>
     </div>
   </article>
 </section>
 
 <section class="section" id="trend">
   <div class="group-head reveal"><span class="tier">08</span>
-    <div><div class="eyebrow">Context · 背景</div><h2 class="title">MACD Works With the Trend, Not Against It</h2></div></div>
+    <div><div class="eyebrow"><span class="en">Context</span><span class="zh">背景</span></div><h2 class="title">MACD Works With the Trend, Not Against It</h2></div></div>
 
   <article class="pattern reveal">
-    <div class="pattern-head"><span class="idx">M.08</span><h3>Trend-Following Crosses Only<span class="zh">顺趋势的交叉才有效</span></h3><span class="tag bull">Trend 顺势</span></div>
+    <div class="pattern-head"><span class="idx">M.08</span><h3>Trend-Following Crosses Only<span class="zh">顺趋势的交叉才有效</span></h3><span class="tag bull"><span class="en">Trend</span><span class="zh">顺势</span></span></div>
     <figure class="chart-fig wide"><div class="rchart" data-r="macdtrend"></div>
       <figcaption>The same golden cross: valid in an uptrend, false inside a range<span class="zh">同一个金叉：上升趋势里有效，震荡区间里是假的</span></figcaption></figure>
     <div class="pattern-desc">
@@ -817,17 +817,17 @@ body.lang-zh.lang-strict .en{display:none !important;}
         <li><b>Uptrend + golden cross below zero</b> — early reversal attempt. Wait for the zero cross.<span class="zh">上升趋势 + 零轴下方金叉——早期反转尝试，等它上零轴。</span></li>
         <li><b>Range + any cross</b> — false-signal factory. Stand aside or use only divergence.<span class="zh">震荡 + 任何交叉——假信号工厂，观望或只看背离。</span></li>
       </ul>
-      <div class="note">// Ask first: "what is the higher timeframe doing?" — then let MACD time the entry inside it. 先问：「大周期在干嘛？」，再让 MACD 在它里面帮你择时。</div>
+      <div class="note"><span class="en">// Ask first: "what is the higher timeframe doing?" — then let MACD time the entry inside it</span><span class="zh">先问：「大周期在干嘛？」，再让 MACD 在它里面帮你择时。</span></div>
     </div>
   </article>
 </section>
 
 <section class="section" id="misuse">
   <div class="group-head reveal"><span class="tier">09</span>
-    <div><div class="eyebrow">Common mistakes · 常见误用</div><h2 class="title">Why MACD Lies to Most People</h2></div></div>
+    <div><div class="eyebrow"><span class="en">Common mistakes</span><span class="zh">常见误用</span></div><h2 class="title">Why MACD Lies to Most People</h2></div></div>
 
   <article class="pattern reveal">
-    <div class="pattern-head"><span class="idx">M.09</span><h3>The False-Signal Machine in Ranges<span class="zh">震荡市里的假信号机器</span></h3><span class="tag bear">Warning 警示</span></div>
+    <div class="pattern-head"><span class="idx">M.09</span><h3>The False-Signal Machine in Ranges<span class="zh">震荡市里的假信号机器</span></h3><span class="tag bear"><span class="en">Warning</span><span class="zh">警示</span></span></div>
     <div class="pattern-desc">
       <p>In a ranging market, price oscillates around a value and MACD oscillates around zero —
         and every oscillation produces a cross. A sideways market can generate <b>dozens of golden and death
@@ -838,7 +838,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
         <span class="zh">解法从来不是调更好的参数，而是<b>先识别市场状态</b>。市场在震荡时，MACD 交叉信号从构造上就是噪音。震荡就用震荡工具，别用动能交叉。</span></p>
       <div class="cmp">
         <div class="col bad">
-          <div class="ch">✕ How beginners use it · 新手用法</div>
+          <div class="ch"><span class="en">✕ How beginners use it</span><span class="zh">新手用法</span></div>
           <ol>
             <li>Take every golden cross<span class="zh">每个金叉都做</span></li>
             <li>Ignore the zero line and the trend<span class="zh">不看零轴、不看趋势</span></li>
@@ -848,7 +848,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
           <div class="verdict">→ Gets chopped to pieces in ranges.<br>在震荡里被反复打脸。</div>
         </div>
         <div class="col good">
-          <div class="ch">✓ How it's actually used · 正确用法</div>
+          <div class="ch"><span class="en">✓ How it's actually used</span><span class="zh">正确用法</span></div>
           <ol>
             <li>Filter by trend and zero line first<span class="zh">先用趋势和零轴过滤</span></li>
             <li>Take crosses only with the trend<span class="zh">只做顺势的交叉</span></li>
@@ -858,7 +858,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
           <div class="verdict">→ MACD becomes a timing tool inside a plan.<br>MACD 变成计划里的择时工具。</div>
         </div>
       </div>
-      <div class="note">// The indicator is not broken. The context is missing. 指标没坏，是背景缺失。</div>
+      <div class="note"><span class="en">// The indicator is not broken. The context is missing</span><span class="zh">指标没坏，是背景缺失。</span></div>
     </div>
   </article>
 </section>
@@ -867,7 +867,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
 <section class="section" id="exam">
   <div class="group-head reveal">
     <span class="tier">EXAM</span>
-    <div><div class="eyebrow">Final Exam · 毕业考试</div><h2 class="title">Pass the Final Quiz to Graduate<span class="zh">通过最终测验 · 课程毕业</span></h2></div>
+    <div><div class="eyebrow"><span class="en">Final Exam</span><span class="zh">毕业考试</span></div><h2 class="title">Pass the Final Quiz to Graduate<span class="zh">通过最终测验 · 课程毕业</span></h2></div>
   </div>
   <div class="note" style="max-width:820px;line-height:1.9;">
     Answer all 5 questions. You need <b>4 of 5 (70%)</b> to pass. Wrong answers are explained - read them, then retry.
@@ -875,7 +875,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
   </div>
   <div id="examBox" style="max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:22px;"></div>
   <div style="max-width:820px;margin:26px auto 0;text-align:center;">
-    <button id="examSubmit" onclick="gradeExam()" style="background:var(--gold);color:#0a0e14;border:none;border-radius:30px;padding:14px 40px;font-family:'Sora',sans-serif;font-weight:700;font-size:15px;cursor:pointer;letter-spacing:.05em;">Submit Answers · 提交答案</button>
+    <button id="examSubmit" onclick="gradeExam()" style="background:var(--gold);color:#0a0e14;border:none;border-radius:30px;padding:14px 40px;font-family:'Sora',sans-serif;font-weight:700;font-size:15px;cursor:pointer;letter-spacing:.05em;"><span class="en">Submit Answers</span><span class="zh">提交答案</span></button>
     <div id="examResult" style="margin-top:22px;"></div>
   </div>
 </section>
@@ -894,7 +894,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
 <!-- ================= FOOTER ================= -->
 <footer class="footer">
   <div class="footer-in">
-    <div class="disc-title reveal">Disclaimer · 免责声明</div>
+    <div class="disc-title reveal"><span class="en">Disclaimer</span><span class="zh">免责声明</span></div>
     <p class="disc reveal">This document is for educational purposes only and does not constitute financial, investment, or legal advice. All figures, prices and examples are illustrative.
       <span class="zh">本文件仅供教育用途，不构成任何财务、投资或法律建议。文中所有数字、价格与案例均为示意。</span></p>
     <p class="disc reveal">Contract specifications, pip values and margin requirements differ between brokers - particularly for metals, indices and CFDs. Always confirm the specification of your own account before sizing a position.
@@ -1434,9 +1434,9 @@ function gradeExam(){
       var whyTxt = (zhMode && item.why_zh) ? item.why_zh : item.why;
       if(user === item.ans){
         correct++;
-        fb.innerHTML = "<span style='color:var(--bull);font-weight:600;'>✓ Correct 正确</span><br><span style='color:var(--muted);font-size:12.5px;'>" + whyTxt + "</span>";
+        fb.innerHTML = "<span style='color:var(--bull);font-weight:600;'><span class="en">✓ Correct</span><span class="zh">正确</span></span><br><span style='color:var(--muted);font-size:12.5px;'>" + whyTxt + "</span>";
       } else {
-        fb.innerHTML = "<span style='color:var(--bear);font-weight:600;'>✗ Wrong 错误</span><br><span style='color:var(--muted);font-size:12.5px;'>你的答案: <b>" + item.opts[user] + "</b> · 正确答案: <b>" + item.opts[item.ans] + "</b><br>为什么错: " + whyTxt + "</span>";
+        fb.innerHTML = "<span style='color:var(--bear);font-weight:600;'><span class="en">✗ Wrong</span><span class="zh">错误</span></span><br><span style='color:var(--muted);font-size:12.5px;'>你的答案: <b>" + item.opts[user] + "</b> · 正确答案: <b>" + item.opts[item.ans] + "</b><br>为什么错: " + whyTxt + "</span>";
       }
       fb.style.display = "block";
     } else {
@@ -1451,7 +1451,7 @@ function gradeExam(){
   var res = document.getElementById("examResult");
   if(correct >= 4){
     localStorage.setItem(MTJ_EXAM_KEY, "1");
-    res.innerHTML = "<div style='background:rgba(44,217,138,.1);border:1px solid rgba(44,217,138,.4);border-radius:14px;padding:22px;'><div style='color:var(--bull);font-weight:700;font-size:18px;margin-bottom:6px;'>🎉 PASSED - " + correct + "/" + total + " 通过!</div><div style='color:var(--muted);font-size:13.5px;'>课程全部完成!恭喜毕业!回到目录查看你的学习成果。</div><a href='../MakeTradesJourney.html' style='display:inline-block;margin-top:14px;background:var(--gold);color:#0a0e14;border-radius:30px;padding:10px 24px;font-weight:600;font-size:13px;text-decoration:none;'>查看目录 · Back to Catalog</a></div>";
+    res.innerHTML = "<div style='background:rgba(44,217,138,.1);border:1px solid rgba(44,217,138,.4);border-radius:14px;padding:22px;'><div style='color:var(--bull);font-weight:700;font-size:18px;margin-bottom:6px;'><span class="en">🎉 PASSED - " + correct + "/" + total + "</span><span class="zh">通过!</span></div><div style='color:var(--muted);font-size:13.5px;'>课程全部完成!恭喜毕业!回到目录查看你的学习成果。</div><a href='../MakeTradesJourney.html' style='display:inline-block;margin-top:14px;background:var(--gold);color:#0a0e14;border-radius:30px;padding:10px 24px;font-weight:600;font-size:13px;text-decoration:none;'>查看目录 · Back to Catalog</a></div>";
   } else {
     res.innerHTML = "<div style='background:rgba(255,92,99,.08);border:1px solid rgba(255,92,99,.35);border-radius:14px;padding:22px;'><div style='color:var(--bear);font-weight:700;font-size:18px;margin-bottom:6px;'>NOT PASSED - " + correct + "/" + total + " (" + Math.round(correct/total*100) + "%)</div><div style='color:var(--muted);font-size:13.5px;'>需要 70% (4/5)。阅读上面的错题解析，然后重试。</div></div>";
   }

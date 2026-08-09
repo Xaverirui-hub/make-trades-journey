@@ -382,12 +382,12 @@ body.lang-zh.lang-strict .en{display:none !important;}
 
 <!-- section nav -->
 <nav class="secnav">
-  <a href="#agenda-sec"><span class="lbl">Overview · 总览</span><span class="pt"></span></a>
-  <a href="#ma-basics"><span class="lbl">Moving Avg · 均线</span><span class="pt"></span></a>
-  <a href="#ma-usage"><span class="lbl">Using MAs · 应用</span><span class="pt"></span></a>
-  <a href="#sr-basics"><span class="lbl">Support/Res · 支撑阻力</span><span class="pt"></span></a>
-  <a href="#sr-adv"><span class="lbl">Breakouts · 突破</span><span class="pt"></span></a>
-  <a href="#close"><span class="lbl">Closing · 结语</span><span class="pt"></span></a>
+  <a href="#agenda-sec"><span class="lbl"><span class="en">Overview</span><span class="zh">总览</span></span><span class="pt"></span></a>
+  <a href="#ma-basics"><span class="lbl"><span class="en">Moving Avg</span><span class="zh">均线</span></span><span class="pt"></span></a>
+  <a href="#ma-usage"><span class="lbl"><span class="en">Using MAs</span><span class="zh">应用</span></span><span class="pt"></span></a>
+  <a href="#sr-basics"><span class="lbl"><span class="en">Support/Res</span><span class="zh">支撑阻力</span></span><span class="pt"></span></a>
+  <a href="#sr-adv"><span class="lbl"><span class="en">Breakouts</span><span class="zh">突破</span></span><span class="pt"></span></a>
+  <a href="#close"><span class="lbl"><span class="en">Closing</span><span class="zh">结语</span></span><span class="pt"></span></a>
 </nav>
 
 <div class="wrap">
@@ -405,7 +405,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
 
 <!-- ================= AGENDA ================= -->
 <section class="section" id="agenda-sec">
-  <div class="eyebrow reveal">Content · 目录</div>
+  <div class="eyebrow reveal"><span class="en">Content</span><span class="zh">目录</span></div>
   <h2 class="title reveal">What we'll cover<span class="zh">本课涵盖内容</span></h2>
   <div class="agenda">
     <div class="card reveal"><div class="n">01</div><h3>Moving Averages</h3><div class="zh">移动平均线 · SMA / EMA</div></div>
@@ -416,46 +416,46 @@ body.lang-zh.lang-strict .en{display:none !important;}
 </section>
 
 <section class="divider">
-  <div class="rail reveal">Part 01 · 第一部分</div>
-  <h2 class="reveal">Moving Averages</h2>
+  <div class="rail reveal"><span class="en">Part 01</span><span class="zh">第一部分</span></div>
+  <h2 class="reveal"><span class="en">Moving Averages</span></h2>
   <div class="zh reveal">移 动 平 均 线</div>
 </section>
 
 <section class="section" id="ma-basics">
   <div class="group-head reveal"><span class="tier">01</span>
-    <div><div class="eyebrow">Moving Averages · 均线</div><h2 class="title">The Trend, Made Visible</h2></div></div>
+    <div><div class="eyebrow"><span class="en">Moving Averages</span><span class="zh">均线</span></div><h2 class="title">The Trend, Made Visible</h2></div></div>
   <article class="pattern reveal">
     <div class="pattern-head"><span class="idx">MA.01</span><h3>What is a Moving Average<span class="zh">什么是移动平均线</span></h3><span class="tag neu">Trend</span></div>
-    <figure class="chart-fig wide"><div class="chart pchart" data-chart="ma_smooth"></div><figcaption><span class="lg lg-k">Candles K线</span><span class="lg lg-1">MA 均线</span></figcaption></figure>
+    <figure class="chart-fig wide"><div class="chart pchart" data-chart="ma_smooth"></div><figcaption><span class="lg lg-k"><span class="en">Candles K</span><span class="zh">线</span></span><span class="lg lg-1">MA 均线</span></figcaption></figure>
     <div class="pattern-desc"><p>A moving average takes the last N closing prices and averages them into one flowing line, smoothing out the noise so the underlying trend stands out.<span class="zh">均线把最近 N 根收盘价平均成一条流动的线，滤掉杂讯，让底层趋势清晰浮现。</span></p>
-  <div class="note">// The line lags price - it confirms trend, it does not predict it 均线滞后于价格，用于确认而非预测</div></div>
+  <div class="note"><span class="en">// The line lags price - it confirms trend, it does not predict it</span><span class="zh">均线滞后于价格，用于确认而非预测</span></div></div>
   </article>
   <article class="pattern reveal">
     <div class="pattern-head"><span class="idx">MA.02</span><h3>SMA vs EMA<span class="zh">简单 vs 指数均线</span></h3><span class="tag neu">Two types</span></div>
-    <figure class="chart-fig wide"><div class="chart pchart" data-chart="ma_smavsema"></div><figcaption><span class="lg lg-k">Candles K线</span><span class="lg lg-1">EMA</span><span class="lg lg-2b">SMA</span></figcaption></figure>
+    <figure class="chart-fig wide"><div class="chart pchart" data-chart="ma_smavsema"></div><figcaption><span class="lg lg-k"><span class="en">Candles K</span><span class="zh">线</span></span><span class="lg lg-1">EMA</span><span class="lg lg-2b">SMA</span></figcaption></figure>
     <div class="pattern-desc"><p><b>SMA</b> weights every candle equally. <b>EMA</b> gives more weight to recent prices, so it turns faster and hugs price more closely.<span class="zh">SMA 对每根 K 线权重相同；EMA 更看重近期价格，因此转向更快、更贴近价格。</span></p>
   <div class="note">// EMA = faster &amp; more sensitive · SMA = smoother &amp; steadier</div></div>
   </article>
   <article class="pattern reveal">
     <div class="pattern-head"><span class="idx">MA.03</span><h3>Common Periods · 20 / 50 / 200<span class="zh">常用周期</span></h3><span class="tag neu">Timeframes</span></div>
-    <figure class="chart-fig wide"><div class="chart pchart" data-chart="ma_periods"></div><figcaption><span class="lg lg-k">Candles K线</span><span class="lg lg-1">Fast MA</span><span class="lg lg-2">Slow MA</span></figcaption></figure>
+    <figure class="chart-fig wide"><div class="chart pchart" data-chart="ma_periods"></div><figcaption><span class="lg lg-k"><span class="en">Candles K</span><span class="zh">线</span></span><span class="lg lg-1">Fast MA</span><span class="lg lg-2">Slow MA</span></figcaption></figure>
     <div class="pattern-desc"><p>Short averages track momentum, medium ones the swing trend, long ones the major trend. The 200 MA is the classic line between a bull and a bear market.<span class="zh">短周期看动能，中周期看波段趋势，长周期看主趋势。200 均线是牛熊分界的经典标准。</span></p></div>
   </article>
 </section>
 
 <section class="section" id="ma-usage">
   <div class="group-head reveal"><span class="tier">02</span>
-    <div><div class="eyebrow">Using Moving Averages · 均线应用</div><h2 class="title">How Traders Use MAs</h2></div></div>
+    <div><div class="eyebrow"><span class="en">Using Moving Averages</span><span class="zh">均线应用</span></div><h2 class="title">How Traders Use MAs</h2></div></div>
   <article class="pattern reveal">
     <div class="pattern-head"><span class="idx">MA.04</span><h3>MA as a Trend Filter<span class="zh">均线作为趋势过滤器</span></h3><span class="tag neu">Bias</span></div>
-    <figure class="chart-fig wide"><div class="chart pchart" data-chart="ma_trend"></div><figcaption><span class="lg lg-k">Candles K线</span><span class="lg lg-1">MA</span><span class="lg lg-s">Above = bullish</span><span class="lg lg-r">Below = bearish</span></figcaption></figure>
+    <figure class="chart-fig wide"><div class="chart pchart" data-chart="ma_trend"></div><figcaption><span class="lg lg-k"><span class="en">Candles K</span><span class="zh">线</span></span><span class="lg lg-1">MA</span><span class="lg lg-s">Above = bullish</span><span class="lg lg-r">Below = bearish</span></figcaption></figure>
     <div class="pattern-desc"><p>Price trading <b>above</b> the MA = bullish bias; <b>below</b> = bearish. A simple rule: trade in the direction the MA is pointing.<span class="zh">价格在均线<b>上方</b>偏多，<b>下方</b>偏空。一条简单法则：顺着均线指向的方向交易。</span></p></div>
   </article>
   <article class="pattern reveal">
     <div class="pattern-head"><span class="idx">MA.05</span><h3>MA as Dynamic Support<span class="zh">均线作为动态支撑</span></h3><span class="tag bull">Rebound entry</span></div>
-    <figure class="chart-fig wide"><div class="chart pchart" data-chart="ma_dynamic"></div><figcaption><span class="lg lg-k">Candles K线</span><span class="lg lg-1">EMA</span><span class="lg lg-e">Entry zone 入场区</span></figcaption></figure>
+    <figure class="chart-fig wide"><div class="chart pchart" data-chart="ma_dynamic"></div><figcaption><span class="lg lg-k"><span class="en">Candles K</span><span class="zh">线</span></span><span class="lg lg-1">EMA</span><span class="lg lg-e"><span class="en">Entry zone</span><span class="zh">入场区</span></span></figcaption></figure>
     <div class="pattern-desc"><p>In an uptrend a rising MA acts as <b>dynamic support</b> — price keeps dipping back to it and bouncing. Each pullback into the MA is a potential long <b>entry zone</b>.<span class="zh">上涨中，向上的均线是<b>动态支撑</b>，价格不断回踩后反弹。每一次回踩到均线，都是潜在的做多<b>入场区</b>。</span></p>
-  <div class="note">// Watch the bounce out of the cyan zone - that's the confirmation 留意价格弹出青色区，即为确认</div></div>
+  <div class="note"><span class="en">// Watch the bounce out of the cyan zone - that's the confirmation</span><span class="zh">留意价格弹出青色区，即为确认</span></div></div>
   </article>
   <article class="pattern reveal">
     <div class="pattern-head"><span class="idx">MA.06</span><h3>Golden Cross &amp; Death Cross<span class="zh">金叉与死叉</span></h3><span class="tag neu">Momentum shift</span></div>
@@ -465,8 +465,8 @@ body.lang-zh.lang-strict .en{display:none !important;}
 </section>
 
 <section class="divider">
-  <div class="rail reveal">Part 02 · 第二部分</div>
-  <h2 class="reveal">Support &amp; Resistance</h2>
+  <div class="rail reveal"><span class="en">Part 02</span><span class="zh">第二部分</span></div>
+  <h2 class="reveal"><span class="en">Support &amp; Resistance</span></h2>
   <div class="zh reveal">支 撑 与 阻 力</div>
 </section>
 
@@ -475,14 +475,14 @@ body.lang-zh.lang-strict .en{display:none !important;}
     <div><div class="eyebrow">Support &amp; Resistance · 支撑阻力</div><h2 class="title">Floors &amp; Ceilings</h2></div></div>
   <article class="pattern reveal">
     <div class="pattern-head"><span class="idx">SR.01</span><h3>What is Support &amp; Resistance<span class="zh">什么是支撑与阻力</span></h3><span class="tag neu">Concept</span></div>
-    <figure class="chart-fig wide"><div class="chart pchart" data-chart="sr_basics"></div><figcaption><span class="lg lg-k">Candles K线</span><span class="lg lg-r">Resistance 阻力</span><span class="lg lg-s">Support 支撑</span></figcaption></figure>
+    <figure class="chart-fig wide"><div class="chart pchart" data-chart="sr_basics"></div><figcaption><span class="lg lg-k"><span class="en">Candles K</span><span class="zh">线</span></span><span class="lg lg-r"><span class="en">Resistance</span><span class="zh">阻力</span></span><span class="lg lg-s"><span class="en">Support</span><span class="zh">支撑</span></span></figcaption></figure>
     <div class="pattern-desc"><p><b>Support</b> is a floor where buyers step in; <b>resistance</b> is a ceiling where sellers take over. They mark where the balance of supply and demand flips.<span class="zh"><b>支撑</b>是买方倾向介入的地板价，<b>阻力</b>是卖方倾向主导的天花板价，标记着供需力量转换的位置。</span></p></div>
   </article>
   <article class="pattern reveal">
     <div class="pattern-head"><span class="idx">SR.02</span><h3>The More Touches, the Stronger<span class="zh">触碰越多，越有效</span></h3><span class="tag neu">Strength</span></div>
-    <figure class="chart-fig wide"><div class="chart pchart" data-chart="sr_touches"></div><figcaption><span class="lg lg-k">Candles K线</span><span class="lg lg-r">Resistance</span></figcaption></figure>
+    <figure class="chart-fig wide"><div class="chart pchart" data-chart="sr_touches"></div><figcaption><span class="lg lg-k"><span class="en">Candles K</span><span class="zh">线</span></span><span class="lg lg-r">Resistance</span></figcaption></figure>
     <div class="pattern-desc"><p>Every time price respects a level, more traders notice it - so the level gains weight. A level tested many times is one the whole market is watching.<span class="zh">价格每一次尊重某个价位，就有更多交易者注意到它，价位因此更具分量。被反复测试的价位，是整个市场都在盯的价位。</span></p>
-  <div class="note">// But each test uses up energy - heavily-tested levels eventually break 但每次测试都在消耗动能，终将被突破</div></div>
+  <div class="note"><span class="en">// But each test uses up energy - heavily-tested levels eventually break</span><span class="zh">但每次测试都在消耗动能，终将被突破</span></div></div>
   </article>
 </section>
 
@@ -491,19 +491,19 @@ body.lang-zh.lang-strict .en{display:none !important;}
     <div><div class="eyebrow">Breakouts &amp; Role Reversal · 突破与反转</div><h2 class="title">When Levels Break</h2></div></div>
   <article class="pattern reveal">
     <div class="pattern-head"><span class="idx">SR.03</span><h3>Role Reversal - the Flip<span class="zh">角色反转 · Flip</span></h3><span class="tag bull">Rebound entry</span></div>
-    <figure class="chart-fig wide"><div class="chart pchart" data-chart="sr_flip"></div><figcaption><span class="lg lg-k">Candles K线</span><span class="lg lg-1">Flip level 反转位</span><span class="lg lg-e">Entry zone 入场区</span></figcaption></figure>
+    <figure class="chart-fig wide"><div class="chart pchart" data-chart="sr_flip"></div><figcaption><span class="lg lg-k"><span class="en">Candles K</span><span class="zh">线</span></span><span class="lg lg-1"><span class="en">Flip level</span><span class="zh">反转位</span></span><span class="lg lg-e"><span class="en">Entry zone</span><span class="zh">入场区</span></span></figcaption></figure>
     <div class="pattern-desc"><p>Once broken, <b>resistance becomes support</b>. Here price breaks above old resistance, pulls back to <b>retest</b> it, holds, and bounces - the retest is the <b>entry zone</b>.<span class="zh">一旦突破，<b>阻力变支撑</b>。图中价格突破旧阻力后回踩<b>确认</b>，守住并反弹——回踩处即为<b>入场区</b>。</span></p></div>
   </article>
   <article class="pattern reveal">
     <div class="pattern-head"><span class="idx">SR.04</span><h3>Breakout &amp; Retest<span class="zh">突破与回踩</span></h3><span class="tag bear">Rebound entry</span></div>
-    <figure class="chart-fig wide"><div class="chart pchart" data-chart="sr_breakout"></div><figcaption><span class="lg lg-k">Candles K线</span><span class="lg lg-s">Broken support</span><span class="lg lg-e">Entry zone 入场区</span></figcaption></figure>
+    <figure class="chart-fig wide"><div class="chart pchart" data-chart="sr_breakout"></div><figcaption><span class="lg lg-k"><span class="en">Candles K</span><span class="zh">线</span></span><span class="lg lg-s">Broken support</span><span class="lg lg-e"><span class="en">Entry zone</span><span class="zh">入场区</span></span></figcaption></figure>
     <div class="pattern-desc"><p>Price breaks a support, then returns to <b>retest</b> it from below. It rejects the level and continues down - the retest into the <b>entry zone</b> is a clean short with defined risk.<span class="zh">价格跌破支撑后，回到下方<b>回踩</b>该价位，受阻后继续下跌——回踩至<b>入场区</b>是干净的做空点，风险可控。</span></p></div>
   </article>
   <article class="pattern reveal">
     <div class="pattern-head"><span class="idx">SR.05</span><h3>Levels are Zones, not Lines<span class="zh">价位是「区」不是「线」</span></h3><span class="tag neu">Zones</span></div>
-    <figure class="chart-fig wide"><div class="chart pchart" data-chart="sr_zone"></div><figcaption><span class="lg lg-k">Candles K线</span><span class="lg lg-r">Resistance zone 阻力区</span></figcaption></figure>
+    <figure class="chart-fig wide"><div class="chart pchart" data-chart="sr_zone"></div><figcaption><span class="lg lg-k"><span class="en">Candles K</span><span class="zh">线</span></span><span class="lg lg-r"><span class="en">Resistance zone</span><span class="zh">阻力区</span></span></figcaption></figure>
     <div class="pattern-desc"><p>Price rarely respects an exact price to the tick. Treat support &amp; resistance as <b>zones</b>, and read how price behaves inside them rather than demanding a perfect line.<span class="zh">价格很少精确地尊重某一个价位。把支撑阻力当作一个<b>区间</b>，观察价格在区间内的反应，而非苛求一条完美的线。</span></p>
-  <div class="note">// Round numbers (100 · 1.2000 · 50,000) often act as psychological levels 整数关口常成为心理价位</div></div>
+  <div class="note"><span class="en">// Round numbers (100</span><span class="zh">1.2000 50,000) often act as psychological levels 整数关口常成为心理价位</span></div></div>
   </article>
 </section>
 
@@ -512,7 +512,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
 <section class="section" id="exam" style="padding-top:70px;">
   <div class="group-head reveal">
     <span class="tier">EXAM</span>
-    <div><div class="eyebrow">Module Check · 模块测验</div><h2 class="title">Pass the Quiz to Unlock Module 07<span class="zh">通过测验解锁下一课</span></h2></div>
+    <div><div class="eyebrow"><span class="en">Module Check</span><span class="zh">模块测验</span></div><h2 class="title">Pass the Quiz to Unlock Module 07<span class="zh">通过测验解锁下一课</span></h2></div>
   </div>
   <div class="note" style="max-width:820px;line-height:1.9;">
     Answer all 5 questions. You need <b>4 of 5 (70%)</b> to pass. Wrong answers are explained - read them, then retry.
@@ -520,7 +520,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
   </div>
   <div id="examBox" style="max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:22px;"></div>
   <div style="max-width:820px;margin:26px auto 0;text-align:center;">
-    <button id="examSubmit" onclick="gradeExam()" style="background:var(--gold);color:#0a0e14;border:none;border-radius:30px;padding:14px 40px;font-family:'Sora',sans-serif;font-weight:700;font-size:15px;cursor:pointer;letter-spacing:.05em;">Submit Answers · 提交答案</button>
+    <button id="examSubmit" onclick="gradeExam()" style="background:var(--gold);color:#0a0e14;border:none;border-radius:30px;padding:14px 40px;font-family:'Sora',sans-serif;font-weight:700;font-size:15px;cursor:pointer;letter-spacing:.05em;"><span class="en">Submit Answers</span><span class="zh">提交答案</span></button>
     <div id="examResult" style="margin-top:22px;"></div>
   </div>
 </section>
@@ -537,7 +537,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
 <!-- ================= FOOTER ================= -->
 <footer class="footer">
   <div class="footer-in">
-    <div class="disc-title reveal">Disclaimer · 免责声明</div>
+    <div class="disc-title reveal"><span class="en">Disclaimer</span><span class="zh">免责声明</span></div>
     <p class="disc reveal">This document is for educational purposes only and does not constitute financial, investment, or legal advice. The individuals appearing in this presentation, if any, are depicted for illustrative purposes only.
       <span class="zh">本文件仅供教育用途，不构成任何财务、投资或法律建议。文中如有出现人物，仅作示意用途。</span></p>
     <p class="disc reveal">Trading involves substantial risk. Past patterns and performance do not guarantee future results. Always do your own research and manage your risk.
@@ -860,9 +860,9 @@ function gradeExam(){
       var whyTxt = (zhMode && item.why_zh) ? item.why_zh : item.why;
       if(user === item.ans){
         correct++;
-        fb.innerHTML = "<span style='color:var(--bull);font-weight:600;'>✓ Correct 正确</span><br><span style='color:var(--muted);font-size:12.5px;'>" + whyTxt + "</span>";
+        fb.innerHTML = "<span style='color:var(--bull);font-weight:600;'><span class="en">✓ Correct</span><span class="zh">正确</span></span><br><span style='color:var(--muted);font-size:12.5px;'>" + whyTxt + "</span>";
       } else {
-        fb.innerHTML = "<span style='color:var(--bear);font-weight:600;'>✗ Wrong 错误</span><br><span style='color:var(--muted);font-size:12.5px;'>你的答案: <b>" + item.opts[user] + "</b> · 正确答案: <b>" + item.opts[item.ans] + "</b><br>为什么错: " + whyTxt + "</span>";
+        fb.innerHTML = "<span style='color:var(--bear);font-weight:600;'><span class="en">✗ Wrong</span><span class="zh">错误</span></span><br><span style='color:var(--muted);font-size:12.5px;'>你的答案: <b>" + item.opts[user] + "</b> · 正确答案: <b>" + item.opts[item.ans] + "</b><br>为什么错: " + whyTxt + "</span>";
       }
       fb.style.display = "block";
     } else {
@@ -877,7 +877,7 @@ function gradeExam(){
   var res = document.getElementById("examResult");
   if(correct >= 4){
     localStorage.setItem(MTJ_EXAM_KEY, "1");
-    res.innerHTML = "<div style='background:rgba(44,217,138,.1);border:1px solid rgba(44,217,138,.4);border-radius:14px;padding:22px;'><div style='color:var(--bull);font-weight:700;font-size:18px;margin-bottom:6px;'>🎉 PASSED - " + correct + "/" + total + " 通过!</div><div style='color:var(--muted);font-size:13.5px;'>Module 07 已解锁。回到目录继续学习。</div><a href='../MakeTradesJourney.html' style='display:inline-block;margin-top:14px;background:var(--gold);color:#0a0e14;border-radius:30px;padding:10px 24px;font-weight:600;font-size:13px;text-decoration:none;'>Continue · 继续</a></div>";
+    res.innerHTML = "<div style='background:rgba(44,217,138,.1);border:1px solid rgba(44,217,138,.4);border-radius:14px;padding:22px;'><div style='color:var(--bull);font-weight:700;font-size:18px;margin-bottom:6px;'><span class="en">🎉 PASSED - " + correct + "/" + total + "</span><span class="zh">通过!</span></div><div style='color:var(--muted);font-size:13.5px;'><span class="en">Module 07</span><span class="zh">已解锁。回到目录继续学习。</span></div><a href='../MakeTradesJourney.html' style='display:inline-block;margin-top:14px;background:var(--gold);color:#0a0e14;border-radius:30px;padding:10px 24px;font-weight:600;font-size:13px;text-decoration:none;'><span class="en">Continue</span><span class="zh">继续</span></a></div>";
   } else {
     res.innerHTML = "<div style='background:rgba(255,92,99,.08);border:1px solid rgba(255,92,99,.35);border-radius:14px;padding:22px;'><div style='color:var(--bear);font-weight:700;font-size:18px;margin-bottom:6px;'>NOT PASSED - " + correct + "/" + total + " (" + Math.round(correct/total*100) + "%)</div><div style='color:var(--muted);font-size:13.5px;'>需要 70% (4/5)。阅读上面的错题解析，然后重试。</div></div>";
   }

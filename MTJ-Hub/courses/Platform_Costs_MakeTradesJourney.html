@@ -641,11 +641,11 @@ body.lang-zh.lang-strict .en{display:none !important;}
 
 <!-- section nav -->
 <nav class="secnav">
-  <a href="#agenda-sec"><span class="lbl">Overview · 总览</span><span class="pt"></span></a>
-  <a href="#orders"><span class="lbl">Order Types · 订单类型</span><span class="pt"></span></a>
-  <a href="#execute"><span class="lbl">Placing It · 下单</span><span class="pt"></span></a>
-  <a href="#costs"><span class="lbl">Costs · 交易成本</span><span class="pt"></span></a>
-  <a href="#golive"><span class="lbl">Going Live · 上实盘</span><span class="pt"></span></a>
+  <a href="#agenda-sec"><span class="lbl"><span class="en">Overview</span><span class="zh">总览</span></span><span class="pt"></span></a>
+  <a href="#orders"><span class="lbl"><span class="en">Order Types</span><span class="zh">订单类型</span></span><span class="pt"></span></a>
+  <a href="#execute"><span class="lbl"><span class="en">Placing It</span><span class="zh">下单</span></span><span class="pt"></span></a>
+  <a href="#costs"><span class="lbl"><span class="en">Costs</span><span class="zh">交易成本</span></span><span class="pt"></span></a>
+  <a href="#golive"><span class="lbl"><span class="en">Going Live</span><span class="zh">上实盘</span></span><span class="pt"></span></a>
 </nav>
 
 <div class="wrap">
@@ -663,7 +663,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
 
 <!-- ================= AGENDA ================= -->
 <section class="section" id="agenda-sec">
-  <div class="eyebrow reveal">Content · 目录</div>
+  <div class="eyebrow reveal"><span class="en">Content</span><span class="zh">目录</span></div>
   <h2 class="title reveal">What we'll cover<span class="zh">本课涵盖内容</span></h2>
   <div class="agenda">
     <div class="card reveal"><div class="n">01</div><h3>Order Types</h3><div class="zh">市价单与四种挂单</div></div>
@@ -682,17 +682,17 @@ body.lang-zh.lang-strict .en{display:none !important;}
 
 <!-- ================= PART 01 · ORDER TYPES ================= -->
 <section class="divider">
-  <div class="rail reveal">Part 01 · 第一部分</div>
-  <h2 class="reveal">Order Types</h2>
+  <div class="rail reveal"><span class="en">Part 01</span><span class="zh">第一部分</span></div>
+  <h2 class="reveal"><span class="en">Order Types</span></h2>
   <div class="zh reveal">订 单 类 型</div>
 </section>
 
 <section class="section" id="orders">
   <div class="group-head reveal"><span class="tier">01</span>
-    <div><div class="eyebrow">Limit vs Stop · 最常搞混的地方</div><h2 class="title">Four Pending Orders, One Diagram</h2></div></div>
+    <div><div class="eyebrow"><span class="en">Limit vs Stop</span><span class="zh">最常搞混的地方</span></div><h2 class="title">Four Pending Orders, One Diagram</h2></div></div>
 
   <article class="pattern reveal">
-    <div class="pattern-head"><span class="idx">M.01</span><h3>Where Each Order Lives<span class="zh">每种挂单放在哪里</span></h3><span class="tag neu">Reference 速查</span></div>
+    <div class="pattern-head"><span class="idx">M.01</span><h3>Where Each Order Lives<span class="zh">每种挂单放在哪里</span></h3><span class="tag neu"><span class="en">Reference</span><span class="zh">速查</span></span></div>
     <figure class="chart-fig wide"><div class="rchart" data-r="orders"></div>
       <figcaption>All four pending orders, relative to the current price<span class="zh">四种挂单相对于现价的位置</span></figcaption></figure>
     <div class="pattern-desc">
@@ -707,28 +707,28 @@ body.lang-zh.lang-strict .en{display:none !important;}
         <div class="ord bl reveal">
           <div class="on">BUY LIMIT</div>
           <h4>Buy on a pullback</h4><div class="zh">回撤到低点再买</div>
-          <div class="where">↓ BELOW current price　放在现价下方</div>
+          <div class="where"><span class="en">↓ BELOW current price</span><span class="zh">放在现价下方</span></div>
           <p>You want to go long, but only if price comes back down to your level first.
             <span class="zh">你想做多，但要等价格先跌回你的价位。典型用法：等回撤到 0.618 或支撑区再进场。</span></p>
         </div>
         <div class="ord sl reveal">
           <div class="on">SELL LIMIT</div>
           <h4>Sell on a bounce</h4><div class="zh">反弹到高点再卖</div>
-          <div class="where">↑ ABOVE current price　放在现价上方</div>
+          <div class="where"><span class="en">↑ ABOVE current price</span><span class="zh">放在现价上方</span></div>
           <p>You want to go short, but only after price rallies back up into resistance.
             <span class="zh">你想做空，但要等价格先反弹到阻力区。典型用法：等反弹到前高或供给区再进场。</span></p>
         </div>
         <div class="ord bs reveal">
           <div class="on">BUY STOP</div>
           <h4>Buy on a breakout</h4><div class="zh">突破才买</div>
-          <div class="where">↑ ABOVE current price　放在现价上方</div>
+          <div class="where"><span class="en">↑ ABOVE current price</span><span class="zh">放在现价上方</span></div>
           <p>You only want to be long if price proves itself by breaking resistance.
             <span class="zh">你只想在价格突破阻力、证明自己之后才做多。典型用法：区间上缘突破、颈线突破。</span></p>
         </div>
         <div class="ord ss reveal">
           <div class="on">SELL STOP</div>
           <h4>Sell on a breakdown</h4><div class="zh">跌破才卖</div>
-          <div class="where">↓ BELOW current price　放在现价下方</div>
+          <div class="where"><span class="en">↓ BELOW current price</span><span class="zh">放在现价下方</span></div>
           <p>You only want to be short if price breaks support.
             <span class="zh">你只想在价格跌破支撑之后才做空。典型用法：区间下缘跌破、颈线跌破。</span></p>
         </div>
@@ -741,17 +741,17 @@ body.lang-zh.lang-strict .en{display:none !important;}
 
 <!-- ================= PART 02 · EXECUTION ================= -->
 <section class="divider">
-  <div class="rail reveal">Part 02 · 第二部分</div>
-  <h2 class="reveal">Placing the Trade</h2>
+  <div class="rail reveal"><span class="en">Part 02</span><span class="zh">第二部分</span></div>
+  <h2 class="reveal"><span class="en">Placing the Trade</span></h2>
   <div class="zh reveal">实 际 下 单</div>
 </section>
 
 <section class="section" id="execute">
   <div class="group-head reveal"><span class="tier">02</span>
-    <div><div class="eyebrow">Order ticket · 下单视窗</div><h2 class="title">Set the Stop Before You Click</h2></div></div>
+    <div><div class="eyebrow"><span class="en">Order ticket</span><span class="zh">下单视窗</span></div><h2 class="title">Set the Stop Before You Click</h2></div></div>
 
   <article class="pattern reveal">
-    <div class="pattern-head"><span class="idx">M.02</span><h3>The Order Ticket, Field by Field<span class="zh">下单视窗逐栏说明</span></h3><span class="tag neu">Walkthrough 逐步</span></div>
+    <div class="pattern-head"><span class="idx">M.02</span><h3>The Order Ticket, Field by Field<span class="zh">下单视窗逐栏说明</span></h3><span class="tag neu"><span class="en">Walkthrough</span><span class="zh">逐步</span></span></div>
     <figure class="chart-fig wide"><div class="rchart" data-r="ticket"></div>
       <figcaption>The MT5 order window - the four fields that matter<span class="zh">MT5 下单视窗 —— 真正重要的四个栏位</span></figcaption></figure>
     <div class="pattern-desc">
@@ -769,17 +769,17 @@ body.lang-zh.lang-strict .en{display:none !important;}
 
 <!-- ================= PART 03 · COSTS ================= -->
 <section class="divider">
-  <div class="rail reveal">Part 03 · 第三部分</div>
-  <h2 class="reveal">What a Trade Really Costs</h2>
+  <div class="rail reveal"><span class="en">Part 03</span><span class="zh">第三部分</span></div>
+  <h2 class="reveal"><span class="en">What a Trade Really Costs</span></h2>
   <div class="zh reveal">一 笔 交 易 的 真 实 成 本</div>
 </section>
 
 <section class="section" id="costs">
   <div class="group-head reveal"><span class="tier">03</span>
-    <div><div class="eyebrow">The silent subtraction · 沉默的扣除</div><h2 class="title">Four Costs, Every Trade</h2></div></div>
+    <div><div class="eyebrow"><span class="en">The silent subtraction</span><span class="zh">沉默的扣除</span></div><h2 class="title">Four Costs, Every Trade</h2></div></div>
 
   <article class="pattern reveal">
-    <div class="pattern-head"><span class="idx">M.03</span><h3>Spread · Commission · Swap · Slippage<span class="zh">点差 · 佣金 · 隔夜费 · 滑点</span></h3><span class="tag bear">Expectancy killer 侵蚀期望值</span></div>
+    <div class="pattern-head"><span class="idx">M.03</span><h3>Spread · Commission · Swap · Slippage<span class="zh">点差 · 佣金 · 隔夜费 · 滑点</span></h3><span class="tag bear"><span class="en">Expectancy killer</span><span class="zh">侵蚀期望值</span></span></div>
     <div class="pattern-desc">
       <p>You start every trade <b>already losing</b>. Understanding by how much is the difference between a system that
         looks profitable on paper and one that is profitable in an account.
@@ -834,17 +834,17 @@ body.lang-zh.lang-strict .en{display:none !important;}
 
 <!-- ================= PART 04 · GOING LIVE ================= -->
 <section class="divider">
-  <div class="rail reveal">Part 04 · 第四部分</div>
-  <h2 class="reveal">Demo → Live</h2>
+  <div class="rail reveal"><span class="en">Part 04</span><span class="zh">第四部分</span></div>
+  <h2 class="reveal"><span class="en">Demo → Live</span></h2>
   <div class="zh reveal">从 模 拟 到 实 盘</div>
 </section>
 
 <section class="section" id="golive">
   <div class="group-head reveal"><span class="tier">04</span>
-    <div><div class="eyebrow">The transition · 过渡</div><h2 class="title">Small Money Beats Fake Money</h2></div></div>
+    <div><div class="eyebrow"><span class="en">The transition</span><span class="zh">过渡</span></div><h2 class="title">Small Money Beats Fake Money</h2></div></div>
 
   <article class="pattern reveal">
-    <div class="pattern-head"><span class="idx">M.06</span><h3>Three Stages, With Exit Criteria<span class="zh">三个阶段，各有通过条件</span></h3><span class="tag bull">Path 路径</span></div>
+    <div class="pattern-head"><span class="idx">M.06</span><h3>Three Stages, With Exit Criteria<span class="zh">三个阶段，各有通过条件</span></h3><span class="tag bull"><span class="en">Path</span><span class="zh">路径</span></span></div>
     <div class="pattern-desc">
       <p>Demo teaches you the platform. It cannot teach you psychology, because nothing is at stake - which is why
         the jump from a profitable demo to a losing live account is so common.
@@ -877,7 +877,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
 
   <div class="toolcta reveal">
     <div class="tt">
-      <span class="tag">Companion Tools · 配套工具</span>
+      <span class="tag"><span class="en">Companion Tools</span><span class="zh">配套工具</span></span>
       <h4>Calculator + Journal</h4>
       <div class="zh">仓 位 计 算 机 · 交 易 日 志</div>
       <p>Use the calculator before every order to get the lot size, and the journal after every close to record what
@@ -893,7 +893,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
 <section class="section" id="exam" style="padding-top:70px;">
   <div class="group-head reveal">
     <span class="tier">EXAM</span>
-    <div><div class="eyebrow">Module Check · 模块测验</div><h2 class="title">Final Module Check<span class="zh">最后一课 · 完成测验即完成全部课程</span></h2></div>
+    <div><div class="eyebrow"><span class="en">Module Check</span><span class="zh">模块测验</span></div><h2 class="title">Final Module Check<span class="zh">最后一课 · 完成测验即完成全部课程</span></h2></div>
   </div>
   <div class="note" style="max-width:820px;line-height:1.9;">
     Answer all 5 questions. You need <b>4 of 5 (70%)</b> to pass. Wrong answers are explained - read them, then retry.
@@ -901,7 +901,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
   </div>
   <div id="examBox" style="max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:22px;"></div>
   <div style="max-width:820px;margin:26px auto 0;text-align:center;">
-    <button id="examSubmit" onclick="gradeExam()" style="background:var(--gold);color:#0a0e14;border:none;border-radius:30px;padding:14px 40px;font-family:'Sora',sans-serif;font-weight:700;font-size:15px;cursor:pointer;letter-spacing:.05em;">Submit Answers · 提交答案</button>
+    <button id="examSubmit" onclick="gradeExam()" style="background:var(--gold);color:#0a0e14;border:none;border-radius:30px;padding:14px 40px;font-family:'Sora',sans-serif;font-weight:700;font-size:15px;cursor:pointer;letter-spacing:.05em;"><span class="en">Submit Answers</span><span class="zh">提交答案</span></button>
     <div id="examResult" style="margin-top:22px;"></div>
   </div>
 </section>
@@ -920,7 +920,7 @@ body.lang-zh.lang-strict .en{display:none !important;}
 <!-- ================= FOOTER ================= -->
 <footer class="footer">
   <div class="footer-in">
-    <div class="disc-title reveal">Disclaimer · 免责声明</div>
+    <div class="disc-title reveal"><span class="en">Disclaimer</span><span class="zh">免责声明</span></div>
     <p class="disc reveal">This document is for educational purposes only and does not constitute financial, investment, or legal advice. All costs, spreads and figures shown are illustrative examples used to demonstrate the arithmetic - they are not quotes and do not reflect any particular broker's pricing.
       <span class="zh">本文件仅供教育用途，不构成任何财务、投资或法律建议。文中所有成本、点差与数字均为用于示范算法的举例，并非报价，也不代表任何特定券商的定价。</span></p>
     <p class="disc reveal">Make Trades Journey does not recommend, endorse, or receive compensation from any broker mentioned or implied in this material. Contract specifications, commissions, swap rates and stop-out levels differ between brokers and change over time - always verify the current specification of your own account, and verify any licence directly with the regulator.
@@ -1284,7 +1284,7 @@ function gradeExam(){
   var pct = Math.round(correct / total * 100);
   var passed = correct >= 4;
   if(answered < total){
-    res.innerHTML = "<div style='color:var(--gold);font-family:monospace;font-size:13px;'>Please answer all " + total + " questions. 请回答全部 " + total + " 题。</div>";
+    res.innerHTML = "<div style='color:var(--gold);font-family:monospace;font-size:13px;'><span class="en">Please answer all " + total + " questions</span><span class="zh">请回答全部 " + total + " 题。</span></div>";
     return;
   }
   if(passed){
