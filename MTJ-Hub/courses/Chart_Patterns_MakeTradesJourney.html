@@ -679,11 +679,11 @@ function renderCandleChart(container){
   const Y=p=>padT+(mx-p)/(mx-mn)*(H-padT-padB);
   const svg=el('svg',{viewBox:'0 0 '+W+' '+H,preserveAspectRatio:'xMidYMid meet',class:'pc-svg'});
   el('line',{x1:8,x2:W-8,y1:H-10,y2:H-10,class:'axis'},svg);
-  // entry zone fill (behind)
+  // entry zone fill (behind) — x0 computed AFTER boI is known (breakout point)
   let ez=null;
-  if(entry){const ep=real[n-1].c,x0=Xc(n-entry.back)-step/2,x1=W-padR;
-    ez={x0:x0,x1:x1,yT:Y(ep+entry.pad),yB:Y(ep-entry.pad)};
-    el('rect',{x:x0,y:ez.yT,width:x1-x0,height:ez.yB-ez.yT,rx:5,class:'entry-zone'},svg);}
+  if(entry){const ep=real[n-1].c,x1=W-padR;
+    // x0 filled in below once boI exists (line ~705)
+    ez={x0:0,x1:x1,yT:Y(ep+entry.pad),yB:Y(ep-entry.pad)};}
   // candles
   all.forEach((c,i)=>{const isP=!!c.proj,cx=Xc(i);
     const g=el('g',{class:'cndl'+(isP?' proj':'')},svg);g.style.setProperty('--i',i);
@@ -696,16 +696,20 @@ function renderCandleChart(container){
   (spec.lines||[]).forEach(Ln=>{const pts=Ln.pts.map(pt=>[Xc(Math.round(pt.x*(n-1))),Y(pt.p)]);
     const a={d:pathFrom(pts),class:'pline '+(Ln.cls||'pline-trend')};if((Ln.cls||'pline-trend')==='pline-trend')a.pathLength=1;el('path',a,svg);});
   // breakout entry marker (1) - on the neckline OR the sloped trendline
+  let boI=Math.round(n*0.5), boP=null;
   if(entry){const dir=entry.dir,key=container.dataset.chart,bl=BOLINE[key];
     const levelAt=xf=> bl!=null ? lineAt(spec.lines[bl],xf) : NECK[key];
     if(levelAt(0.5)!=null){
       let mi=Math.round(n*0.5),best=-1e9;
       for(let i=Math.round(n*0.5);i<n;i++){const lv=levelAt(i/(n-1));const ex=dir==='up'?S[i]-lv:lv-S[i];if(ex>best){best=ex;mi=i;}}
-      let boI=mi;for(let i=mi;i>0;i--){const lv=levelAt(i/(n-1)),lp=levelAt((i-1)/(n-1));const bn=dir==='up'?S[i]>=lv:S[i]<=lv,bp=dir==='up'?S[i-1]>=lp:S[i-1]<=lp;if(bn&&!bp){boI=i;break;}}
-      const boP=levelAt(boI/(n-1));
+      boI=mi;for(let i=mi;i>0;i--){const lv=levelAt(i/(n-1)),lp=levelAt((i-1)/(n-1));const bn=dir==='up'?S[i]>=lv:S[i]<=lv,bp=dir==='up'?S[i-1]>=lp:S[i-1]<=lp;if(bn&&!bp){boI=i;break;}}
+      boP=levelAt(boI/(n-1));
       if(bl!=null){const lp=spec.lines[bl].pts[spec.lines[bl].pts.length-1];
         el('line',{x1:Xc(Math.round(lp.x*(n-1))),y1:Y(lp.p),x2:Xc(boI),y2:Y(boP),class:'pline-neck'},svg);}
       badge(svg,Xc(boI),Y(boP),'1',C.gold,'Breakout 突破',dir==='up'?-13:18,1.0);}}
+  // entry zone fill — from the breakout point (boI) to the right edge
+  if(ez){ez.x0=Math.min(Xc(boI), Xc(n-entry.back)-step/2);
+    el('rect',{x:ez.x0,y:ez.yT,width:ez.x1-ez.x0,height:ez.yB-ez.yT,rx:5,class:'entry-zone'},svg);}
   // target line
   if(spec.target){const tp=spec.target.p,fx=Math.round((spec.target.fromX!=null?spec.target.fromX:0.55)*(n-1));
     el('line',{x1:Xc(fx),y1:Y(tp),x2:W-padR,y2:Y(tp),class:'pline-target'},svg);
@@ -715,19 +719,14 @@ function renderCandleChart(container){
     // V2.1 2026-08-10: long dashed retest line — from the breakout point
     // through the retest zone to the target edge, so students see the
     // retest level is the SAME broken level (not a new line).
-    // Fix (08-10): use the BROKEN LEVEL price (boP) as the retest baseline,
-    // not real[n-1].c — the close price drifts from the level and the line
-    // no longer aligns with the breakout marker.
-    const keyR = container.dataset.chart, blR = BOLINE[keyR];
-    const boIdx = (function(){ for(let i=n-1;i>0;i--){const lv=(function(){if(blR!=null)return lineAt(spec.lines[blR],i/(n-1));return NECK[keyR];})();if(lv==null)continue;const d=entry.dir==='up'?lv-real[n-1].c:real[n-1].c-lv;if(d>=0)return i;} return Math.round(n*0.5);})();
-    const boLevel = (blR!=null) ? lineAt(spec.lines[blR], boIdx/(n-1)) : NECK[keyR];
-    const retLvl = (boLevel!=null && boLevel>0) ? boLevel : real[n-1].c;
-    const xB = Xc(boIdx);
+    // Uses the SAME boI/boP as the breakout marker (1) — aligned by construction.
+    const retLvl = (boP!=null && boP>0) ? boP : real[n-1].c;
+    const xB = Xc(boI);
     const yR = Y(retLvl);
     // horizontal long dashed level line: breakout point → target edge
     el('line',{x1:xB,y1:yR,x2:W-padR,y2:yR,class:'pline-retest'},svg);
-    // vertical dashed connector: breakout marker (1) drops down to the retest level
-    el('line',{x1:xB,y1:Y(boLevel!=null?boLevel:retLvl),x2:xB,y2:yR,class:'pline-retest-v'},svg);
+    // vertical connector: breakout marker to the retest level (same point for wedge/flat)
+    el('line',{x1:xB,y1:Y(retLvl),x2:xB,y2:yR,class:'pline-retest-v'},svg);
     badge(svg,Xc(n-1),Y(retLvl),'2',C.gold,'Retest 回踩',entry.dir==='up'?18:-13,1.35);}
   // labels
   (spec.labels||[]).forEach(lb=>{const tt=el('text',{x:Xc(Math.round(lb.x*(n-1))),y:Y(lb.p)+(lb.dy||-10),'text-anchor':lb.anchor||'middle',class:'plabel'},svg);
