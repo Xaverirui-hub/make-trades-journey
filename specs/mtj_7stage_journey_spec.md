@@ -12,7 +12,7 @@
 
 **賣點**：不用買書、不用找 mentor、不用開一堆軟體。課程 + 考核 + 工具 + 記錄全在網站，Composer 把「想法 → EA」的最後一哩也包了。
 
-**方法論（2026-08-11 新增）**：參考 codecrafters-io/build-your-own-x——「What I cannot create, I do not understand」(Feynman)。MTJ 不只是教學網站，是**「build your own trader」**：每個 Stage 都有動手重造任務，學員從零做出東西 = 最深的理解。
+**品牌敘事（2026-08-11 定稿）**：**BUILD YOUR OWN TRADING JOURNEY**——不只是「build your own trader」（重造一個交易者），而是「build your own journey」（親手打造你自己的交易旅程）。每個學員走過的不是同一條路，是**自己動手蓋出來的**一段旅程：課程是藍圖、工具是建材、考核是路標、Journal 是施工記錄、Composer 是頂層的自主建造。參考 codecrafters-io/build-your-own-x——「What I cannot create, I do not understand」(Feynman)：**你親手建造的，才真正屬於你。**
 
 ---
 
@@ -88,7 +88,7 @@
 ## §7 Build-your-own-X 動手重造（2026-08-11 新增）
 
 **靈感**：codecrafters-io/build-your-own-x（GitHub，30 分類 × 數百個「從零重造」教學）。
-**理念**：Feynman ——「我無法創造的東西，我就還不懂」。每個 Stage 加「動手重造」任務，學員從零做出東西來驗證理解。
+**理念**：Feynman ——「我無法創造的東西，我就還不懂」。每個 Stage 加「動手重造」任務，學員從零做出東西來驗證理解——**這是「Build Your Own Trading Journey」的執行層**。
 
 ### 7 個 Stage 的重造任務
 
