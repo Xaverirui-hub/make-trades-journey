@@ -150,6 +150,19 @@ table.tj .pos{color:var(--bull);} table.tj .neg{color:var(--bear);} table.tj .fl
 .quad .qd{font-size:12px;color:var(--muted-2);margin-top:10px;line-height:1.7;}
 .quad.dw .qd{color:var(--bear);}
 
+/* ==================== COACH DIAGNOSTIC (V2.0 2026-08-11) ==================== */
+.diag{display:grid;gap:10px;margin-top:12px;}
+.diag-item{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border:1px solid var(--line-soft);border-radius:12px;background:rgba(232,200,119,.02);}
+.diag-item .di{font-size:12px;line-height:1.7;}
+.diag-item .dtag{flex:0 0 auto;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:4px 10px;border-radius:20px;font-weight:600;}
+.diag-item.ok .dtag{background:rgba(44,217,138,.12);color:var(--bull);border:1px solid rgba(44,217,138,.3);}
+.diag-item.warn .dtag{background:rgba(255,92,99,.12);color:var(--bear);border:1px solid rgba(255,92,99,.3);}
+.diag-item .dtitle{font-weight:700;font-size:14px;margin-bottom:4px;color:var(--text);}
+.diag-item .dmsg{color:var(--muted);font-size:13px;}
+.diag-item .dmsg b{color:var(--text);font-weight:600;}
+.diag-item .dmsg .dgold{color:var(--gold);}
+.diag-item .dact{margin-top:8px;padding-top:8px;border-top:1px dashed rgba(232,200,119,.15);color:var(--gold);font-size:12.5px;}
+.diag-item .dact b{color:var(--gold);}
 /* breakdown table */
 .bd{width:100%;border-collapse:collapse;font-family:'JetBrains Mono',monospace;font-size:12px;margin-top:10px;}
 .bd th{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2);font-weight:400;
@@ -371,6 +384,12 @@ body.lang-zh.lang-strict .en{display:none !important;}
       <span class="zh">平均每笔交易的期望值。正数才代表这套系统长期是赚的。</span></div>
   </div>
 
+  <div class="card" id="diagCard">
+    <h2>Coach · 诊断报告</h2>
+    <div class="h-zh">用你的记录找出问题，给出改善方向 —— 不是评判，是照妖镜</div>
+    <div id="s_diag" class="diag"></div>
+  </div>
+
   <div class="card">
     <h2>Core Numbers · 核心数字</h2>
     <div class="h-zh">样本数少于 30 笔时，这些数字还不能说明什么</div>
@@ -569,7 +588,7 @@ function renderStats(){
   if(!n){
     $('s_exp').textContent='—';
     $('s_core').innerHTML='<div class="empty" style="grid-column:1/-1">No data yet.<span class="zh">还没有资料 —— 先记录几笔交易。</span></div>';
-    $('s_curve').innerHTML=''; $('s_quads').innerHTML=''; $('s_setup').innerHTML=''; $('s_session').innerHTML='';
+    $('s_curve').innerHTML=''; $('s_quads').innerHTML=''; $('s_setup').innerHTML=''; $('s_session').innerHTML=''; $('s_diag').innerHTML='';
     return;
   }
   const Rs=trades.map(rOf);
@@ -623,6 +642,7 @@ function renderStats(){
 
   $('s_setup').innerHTML=breakdown('setup');
   $('s_session').innerHTML=breakdown('session');
+  renderDiag();
 }
 
 function breakdown(key){
@@ -671,6 +691,124 @@ function drawCurve(chron){
   const xt=el('text',{x:L+pw/2,y:H-8,'text-anchor':'middle','font-family':"'JetBrains Mono',monospace",
     'font-size':9.5,fill:'#6f6c64','letter-spacing':'.16em'},svg);
   xt.textContent='TRADES 交易笔数 (chronological) — '+chron.length;
+}
+
+/* ---------- coach diagnostic (V2.0 2026-08-11) ---------- */
+function renderDiag(){
+  const box=$('s_diag'); if(!box) return;
+  const n=trades.length;
+  if(n<3){ box.innerHTML='<div class="empty">Need at least 3 trades for the coach.<span class="zh">至少 3 笔，教练才开始说话。</span></div>'; return; }
+  const Rs=trades.map(rOf);
+  const items=[];
+
+  /* 1. sample size */
+  if(n<30){
+    items.push({t:'warn',tag:'SAMPLE 样本',title:'样本还太小，数字会骗你',
+      msg:'<b>'+n+'</b> 笔交易 —— 统计上至少要 <b>30 笔</b> 才看得出稳定的期望值。现在的高胜率或亏损，都可能是运气。',
+      act:'继续记录，别急着因为 10 笔战绩就加仓。目标：记满 30 笔再复盘。'});
+  } else {
+    items.push({t:'ok',tag:'SAMPLE 样本',title:'样本量达标',
+      msg:'<b>'+n+'</b> 笔交易 —— 统计开始有意义了，接下来看数字。'});
+  }
+
+  /* 2. expectancy */
+  const exp=Rs.reduce((a,b)=>a+b,0)/n;
+  if(exp<=0){
+    items.push({t:'warn',tag:'EXPECTANCY 期望值',title:'你的系统目前是负期望',
+      msg:'平均每笔 <b>'+fmtR(exp)+'</b> —— 长期这样交易，帐户只会越来越小。<span class="dgold">问题可能不在「纪律」，而在「系统本身」。</span>',
+      act:'先别交易。回到 Stage 5：把 setup 按 By Setup 分解，找出真正正期望的组合，只做那一个。'});
+  } else if(exp<0.2){
+    items.push({t:'warn',tag:'EXPECTANCY 期望值',title:'期望值勉强为正，但很薄',
+      msg:'平均每笔 <b>'+fmtR(exp)+'</b> —— 能活，但不够厚。一点滑点或情绪化就能吃掉它。',
+      act:'提高门槛：只做前 2 个 setup（By Setup 看谁在赚钱），砍掉赔钱的。'});
+  } else {
+    items.push({t:'ok',tag:'EXPECTANCY 期望值',title:'正期望系统',
+      msg:'平均每笔 <b>'+fmtR(exp)+'</b> —— 系统本身是赚的，剩下的问题是执行质量。'});
+  }
+
+  /* 3. rule discipline */
+  const kept=trades.filter(t=>t.rules===1), broke=trades.filter(t=>t.rules===0);
+  const keptR=kept.reduce((s,t)=>s+rOf(t),0), brokeR=broke.reduce((s,t)=>s+rOf(t),0);
+  const brokePct=broke.length/n*100;
+  if(brokePct>=30){
+    items.push({t:'warn',tag:'DISCIPLINE 纪律',title:'破规则率偏高 —— 你在「感觉」交易',
+      msg:'<b>'+broke.length+'/'+n+' 笔 ('+brokePct.toFixed(0)+'%)</b> 是破规则做的。破规则的 <b>'+fmtR(brokeR)+'R</b> vs 守规则的 <b>'+fmtR(keptR)+'R</b> —— 看看破规则有没有「赢很多」？那是陷阱。',
+      act:'翻到四象限看「破规则赢」那格 —— 如果它很大，你的大脑被奖励绑架了。下一步：进场前重读 checklist，破规则那笔就别开。'});
+  } else if(brokePct>0){
+    items.push({t:'ok',tag:'DISCIPLINE 纪律',title:'纪律良好（还有进步空间）',
+      msg:'<b>'+brokePct.toFixed(0)+'%</b> 破规则率 —— 大部分时间你在守规矩。守规则 <b>'+fmtR(keptR)+'R</b> vs 破规则 <b>'+fmtR(brokeR)+'R</b>。',
+      act:'目标：破规则率降到 0。每一笔破规则都是送给市场的钱。'});
+  } else {
+    items.push({t:'ok',tag:'DISCIPLINE 纪律',title:'100% 守规则',
+      msg:'每一笔都按规则做 —— 这是职业选手的特征。'});
+  }
+
+  /* 4. emotion correlation */
+  const emoGroups={};
+  trades.forEach(t=>{ const e=t.emo||3; (emoGroups[e]=emoGroups[e]||[]).push(t); });
+  const EMO_NAME={1:'Fear 恐惧',2:'Hesitant 犹豫',3:'Neutral 平静',4:'Eager 急躁',5:'Revenge 上头'};
+  const emoRows=[1,2,3,4,5].filter(e=>emoGroups[e]&&emoGroups[e].length>=2).map(e=>{
+    const arr=emoGroups[e], r=arr.reduce((s,t)=>s+rOf(t),0)/arr.length;
+    return {e,name:EMO_NAME[e],n:arr.length,r};
+  });
+  const emoBad=emoRows.filter(x=>x.r<0 && x.e!==3 && x.e>=4);
+  const emoFear=emoRows.filter(x=>x.r<0 && x.e<=2);
+  if(emoBad.length){
+    items.push({t:'warn',tag:'EMOTION 情绪',title:'「上头」的时候你在亏钱',
+      msg:emoBad.map(x=>'<b>'+x.name+'</b> ('+x.n+'笔, '+fmtR(x.r)+'/笔)').join(' · ')+' —— 急躁/报复心态的交易是负期望的。',
+      act:'这是最贵的教训：<b>情绪 4-5 级 = 禁止进场</b>。把这条写进 checklist，作为硬规则。'});
+  }
+  if(emoFear.length){
+    items.push({t:'warn',tag:'EMOTION 情绪',title:'恐惧/犹豫也在拖后腿',
+      msg:emoFear.map(x=>'<b>'+x.name+'</b> ('+x.n+'笔, '+fmtR(x.r)+'/笔)').join(' · ')+' —— 该进的时候不敢进，或进错。',
+      act:'恐惧来自「规则不明确」。回 Stage 6：把 setup 写成 if-then 清单，进场不再靠感觉。'});
+  }
+  if(!emoBad.length && !emoFear.length && emoRows.length){
+    const calm=emoRows.find(x=>x.e===3);
+    items.push({t:'ok',tag:'EMOTION 情绪',title:'情绪没有明显侵蚀你的交易',
+      msg:calm?'平静状态 <b>'+fmtR(calm.r)+'R/笔</b> —— 好。':'情绪状态与盈亏没有明显负相关。'});
+  }
+
+  /* 5. over-trading */
+  const chron=[...trades].sort((a,b)=>(a.date||'').localeCompare(b.date||''));
+  const dayCount={};
+  chron.forEach(t=>{ const d=(t.date||'').slice(0,10); dayCount[d]=(dayCount[d]||0)+1; });
+  const dayArr=Object.values(dayCount);
+  const maxDay=dayArr.length?Math.max(...dayArr):0;
+  if(maxDay>=4){
+    items.push({t:'warn',tag:'OVER-TRADE 过度交易',title:'单日交易太密',
+      msg:'有一天开了 <b>'+maxDay+'</b> 笔 —— 交易频率高通常代表「手痒」而不是「机会多」。',
+      act:'设每日上限（如 2-3 笔）。超过就关平台，明天再来。'});
+  }
+
+  /* 6. losing streak response */
+  const maxL=(()=>{let c=0,m=0;Rs.forEach(r=>{if(r<0){c++;m=Math.max(m,c);}else c=0;});return m;})();
+  if(maxL>=5){
+    items.push({t:'warn',tag:'STREAK 连亏',title:'连亏 ' + maxL + ' 笔还在继续',
+      msg:'连续亏损 <b>'+maxL+'</b> 笔 —— 这时候最危险：不是亏多少，是你会开始「追」或「改规则」。',
+      act:'设连亏熔断：连亏 3 笔就停一天，收盘再复盘。别在当天决定改系统。'});
+  }
+
+  /* 7. best/worst setup */
+  const setupMap={};
+  trades.forEach(t=>{ const k=t.setup||'—'; (setupMap[k]=setupMap[k]||[]).push(t); });
+  const setupRows=Object.entries(setupMap).map(([k,arr])=>({k,n:arr.length,r:arr.reduce((s,t)=>s+rOf(t),0)/arr.length}));
+  const best=[...setupRows].sort((a,b)=>b.r-a.r)[0];
+  const worst=[...setupRows].sort((a,b)=>a.r-b.r)[setupRows.length-1];
+  if(setupRows.length>=2 && worst && worst.r<-0.5 && worst.n>=3){
+    items.push({t:'warn',tag:'SETUP 形态',title:'这个 setup 在稳定亏钱：'+esc(worst.k),
+      msg:'<b>'+esc(worst.k)+'</b> — '+worst.n+'笔, <b>'+fmtR(worst.r)+'R/笔</b>。最赚的是 <b>'+esc(best.k)+'</b> ('+best.n+'笔, '+fmtR(best.r)+'R/笔)。',
+      act:'砍掉 '+esc(worst.k)+'，只做 '+esc(best.k)+'。你的系统不需要 5 个 setup，只需要 1-2 个赚的。'});
+  }
+
+  /* build html */
+  box.innerHTML = items.map(it=>
+    '<div class="diag-item '+(it.t==='ok'?'ok':'warn')+'">'
+    +'<span class="dtag">'+(it.t==='ok'?'✓':'⚠')+' '+it.tag+'</span>'
+    +'<div class="di"><div class="dtitle">'+it.title+'</div>'
+    +'<div class="dmsg">'+it.msg+'</div>'
+    +(it.act?'<div class="dact">▶ 改善方案：<b>'+it.act+'</b></div>':'')
+    +'</div></div>').join('');
 }
 
 /* ---------- checklist ---------- */
