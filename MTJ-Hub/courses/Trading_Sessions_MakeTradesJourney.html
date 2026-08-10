@@ -1065,5 +1065,44 @@ renderExam();
   }catch(e){}
 })();
 </script>
+
+
+
+
+
+
+
+<script>
+/* agenda cards jump to matching article — keyword score (2026-08-10) */
+(function(){
+  var cards = document.querySelectorAll('.agenda .card');
+  if(!cards.length) return;
+  var arts = Array.prototype.slice.call(document.querySelectorAll('article'));
+  cards.forEach(function(card){
+    var h3 = card.querySelector('h3');
+    if(!h3) return;
+    var title = (h3.textContent || '').replace(/&amp;/g,'&').trim().toLowerCase();
+    if(!title) return;
+    var words = title.split(/[^a-z0-9]+/).filter(function(w){ return w.length > 2; });
+    var tgt = null, best = 0;
+    for(var i=0;i<arts.length;i++){
+      var ah = arts[i].querySelector('h3');
+      if(!ah) continue;
+      var atxt = (ah.textContent || '').toLowerCase();
+      var score = 0;
+      for(var w=0;w<words.length;w++){ if(atxt.indexOf(words[w]) >= 0) score++; }
+      if(score > best){ best = score; tgt = arts[i]; }
+    }
+    if(!tgt || best === 0) return;
+    card.style.cursor = 'pointer';
+    card.style.transition = '.3s';
+    card.addEventListener('mouseenter', function(){ card.style.transform = 'translateY(-3px)'; card.style.borderColor = 'rgba(232,200,119,.5)'; });
+    card.addEventListener('mouseleave', function(){ card.style.transform = 'none'; card.style.borderColor = ''; });
+    card.addEventListener('click', function(){
+      tgt.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  });
+})();
+</script>
 </body>
 </html>
