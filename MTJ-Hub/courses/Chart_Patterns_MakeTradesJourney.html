@@ -268,11 +268,11 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 .in .pline-neck{opacity:1;}
 .pline-target{stroke:var(--cyan);stroke-width:1.4;stroke-dasharray:4 4;opacity:0;transition:opacity .7s ease .85s;}
 .in .pline-target{opacity:1;}
-/* V2.1 2026-08-10: long dashed retest level line — spans breakout point → target edge */
-.pline-retest{stroke:var(--cyan);stroke-width:2;stroke-dasharray:12 7;opacity:0;transition:opacity .7s ease .7s;filter:drop-shadow(0 0 4px rgba(47,224,214,.35));}
+/* V2.1 2026-08-10: long dashed retest level line — spans breakout point → target edge (gold) */
+.pline-retest{stroke:var(--gold);stroke-width:2;stroke-dasharray:12 7;opacity:0;transition:opacity .7s ease .7s;filter:drop-shadow(0 0 4px rgba(232,200,119,.4));}
 .in .pline-retest{opacity:1;animation:retestflow 1.2s linear infinite;}
-/* vertical connector: breakout marker drops to the retest level */
-.pline-retest-v{stroke:var(--cyan);stroke-width:1.3;stroke-dasharray:4 4;opacity:0;transition:opacity .7s ease .75s;filter:drop-shadow(0 0 3px rgba(47,224,214,.25));}
+/* vertical connector: breakout marker drops to the retest level (gold) */
+.pline-retest-v{stroke:var(--gold);stroke-width:1.3;stroke-dasharray:4 4;opacity:0;transition:opacity .7s ease .75s;filter:drop-shadow(0 0 3px rgba(232,200,119,.3));}
 .in .pline-retest-v{opacity:1;}
 @keyframes retestflow{to{stroke-dashoffset:-38;}}
 .plabel{font-family:'JetBrains Mono',monospace;font-size:9.5px;opacity:0;transition:opacity .5s ease .95s;}
@@ -715,16 +715,20 @@ function renderCandleChart(container){
     // V2.1 2026-08-10: long dashed retest line — from the breakout point
     // through the retest zone to the target edge, so students see the
     // retest level is the SAME broken level (not a new line).
-    const retLvl = real[n-1].c;
-    const boIdx = (function(){ for(let i=n-1;i>0;i--){const lv=(function(){const key=container.dataset.chart,bl=BOLINE[key];if(bl!=null)return lineAt(spec.lines[bl],i/(n-1));return NECK[key];})();if(lv==null)continue;const d=entry.dir==='up'?lv-retLvl:retLvl-lv;if(d>=0)return i;} return Math.round(n*0.5);})();
+    // Fix (08-10): use the BROKEN LEVEL price (boP) as the retest baseline,
+    // not real[n-1].c — the close price drifts from the level and the line
+    // no longer aligns with the breakout marker.
+    const keyR = container.dataset.chart, blR = BOLINE[keyR];
+    const boIdx = (function(){ for(let i=n-1;i>0;i--){const lv=(function(){if(blR!=null)return lineAt(spec.lines[blR],i/(n-1));return NECK[keyR];})();if(lv==null)continue;const d=entry.dir==='up'?lv-real[n-1].c:real[n-1].c-lv;if(d>=0)return i;} return Math.round(n*0.5);})();
+    const boLevel = (blR!=null) ? lineAt(spec.lines[blR], boIdx/(n-1)) : NECK[keyR];
+    const retLvl = (boLevel!=null && boLevel>0) ? boLevel : real[n-1].c;
     const xB = Xc(boIdx);
     const yR = Y(retLvl);
     // horizontal long dashed level line: breakout point → target edge
     el('line',{x1:xB,y1:yR,x2:W-padR,y2:yR,class:'pline-retest'},svg);
     // vertical dashed connector: breakout marker (1) drops down to the retest level
-    const yBo = Y(real[boIdx] ? real[boIdx].c : retLvl);
-    el('line',{x1:xB,y1:yBo,x2:xB,y2:yR,class:'pline-retest-v'},svg);
-    badge(svg,Xc(n-1),Y(retLvl),'2',C.cyan,'Retest 回踩',entry.dir==='up'?18:-13,1.35);}
+    el('line',{x1:xB,y1:Y(boLevel!=null?boLevel:retLvl),x2:xB,y2:yR,class:'pline-retest-v'},svg);
+    badge(svg,Xc(n-1),Y(retLvl),'2',C.gold,'Retest 回踩',entry.dir==='up'?18:-13,1.35);}
   // labels
   (spec.labels||[]).forEach(lb=>{const tt=el('text',{x:Xc(Math.round(lb.x*(n-1))),y:Y(lb.p)+(lb.dy||-10),'text-anchor':lb.anchor||'middle',class:'plabel'},svg);
     tt.setAttribute('fill',lb.c||C.muted);tt.textContent=lb.t;});
