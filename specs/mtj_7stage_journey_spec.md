@@ -12,6 +12,8 @@
 
 **賣點**：不用買書、不用找 mentor、不用開一堆軟體。課程 + 考核 + 工具 + 記錄全在網站，Composer 把「想法 → EA」的最後一哩也包了。
 
+**方法論（2026-08-11 新增）**：參考 codecrafters-io/build-your-own-x——「What I cannot create, I do not understand」(Feynman)。MTJ 不只是教學網站，是**「build your own trader」**：每個 Stage 都有動手重造任務，學員從零做出東西 = 最深的理解。
+
 ---
 
 ## §1 學習路徑——7 段旅程（對齊 courses.html 現有 7 stage）
@@ -75,10 +77,55 @@
 
 ## §5 實施順序建議
 
-1. **P0**：Journal 統計儀表板（Stage 6 閉環的關鍵）
+1. **P0**：Journal 統計儀表板（Stage 6 閉環的關鍵）—— ✅ 已完成（2026-08-11 Coach 診斷引擎）
 2. **P1**：Stage 徽章/證書（7 段旅程的成就感）
 3. **P1**：雲端同步（會員 spec 落地）
 4. **P2**：回測 SOP 頁 + 免費層優化
+5. **P2**：Build-your-own 系列任務頁（§7）
+
+---
+
+## §7 Build-your-own-X 動手重造（2026-08-11 新增）
+
+**靈感**：codecrafters-io/build-your-own-x（GitHub，30 分類 × 數百個「從零重造」教學）。
+**理念**：Feynman ——「我無法創造的東西，我就還不懂」。每個 Stage 加「動手重造」任務，學員從零做出東西來驗證理解。
+
+### 7 個 Stage 的重造任務
+
+| Stage | Build your own | 用什麼做 | 驗證 |
+|---|---|---|---|
+| 1 | **報價計算器**（pip 價值/點差成本）| 網站內建計算器（頁面 JS）| 算出正確答案 |
+| 2 | **iFractals 指標** | MT5 自寫指標（課程帶）| 圖表顯示一致 |
+| 3 | **FOMC 數據判讀器**（非農→利率方向）| 網站互動練習 | 方向判斷正確 |
+| 4 | **倉位計算器**（風險 %→手數）| Position Calculator 從零重造 | 與工具結果一致 |
+| 5 | **供需區畫法** | MT5 圖表手動標記 | 助教/自評 |
+| 6 | **自己的交易日誌** | 網站模板（含 Coach 數據）| 記 20 筆 + 診斷 |
+| 7 | **第一個 EA/策略** | Strategy Composer | 匯出 EA + 回測報告 |
+
+### 呈現方式（參考 repo 結構）
+
+```
+BUILD YOUR OWN TRADER 頁（tools/ 或 courses/ 下）
+├── Build your own pip calculator      → Stage 1
+├── Build your own iFractals           → Stage 2
+├── Build your own position sizer      → Stage 4
+├── Build your own journal             → Stage 6
+└── Build your own first EA            → Stage 7
+每條：任務說明 + 對應課程 + 可用工具 + 驗收標準
+```
+
+### 價值
+
+- **學習**：重造 = 最深理解（比看課更牢固）
+- **產品**：「build your own trader」是獨特敘事——沒人這樣教交易
+- **閉環**：每個 Stage 的輸出物變成「作品集」→ 完成 7 個 = 有實力的證明
+- **差異化**：免費教育內容多的是，但「從零重造」的體系化是護城河
+
+### 實施注意
+
+- 任務要「網站內可完成」（不要求 MT5 安裝）——pip 計算器/倉位/日誌用網頁，iFractals/EA 才上 MT5
+- 每個任務給「驗收標準」（結果可對照），像 repo 的教學品質把關
+- 可開放社群提交自製任務（PR 模式）——未來內容自生長
 
 ---
 
