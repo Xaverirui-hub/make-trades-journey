@@ -389,6 +389,27 @@ body.lang-zh .zh-t{display:block !important;}
       <p>Reading a chart is half the job. This is the other half - how much to put on, where the stop belongs, the loop that turns every trade into feedback, and the discipline to actually follow it.</p>
       <div class="cnt">3 Modules · 三课</div>
     </div>
+    <div class="stage reveal" onclick="document.getElementById('stage-advanced').scrollIntoView({behavior:'smooth',block:'start'})" style="cursor:pointer;transition:.3s" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='rgba(232,200,119,.5)'" onmouseout="this.style.transform='none';this.style.borderColor=''">
+      <div class="num">05</div>
+      <h3>Advanced Craft</h3>
+      <div class="zh">进 阶 读 图</div>
+      <p>Trendlines, channels, supply &amp; demand — the structural zones where institutions leave footprints.</p>
+      <div class="cnt">2 Modules · 两课</div>
+    </div>
+    <div class="stage reveal" onclick="document.getElementById('stage-system').scrollIntoView({behavior:'smooth',block:'start'})" style="cursor:pointer;transition:.3s" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='rgba(232,200,119,.5)'" onmouseout="this.style.transform='none';this.style.borderColor=''">
+      <div class="num">06</div>
+      <h3>System &amp; Execution</h3>
+      <div class="zh">系 统 与 执 行</div>
+      <p>Trade management, backtesting and the daily routine — turning decisions into a repeatable system.</p>
+      <div class="cnt">3 Modules · 三课</div>
+    </div>
+    <div class="stage reveal" onclick="document.getElementById('stage-indicators').scrollIntoView({behavior:'smooth',block:'start'})" style="cursor:pointer;transition:.3s" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='rgba(232,200,119,.5)'" onmouseout="this.style.transform='none';this.style.borderColor=''">
+      <div class="num">07</div>
+      <h3>Indicators &amp; Platform</h3>
+      <div class="zh">指 标 与 平 台</div>
+      <p>RSI, Stochastic, MACD, platform costs and Expert Advisors — the tools and the machinery of trading.</p>
+      <div class="cnt">5 Modules · 五课</div>
+    </div>
   </div>
 </section>
 <!-- ================= COURSES ================= -->
@@ -548,7 +569,7 @@ body.lang-zh .zh-t{display:block !important;}
     </a>
   </div>
 
-  <div class="group-head reveal"><span class="tier">05</span>
+  <div class="group-head reveal" id="stage-advanced"><span class="tier">05</span>
     <div><h3>Advanced Craft</h3><div class="zh">进 阶 读 图 · 结 构 与 区 域</div></div>
   </div>
   <div class="grid">
@@ -574,7 +595,7 @@ body.lang-zh .zh-t{display:block !important;}
 
   </div>
 
-  <div class="group-head reveal"><span class="tier">06</span>
+  <div class="group-head reveal" id="stage-system"><span class="tier">06</span>
     <div><h3>System &amp; Execution</h3><div class="zh">系 统 与 执 行</div></div>
   </div>
   <div class="grid">
@@ -609,8 +630,8 @@ body.lang-zh .zh-t{display:block !important;}
     </a>
   </div>
 
-  <div class="group-head reveal"><span class="tier">07</span>
-    <div><h3>Indicators &amp; Platform</h3><div class="zh">指 标 与 平 台</div></div>
+  <div class="group-head reveal" id="stage-indicators"><span class="tier">07</span>
+    <div><h3>Indicators</h3><div class="zh">指 标 应 用</div></div>
   </div>
   <div class="grid">
     <a class="mod reveal" href="courses/RSI_Indicator_MakeTradesJourney.html">
@@ -637,7 +658,12 @@ body.lang-zh .zh-t{display:block !important;}
       <div class="tags"><span>Signal 信号线</span><span>Histogram 柱</span><span>MT5 Style</span></div>
       <div class="go">OPEN MODULE →</div>
     </a>
+  </div>
 
+  <div class="group-head reveal" id="stage-platform"><span class="tier">08</span>
+    <div><h3>Platform</h3><div class="zh">平 台 实 操</div></div>
+  </div>
+  <div class="grid">
     <a class="mod reveal" href="courses/Platform_Costs_MakeTradesJourney.html">
       <div class="idx">MODULE 21</div>
       <h4>Platform &amp; Trading Costs</h4>
@@ -647,6 +673,12 @@ body.lang-zh .zh-t{display:block !important;}
       <div class="go">OPEN MODULE →</div>
     </a>
 
+    </div>
+
+  <div class="group-head reveal" id="stage-ea"><span class="tier">09</span>
+    <div><h3>Expert Advisor</h3><div class="zh">智 能 交 易</div></div>
+  </div>
+  <div class="grid">
     <a class="mod reveal" href="courses/Expert_Advisor_MakeTradesJourney.html">
       <div class="idx">MODULE 22</div>
       <h4>What is an Expert Advisor?</h4>
