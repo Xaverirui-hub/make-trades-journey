@@ -361,28 +361,28 @@ body.lang-zh .zh-t{display:block !important;}
     <span class="zh">第一次学习建议按顺序进行，每个阶段都建立在前一个阶段之上。</span></p>
 
   <div class="path">
-    <div class="stage reveal">
+    <div class="stage reveal" onclick="document.getElementById('stage-foundations').scrollIntoView({behavior:'smooth',block:'start'})" style="cursor:pointer;transition:.3s" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='rgba(232,200,119,.5)'" onmouseout="this.style.transform='none';this.style.borderColor=''"
       <div class="num">01</div>
       <h3>Foundations</h3>
       <div class="zh">打 基 础</div>
       <p>What you are actually trading, the three lenses used to analyse it, and when the market is worth trading at all.</p>
       <div class="cnt">3 Modules · 三课</div>
     </div>
-    <div class="stage reveal">
+    <div class="stage reveal" onclick="document.getElementById('stage-chartcraft').scrollIntoView({behavior:'smooth',block:'start'})" style="cursor:pointer;transition:.3s" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='rgba(232,200,119,.5)'" onmouseout="this.style.transform='none';this.style.borderColor=''"
       <div class="num">02</div>
       <h3>Chart Craft</h3>
       <div class="zh">读 图 技 术</div>
       <p>The technical toolkit: candles, patterns, moving averages, key levels and Fibonacci - the skills you use on every single chart.</p>
       <div class="cnt">4 Modules · 四课</div>
     </div>
-    <div class="stage reveal">
+    <div class="stage reveal" onclick="document.getElementById('stage-market').scrollIntoView({behavior:'smooth',block:'start'})" style="cursor:pointer;transition:.3s" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='rgba(232,200,119,.5)'" onmouseout="this.style.transform='none';this.style.borderColor=''"
       <div class="num">03</div>
       <h3>Market Context</h3>
       <div class="zh">市 场 脉 络</div>
       <p>Zoom out. Align timeframes, then understand the data and central-bank decisions that move price in the first place.</p>
       <div class="cnt">2 Modules · 两课</div>
     </div>
-    <div class="stage reveal">
+    <div class="stage reveal" onclick="document.getElementById('stage-execution').scrollIntoView({behavior:'smooth',block:'start'})" style="cursor:pointer;transition:.3s" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='rgba(232,200,119,.5)'" onmouseout="this.style.transform='none';this.style.borderColor=''"
       <div class="num">04</div>
       <h3>Execution &amp; Risk</h3>
       <div class="zh">执 行 与 风 控</div>
@@ -405,7 +405,7 @@ body.lang-zh .zh-t{display:block !important;}
     <span class="zh">点击任意卡片即可打开完整课程。</span></p>
 
   <!-- STAGE 01 -->
-  <div class="group-head reveal"><span class="tier">01</span>
+  <div class="group-head reveal" id="stage-foundations"><span class="tier">01</span>
     <div><h3>Foundations</h3><div class="zh">打 基 础 · 入 门 必 修</div></div>
   </div>
   <div class="grid">
@@ -441,7 +441,7 @@ body.lang-zh .zh-t{display:block !important;}
   </div>
 
   <!-- STAGE 02 -->
-  <div class="group-head reveal"><span class="tier">02</span>
+  <div class="group-head reveal" id="stage-chartcraft"><span class="tier">02</span>
     <div><h3>Chart Craft</h3><div class="zh">读 图 技 术 · 核 心 工 具</div></div>
   </div>
   <div class="grid">
@@ -487,7 +487,7 @@ body.lang-zh .zh-t{display:block !important;}
   </div>
 
   <!-- STAGE 03 -->
-  <div class="group-head reveal"><span class="tier">03</span>
+  <div class="group-head reveal" id="stage-market"><span class="tier">03</span>
     <div><h3>Market Context</h3><div class="zh">市 场 脉 络 · 由 上 而 下</div></div>
   </div>
   <div class="grid">
@@ -513,7 +513,7 @@ body.lang-zh .zh-t{display:block !important;}
   </div>
 
   <!-- STAGE 04 -->
-  <div class="group-head reveal"><span class="tier">04</span>
+  <div class="group-head reveal" id="stage-execution"><span class="tier">04</span>
     <div><h3>Execution &amp; Risk</h3><div class="zh">执 行 与 风 控 · 活 下 来 的 关 键</div></div>
   </div>
   <div class="grid">
