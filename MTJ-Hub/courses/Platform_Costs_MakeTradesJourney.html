@@ -1280,7 +1280,7 @@ function gradeExam(){
   var pct = Math.round(correct / total * 100);
   var passed = correct >= 4;
   if(answered < total){
-    res.innerHTML = "<div style='color:var(--gold);font-family:monospace;font-size:13px;'><span class="en">Please answer all " + total + " questions</span><span class="zh">请回答全部 " + total + " 题。</span></div>";
+    res.innerHTML = "<div style='color:var(--gold);font-family:monospace;font-size:13px;'>Please answer all " + total + " questions 请回答全部 " + total + " 题。</div>";
     return;
   }
   if(passed){

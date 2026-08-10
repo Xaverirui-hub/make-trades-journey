@@ -1300,9 +1300,9 @@ function gradeExam(){
       var whyTxt = (zhMode && item.why_zh) ? item.why_zh : item.why;
       if(user === item.ans){
         correct++;
-        fb.innerHTML = "<span style='color:var(--bull);font-weight:600;'><span class="en">✓ Correct</span><span class="zh">正确</span></span><br><span style='color:var(--muted);font-size:12.5px;'>" + whyTxt + "</span>";
+        fb.innerHTML = "<span style='color:var(--bull);font-weight:600;'>✓ Correct 正确</span><br><span style='color:var(--muted);font-size:12.5px;'>" + whyTxt + "</span>";
       } else {
-        fb.innerHTML = "<span style='color:var(--bear);font-weight:600;'><span class="en">✗ Wrong</span><span class="zh">错误</span></span><br><span style='color:var(--muted);font-size:12.5px;'>你的答案: <b>" + item.opts[user] + "</b> · 正确答案: <b>" + item.opts[item.ans] + "</b><br>为什么错: " + whyTxt + "</span>";
+        fb.innerHTML = "<span style='color:var(--bear);font-weight:600;'>✗ Wrong 错误</span><br><span style='color:var(--muted);font-size:12.5px;'>你的答案: <b>" + item.opts[user] + "</b> · 正确答案: <b>" + item.opts[item.ans] + "</b><br>为什么错: " + whyTxt + "</span>";
       }
       fb.style.display = "block";
     } else {
@@ -1317,7 +1317,7 @@ function gradeExam(){
   var res = document.getElementById("examResult");
   if(correct >= 4){
     localStorage.setItem(MTJ_EXAM_KEY, "1");
-    res.innerHTML = "<div style='background:rgba(44,217,138,.1);border:1px solid rgba(44,217,138,.4);border-radius:14px;padding:22px;'><div style='color:var(--bull);font-weight:700;font-size:18px;margin-bottom:6px;'><span class="en">🎉 PASSED - " + correct + "/" + total + "</span><span class="zh">通过!</span></div><div style='color:var(--muted);font-size:13.5px;'><span class="en">Module 12</span><span class="zh">已解锁。回到目录继续学习。</span></div><a href='../MakeTradesJourney.html' style='display:inline-block;margin-top:14px;background:var(--gold);color:#0a0e14;border-radius:30px;padding:10px 24px;font-weight:600;font-size:13px;text-decoration:none;'><span class="en">Continue</span><span class="zh">继续</span></a></div>";
+    res.innerHTML = "<div style='background:rgba(44,217,138,.1);border:1px solid rgba(44,217,138,.4);border-radius:14px;padding:22px;'><div style='color:var(--bull);font-weight:700;font-size:18px;margin-bottom:6px;'>🎉 PASSED - " + correct + "/" + total + " 通过!</div><div style='color:var(--muted);font-size:13.5px;'>Module 12 已解锁。回到目录继续学习。</div><a href='../MakeTradesJourney.html' style='display:inline-block;margin-top:14px;background:var(--gold);color:#0a0e14;border-radius:30px;padding:10px 24px;font-weight:600;font-size:13px;text-decoration:none;'>Continue 继续</a></div>";
   } else {
     res.innerHTML = "<div style='background:rgba(255,92,99,.08);border:1px solid rgba(255,92,99,.35);border-radius:14px;padding:22px;'><div style='color:var(--bear);font-weight:700;font-size:18px;margin-bottom:6px;'>NOT PASSED - " + correct + "/" + total + " (" + Math.round(correct/total*100) + "%)</div><div style='color:var(--muted);font-size:13.5px;'>需要 70% (4/5)。阅读上面的错题解析，然后重试。</div></div>";
   }
