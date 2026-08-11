@@ -151,6 +151,28 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 .stage p{margin:14px 0 0;font-size:13.5px;color:var(--muted);line-height:1.8;}
 .stage .cnt{margin-top:16px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;
   text-transform:uppercase;color:var(--gold-deep);border-top:1px solid var(--line-soft);padding-top:12px;}
+.stage-badge{display:none;margin-top:14px;font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(232,200,119,.28);
+  border-radius:999px;padding:7px 11px;background:rgba(232,200,119,.055);width:max-content;max-width:100%;}
+.stage-badge.show{display:inline-flex;align-items:center;gap:7px;}
+.stage-badge.complete{color:var(--gold-bright);border-color:rgba(232,200,119,.55);
+  background:linear-gradient(180deg,rgba(232,200,119,.15),rgba(232,200,119,.045));
+  box-shadow:0 0 18px rgba(232,200,119,.10);}
+.stage-badge .zh{font-family:'Noto Sans SC';font-size:1.08em;letter-spacing:.06em;color:inherit;text-transform:none;}
+.journey-progress{margin:28px 0 2px;border:1px solid var(--line-soft);border-radius:18px;padding:18px 18px 16px;
+  background:linear-gradient(180deg,rgba(232,200,119,.07),rgba(232,200,119,.018));}
+.journey-progress .jp-top{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:12px;}
+.journey-progress .jp-title{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--gold);}
+.journey-progress .jp-title .zh{font-family:'Noto Sans SC';font-size:1.12em;letter-spacing:.12em;color:inherit;text-transform:none;margin-left:6px;}
+.journey-progress .jp-count{font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:700;color:var(--gold-bright);white-space:nowrap;}
+.journey-progress .jp-track{height:8px;border-radius:999px;background:rgba(232,200,119,.10);overflow:hidden;border:1px solid rgba(232,200,119,.10);}
+.journey-progress .jp-fill{height:100%;width:100%;border-radius:999px;background:linear-gradient(90deg,var(--gold-deep),var(--gold-bright));
+  box-shadow:0 0 18px rgba(232,200,119,.42);transform:scaleX(0);transform-origin:left;transition:transform .55s cubic-bezier(.2,.7,.2,1);}
+.journey-progress .jp-note{margin-top:10px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted-2);}
+.journey-progress .jp-note .zh{font-family:'Noto Sans SC';font-size:1.08em;letter-spacing:.04em;color:inherit;text-transform:none;}
+@media(max-width:560px){.journey-progress .jp-top{align-items:flex-start;flex-direction:column;gap:8px;}.journey-progress{padding:16px 14px;}}
 
 /* ---------- course grid ---------- */
 .group-head{display:flex;align-items:center;gap:18px;margin:0 0 26px;}
@@ -350,8 +372,8 @@ body.lang-zh .zh-t{display:block !important;}
 <!-- ================= LEARNING PATH ================= -->
 <section class="divider">
   <div class="rail reveal">The Route · 学习路线</div>
-  <h2 class="reveal">Four Stages</h2>
-  <div class="zh reveal">四 个 阶 段</div>
+  <h2 class="reveal">Seven Stages</h2>
+  <div class="zh reveal">七 个 阶 段</div>
 </section>
 
 <section class="section" id="path">
@@ -360,50 +382,60 @@ body.lang-zh .zh-t{display:block !important;}
   <p class="lead reveal">Take the modules in order the first time through. Each stage assumes the one before it.
     <span class="zh">第一次学习建议按顺序进行，每个阶段都建立在前一个阶段之上。</span></p>
 
+  <div class="journey-progress reveal" id="journeyProgress" aria-live="polite">
+    <div class="jp-top">
+      <div class="jp-title">Journey Progress <span class="zh">旅程进度</span></div>
+      <div class="jp-count"><span id="journeyDone">0</span>/7</div>
+    </div>
+    <div class="jp-track"><div class="jp-fill" id="journeyFill"></div></div>
+    <div class="jp-note">Complete every exam in a stage to close the loop.
+      <span class="zh">通过每个阶段内所有课程考核，完成该阶段闭环。</span></div>
+  </div>
+
   <div class="path">
-    <div class="stage reveal" onclick="document.getElementById('stage-foundations').scrollIntoView({behavior:'smooth',block:'start'})" style="cursor:pointer;transition:.3s" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='rgba(232,200,119,.5)'" onmouseout="this.style.transform='none';this.style.borderColor=''">
+    <div class="stage reveal" data-stage="1" data-courses="1,2,3" onclick="document.getElementById('stage-foundations').scrollIntoView({behavior:'smooth',block:'start'})" style="cursor:pointer;transition:.3s" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='rgba(232,200,119,.5)'" onmouseout="this.style.transform='none';this.style.borderColor=''">
       <div class="num">01</div>
       <h3>Foundations</h3>
       <div class="zh">打 基 础</div>
       <p>What you are actually trading, the three lenses used to analyse it, and when the market is worth trading at all.</p>
       <div class="cnt">3 Modules · 三课</div>
     </div>
-    <div class="stage reveal" onclick="document.getElementById('stage-chartcraft').scrollIntoView({behavior:'smooth',block:'start'})" style="cursor:pointer;transition:.3s" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='rgba(232,200,119,.5)'" onmouseout="this.style.transform='none';this.style.borderColor=''">
+    <div class="stage reveal" data-stage="2" data-courses="4,5,6,7" onclick="document.getElementById('stage-chartcraft').scrollIntoView({behavior:'smooth',block:'start'})" style="cursor:pointer;transition:.3s" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='rgba(232,200,119,.5)'" onmouseout="this.style.transform='none';this.style.borderColor=''">
       <div class="num">02</div>
       <h3>Chart Craft</h3>
       <div class="zh">读 图 技 术</div>
       <p>The technical toolkit: candles, patterns, moving averages, key levels and Fibonacci - the skills you use on every single chart.</p>
       <div class="cnt">4 Modules · 四课</div>
     </div>
-    <div class="stage reveal" onclick="document.getElementById('stage-market').scrollIntoView({behavior:'smooth',block:'start'})" style="cursor:pointer;transition:.3s" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='rgba(232,200,119,.5)'" onmouseout="this.style.transform='none';this.style.borderColor=''">
+    <div class="stage reveal" data-stage="3" data-courses="8,9" onclick="document.getElementById('stage-market').scrollIntoView({behavior:'smooth',block:'start'})" style="cursor:pointer;transition:.3s" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='rgba(232,200,119,.5)'" onmouseout="this.style.transform='none';this.style.borderColor=''">
       <div class="num">03</div>
       <h3>Market Context</h3>
       <div class="zh">市 场 脉 络</div>
       <p>Zoom out. Align timeframes, then understand the data and central-bank decisions that move price in the first place.</p>
       <div class="cnt">2 Modules · 两课</div>
     </div>
-    <div class="stage reveal" onclick="document.getElementById('stage-execution').scrollIntoView({behavior:'smooth',block:'start'})" style="cursor:pointer;transition:.3s" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='rgba(232,200,119,.5)'" onmouseout="this.style.transform='none';this.style.borderColor=''">
+    <div class="stage reveal" data-stage="4" data-courses="10,11,12" onclick="document.getElementById('stage-execution').scrollIntoView({behavior:'smooth',block:'start'})" style="cursor:pointer;transition:.3s" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='rgba(232,200,119,.5)'" onmouseout="this.style.transform='none';this.style.borderColor=''">
       <div class="num">04</div>
       <h3>Execution &amp; Risk</h3>
       <div class="zh">执 行 与 风 控</div>
       <p>Reading a chart is half the job. This is the other half - how much to put on, where the stop belongs, the loop that turns every trade into feedback, and the discipline to actually follow it.</p>
       <div class="cnt">3 Modules · 三课</div>
     </div>
-    <div class="stage reveal" onclick="document.getElementById('stage-advanced').scrollIntoView({behavior:'smooth',block:'start'})" style="cursor:pointer;transition:.3s" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='rgba(232,200,119,.5)'" onmouseout="this.style.transform='none';this.style.borderColor=''">
+    <div class="stage reveal" data-stage="5" data-courses="13,14" onclick="document.getElementById('stage-advanced').scrollIntoView({behavior:'smooth',block:'start'})" style="cursor:pointer;transition:.3s" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='rgba(232,200,119,.5)'" onmouseout="this.style.transform='none';this.style.borderColor=''">
       <div class="num">05</div>
       <h3>Advanced Craft</h3>
       <div class="zh">进 阶 读 图</div>
       <p>Trendlines, channels, supply &amp; demand — the structural zones where institutions leave footprints.</p>
       <div class="cnt">2 Modules · 两课</div>
     </div>
-    <div class="stage reveal" onclick="document.getElementById('stage-system').scrollIntoView({behavior:'smooth',block:'start'})" style="cursor:pointer;transition:.3s" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='rgba(232,200,119,.5)'" onmouseout="this.style.transform='none';this.style.borderColor=''">
+    <div class="stage reveal" data-stage="6" data-courses="15,16,17" onclick="document.getElementById('stage-system').scrollIntoView({behavior:'smooth',block:'start'})" style="cursor:pointer;transition:.3s" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='rgba(232,200,119,.5)'" onmouseout="this.style.transform='none';this.style.borderColor=''">
       <div class="num">06</div>
       <h3>System &amp; Execution</h3>
       <div class="zh">系 统 与 执 行</div>
       <p>Trade management, backtesting and the daily routine — turning decisions into a repeatable system.</p>
       <div class="cnt">3 Modules · 三课</div>
     </div>
-    <div class="stage reveal" onclick="document.getElementById('stage-indicators').scrollIntoView({behavior:'smooth',block:'start'})" style="cursor:pointer;transition:.3s" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='rgba(232,200,119,.5)'" onmouseout="this.style.transform='none';this.style.borderColor=''">
+    <div class="stage reveal" data-stage="7" data-courses="18,19,20,21,22" onclick="document.getElementById('stage-indicators').scrollIntoView({behavior:'smooth',block:'start'})" style="cursor:pointer;transition:.3s" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='rgba(232,200,119,.5)'" onmouseout="this.style.transform='none';this.style.borderColor=''">
       <div class="num">07</div>
       <h3>Indicators &amp; Platform</h3>
       <div class="zh">指 标 与 平 台</div>
@@ -846,6 +878,48 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
       a.appendChild(lock);
     }
   }
+})();
+</script>
+
+<script>
+/* ===== MTJ Stage Badges + Journey Progress ===== */
+(function(){
+  var stages = Array.prototype.slice.call(document.querySelectorAll('.path .stage[data-courses]'));
+  if(!stages.length) return;
+
+  function examPassed(n){
+    try{ return localStorage.getItem('mtj_exam_pass_' + n) === '1'; }catch(e){ return false; }
+  }
+
+  var completeStages = 0;
+  stages.forEach(function(stage){
+    var stageNo = parseInt(stage.getAttribute('data-stage') || '0', 10);
+    var courses = (stage.getAttribute('data-courses') || '').split(',').map(function(v){ return parseInt(v, 10); }).filter(Boolean);
+    var passed = courses.filter(examPassed).length;
+    var total = courses.length;
+    var badge = stage.querySelector('.stage-badge');
+    if(!badge){
+      badge = document.createElement('div');
+      badge.className = 'stage-badge';
+      stage.appendChild(badge);
+    }
+
+    badge.classList.remove('show','complete');
+    badge.innerHTML = '';
+    if(total && passed === total){
+      completeStages++;
+      badge.classList.add('show','complete');
+      badge.innerHTML = '<span>✓ STAGE ' + stageNo + ' COMPLETE</span><span class="zh">第 ' + stageNo + ' 阶段完成</span>';
+    }else if(passed > 0){
+      badge.classList.add('show');
+      badge.innerHTML = '<span>' + passed + '/' + total + ' COMPLETE</span><span class="zh">已通过 ' + passed + '/' + total + '</span>';
+    }
+  });
+
+  var done = document.getElementById('journeyDone');
+  var fill = document.getElementById('journeyFill');
+  if(done) done.textContent = completeStages;
+  if(fill) fill.style.transform = 'scaleX(' + (completeStages / 7) + ')';
 })();
 </script>
 
