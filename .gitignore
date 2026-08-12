@@ -16,3 +16,9 @@ $RECYCLE.BIN/
 
 # 审阅用暂存副本
 _review_tmp/
+
+# 建置中间产物
+dom_out.html
+head_new.html
+head_tpl.html
+new_body.html

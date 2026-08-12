@@ -9,6 +9,7 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 body{background:var(--bg);color:var(--text);font-family:'JetBrains Mono',monospace;padding-top:57px;line-height:1.7;}
 body.lang-en .zh{display:none !important;}
+body.lang-zh.lang-strict .en{display:none !important;}
 .navbar{position:fixed;top:0;left:0;right:0;height:57px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;background:rgba(10,10,14,.72);backdrop-filter:blur(18px) saturate(1.6);-webkit-backdrop-filter:blur(18px) saturate(1.6);border-bottom:1px solid var(--line);z-index:100;}
 .nb-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;}
 .nb-links{display:flex;align-items:center;gap:2px;}
@@ -43,7 +44,7 @@ h1{font-size:clamp(30px,5vw,52px);font-weight:800;letter-spacing:-.02em;line-hei
 .btn.primary:hover{background:var(--gold-bright);box-shadow:0 0 24px rgba(232,200,119,.3);}
 .btn:hover{border-color:var(--gold);color:var(--gold-bright);}
 .bar{height:6px;background:var(--line);border-radius:4px;margin-top:12px;overflow:hidden;}
-.bar i{display:block;height:100%;background:var(--gold);border-radius:4px;transition:width .5s;width:0;}
+.bar i{display:block;height:100%;width:100%;transform-origin:left;transform:scaleX(0);background:var(--gold);border-radius:4px;transition:transform .5s;}
 </style>
 </head>
 <body class="lang-zh">
@@ -68,10 +69,10 @@ h1{font-size:clamp(30px,5vw,52px);font-weight:800;letter-spacing:-.02em;line-hei
   <p class="sub"><span class="en">Backtesting is how you find out whether your system actually works — before risking real money. Follow these 5 steps every time.</span><span class="zh">回测是你在拿真钱冒险之前，找出系统是否真的有效的办法。每次都按这五步走。</span></p>
 
   <div class="card">
-    <h2>Step 1 · 样本规划 <span class="zh">Sample Planning</span></h2>
-    <div class="h-zh">没有足够的样本，任何结论都是猜测</div>
+    <h2><span class="en">Step 1 &#183; Sample Planning</span><span class="zh">第1步 &#183; 样本规划</span></h2>
+    <div class="h-zh"><span class="zh">没有足够的样本，任何结论都是猜测</span></div>
     <div class="step">
-      <div class="snum">STEP 1 · 第一步</div>
+      <div class="snum"><span class="en">STEP 1</span><span class="zh">第一步</span></div>
       <div class="stitle"><span class="en">Plan the sample</span><span class="zh">规划样本</span></div>
       <div class="szh"><span class="en">Enough trades, across market conditions.</span><span class="zh">足够的交易笔数，覆盖不同的市场状态。</span></div>
       <ul>
@@ -83,10 +84,10 @@ h1{font-size:clamp(30px,5vw,52px);font-weight:800;letter-spacing:-.02em;line-hei
   </div>
 
   <div class="card">
-    <h2>Step 2 · 数据准备 <span class="zh">Data Preparation</span></h2>
-    <div class="h-zh">数据不干净，结论就不可信</div>
+    <h2><span class="en">Step 2 &#183; Data Preparation</span><span class="zh">第2步 &#183; 数据准备</span></h2>
+    <div class="h-zh"><span class="zh">数据不干净，结论就不可信</span></div>
     <div class="step">
-      <div class="snum">STEP 2 · 第二步</div>
+      <div class="snum"><span class="en">STEP 2</span><span class="zh">第二步</span></div>
       <div class="stitle"><span class="en">Prepare clean data</span><span class="zh">准备干净的数据</span></div>
       <div class="szh"><span class="en">Test on data that matches your live execution.</span><span class="zh">用与实盘执行一致的数据来测试。</span></div>
       <ul>
@@ -98,10 +99,10 @@ h1{font-size:clamp(30px,5vw,52px);font-weight:800;letter-spacing:-.02em;line-hei
   </div>
 
   <div class="card">
-    <h2>Step 3 · 执行与记录 <span class="zh">Execute & Record</span></h2>
-    <div class="h-zh">每一笔都记下来 —— 没有记录就没有复盘</div>
+    <h2><span class="en">Step 3 &#183; Execute &amp; Record</span><span class="zh">第3步 &#183; 执行与记录</span></h2>
+    <div class="h-zh"><span class="zh">每一笔都记下来 —— 没有记录就没有复盘</span></div>
     <div class="step">
-      <div class="snum">STEP 3 · 第三步</div>
+      <div class="snum"><span class="en">STEP 3</span><span class="zh">第三步</span></div>
       <div class="stitle"><span class="en">Execute and record every trade</span><span class="zh">执行并记录每一笔交易</span></div>
       <div class="szh"><span class="en">Entry, stop, target, result — into the journal.</span><span class="zh">进场、止损、目标、结果 —— 记进交易日誌。</span></div>
       <ul>
@@ -113,10 +114,10 @@ h1{font-size:clamp(30px,5vw,52px);font-weight:800;letter-spacing:-.02em;line-hei
   </div>
 
   <div class="card">
-    <h2>Step 4 · 五个关键指标 <span class="zh">The Five Numbers</span></h2>
-    <div class="h-zh">用数字判断，不用感觉判断</div>
+    <h2><span class="en">Step 4 &#183; The Five Numbers</span><span class="zh">第4步 &#183; 五个关键指标</span></h2>
+    <div class="h-zh"><span class="zh">用数字判断，不用感觉判断</span></div>
     <div class="step">
-      <div class="snum">STEP 4 · 第四步</div>
+      <div class="snum"><span class="en">STEP 4</span><span class="zh">第四步</span></div>
       <div class="stitle"><span class="en">Check the five key metrics</span><span class="zh">检查五个关键指标</span></div>
       <div class="szh"><span class="en">From Module 16 — the only numbers that matter.</span><span class="zh">来自 M16 —— 唯一重要的几个数字。</span></div>
       <ul>
@@ -130,10 +131,10 @@ h1{font-size:clamp(30px,5vw,52px);font-weight:800;letter-spacing:-.02em;line-hei
   </div>
 
   <div class="card">
-    <h2>Step 5 · 判决 <span class="zh">The Verdict</span></h2>
-    <div class="h-zh">通过就前进，不通过就回去重设计</div>
+    <h2><span class="en">Step 5 &#183; The Verdict</span><span class="zh">第5步 &#183; 判决</span></h2>
+    <div class="h-zh"><span class="zh">通过就前进，不通过就回去重设计</span></div>
     <div class="step">
-      <div class="snum">STEP 5 · 第五步</div>
+      <div class="snum"><span class="en">STEP 5</span><span class="zh">第五步</span></div>
       <div class="stitle"><span class="en">Judge the system</span><span class="zh">判定系统</span></div>
       <div class="szh"><span class="en">Pass the gate? Move to demo. Fail? Back to Module 16.</span><span class="zh">通过门槛？进模拟盘。不通过？回 M16 重设计。</span></div>
       <ul>
@@ -146,8 +147,8 @@ h1{font-size:clamp(30px,5vw,52px);font-weight:800;letter-spacing:-.02em;line-hei
   </div>
 
   <div class="card">
-    <h2>Completion Checklist · 完成清单</h2>
-    <div class="h-zh">勾完这五步，才算完成一次回测</div>
+    <h2><span class="en">Completion Checklist</span><span class="zh">完成清单</span></h2>
+    <div class="h-zh"><span class="zh">勾完这五步，才算完成一次回测</span></div>
     <div class="bar"><i id="sopFill"></i></div>
     <div style="margin-top:18px" id="sopList"></div>
   </div>
@@ -191,7 +192,7 @@ function renderSop(){
     list.appendChild(d);
   });
   const n=Object.keys(saved).filter(k=>saved[k]).length;
-  $('sopFill').style.width=(n/5*100)+'%';
+  $('sopFill').style.transform='scaleX('+(n/5)+')';
 }
 window.toggleSop=function(i,el){
   let saved={}; try{saved=JSON.parse(localStorage.getItem(KEY))||{};}catch(e){}
@@ -205,6 +206,151 @@ window.toggleSop=function(i,el){
   window.setLang(saved);
   renderSop();
 })();
+</script>
+<script>
+/* ===== MTJ Language Engine v3 =====================================
+   Bilingual pages mark Chinese with <span class="zh">. English lives as
+   bare text nodes, and CSS cannot target a text node. On load we classify
+   every loose text run and wrap it so the two languages become mutually
+   excludable with pure CSS.
+
+   v3 classifies by content instead of position:
+     pure Latin  -> <span class="en">   hidden in Chinese mode
+     pure CJK    -> <span class="zh">   hidden in English mode
+     mixed       -> left alone          visible in both modes
+
+   Leaving mixed runs alone is deliberate. A run like "Country 国家" cannot
+   be split by any selector, so hiding it would delete content from one
+   mode. Showing it in both is the safe failure: slightly redundant, never
+   missing. Numbers, chart labels, and classed blocks are never touched.
+   ================================================================== */
+(function(){
+  var INLINE = {B:1,I:1,EM:1,STRONG:1,U:1,SMALL:1,CODE:1,SUP:1,SUB:1,BR:1,A:1,SPAN:1,Q:1};
+  var BLOCK  = {H1:1,H2:1,H3:1,H4:1,H5:1,H6:1,P:1,LI:1,TD:1,FIGCAPTION:1,DIV:1};
+  var CJK    = /[一-鿿㐀-䶿]/;
+  var LATIN  = /[A-Za-z]{2,}/;
+
+  /* Brand marks read the same in both languages and must never be hidden.
+     The length guard matters: a legal paragraph that merely mentions the
+     brand is still English prose and should still be swapped out.       */
+  var BRAND = /^[\s·|—-]*(Make\s*Trades\s*Journey|XRs?\s*Trading\s*Lab|Once hope it possible)[\s·|—.-]*$/i;
+  function isBrandMark(text){
+    var t = text.trim();
+    return t.length <= 60 && BRAND.test(t);
+  }
+
+  function classify(text){
+    if(isBrandMark(text)) return null;            /* never hide the brand */
+    var cjk = CJK.test(text), lat = LATIN.test(text);
+    if(cjk && lat) return null;                   /* mixed: keep in both  */
+    if(cjk) return 'zh';
+    if(lat) return 'en';
+    return null;                                  /* digits, punctuation  */
+  }
+
+  function wrappable(n){
+    if(n.nodeType === 3) return true;
+    if(n.nodeType !== 1) return false;
+    if(n.className) return false;                 /* classed block: skip  */
+    return !!(INLINE[n.tagName] || BLOCK[n.tagName]);
+  }
+
+  function wrapHost(host){
+    if(host.getAttribute('data-bi') === '1') return;
+    host.setAttribute('data-bi','1');
+    var kids = Array.prototype.slice.call(host.childNodes), run = [];
+
+    function flush(){
+      if(!run.length) return;
+      var text = run.map(function(n){
+        return n.nodeType === 3 ? n.nodeValue : n.textContent;
+      }).join('');
+      var lang = text.trim() ? classify(text) : null;
+      if(lang){
+        var s = document.createElement('span');
+        s.className = lang;
+        host.insertBefore(s, run[0]);
+        run.forEach(function(n){ s.appendChild(n); });
+      }
+      run = [];
+    }
+
+    kids.forEach(function(n){
+      if(n.nodeType === 1 && n.classList &&
+         (n.classList.contains('zh') || n.classList.contains('en'))) flush();
+      else if(wrappable(n)) run.push(n);
+      else flush();
+    });
+    flush();
+  }
+
+  /* the language switcher must never be language-filtered, or it hides
+     its own label and the user cannot switch back                    */
+  var SKIP = 'svg,script,style,#langEn,#langZh,.nb-lang,[onclick*="setLang"]';
+
+  function markup(){
+    /* every element that holds loose text, not just bilingual pairs */
+    var hosts = [];
+    document.querySelectorAll('body *').forEach(function(el){
+      if(el.closest(SKIP)) return;                   /* chart labels stay */
+      if(el.classList.contains('zh') || el.classList.contains('en')) return;
+      for(var i = 0; i < el.childNodes.length; i++){
+        if(el.childNodes[i].nodeType === 3 && el.childNodes[i].nodeValue.trim()){
+          hosts.push(el); break;
+        }
+      }
+    });
+    hosts.forEach(wrapHost);
+
+    /* an existing .zh span that actually holds English would vanish in
+       English mode, so re-label it                                    */
+    document.querySelectorAll('span.zh').forEach(function(z){
+      if(z.closest(SKIP)) return;
+      var t = z.textContent || '';
+      if(LATIN.test(t) && !CJK.test(t) && !isBrandMark(t)) z.className = 'en';
+    });
+  }
+
+  var STRICT = true;
+
+  window.setLang = function(l){
+    if(l !== 'en' && l !== 'zh') l = 'zh';
+    document.body.classList.remove('lang-en','lang-zh','lang-strict');
+    document.body.classList.add('lang-' + l);
+    if(STRICT) document.body.classList.add('lang-strict');
+    try{ localStorage.setItem('mtj_lang', l); }catch(e){}
+    /* navbar pages style the active button from CSS via .on; older pages
+       have no such rule, so those get the inline fallback              */
+    var on  = "background:var(--gold);color:#0a0a0e;border:1px solid var(--gold);border-radius:20px;padding:5px 14px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;cursor:pointer;font-weight:700;";
+    var off = "background:none;border:1px solid var(--line);color:var(--muted);border-radius:20px;padding:5px 14px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;cursor:pointer;";
+    [['langEn','en'],['langZh','zh']].forEach(function(p){
+      var b = document.getElementById(p[0]);
+      if(!b) return;
+      var active = (l === p[1]);
+      b.classList.toggle('on', active);
+      if(!b.closest('.nb-lang')) b.style.cssText = active ? on : off;
+    });
+    if(typeof renderExam === 'function' && document.getElementById('examBox')){
+      var box = document.getElementById('examBox'), picked = [];
+      box.querySelectorAll('input[type=radio]:checked').forEach(function(r){ picked.push([r.name, r.value]); });
+      box.innerHTML = ''; renderExam();
+      picked.forEach(function(p){
+        var r = box.querySelector('input[name="' + p[0] + '"][value="' + p[1] + '"]');
+        if(r) r.checked = true;
+      });
+    }
+  };
+
+  function boot(){
+    markup();
+    var saved = 'zh';
+    try{ saved = localStorage.getItem('mtj_lang') || 'zh'; }catch(e){}
+    window.setLang(saved);
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
+})();
+
 </script>
 </body>
 </html>

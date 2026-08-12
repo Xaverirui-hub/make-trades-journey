@@ -986,26 +986,50 @@ renderExam();
 
 
 <script>
-/* ===== MTJ Language Engine v2 =====================================
-   Bilingual pages mark Chinese with <span class="zh">. English lives
-   as bare text nodes, and CSS cannot target a text node. So on load we
-   wrap each run of English siblings in <span class="en">, which makes
-   the two languages mutually excludable with pure CSS.
+/* ===== MTJ Language Engine v3 =====================================
+   Bilingual pages mark Chinese with <span class="zh">. English lives as
+   bare text nodes, and CSS cannot target a text node. On load we classify
+   every loose text run and wrap it so the two languages become mutually
+   excludable with pure CSS.
 
-   Only text nodes and unclassed inline tags are wrapped, so numbers,
-   chart labels and classed blocks (.n, .idx, .tier ...) stay visible
-   in both modes. Language choice persists across every page.
+   v3 classifies by content instead of position:
+     pure Latin  -> <span class="en">   hidden in Chinese mode
+     pure CJK    -> <span class="zh">   hidden in English mode
+     mixed       -> left alone          visible in both modes
+
+   Leaving mixed runs alone is deliberate. A run like "Country 国家" cannot
+   be split by any selector, so hiding it would delete content from one
+   mode. Showing it in both is the safe failure: slightly redundant, never
+   missing. Numbers, chart labels, and classed blocks are never touched.
    ================================================================== */
 (function(){
   var INLINE = {B:1,I:1,EM:1,STRONG:1,U:1,SMALL:1,CODE:1,SUP:1,SUB:1,BR:1,A:1,SPAN:1,Q:1};
-  /* unclassed headings/paragraphs that sit as siblings of a .zh block are the
-     English half of a bilingual pair (agenda cards, section dividers)        */
-  var BLOCK  = {H1:1,H2:1,H3:1,H4:1,H5:1,H6:1,P:1,LI:1,TD:1,FIGCAPTION:1};
+  var BLOCK  = {H1:1,H2:1,H3:1,H4:1,H5:1,H6:1,P:1,LI:1,TD:1,FIGCAPTION:1,DIV:1};
+  var CJK    = /[一-鿿㐀-䶿]/;
+  var LATIN  = /[A-Za-z]{2,}/;
+
+  /* Brand marks read the same in both languages and must never be hidden.
+     The length guard matters: a legal paragraph that merely mentions the
+     brand is still English prose and should still be swapped out.       */
+  var BRAND = /^[\s·|—-]*(Make\s*Trades\s*Journey|XRs?\s*Trading\s*Lab|Once hope it possible)[\s·|—.-]*$/i;
+  function isBrandMark(text){
+    var t = text.trim();
+    return t.length <= 60 && BRAND.test(t);
+  }
+
+  function classify(text){
+    if(isBrandMark(text)) return null;            /* never hide the brand */
+    var cjk = CJK.test(text), lat = LATIN.test(text);
+    if(cjk && lat) return null;                   /* mixed: keep in both  */
+    if(cjk) return 'zh';
+    if(lat) return 'en';
+    return null;                                  /* digits, punctuation  */
+  }
 
   function wrappable(n){
-    if(n.nodeType === 3) return true;                       /* text node   */
+    if(n.nodeType === 3) return true;
     if(n.nodeType !== 1) return false;
-    if(n.className) return false;                           /* classed: skip */
+    if(n.className) return false;                 /* classed block: skip  */
     return !!(INLINE[n.tagName] || BLOCK[n.tagName]);
   }
 
@@ -1015,13 +1039,14 @@ renderExam();
     var kids = Array.prototype.slice.call(host.childNodes), run = [];
 
     function flush(){
-      if(!run.length){ return; }
-      var hasText = run.some(function(n){
-        return (n.nodeType === 3 ? n.nodeValue : n.textContent).trim().length > 0;
-      });
-      if(hasText){
+      if(!run.length) return;
+      var text = run.map(function(n){
+        return n.nodeType === 3 ? n.nodeValue : n.textContent;
+      }).join('');
+      var lang = text.trim() ? classify(text) : null;
+      if(lang){
         var s = document.createElement('span');
-        s.className = 'en';
+        s.className = lang;
         host.insertBefore(s, run[0]);
         run.forEach(function(n){ s.appendChild(n); });
       }
@@ -1029,29 +1054,42 @@ renderExam();
     }
 
     kids.forEach(function(n){
-      if(n.nodeType === 1 && n.classList && n.classList.contains('zh')) flush();
+      if(n.nodeType === 1 && n.classList &&
+         (n.classList.contains('zh') || n.classList.contains('en'))) flush();
       else if(wrappable(n)) run.push(n);
       else flush();
     });
     flush();
   }
 
+  /* the language switcher must never be language-filtered, or it hides
+     its own label and the user cannot switch back                    */
+  var SKIP = 'svg,script,style,#langEn,#langZh,.nb-lang,[onclick*="setLang"]';
+
   function markup(){
-    var hosts = [], seen = [];
-    document.querySelectorAll('.zh').forEach(function(z){
-      var p = z.parentNode;
-      if(p && p.nodeType === 1 && seen.indexOf(p) < 0){ seen.push(p); hosts.push(p); }
+    /* every element that holds loose text, not just bilingual pairs */
+    var hosts = [];
+    document.querySelectorAll('body *').forEach(function(el){
+      if(el.closest(SKIP)) return;                   /* chart labels stay */
+      if(el.classList.contains('zh') || el.classList.contains('en')) return;
+      for(var i = 0; i < el.childNodes.length; i++){
+        if(el.childNodes[i].nodeType === 3 && el.childNodes[i].nodeValue.trim()){
+          hosts.push(el); break;
+        }
+      }
     });
     hosts.forEach(wrapHost);
+
+    /* an existing .zh span that actually holds English would vanish in
+       English mode, so re-label it                                    */
+    document.querySelectorAll('span.zh').forEach(function(z){
+      if(z.closest(SKIP)) return;
+      var t = z.textContent || '';
+      if(LATIN.test(t) && !CJK.test(t) && !isBrandMark(t)) z.className = 'en';
+    });
   }
 
-  /* ---- public API ---- */
-  /* Strict mode hides the other language outright. It stays off until the
-     content pass is finished: a lot of copy still mixes both languages
-     inside one text node (".note", figcaption), which no selector can
-     split. Turning it on early leaves English fragments stranded in the
-     Chinese view. Flip STRICT to true once that pass lands.            */
-  var STRICT = false;
+  var STRICT = true;
 
   window.setLang = function(l){
     if(l !== 'en' && l !== 'zh') l = 'zh';
@@ -1059,20 +1097,21 @@ renderExam();
     document.body.classList.add('lang-' + l);
     if(STRICT) document.body.classList.add('lang-strict');
     try{ localStorage.setItem('mtj_lang', l); }catch(e){}
-    var en = document.getElementById('langEn'), zh = document.getElementById('langZh');
-    if(en) en.classList.toggle('on', l !== 'zh');
-    if(zh) zh.classList.toggle('on', l === 'zh');
+    /* navbar pages style the active button from CSS via .on; older pages
+       have no such rule, so those get the inline fallback              */
     var on  = "background:var(--gold);color:#0a0a0e;border:1px solid var(--gold);border-radius:20px;padding:5px 14px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;cursor:pointer;font-weight:700;";
     var off = "background:none;border:1px solid var(--line);color:var(--muted);border-radius:20px;padding:5px 14px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;cursor:pointer;";
-    if(en) en.style.cssText = (l === 'en') ? on : off;
-    if(zh) zh.style.cssText = (l === 'zh') ? on : off;
-    /* exam explanations re-render in the active language */
+    [['langEn','en'],['langZh','zh']].forEach(function(p){
+      var b = document.getElementById(p[0]);
+      if(!b) return;
+      var active = (l === p[1]);
+      b.classList.toggle('on', active);
+      if(!b.closest('.nb-lang')) b.style.cssText = active ? on : off;
+    });
     if(typeof renderExam === 'function' && document.getElementById('examBox')){
-      var box = document.getElementById('examBox');
-      var picked = [];
+      var box = document.getElementById('examBox'), picked = [];
       box.querySelectorAll('input[type=radio]:checked').forEach(function(r){ picked.push([r.name, r.value]); });
-      box.innerHTML = '';
-      renderExam();
+      box.innerHTML = ''; renderExam();
       picked.forEach(function(p){
         var r = box.querySelector('input[name="' + p[0] + '"][value="' + p[1] + '"]');
         if(r) r.checked = true;
