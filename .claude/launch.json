@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "mtj",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [".claude/devserver.mjs", "MTJ-Hub"],
+      "port": 4173
+    }
+  ]
+}
