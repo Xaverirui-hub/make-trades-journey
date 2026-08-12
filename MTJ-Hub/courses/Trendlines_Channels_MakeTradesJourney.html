@@ -1486,6 +1486,17 @@ renderExam();
        in document order, so a parent may have moved this node inside a
        language container after the list was built.                       */
     if(host.closest('.zh, .en')) return;
+    /* A formula is one unit. Wrapping its pieces individually is what gutted
+       "Gain needed to break even = Loss % ÷ ( 1 − Loss % )" down to "= ÷ ( 1 −"
+       in Chinese mode: the operand spans hid, the operators stayed. Label the
+       whole line instead, so the English formula hides and the Chinese caption
+       underneath carries the meaning. */
+    if(isNotation(host.textContent)){
+      var whole = classify(host.textContent);
+      if(whole) host.classList.add(whole);
+      host.setAttribute('data-bi','1');
+      return;
+    }
     host.setAttribute('data-bi','1');
     var kids = Array.prototype.slice.call(host.childNodes), run = [];
 
@@ -1513,9 +1524,26 @@ renderExam();
     flush();
   }
 
-  /* the language switcher must never be language-filtered, or it hides
-     its own label and the user cannot switch back                    */
-  var SKIP = 'svg,script,style,#langEn,#langZh,.nb-lang,[onclick*="setLang"]';
+  /* Never language-filter:
+     - the switcher itself, or it hides its own label and you cannot switch back
+     - SVG chart labels, which are diagram parts rather than copy
+     - notation blocks, where the English words are operands inside a formula
+       or a typographic band. Hiding those leaves dangling operators: the
+       break-even formula collapsed to "= ÷ ( 1 −" in Chinese mode.        */
+  var SKIP = 'svg,script,style,#langEn,#langZh,.nb-lang,[onclick*="setLang"],' +
+             '.verbs,.caserow,.work';
+
+  /* Same idea, applied by content rather than by class, so a formula written
+     anywhere is protected without having to be tagged first.
+     Deliberately narrow: only operators that do not occur in prose, and only
+     in short runs. A hyphen surrounded by spaces was tried first and matched
+     ordinary sentences, which left whole paragraphs showing in both
+     languages. */
+  var MATH_OPS = /[=÷×≈≥≤]/;
+  function isNotation(text){
+    var t = (text || '').trim();
+    return t.length < 140 && MATH_OPS.test(t);
+  }
 
   function markup(){
     /* every element that holds loose text, not just bilingual pairs */

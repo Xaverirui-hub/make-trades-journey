@@ -493,6 +493,96 @@ body.lang-zh.lang-strict .en{display:none !important;}
   .navbar .nb-links a{font-size:9px;padding:5px 8px;letter-spacing:.1em;}
   .navbar .nb-right{margin-left:auto;}
 }
+/* ===== pacing pass ==========================================================
+   Measured before: 20 screens of scroll for 4.6 minutes of reading. Text was
+   only 10% of the page height, dividers 13%, whitespace 40%. Nothing is cut
+   here; the rhythm is tightened so the content arrives at a readable pace. */
+
+/* Part dividers were a full screen each to say three words. Now a banded rule
+   that still marks the chapter but costs a fifth of the height. */
+.divider{padding:clamp(34px,5vh,52px) 20px;text-align:left;max-width:var(--maxw);margin:0 auto;
+  display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;
+  border-top:1px solid var(--line-soft);}
+.divider .rail{margin:0;flex:none;order:1;font-size:11px;}
+.divider h2{order:2;font-size:clamp(22px,3.4vw,34px);letter-spacing:-.01em;}
+.divider .zh{order:3;margin-top:0;letter-spacing:.26em;font-size:clamp(12px,1.7vw,15px);
+  color:var(--muted);}
+.divider::after{content:"";order:4;flex:1 1 60px;height:1px;align-self:center;
+  background:linear-gradient(90deg,var(--line),transparent);}
+
+/* section and block rhythm */
+.section{padding:clamp(40px,5.5vh,64px) clamp(20px,5vw,48px);}
+.pattern{padding:22px 0;gap:16px;}
+.group-head{margin-bottom:4px;}
+.group-head .tier{font-size:30px;}
+h2.title{font-size:clamp(24px,3.6vw,38px);}
+.points li{padding:11px 0 11px 34px;}
+.points li::before{top:17px;}
+.pattern-desc p{margin:0 0 9px;}
+
+/* On wide screens a chart and its prose sit side by side instead of stacking,
+   which is where most of the remaining scroll length was going. Only patterns
+   that actually contain a figure switch to two columns, so text-only blocks
+   keep their full measure. */
+@media(min-width:1040px){
+  .pattern:has(> .chart-fig){
+    grid-template-columns:minmax(0,1.04fr) minmax(0,.96fr);
+    grid-template-areas:"head head" "fig desc";
+    column-gap:clamp(22px,3vw,40px);align-items:start;}
+  .pattern:has(> .chart-fig) > .pattern-head{grid-area:head;}
+  .pattern:has(> .chart-fig) > .chart-fig{grid-area:fig;}
+  .pattern:has(> .chart-fig) > .pattern-desc{grid-area:desc;}
+}
+.chart-fig{padding:10px 10px 6px;}
+.chart-fig figcaption{margin-top:6px;}
+
+/* chapter rail: 20 screens needs a sense of place, not just a progress line */
+.secnav{gap:11px;}
+/* ===== pacing pass ==========================================================
+   Measured before: 20 screens of scroll for 4.6 minutes of reading. Text was
+   only 10% of the page height, dividers 13%, whitespace 40%. Nothing is cut
+   here; the rhythm is tightened so the content arrives at a readable pace. */
+
+/* Part dividers were a full screen each to say three words. Now a banded rule
+   that still marks the chapter but costs a fifth of the height. */
+.divider{padding:clamp(34px,5vh,52px) 20px;text-align:left;max-width:var(--maxw);margin:0 auto;
+  display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;
+  border-top:1px solid var(--line-soft);}
+.divider .rail{margin:0;flex:none;order:1;font-size:11px;}
+.divider h2{order:2;font-size:clamp(22px,3.4vw,34px);letter-spacing:-.01em;}
+.divider .zh{order:3;margin-top:0;letter-spacing:.26em;font-size:clamp(12px,1.7vw,15px);
+  color:var(--muted);}
+.divider::after{content:"";order:4;flex:1 1 60px;height:1px;align-self:center;
+  background:linear-gradient(90deg,var(--line),transparent);}
+
+/* section and block rhythm */
+.section{padding:clamp(40px,5.5vh,64px) clamp(20px,5vw,48px);}
+.pattern{padding:22px 0;gap:16px;}
+.group-head{margin-bottom:4px;}
+.group-head .tier{font-size:30px;}
+h2.title{font-size:clamp(24px,3.6vw,38px);}
+.points li{padding:11px 0 11px 34px;}
+.points li::before{top:17px;}
+.pattern-desc p{margin:0 0 9px;}
+
+/* On wide screens a chart and its prose sit side by side instead of stacking,
+   which is where most of the remaining scroll length was going. Only patterns
+   that actually contain a figure switch to two columns, so text-only blocks
+   keep their full measure. */
+@media(min-width:1040px){
+  .pattern:has(> .chart-fig){
+    grid-template-columns:minmax(0,1.04fr) minmax(0,.96fr);
+    grid-template-areas:"head head" "fig desc";
+    column-gap:clamp(22px,3vw,40px);align-items:start;}
+  .pattern:has(> .chart-fig) > .pattern-head{grid-area:head;}
+  .pattern:has(> .chart-fig) > .chart-fig{grid-area:fig;}
+  .pattern:has(> .chart-fig) > .pattern-desc{grid-area:desc;}
+}
+.chart-fig{padding:10px 10px 6px;}
+.chart-fig figcaption{margin-top:6px;}
+
+/* chapter rail: 20 screens needs a sense of place, not just a progress line */
+.secnav{gap:11px;}
 </style>
 </head>
 <body>
@@ -1570,6 +1660,17 @@ renderExam();
        in document order, so a parent may have moved this node inside a
        language container after the list was built.                       */
     if(host.closest('.zh, .en')) return;
+    /* A formula is one unit. Wrapping its pieces individually is what gutted
+       "Gain needed to break even = Loss % ÷ ( 1 − Loss % )" down to "= ÷ ( 1 −"
+       in Chinese mode: the operand spans hid, the operators stayed. Label the
+       whole line instead, so the English formula hides and the Chinese caption
+       underneath carries the meaning. */
+    if(isNotation(host.textContent)){
+      var whole = classify(host.textContent);
+      if(whole) host.classList.add(whole);
+      host.setAttribute('data-bi','1');
+      return;
+    }
     host.setAttribute('data-bi','1');
     var kids = Array.prototype.slice.call(host.childNodes), run = [];
 
@@ -1597,9 +1698,26 @@ renderExam();
     flush();
   }
 
-  /* the language switcher must never be language-filtered, or it hides
-     its own label and the user cannot switch back                    */
-  var SKIP = 'svg,script,style,#langEn,#langZh,.nb-lang,[onclick*="setLang"]';
+  /* Never language-filter:
+     - the switcher itself, or it hides its own label and you cannot switch back
+     - SVG chart labels, which are diagram parts rather than copy
+     - notation blocks, where the English words are operands inside a formula
+       or a typographic band. Hiding those leaves dangling operators: the
+       break-even formula collapsed to "= ÷ ( 1 −" in Chinese mode.        */
+  var SKIP = 'svg,script,style,#langEn,#langZh,.nb-lang,[onclick*="setLang"],' +
+             '.verbs,.caserow,.work';
+
+  /* Same idea, applied by content rather than by class, so a formula written
+     anywhere is protected without having to be tagged first.
+     Deliberately narrow: only operators that do not occur in prose, and only
+     in short runs. A hyphen surrounded by spaces was tried first and matched
+     ordinary sentences, which left whole paragraphs showing in both
+     languages. */
+  var MATH_OPS = /[=÷×≈≥≤]/;
+  function isNotation(text){
+    var t = (text || '').trim();
+    return t.length < 140 && MATH_OPS.test(t);
+  }
 
   function markup(){
     /* every element that holds loose text, not just bilingual pairs */
