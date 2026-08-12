@@ -1566,6 +1566,10 @@ renderExam();
 
   function wrapHost(host){
     if(host.getAttribute('data-bi') === '1') return;
+    /* Re-check at wrap time, not just at collection time. Hosts are visited
+       in document order, so a parent may have moved this node inside a
+       language container after the list was built.                       */
+    if(host.closest('.zh, .en')) return;
     host.setAttribute('data-bi','1');
     var kids = Array.prototype.slice.call(host.childNodes), run = [];
 
@@ -1602,7 +1606,11 @@ renderExam();
     var hosts = [];
     document.querySelectorAll('body *').forEach(function(el){
       if(el.closest(SKIP)) return;                   /* chart labels stay */
-      if(el.classList.contains('zh') || el.classList.contains('en')) return;
+      /* Anything already inside a language container is handled by that
+         container. Wrapping again nests .zh inside .zh, and page CSS like
+         `.pattern-desc p .zh{display:block}` then matches the inner span
+         and snaps a sentence into three lines.                          */
+      if(el.closest('.zh, .en')) return;
       for(var i = 0; i < el.childNodes.length; i++){
         if(el.childNodes[i].nodeType === 3 && el.childNodes[i].nodeValue.trim()){
           hosts.push(el); break;
