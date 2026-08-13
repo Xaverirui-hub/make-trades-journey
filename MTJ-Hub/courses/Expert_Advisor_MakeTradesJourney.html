@@ -457,7 +457,7 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 @media(max-width:720px){.bg-logo{background-size:92vw auto;opacity:.055;}}
 @media(prefers-reduced-motion:reduce){.bg-logo{opacity:.05;}}
 body.lang-en .zh{display:none !important;}
-body.lang-zh.lang-strict .en{display:none !important;}
+body.lang-zh.lang-strict .en:not(.en-keep){display:none !important;}
 
 
 
@@ -500,6 +500,44 @@ body.lang-zh.lang-strict .en{display:none !important;}
   .navbar .nb-links a{font-size:9px;padding:5px 8px;letter-spacing:.1em;}
   .navbar .nb-right{margin-left:auto;}
 }
+
+/* ===== Chinese is not a subtitle ==========================================
+   Every .zh size below was authored when the Chinese line sat *under* the
+   English as a secondary caption. Strict mode makes it the only line, so it
+   has to carry the role it replaces:
+   - a heading's .zh goes back to full heading size. h2.title .zh was .54em,
+     so a 48px title silently became a 26px one on switching language;
+   - body .zh gets a small bump, because Han glyphs read smaller than Latin
+     at the same pixel size.
+   Some headings keep their Chinese in a *sibling* rather than a child
+   (.divider h2 + .divider > .zh). Hiding the English half is not enough
+   there - something has to take over the role, so it is promoted by hand. */
+body.lang-zh.lang-strict .zh{font-size:1.06em;}
+/* A symbol kept beside Chinese has no space of its own in the markup:
+   <span class="en">RSI</span><span class="zh">是 什 么</span> ran together. */
+body.lang-zh.lang-strict .en-keep + .zh{margin-left:.3em;}
+/* These wrappers hold nothing but the Chinese line. Their child hides in
+   English mode but the wrapper keeps its own margin, which left ~7px of dead
+   space under every course card title. */
+body.lang-en .h-zh,body.lang-en .zh-t,body.lang-en .quote-zh{display:none;}
+body.lang-zh.lang-strict h1 .zh,
+body.lang-zh.lang-strict h2 .zh,
+body.lang-zh.lang-strict h3 .zh,
+body.lang-zh.lang-strict h4 .zh,
+body.lang-zh.lang-strict .title .zh,
+body.lang-zh.lang-strict .eyebrow .zh,
+body.lang-zh.lang-strict .rail .zh,
+body.lang-zh.lang-strict .tag .zh,
+body.lang-zh.lang-strict .btn .zh,
+body.lang-zh.lang-strict .chip .zh{font-size:1em;margin-left:0;}
+body.lang-zh.lang-strict h2 .zh,
+body.lang-zh.lang-strict h3 .zh{display:block;margin-top:0;}
+body.lang-zh.lang-strict .divider:has(> .zh) h2{display:none;}
+body.lang-zh.lang-strict .divider > .zh{font-size:clamp(26px,4.4vw,44px);font-weight:700;
+  letter-spacing:.26em;color:var(--text,#EDE7D8);margin-top:0;}
+body.lang-zh.lang-strict .hero .h-zh{font-size:clamp(19px,3.2vw,30px);color:var(--gold,#E8C877);
+  letter-spacing:.34em;}
+/* ========================================================================= */
 </style>
 </head>
 <body>
@@ -1285,6 +1323,41 @@ renderExam();
     return t.length <= 60 && BRAND.test(t);
   }
 
+
+  /* English is the source language here; the Chinese is a translation that
+     does not exist everywhere yet. Hiding English that has nothing to replace
+     it is what emptied the currency codes, the tag badges and the country
+     names: GBP rendered as a bare "P", because <span class="c1">GB</span> was
+     hidden and the single letter left in .c2 was too short to classify.
+     So English only hides when this host actually carries Chinese.        */
+  function hasZh(host){
+    if(!host) return false;
+    if(CJK.test(host.textContent || '')) return true;
+    return !!(host.querySelector && host.querySelector('.zh'));
+  }
+
+
+  /* An author-written <span class="en"> is only safe to hide if a Chinese
+     counterpart is standing by. Two shapes count: a .zh inside the same
+     parent, and the divider shape where the heading holds the English and a
+     sibling div holds the Chinese:
+        <h2><span class="en">Position Sizing</span></h2>
+        <div class="zh">仓位怎么算</div>
+     Everything else is untranslated, and hiding it leaves a hole - 129 of
+     them on the risk course alone, including the whole navbar.            */
+  function pairedEn(el){
+    var p = el.parentElement;
+    if(!p) return false;
+    var z = p.querySelectorAll('.zh');
+    for(var i = 0; i < z.length; i++) if(!el.contains(z[i])) return true;
+    if(/^H[1-4]$/.test(p.tagName)){
+      var gp = p.parentElement;
+      if(gp) for(var j = 0; j < gp.children.length; j++)
+        if(gp.children[j].classList.contains('zh')) return true;
+    }
+    return false;
+  }
+
   function classify(text){
     if(isBrandMark(text)) return null;            /* never hide the brand */
     var cjk = CJK.test(text), lat = LATIN.test(text);
@@ -1314,6 +1387,7 @@ renderExam();
        underneath carries the meaning. */
     if(isNotation(host.textContent)){
       var whole = classify(host.textContent);
+      if(whole === 'en' && !hasZh(host)) whole = null;
       if(whole) host.classList.add(whole);
       host.setAttribute('data-bi','1');
       return;
@@ -1327,6 +1401,7 @@ renderExam();
         return n.nodeType === 3 ? n.nodeValue : n.textContent;
       }).join('');
       var lang = text.trim() ? classify(text) : null;
+      if(lang === 'en' && !hasZh(host)) lang = null;   /* nothing to swap to */
       if(lang){
         var s = document.createElement('span');
         s.className = lang;
@@ -1383,6 +1458,20 @@ renderExam();
       }
     });
     hosts.forEach(wrapHost);
+
+    /* Same rule as hasZh(), applied to the pairs the page author wrote by
+       hand. .en-keep is what the strict rule excludes, so the element keeps
+       its .en class - and any styling hung on it - without being hidden. */
+    /* A ticker, a pair or an indicator name is notation, not English. It has
+       no Chinese counterpart to swap to even when the page author wrapped it
+       in .en by hand - <div class="zh"><span class="en">RSI</span>… would
+       otherwise leave a divider reading just "是 什 么". No spaces in the
+       pattern on purpose, so caption text like "MOST TRADED" is not caught. */
+    var SYMBOL = /^[A-Z0-9][A-Z0-9\/·.\-:%+]{0,9}$/;
+    document.querySelectorAll('.en').forEach(function(e){
+      var t = (e.textContent || '').trim();
+      if(!pairedEn(e) || SYMBOL.test(t)) e.classList.add('en-keep');
+    });
 
     /* an existing .zh span that actually holds English would vanish in
        English mode, so re-label it                                    */
