@@ -16,13 +16,13 @@
    - the grid is rebuilt on element resize via ResizeObserver rather than on
      window resize, because the host is a cover whose height comes from svh.
 
-   Theme: one dim bronze that most characters sit at, plus two golds that the
-   scramble picks out - the same read as the upstream dark-green/two-bright
-   palette, in MTJ colours.
+   Colour: upstream's terminal palette, kept as-is. Gold was tried and lost -
+   a gold field under a gold headline flattens into one plane, and the green
+   is what makes this read as a machine console rather than as decoration.
    ========================================================================== */
 
 const DEFAULTS = {
-  glitchColors: ['#3A2E12', '#E8C877', '#C9A227'],
+  glitchColors: ['#2b4539', '#61dca3', '#61b3dc'],
   glitchSpeed: 55,
   centerVignette: false,
   outerVignette: true,
