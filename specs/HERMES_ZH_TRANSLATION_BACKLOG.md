@@ -38,6 +38,46 @@
 <div class="zh">货 币</div>
 ```
 
+### ⚠️ 陷阱：SKIP 容器内必须手动包 `.en`
+
+引擎的 `SKIP` 列表里有三个类：**`.verbs` / `.caserow` / `.work`**。这些容器**引擎完全不进去**，所以里面的英文文字节点**永远不会被自动打上 `.en`**。
+
+在这里面只加中文，结果是两个语言**黏在一起**：
+
+```html
+<!-- ✗ 错：.caserow 在 SKIP 内，英文没人标记，中英模式都显示 "BALANCE余额" -->
+<div class="k">Balance<span class="zh">余额</span></div>
+
+<!-- ✓ 对：手动把英文也包起来 -->
+<div class="k"><span class="en">Balance</span><span class="zh">余额</span></div>
+```
+
+手动包的 `.en` 是有效的——`pairedEn` 与 strict CSS 规则都不受 SKIP 影响。
+
+**2026-08-13 已发生过一次**：Risk_Management 的 18 个案例栏字段就是这样黏住的，我已修（`<span class="en">` 手动包）。
+
+**含 SKIP 容器、下手前要留意的页面**（数字＝容器数量）：
+
+| 页面 | 数量 | 页面 | 数量 |
+|---|---|---|---|
+| Risk_Management | 7 | Trendlines_Channels | 1 |
+| RSI_Indicator | 7 | Supply_Demand | 1 |
+| Trading_Plan_Routine | 3 | Stochastic_Indicator | 1 |
+| Trade_Management | 3 | Psychology_Discipline | 1 |
+| Journal_Review | 1 | Platform_Costs | 1 |
+| Backtesting_System_Design | 1 | MACD_Indicator | 1 |
+| Expert_Advisor | 1 | | |
+
+第 6 节的验收脚本**查不出这一类**（元素没被掏空，只是多了英文）。所以在这些页面上，改完额外跑一次：
+
+```js
+setLang('zh');
+console.log([...document.querySelectorAll('.verbs .zh,.caserow .zh,.work .zh')]
+  .filter(z => { const t = (z.parentElement.innerText||'').trim();
+                 return /[A-Za-z]{3,}/.test(t) && /[一-鿿]/.test(t); })
+  .map(z => z.parentElement.innerText.trim()));   // 必须是空数组
+```
+
 ---
 
 ## 1. 实测规模
