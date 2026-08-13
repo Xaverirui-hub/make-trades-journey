@@ -161,10 +161,11 @@ const MAX_COLORS = 8;
 
 /* MTJ palette: three golds falling through a warm amber ambience. */
 const DEFAULTS = {
-  /* Upstream violet/pink kept - they are what make the fall read as depth -
-     but the pale near-white streak (#A6C8FF) becomes MTJ gold, so the
-     brightest thing on screen is the brand colour rather than a cold white. */
-  colors: ['#E8C877', '#5227FF', '#FF9FFC'],
+  /* Gold, violet, amber. The violet stays because it is what gives the fall
+     its depth - three warm hues sit on one plane and the layering collapses.
+     The other two are warm: MTJ gold where upstream had a cold near-white,
+     and amber where it had pink. */
+  colors: ['#E8C877', '#5227FF', '#EDA34A'],
   backgroundColor: '#0A29FF',
   speed: 0.5,
   streakCount: 3,
