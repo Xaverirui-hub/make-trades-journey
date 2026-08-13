@@ -912,7 +912,8 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
       // 加鎖標記
       var lock = document.createElement("div");
       lock.style.cssText = "font-size:11px;color:var(--gold);letter-spacing:.12em;margin-top:8px;font-family:'JetBrains Mono',monospace;";
-      lock.textContent = "LOCKED · PASS MODULE " + (m-1) + " EXAM TO UNLOCK";
+      lock.innerHTML = '<span class="en">LOCKED · PASS MODULE ' + (m-1) + ' EXAM TO UNLOCK</span>'
+                     + '<span class="zh">未解锁 · 通过第 ' + (m-1) + ' 课测验后开启</span>';
       a.appendChild(lock);
     }
   }

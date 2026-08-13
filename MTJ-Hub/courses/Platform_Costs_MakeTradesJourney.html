@@ -1270,7 +1270,8 @@ function renderExam(){
     card.style.cssText = "background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;";
     var head = document.createElement("div");
     head.style.cssText = "font-family:monospace;font-size:11px;color:var(--gold);letter-spacing:.15em;margin-bottom:8px;";
-    head.textContent = "QUESTION " + (qi+1) + " / " + EXAM_QUESTIONS.length;
+    head.innerHTML = '<span class="en">QUESTION ' + (qi+1) + ' / ' + EXAM_QUESTIONS.length + '</span>'
+                + '<span class="zh">第 ' + (qi+1) + ' 题 / 共 ' + EXAM_QUESTIONS.length + ' 题</span>';
     card.appendChild(head);
     var q = document.createElement("div");
     q.style.cssText = "font-weight:600;font-size:15px;color:var(--text);margin-bottom:14px;";
