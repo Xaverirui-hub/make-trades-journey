@@ -2562,6 +2562,32 @@ function genMQL5(G){
 
   // ---- 已實作積木表 ----
   const E_IMPL={
+    i_macd:b=>`(MACDh(In_${b.id}_fast,In_${b.id}_slow,In_${b.id}_signal,2)<=0 && MACDh(In_${b.id}_fast,In_${b.id}_slow,In_${b.id}_signal,1)>0)`,
+    i_macd_s:b=>`(MACDh(In_${b.id}_fast,In_${b.id}_slow,In_${b.id}_signal,2)>=0 && MACDh(In_${b.id}_fast,In_${b.id}_slow,In_${b.id}_signal,1)<0)`,
+    i_bb:b=>`(!Bad(BBlo(In_${b.id}_period,In_${b.id}_dev,1)) && iLow(_Symbol,PERIOD_CURRENT,1)<=BBlo(In_${b.id}_period,In_${b.id}_dev,1))`,
+    i_bb_s:b=>`(!Bad(BBup(In_${b.id}_period,In_${b.id}_dev,1)) && iHigh(_Symbol,PERIOD_CURRENT,1)>=BBup(In_${b.id}_period,In_${b.id}_dev,1))`,
+    i_bbbrk:b=>`(iClose(_Symbol,PERIOD_CURRENT,2)<=BBup(In_${b.id}_period,In_${b.id}_dev,2) && iClose(_Symbol,PERIOD_CURRENT,1)>BBup(In_${b.id}_period,In_${b.id}_dev,1))`,
+    i_bbbrk_s:b=>`(iClose(_Symbol,PERIOD_CURRENT,2)>=BBlo(In_${b.id}_period,In_${b.id}_dev,2) && iClose(_Symbol,PERIOD_CURRENT,1)<BBlo(In_${b.id}_period,In_${b.id}_dev,1))`,
+    i_dmi:b=>`(DIp(In_${b.id}_period,2)<=DIn(In_${b.id}_period,2) && DIp(In_${b.id}_period,1)>DIn(In_${b.id}_period,1))`,
+    i_dmi_s:b=>`(DIp(In_${b.id}_period,2)>=DIn(In_${b.id}_period,2) && DIp(In_${b.id}_period,1)<DIn(In_${b.id}_period,1))`,
+    i_ichi:b=>`(IcTen(In_${b.id}_tenkan,In_${b.id}_kijun,In_${b.id}_senkou,2)<=IcKij(In_${b.id}_tenkan,In_${b.id}_kijun,In_${b.id}_senkou,2) && IcTen(In_${b.id}_tenkan,In_${b.id}_kijun,In_${b.id}_senkou,1)>IcKij(In_${b.id}_tenkan,In_${b.id}_kijun,In_${b.id}_senkou,1))`,
+    i_ichi_s:b=>`(IcTen(In_${b.id}_tenkan,In_${b.id}_kijun,In_${b.id}_senkou,2)>=IcKij(In_${b.id}_tenkan,In_${b.id}_kijun,In_${b.id}_senkou,2) && IcTen(In_${b.id}_tenkan,In_${b.id}_kijun,In_${b.id}_senkou,1)<IcKij(In_${b.id}_tenkan,In_${b.id}_kijun,In_${b.id}_senkou,1))`,
+    i_sar:b=>`(iClose(_Symbol,PERIOD_CURRENT,2)<=SARat(In_${b.id}_step,In_${b.id}_max,2) && iClose(_Symbol,PERIOD_CURRENT,1)>SARat(In_${b.id}_step,In_${b.id}_max,1))`,
+    i_sar_s:b=>`(iClose(_Symbol,PERIOD_CURRENT,2)>=SARat(In_${b.id}_step,In_${b.id}_max,2) && iClose(_Symbol,PERIOD_CURRENT,1)<SARat(In_${b.id}_step,In_${b.id}_max,1))`,
+    i_stoch:b=>`(StoK(In_${b.id}_k,In_${b.id}_slow,In_${b.id}_d,1)<In_${b.id}_level && StoK(In_${b.id}_k,In_${b.id}_slow,In_${b.id}_d,1)>StoD(In_${b.id}_k,In_${b.id}_slow,In_${b.id}_d,1) && StoK(In_${b.id}_k,In_${b.id}_slow,In_${b.id}_d,2)<=StoD(In_${b.id}_k,In_${b.id}_slow,In_${b.id}_d,2))`,
+    i_stoch_s:b=>`(StoK(In_${b.id}_k,In_${b.id}_slow,In_${b.id}_d,1)>100-In_${b.id}_level && StoK(In_${b.id}_k,In_${b.id}_slow,In_${b.id}_d,1)<StoD(In_${b.id}_k,In_${b.id}_slow,In_${b.id}_d,1) && StoK(In_${b.id}_k,In_${b.id}_slow,In_${b.id}_d,2)>=StoD(In_${b.id}_k,In_${b.id}_slow,In_${b.id}_d,2))`,
+    i_cci:b=>`(CCIat(In_${b.id}_period,2)<=-In_${b.id}_level && CCIat(In_${b.id}_period,1)>-In_${b.id}_level)`,
+    i_cci_s:b=>`(CCIat(In_${b.id}_period,2)>=In_${b.id}_level && CCIat(In_${b.id}_period,1)<In_${b.id}_level)`,
+    i_wpr:b=>`(WPRat(In_${b.id}_period,2)<=-100+In_${b.id}_level && WPRat(In_${b.id}_period,1)>-100+In_${b.id}_level)`,
+    i_wpr_s:b=>`(WPRat(In_${b.id}_period,2)>=-In_${b.id}_level && WPRat(In_${b.id}_period,1)<-In_${b.id}_level)`,
+    i_mfi:b=>`(!Bad(MFIat(In_${b.id}_period,1)) && MFIat(In_${b.id}_period,1)<In_${b.id}_level)`,
+    i_mfi_s:b=>`(!Bad(MFIat(In_${b.id}_period,1)) && MFIat(In_${b.id}_period,1)>100-In_${b.id}_level)`,
+    i_env:b=>`(!Bad(ENVlo(In_${b.id}_period,In_${b.id}_dev,1)) && iLow(_Symbol,PERIOD_CURRENT,1)<=ENVlo(In_${b.id}_period,In_${b.id}_dev,1))`,
+    i_env_s:b=>`(!Bad(ENVup(In_${b.id}_period,In_${b.id}_dev,1)) && iHigh(_Symbol,PERIOD_CURRENT,1)>=ENVup(In_${b.id}_period,In_${b.id}_dev,1))`,
+    i_frbrk:b=>`(!Bad(FrUp(1)) && iClose(_Symbol,PERIOD_CURRENT,2)<=FrUp(1)+In_${b.id}_buffer*iClose(_Symbol,PERIOD_CURRENT,1)*1e-5 && iClose(_Symbol,PERIOD_CURRENT,1)>FrUp(1)+In_${b.id}_buffer*iClose(_Symbol,PERIOD_CURRENT,1)*1e-5)`,
+    i_frbrk_s:b=>`(!Bad(FrDn(1)) && iClose(_Symbol,PERIOD_CURRENT,2)>=FrDn(1)-In_${b.id}_buffer*iClose(_Symbol,PERIOD_CURRENT,1)*1e-5 && iClose(_Symbol,PERIOD_CURRENT,1)<FrDn(1)-In_${b.id}_buffer*iClose(_Symbol,PERIOD_CURRENT,1)*1e-5)`,
+    i_frrev:b=>`(!Bad(FrDn(1)) && iLow(_Symbol,PERIOD_CURRENT,1)<=FrDn(1)+In_${b.id}_tol*iClose(_Symbol,PERIOD_CURRENT,1)*1e-5 && iClose(_Symbol,PERIOD_CURRENT,1)>iOpen(_Symbol,PERIOD_CURRENT,1) && iClose(_Symbol,PERIOD_CURRENT,1)>FrDn(1))`,
+    i_frrev_s:b=>`(!Bad(FrUp(1)) && iHigh(_Symbol,PERIOD_CURRENT,1)>=FrUp(1)-In_${b.id}_tol*iClose(_Symbol,PERIOD_CURRENT,1)*1e-5 && iClose(_Symbol,PERIOD_CURRENT,1)<iOpen(_Symbol,PERIOD_CURRENT,1) && iClose(_Symbol,PERIOD_CURRENT,1)<FrUp(1))`,
     ma_cross:b=>`(SMAat(In_${b.id}_fast,1)>SMAat(In_${b.id}_slow,1) && SMAat(In_${b.id}_fast,2)<=SMAat(In_${b.id}_slow,2))`,
     ma_cross_s:b=>`(SMAat(In_${b.id}_fast,1)<SMAat(In_${b.id}_slow,1) && SMAat(In_${b.id}_fast,2)>=SMAat(In_${b.id}_slow,2))`,
     rsi_rev:b=>`(RSIat(In_${b.id}_period,2)<In_${b.id}_level && RSIat(In_${b.id}_period,1)>=In_${b.id}_level)`,
@@ -2576,6 +2602,16 @@ function genMQL5(G){
     i_hma_s:b=>`(HMAat(In_${b.id}_period,1)<HMAat(In_${b.id}_period,2) && HMAat(In_${b.id}_period,2)>=HMAat(In_${b.id}_period,3))`,
   };
   const F_IMPL={
+    f_macd:(b,side)=>side==='long'?`(MACDh(In_${b.id}_fast,In_${b.id}_slow,In_${b.id}_signal,1)>0)`:`(MACDh(In_${b.id}_fast,In_${b.id}_slow,In_${b.id}_signal,1)<0)`,
+    f_bbw:b=>`(!Bad(BBup(In_${b.id}_period,In_${b.id}_dev,1)) && 100.0*(BBup(In_${b.id}_period,In_${b.id}_dev,1)-BBlo(In_${b.id}_period,In_${b.id}_dev,1))/BBmid(In_${b.id}_period,In_${b.id}_dev,1)>In_${b.id}_minw)`,
+    f_ichi:(b,side)=>side==='long'?`(iClose(_Symbol,PERIOD_CURRENT,1)>MathMax(IcSpA(In_${b.id}_tenkan,In_${b.id}_kijun,In_${b.id}_senkou,1),IcSpB(In_${b.id}_tenkan,In_${b.id}_kijun,In_${b.id}_senkou,1)))`:`(iClose(_Symbol,PERIOD_CURRENT,1)<MathMin(IcSpA(In_${b.id}_tenkan,In_${b.id}_kijun,In_${b.id}_senkou,1),IcSpB(In_${b.id}_tenkan,In_${b.id}_kijun,In_${b.id}_senkou,1)))`,
+    f_sar:(b,side)=>side==='long'?`(iClose(_Symbol,PERIOD_CURRENT,1)>SARat(In_${b.id}_step,In_${b.id}_max,1))`:`(iClose(_Symbol,PERIOD_CURRENT,1)<SARat(In_${b.id}_step,In_${b.id}_max,1))`,
+    f_stoch:b=>`(!Bad(StoK(In_${b.id}_k,In_${b.id}_slow,In_${b.id}_d,1)) && StoK(In_${b.id}_k,In_${b.id}_slow,In_${b.id}_d,1)>=In_${b.id}_lo && StoK(In_${b.id}_k,In_${b.id}_slow,In_${b.id}_d,1)<=In_${b.id}_hi)`,
+    f_cci:(b,side)=>side==='long'?`(CCIat(In_${b.id}_period,1)>In_${b.id}_level)`:`(CCIat(In_${b.id}_period,1)<-In_${b.id}_level)`,
+    f_mfi:b=>`(!Bad(MFIat(In_${b.id}_period,1)) && MFIat(In_${b.id}_period,1)>=In_${b.id}_lo && MFIat(In_${b.id}_period,1)<=In_${b.id}_hi)`,
+    f_sd:b=>`(!Bad(SDat(In_${b.id}_period,1)) && !Bad(SDavg(In_${b.id}_period,60,1)) && SDat(In_${b.id}_period,1)>SDavg(In_${b.id}_period,60,1)*In_${b.id}_mult)`,
+    f_fr:b=>`(!Bad(FrUp(1)) && !Bad(FrDn(1)) && FrUp(1)>FrDn(1) && 100.0*(iClose(_Symbol,PERIOD_CURRENT,1)-FrDn(1))/(FrUp(1)-FrDn(1))>=In_${b.id}_minPct && 100.0*(iClose(_Symbol,PERIOD_CURRENT,1)-FrDn(1))/(FrUp(1)-FrDn(1))<=In_${b.id}_maxPct)`,
+    f_obv:(b,side)=>side==='long'?`(OBVat(1)-OBVat(1+(int)In_${b.id}_lookback)>0)`:`(OBVat(1)-OBVat(1+(int)In_${b.id}_lookback)<0)`,
     f_adx:b=>`(ADXat(In_${b.id}_period,1)>In_${b.id}_level)`,
     f_st:(b,d)=>`(STdir(In_${b.id}_period,In_${b.id}_mult,1)${d==="long"?">":"<"}0)`,
     f_hma:(b,d)=>`(HMAat(In_${b.id}_period,1)${d==="long"?">":"<"}HMAat(In_${b.id}_period,2))`,
@@ -2687,6 +2723,73 @@ int STdir(double p,double m,int sh){        // SuperTrend 方向:+1/-1(從 3×pe
     double c=iClose(_Symbol,PERIOD_CURRENT,i);
     if(d==1&&c<dn)d=-1; else if(d==-1&&c>up)d=1;
   } return d; }
+
+
+//--- 指標控制代碼快取(同一支指標同一組參數只建立一次)-----------------
+#define MTJ_MAXH 48
+int    g_hh[MTJ_MAXH]; string g_hk[MTJ_MAXH]; int g_hn=0;
+int Hget(string k){ for(int i=0;i<g_hn;i++) if(g_hk[i]==k) return g_hh[i]; return INVALID_HANDLE; }
+int Hput(string k,int h){ if(g_hn<MTJ_MAXH){ g_hk[g_hn]=k; g_hh[g_hn]=h; g_hn++; } return h; }
+double Buf(int h,int b,int sh){ double a[];
+  if(h==INVALID_HANDLE) return EMPTY_VALUE;
+  if(CopyBuffer(h,b,sh,1,a)<1) return EMPTY_VALUE; return a[0]; }
+bool Bad(double v){ return v==EMPTY_VALUE || !MathIsValidNumber(v); }
+
+//--- MT5 內建指標包裝(全部只讀已收盤 bar)----------------------------
+double MACDh(double f,double sl,double sg,int sh){
+  string k="macd"+(string)(int)f+"_"+(string)(int)sl+"_"+(string)(int)sg;
+  int h=Hget(k); if(h==INVALID_HANDLE) h=Hput(k,iMACD(_Symbol,PERIOD_CURRENT,(int)f,(int)sl,(int)sg,PRICE_CLOSE));
+  double m=Buf(h,0,sh),g=Buf(h,1,sh); if(Bad(m)||Bad(g)) return EMPTY_VALUE; return m-g; }
+int BBh(double p,double dv){ string k="bb"+(string)(int)p+"_"+DoubleToString(dv,3);
+  int h=Hget(k); if(h==INVALID_HANDLE) h=Hput(k,iBands(_Symbol,PERIOD_CURRENT,(int)p,0,dv,PRICE_CLOSE)); return h; }
+double BBmid(double p,double dv,int sh){ return Buf(BBh(p,dv),0,sh); }
+double BBup (double p,double dv,int sh){ return Buf(BBh(p,dv),1,sh); }
+double BBlo (double p,double dv,int sh){ return Buf(BBh(p,dv),2,sh); }
+int ADXh(double p){ string k="adx"+(string)(int)p;
+  int h=Hget(k); if(h==INVALID_HANDLE) h=Hput(k,iADX(_Symbol,PERIOD_CURRENT,(int)p)); return h; }
+double DIp(double p,int sh){ return Buf(ADXh(p),1,sh); }
+double DIn(double p,int sh){ return Buf(ADXh(p),2,sh); }
+int ICh(double t,double kj,double sn){ string k="ichi"+(string)(int)t+"_"+(string)(int)kj+"_"+(string)(int)sn;
+  int h=Hget(k); if(h==INVALID_HANDLE) h=Hput(k,iIchimoku(_Symbol,PERIOD_CURRENT,(int)t,(int)kj,(int)sn)); return h; }
+double IcTen(double t,double kj,double sn,int sh){ return Buf(ICh(t,kj,sn),0,sh); }
+double IcKij(double t,double kj,double sn,int sh){ return Buf(ICh(t,kj,sn),1,sh); }
+double IcSpA(double t,double kj,double sn,int sh){ return Buf(ICh(t,kj,sn),2,sh); }
+double IcSpB(double t,double kj,double sn,int sh){ return Buf(ICh(t,kj,sn),3,sh); }
+double SARat(double st,double mx,int sh){ string k="sar"+DoubleToString(st,4)+"_"+DoubleToString(mx,4);
+  int h=Hget(k); if(h==INVALID_HANDLE) h=Hput(k,iSAR(_Symbol,PERIOD_CURRENT,st,mx)); return Buf(h,0,sh); }
+int STOh(double kk,double sl,double dd){ string k="sto"+(string)(int)kk+"_"+(string)(int)sl+"_"+(string)(int)dd;
+  int h=Hget(k); if(h==INVALID_HANDLE) h=Hput(k,iStochastic(_Symbol,PERIOD_CURRENT,(int)kk,(int)dd,(int)sl,MODE_SMA,STO_LOWHIGH)); return h; }
+double StoK(double kk,double sl,double dd,int sh){ return Buf(STOh(kk,sl,dd),0,sh); }
+double StoD(double kk,double sl,double dd,int sh){ return Buf(STOh(kk,sl,dd),1,sh); }
+double CCIat(double p,int sh){ string k="cci"+(string)(int)p;
+  int h=Hget(k); if(h==INVALID_HANDLE) h=Hput(k,iCCI(_Symbol,PERIOD_CURRENT,(int)p,PRICE_TYPICAL)); return Buf(h,0,sh); }
+double WPRat(double p,int sh){ string k="wpr"+(string)(int)p;
+  int h=Hget(k); if(h==INVALID_HANDLE) h=Hput(k,iWPR(_Symbol,PERIOD_CURRENT,(int)p)); return Buf(h,0,sh); }
+double MFIat(double p,int sh){ string k="mfi"+(string)(int)p;
+  int h=Hget(k); if(h==INVALID_HANDLE) h=Hput(k,iMFI(_Symbol,PERIOD_CURRENT,(int)p,VOLUME_TICK)); return Buf(h,0,sh); }
+int ENVh(double p,double dv){ string k="env"+(string)(int)p+"_"+DoubleToString(dv,4);
+  int h=Hget(k); if(h==INVALID_HANDLE) h=Hput(k,iEnvelopes(_Symbol,PERIOD_CURRENT,(int)p,0,MODE_SMA,PRICE_CLOSE,dv)); return h; }
+double ENVup(double p,double dv,int sh){ return Buf(ENVh(p,dv),0,sh); }
+double ENVlo(double p,double dv,int sh){ return Buf(ENVh(p,dv),1,sh); }
+double SDat(double p,int sh){ string k="sd"+(string)(int)p;
+  int h=Hget(k); if(h==INVALID_HANDLE) h=Hput(k,iStdDev(_Symbol,PERIOD_CURRENT,(int)p,0,MODE_SMA,PRICE_CLOSE)); return Buf(h,0,sh); }
+double OBVat(int sh){ string k="obv";
+  int h=Hget(k); if(h==INVALID_HANDLE) h=Hput(k,iOBV(_Symbol,PERIOD_CURRENT,VOLUME_TICK)); return Buf(h,0,sh); }
+double SDavg(double p,int n,int sh){ double s=0; int c=0;
+  for(int i=sh;i<sh+n;i++){ double v=SDat(p,i); if(!Bad(v)){ s+=v; c++; } }
+  return c>0? s/c : EMPTY_VALUE; }
+
+//--- 分形:往回找最近一個已確認的上/下分形(中心 bar 兩側各 2 根)------
+double FrUp(int sh){ for(int i=sh+2;i<sh+300;i++){
+    double h0=iHigh(_Symbol,PERIOD_CURRENT,i);
+    if(h0>iHigh(_Symbol,PERIOD_CURRENT,i+1)&&h0>iHigh(_Symbol,PERIOD_CURRENT,i+2)
+     &&h0>iHigh(_Symbol,PERIOD_CURRENT,i-1)&&h0>iHigh(_Symbol,PERIOD_CURRENT,i-2)) return h0; }
+  return EMPTY_VALUE; }
+double FrDn(int sh){ for(int i=sh+2;i<sh+300;i++){
+    double l0=iLow(_Symbol,PERIOD_CURRENT,i);
+    if(l0<iLow(_Symbol,PERIOD_CURRENT,i+1)&&l0<iLow(_Symbol,PERIOD_CURRENT,i+2)
+     &&l0<iLow(_Symbol,PERIOD_CURRENT,i-1)&&l0<iLow(_Symbol,PERIOD_CURRENT,i-2)) return l0; }
+  return EMPTY_VALUE; }
 
 //--- 訊號 -----------------------------------------------------------
 bool EntryLong(){ return (${mkSide("long")||"false"})
