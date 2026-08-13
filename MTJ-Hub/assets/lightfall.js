@@ -161,8 +161,11 @@ const MAX_COLORS = 8;
 
 /* MTJ palette: three golds falling through a warm amber ambience. */
 const DEFAULTS = {
-  colors: ['#FCE9A8', '#E8C877', '#C9A227'],
-  backgroundColor: '#7A5F1A',
+  /* Upstream violet/pink kept - they are what make the fall read as depth -
+     but the pale near-white streak (#A6C8FF) becomes MTJ gold, so the
+     brightest thing on screen is the brand colour rather than a cold white. */
+  colors: ['#E8C877', '#5227FF', '#FF9FFC'],
+  backgroundColor: '#0A29FF',
   speed: 0.5,
   streakCount: 3,
   streakWidth: 1,
@@ -177,8 +180,10 @@ const DEFAULTS = {
   mouseStrength: 0.5,
   mouseRadius: 1,
   mouseDampening: 0.15,
-  /* trim roughly in proportion to the gold itself, so the hue survives it */
-  black: [0.05, 0.045, 0.035],
+  /* Between upstream's [0.04,0.08,0.02] and a neutral trim: the ambient is
+     blue again so it can take some green off, but not so much that the dim
+     tails of the gold streak turn magenta the way the full 0.08 did. */
+  black: [0.04, 0.06, 0.02],
   maxDpr: 1.35   /* heaviest of the three shaders - keep the pixel count down */
 };
 
