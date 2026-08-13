@@ -118,6 +118,28 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 .btn:hover .ar{transform:translateX(4px);}
 
 
+/* ---------- LetterGlitch cover ----------
+   Same full-bleed correction as courses.html: .hero is min-height:100svh but
+   sits 114px down (57px above .wrap + .wrap's own 57px top padding), so a
+   100svh hero overflows the first screen by exactly that much and pushes the
+   scroll cue out of sight. Cancel the offset rather than shrink the hero. */
+.hero{margin-top:-114px;padding-top:clamp(96px,14vh,150px);}
+#letterglitch{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;
+  opacity:0;transition:opacity 1.2s ease;
+  --lg-mask:linear-gradient(to bottom,rgba(0,0,0,.35) 0%,#000 22%,#000 62%,rgba(0,0,0,.35) 86%,transparent 100%);
+  mask-image:var(--lg-mask);-webkit-mask-image:var(--lg-mask);}
+#letterglitch.is-live{opacity:.32;}
+#letterglitch canvas{display:block;width:100%;height:100%;}
+/* the glitch field is dense text - the headline needs a hole punched in it */
+.hero::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:radial-gradient(64% 48% at 50% 47%,rgba(6,6,8,.97),rgba(6,6,8,.78) 48%,rgba(6,6,8,.25) 74%,transparent 88%);}
+@media(prefers-reduced-motion:reduce){#letterglitch{display:none;}}
+.hero .scroll-cue{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);z-index:2;
+  font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--muted-2);text-decoration:none;display:flex;flex-direction:column;align-items:center;gap:7px;}
+.hero .scroll-cue:hover{color:var(--gold);}
+.hero .scroll-cue i{width:1px;height:26px;background:linear-gradient(180deg,var(--gold),transparent);}
+
 /* ---------- dividers ---------- */
 .divider{max-width:var(--maxw);margin:0 auto;padding:clamp(40px,7vh,80px) clamp(20px,5vw,48px) 0;text-align:center;}
 .divider .rail{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.3em;
@@ -389,7 +411,8 @@ body.lang-zh.lang-strict .hero .h-zh{font-size:clamp(19px,3.2vw,30px);color:var(
     </div>
   </div>
 </nav>
-<nav class="secnav"><a href="#start"><span class="lbl">Start · 这条线</span><span class="pt"></span></a>
+<nav class="secnav"><a href="#top"><span class="lbl">Cover · 封面</span><span class="pt"></span></a>
+<a href="#start"><span class="lbl">Start · 这条线</span><span class="pt"></span></a>
 <a href="#composer"><span class="lbl">Composer · 拼装</span><span class="pt"></span></a>
 <a href="#backtest"><span class="lbl">Backtest · 回测</span><span class="pt"></span></a>
 <a href="#close"><span class="lbl">Begin · 开始</span><span class="pt"></span></a>
@@ -407,7 +430,17 @@ body.lang-zh.lang-strict .hero .h-zh{font-size:clamp(19px,3.2vw,30px);color:var(
 <!-- section nav -->
 
 
-<div class="wrap" id="top" style="padding-top:57px;">
+<div class="wrap" style="padding-top:57px;">
+<header class="hero" id="top">
+  <div id="letterglitch" aria-hidden="true"></div>
+  <h1>Write the rules once.<br>The machine keeps them.</h1>
+  <div class="h-zh">规 则 写 一 次 · 让 机 器 替 你 守</div>
+  <p class="h-sub">Not a shortcut past the charts - the step after them.
+    <span class="zh">不是绕过看图的捷径，是看懂之后的下一步。</span></p>
+
+  <a class="scroll-cue" href="#start"><span class="en">Two Things</span><span class="zh">两 件 事</span><i></i></a>
+</header>
+
 <!-- ================= WHAT THIS TRACK IS ================= -->
 <section class="divider">
   <div class="rail reveal">Automation · 自动化</div>
@@ -1112,6 +1145,15 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
     }
   }catch(e){}
 })();
+</script>
+<script type="module">
+  /* Cover only. Silent failure by design: the hero keeps its own glow and
+     particle background if this cannot run. */
+  try{
+    const { mountLetterGlitch } = await import('./assets/letterglitch.js');
+    /* dense text behind copy: dim it and let the component darken its own centre */
+    mountLetterGlitch('#letterglitch', { centerVignette: true, glitchSpeed: 70 });
+  }catch(e){ /* static cover stands on its own */ }
 </script>
 </body>
 </html>
