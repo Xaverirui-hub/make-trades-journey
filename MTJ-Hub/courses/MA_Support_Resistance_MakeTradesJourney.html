@@ -447,16 +447,16 @@ body.lang-zh.lang-strict .hero .h-zh{font-size:clamp(19px,3.2vw,30px);color:var(
   <div class="eyebrow reveal"><span class="en">Content</span><span class="zh">目录</span></div>
   <h2 class="title reveal">What we'll cover<span class="zh">本课涵盖内容</span></h2>
   <div class="agenda">
-    <div class="card reveal"><div class="n">01</div><h3>Moving Averages</h3><div class="zh">移动平均线 · SMA / EMA</div></div>
-    <div class="card reveal"><div class="n">02</div><h3>Using Moving Averages</h3><div class="zh">趋势 · 动态支撑阻力 · 金叉死叉</div></div>
-    <div class="card reveal"><div class="n">03</div><h3>Support &amp; Resistance</h3><div class="zh">支撑与阻力的地板与天花板</div></div>
-    <div class="card reveal"><div class="n">04</div><h3>Breakouts &amp; Flips</h3><div class="zh">突破 · 回踩 · 角色反转</div></div>
+    <div class="card reveal"><div class="n">01</div><h3>Moving Averages<span class="zh">移动平均线 · SMA / EMA</span></h3></div>
+    <div class="card reveal"><div class="n">02</div><h3>Using Moving Averages<span class="zh">趋势 · 动态支撑阻力 · 金叉死叉</span></h3></div>
+    <div class="card reveal"><div class="n">03</div><h3>Support &amp; Resistance<span class="zh">支撑与阻力的地板与天花板</span></h3></div>
+    <div class="card reveal"><div class="n">04</div><h3>Breakouts &amp; Flips<span class="zh">突破 · 回踩 · 角色反转</span></h3></div>
   </div>
 </section>
 
 <section class="divider">
   <div class="rail reveal"><span class="en">Part 01</span><span class="zh">第一部分</span></div>
-  <h2 class="reveal"><span class="en">Moving Averages</span></h2>
+  <h2 class="reveal"><span class="en">Moving Averages</span><span class="zh">均 线</span></h2>
   <div class="zh reveal">移 动 平 均 线</div>
 </section>
 
@@ -464,20 +464,20 @@ body.lang-zh.lang-strict .hero .h-zh{font-size:clamp(19px,3.2vw,30px);color:var(
   <div class="group-head reveal"><span class="tier">01</span>
     <div><div class="eyebrow"><span class="en">Moving Averages</span><span class="zh">均线</span></div><h2 class="title"><span class="en">The Trend, Made Visible</span></h2></div></div>
   <article class="pattern reveal">
-    <div class="pattern-head"><span class="idx">MA.01</span><h3>What is a Moving Average<span class="zh">什么是移动平均线</span></h3><span class="tag neu">Trend</span></div>
+    <div class="pattern-head"><span class="idx">MA.01</span><h3>What is a Moving Average<span class="zh">什么是移动平均线</span></h3><span class="tag neu"><span class="en">Trend</span><span class="zh">趋势</span></span></div>
     <figure class="chart-fig wide"><div class="chart pchart" data-chart="ma_smooth"></div><figcaption><span class="lg lg-k"><span class="en">Candles K</span><span class="zh">线</span></span><span class="lg lg-1">MA 均线</span></figcaption></figure>
     <div class="pattern-desc"><p>A moving average takes the last N closing prices and averages them into one flowing line, smoothing out the noise so the underlying trend stands out.<span class="zh">均线把最近 N 根收盘价平均成一条流动的线，滤掉杂讯，让底层趋势清晰浮现。</span></p>
   <div class="note"><span class="en">// The line lags price - it confirms trend, it does not predict it</span><span class="zh">均线滞后于价格，用于确认而非预测</span></div></div>
   </article>
   <article class="pattern reveal">
-    <div class="pattern-head"><span class="idx">MA.02</span><h3>SMA vs EMA<span class="zh">简单 vs 指数均线</span></h3><span class="tag neu">Two types</span></div>
+    <div class="pattern-head"><span class="idx">MA.02</span><h3>SMA vs EMA<span class="zh">简单 vs 指数均线</span></h3><span class="tag neu"><span class="en">Two types</span><span class="zh">两种</span></span></div>
     <figure class="chart-fig wide"><div class="chart pchart" data-chart="ma_smavsema"></div><figcaption><span class="lg lg-k"><span class="en">Candles K</span><span class="zh">线</span></span><span class="lg lg-1">EMA</span><span class="lg lg-2b">SMA</span></figcaption></figure>
     <div class="pattern-desc"><p><b>SMA</b> weights every candle equally. <b>EMA</b> gives more weight to recent prices, so it turns faster and hugs price more closely.<span class="zh">SMA 对每根 K 线权重相同；EMA 更看重近期价格，因此转向更快、更贴近价格。</span></p>
-  <div class="note">// EMA = faster &amp; more sensitive · SMA = smoother &amp; steadier</div></div>
+  <div class="note">// EMA = faster &amp; more sensitive · SMA = smoother &amp; steadier<span class="zh">// EMA 更快更灵敏 · SMA 更平滑更稳定</span></div></div>
   </article>
   <article class="pattern reveal">
-    <div class="pattern-head"><span class="idx">MA.03</span><h3>Common Periods · 20 / 50 / 200<span class="zh">常用周期</span></h3><span class="tag neu">Timeframes</span></div>
-    <figure class="chart-fig wide"><div class="chart pchart" data-chart="ma_periods"></div><figcaption><span class="lg lg-k"><span class="en">Candles K</span><span class="zh">线</span></span><span class="lg lg-1">Fast MA</span><span class="lg lg-2">Slow MA</span></figcaption></figure>
+    <div class="pattern-head"><span class="idx">MA.03</span><h3>Common Periods · 20 / 50 / 200<span class="zh">常用周期</span></h3><span class="tag neu"><span class="en">Timeframes</span><span class="zh">周期</span></span></div>
+    <figure class="chart-fig wide"><div class="chart pchart" data-chart="ma_periods"></div><figcaption><span class="lg lg-k"><span class="en">Candles K</span><span class="zh">线</span></span><span class="lg lg-1">Fast MA<span class="zh">快线</span></span><span class="lg lg-2">Slow MA<span class="zh">慢线</span></span></figcaption></figure>
     <div class="pattern-desc"><p>Short averages track momentum, medium ones the swing trend, long ones the major trend. The 200 MA is the classic line between a bull and a bear market.<span class="zh">短周期看动能，中周期看波段趋势，长周期看主趋势。200 均线是牛熊分界的经典标准。</span></p></div>
   </article>
 </section>
@@ -486,19 +486,19 @@ body.lang-zh.lang-strict .hero .h-zh{font-size:clamp(19px,3.2vw,30px);color:var(
   <div class="group-head reveal"><span class="tier">02</span>
     <div><div class="eyebrow"><span class="en">Using Moving Averages</span><span class="zh">均线应用</span></div><h2 class="title"><span class="en">How Traders Use MAs</span></h2></div></div>
   <article class="pattern reveal">
-    <div class="pattern-head"><span class="idx">MA.04</span><h3>MA as a Trend Filter<span class="zh">均线作为趋势过滤器</span></h3><span class="tag neu">Bias</span></div>
-    <figure class="chart-fig wide"><div class="chart pchart" data-chart="ma_trend"></div><figcaption><span class="lg lg-k"><span class="en">Candles K</span><span class="zh">线</span></span><span class="lg lg-1">MA</span><span class="lg lg-s">Above = bullish</span><span class="lg lg-r">Below = bearish</span></figcaption></figure>
+    <div class="pattern-head"><span class="idx">MA.04</span><h3>MA as a Trend Filter<span class="zh">均线作为趋势过滤器</span></h3><span class="tag neu"><span class="en">Bias</span><span class="zh">倾向</span></span></div>
+    <figure class="chart-fig wide"><div class="chart pchart" data-chart="ma_trend"></div><figcaption><span class="lg lg-k"><span class="en">Candles K</span><span class="zh">线</span></span><span class="lg lg-1">MA<span class="zh">均线</span></span><span class="lg lg-s">Above = bullish<span class="zh">上方 = 看涨</span></span><span class="lg lg-r">Below = bearish<span class="zh">下方 = 看跌</span></span></figcaption></figure>
     <div class="pattern-desc"><p>Price trading <b>above</b> the MA = bullish bias; <b>below</b> = bearish. A simple rule: trade in the direction the MA is pointing.<span class="zh">价格在均线<b>上方</b>偏多，<b>下方</b>偏空。一条简单法则：顺着均线指向的方向交易。</span></p></div>
   </article>
   <article class="pattern reveal">
-    <div class="pattern-head"><span class="idx">MA.05</span><h3>MA as Dynamic Support<span class="zh">均线作为动态支撑</span></h3><span class="tag bull">Rebound entry</span></div>
+    <div class="pattern-head"><span class="idx">MA.05</span><h3>MA as Dynamic Support<span class="zh">均线作为动态支撑</span></h3><span class="tag bull"><span class="en">Rebound entry</span><span class="zh">回踩进场</span></span></div>
     <figure class="chart-fig wide"><div class="chart pchart" data-chart="ma_dynamic"></div><figcaption><span class="lg lg-k"><span class="en">Candles K</span><span class="zh">线</span></span><span class="lg lg-1">EMA</span><span class="lg lg-e"><span class="en">Entry zone</span><span class="zh">入场区</span></span></figcaption></figure>
     <div class="pattern-desc"><p>In an uptrend a rising MA acts as <b>dynamic support</b> — price keeps dipping back to it and bouncing. Each pullback into the MA is a potential long <b>entry zone</b>.<span class="zh">上涨中，向上的均线是<b>动态支撑</b>，价格不断回踩后反弹。每一次回踩到均线，都是潜在的做多<b>入场区</b>。</span></p>
   <div class="note"><span class="en">// Watch the bounce out of the cyan zone - that's the confirmation</span><span class="zh">留意价格弹出青色区，即为确认</span></div></div>
   </article>
   <article class="pattern reveal">
-    <div class="pattern-head"><span class="idx">MA.06</span><h3>Golden Cross &amp; Death Cross<span class="zh">金叉与死叉</span></h3><span class="tag neu">Momentum shift</span></div>
-    <figure class="chart-fig wide"><div class="chart pchart" data-chart="ma_cross"></div><figcaption><span class="lg lg-1">Fast MA</span><span class="lg lg-2">Slow MA</span></figcaption></figure>
+    <div class="pattern-head"><span class="idx">MA.06</span><h3>Golden Cross &amp; Death Cross<span class="zh">金叉与死叉</span></h3><span class="tag neu"><span class="en">Momentum shift</span><span class="zh">动能转变</span></span></div>
+    <figure class="chart-fig wide"><div class="chart pchart" data-chart="ma_cross"></div><figcaption><span class="lg lg-1">Fast MA<span class="zh">快线</span></span><span class="lg lg-2">Slow MA<span class="zh">慢线</span></span></figcaption></figure>
     <div class="pattern-desc"><p><b>Golden Cross:</b> the faster MA crosses <b>above</b> the slower - a bullish momentum shift. <b>Death Cross:</b> faster crosses <b>below</b> — bearish.<span class="zh">金叉：快线上穿慢线，动能转多；死叉：快线下穿慢线，动能转空。</span></p></div>
   </article>
 </section>
@@ -513,13 +513,13 @@ body.lang-zh.lang-strict .hero .h-zh{font-size:clamp(19px,3.2vw,30px);color:var(
   <div class="group-head reveal"><span class="tier">03</span>
     <div><div class="eyebrow">Support &amp; Resistance · 支撑阻力</div><h2 class="title"><span class="en">Floors &amp; Ceilings</span></h2></div></div>
   <article class="pattern reveal">
-    <div class="pattern-head"><span class="idx">SR.01</span><h3>What is Support &amp; Resistance<span class="zh">什么是支撑与阻力</span></h3><span class="tag neu">Concept</span></div>
+    <div class="pattern-head"><span class="idx">SR.01</span><h3>What is Support &amp; Resistance<span class="zh">什么是支撑与阻力</span></h3><span class="tag neu"><span class="en">Concept</span><span class="zh">概念</span></span></div>
     <figure class="chart-fig wide"><div class="chart pchart" data-chart="sr_basics"></div><figcaption><span class="lg lg-k"><span class="en">Candles K</span><span class="zh">线</span></span><span class="lg lg-r"><span class="en">Resistance</span><span class="zh">阻力</span></span><span class="lg lg-s"><span class="en">Support</span><span class="zh">支撑</span></span></figcaption></figure>
     <div class="pattern-desc"><p><b>Support</b> is a floor where buyers step in; <b>resistance</b> is a ceiling where sellers take over. They mark where the balance of supply and demand flips.<span class="zh"><b>支撑</b>是买方倾向介入的地板价，<b>阻力</b>是卖方倾向主导的天花板价，标记着供需力量转换的位置。</span></p></div>
   </article>
   <article class="pattern reveal">
-    <div class="pattern-head"><span class="idx">SR.02</span><h3>The More Touches, the Stronger<span class="zh">触碰越多，越有效</span></h3><span class="tag neu">Strength</span></div>
-    <figure class="chart-fig wide"><div class="chart pchart" data-chart="sr_touches"></div><figcaption><span class="lg lg-k"><span class="en">Candles K</span><span class="zh">线</span></span><span class="lg lg-r">Resistance</span></figcaption></figure>
+    <div class="pattern-head"><span class="idx">SR.02</span><h3>The More Touches, the Stronger<span class="zh">触碰越多，越有效</span></h3><span class="tag neu"><span class="en">Strength</span><span class="zh">强度</span></span></div>
+    <figure class="chart-fig wide"><div class="chart pchart" data-chart="sr_touches"></div><figcaption><span class="lg lg-k"><span class="en">Candles K</span><span class="zh">线</span></span><span class="lg lg-r">Resistance<span class="zh">阻力</span></span></figcaption></figure>
     <div class="pattern-desc"><p>Every time price respects a level, more traders notice it - so the level gains weight. A level tested many times is one the whole market is watching.<span class="zh">价格每一次尊重某个价位，就有更多交易者注意到它，价位因此更具分量。被反复测试的价位，是整个市场都在盯的价位。</span></p>
   <div class="note"><span class="en">// But each test uses up energy - heavily-tested levels eventually break</span><span class="zh">但每次测试都在消耗动能，终将被突破</span></div></div>
   </article>
@@ -529,7 +529,7 @@ body.lang-zh.lang-strict .hero .h-zh{font-size:clamp(19px,3.2vw,30px);color:var(
   <div class="group-head reveal"><span class="tier">04</span>
     <div><div class="eyebrow">Breakouts &amp; Role Reversal · 突破与反转</div><h2 class="title"><span class="en">When Levels Break</span></h2></div></div>
   <article class="pattern reveal">
-    <div class="pattern-head"><span class="idx">SR.03</span><h3>Role Reversal - the Flip<span class="zh">角色反转 · Flip</span></h3><span class="tag bull">Rebound entry</span></div>
+    <div class="pattern-head"><span class="idx">SR.03</span><h3>Role Reversal - the Flip<span class="zh">角色反转 · Flip</span></h3><span class="tag bull"><span class="en">Rebound entry</span><span class="zh">回踩进场</span></span></div>
     <figure class="chart-fig wide"><div class="chart pchart" data-chart="sr_flip"></div><figcaption><span class="lg lg-k"><span class="en">Candles K</span><span class="zh">线</span></span><span class="lg lg-1"><span class="en">Flip level</span><span class="zh">反转位</span></span><span class="lg lg-e"><span class="en">Entry zone</span><span class="zh">入场区</span></span></figcaption></figure>
     <div class="pattern-desc"><p>Once broken, <b>resistance becomes support</b>. Here price breaks above old resistance, pulls back to <b>retest</b> it, holds, and bounces - the retest is the <b>entry zone</b>.<span class="zh">一旦突破，<b>阻力变支撑</b>。图中价格突破旧阻力后回踩<b>确认</b>，守住并反弹——回踩处即为<b>入场区</b>。</span></p></div>
   </article>
