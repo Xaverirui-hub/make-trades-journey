@@ -135,7 +135,7 @@ export function mountLetterGlitch(target, options = {}) {
 
   function frame() {
     raf = requestAnimationFrame(frame);
-    if (!visible) return;
+    if (!visible || document.hidden) return;
     const now = Date.now();
     let redraw = false;
     if (now - last >= o.glitchSpeed) { scramble(); last = now; redraw = true; }
@@ -173,14 +173,16 @@ export function mountLetterGlitch(target, options = {}) {
     : null;
   if (io) io.observe(host);
 
-  const onVis = () => { if (document.hidden) visible = false; };
-  document.addEventListener('visibilitychange', onVis);
+  /* Page visibility is checked inside the frame loop, not latched here.
+     An earlier version set visible=false on visibilitychange and had nothing
+     that ever set it back: once the tab was hidden the loop stayed parked
+     until an intersection change happened to fire, which for an element that
+     was already fully on screen never came. Derive, do not latch. */
 
   return function destroy() {
     cancelAnimationFrame(raf);
     if (ro) ro.disconnect();
     if (io) io.disconnect();
-    document.removeEventListener('visibilitychange', onVis);
     [canvas, vOuter, vCenter].forEach(el => { if (el && el.parentNode) el.parentNode.removeChild(el); });
     host.classList.remove('is-live');
   };

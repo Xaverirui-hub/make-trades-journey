@@ -336,7 +336,7 @@ export function mountLightfall(target, options = {}) {
 
   function frame(t) {
     raf = requestAnimationFrame(frame);
-    if (!visible || lost) { last = t; return; }
+    if (!visible || lost || document.hidden) { last = t; return; }
 
     gl.uniform1f(U.iTime, t * 0.001);
     if (o.mouseDampening > 0) {
@@ -369,14 +369,16 @@ export function mountLightfall(target, options = {}) {
     : null;
   if (io) io.observe(host);
 
-  const onVis = () => { if (document.hidden) visible = false; };
-  document.addEventListener('visibilitychange', onVis);
+  /* Page visibility is checked inside the frame loop, not latched here.
+     An earlier version set visible=false on visibilitychange and had nothing
+     that ever set it back: once the tab was hidden the loop stayed parked
+     until an intersection change happened to fire, which for an element that
+     was already fully on screen never came. Derive, do not latch. */
 
   return function destroy() {
     cancelAnimationFrame(raf);
     if (ro) ro.disconnect(); else window.removeEventListener('resize', resize);
-    if (io) io.disconnect();
-    document.removeEventListener('visibilitychange', onVis);
+    if (io) io.disconnect();
     if (o.mouseInteraction) window.removeEventListener('pointermove', onMove);
     const ext = gl.getExtension('WEBGL_lose_context');
     if (ext) ext.loseContext();

@@ -161,6 +161,24 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 .hero .scroll-cue:hover{color:var(--gold);}
 .hero .scroll-cue i{width:1px;height:26px;background:linear-gradient(180deg,var(--gold),transparent);}
 
+/* ---------- Galaxy: everything below the cover ----------
+   The cover keeps its own effect; from here down the page travels through a
+   star field. The canvas is viewport-sized and sticky rather than as tall as
+   the zone - same pixels per frame no matter how long the page grows, and the
+   stars drift past as you scroll instead of sitting still.
+   No overflow:hidden here on purpose: it would turn .galaxy-bg into a scroll
+   container and the sticky child would stop tracking the viewport. */
+.galaxy-zone{position:relative;}
+.galaxy-zone>*:not(.galaxy-bg){position:relative;z-index:1;}
+.galaxy-bg{position:absolute;inset:0;z-index:0;pointer-events:none;
+  --gx-mask:linear-gradient(to bottom,transparent 0,#000 9%,#000 84%,rgba(0,0,0,.3) 95%,transparent 100%);
+  mask-image:var(--gx-mask);-webkit-mask-image:var(--gx-mask);}
+#galaxy{position:sticky;top:0;width:100%;height:100svh;
+  opacity:0;transition:opacity 1.6s ease;}
+#galaxy.is-live{opacity:.8;}
+#galaxy canvas{display:block;width:100%;height:100%;}
+@media(prefers-reduced-motion:reduce){.galaxy-bg{display:none;}}
+
 /* ---------- dividers ---------- */
 .divider{max-width:var(--maxw);margin:0 auto;padding:clamp(40px,7vh,80px) clamp(20px,5vw,48px) 0;text-align:center;}
 .divider .rail{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.3em;
@@ -472,6 +490,8 @@ body.lang-zh.lang-strict .hero .h-zh{font-size:clamp(19px,3.2vw,30px);color:var(
   </div>
   <a class="scroll-cue" href="#path"><span class="en">Six Stages</span><span class="zh">六 个 阶 段</span><i></i></a>
 </header>
+<div class="galaxy-zone">
+<div class="galaxy-bg" aria-hidden="true"><div id="galaxy"></div></div>
 
 <!-- ================= LEARNING PATH ================= -->
 <section class="divider">
@@ -819,6 +839,7 @@ body.lang-zh.lang-strict .hero .h-zh{font-size:clamp(19px,3.2vw,30px);color:var(
     <div class="copy reveal">© <span id="yr"></span> Make Trades Journey · By XRs Trading Lab · Learning Hub</div>
   </div>
 </footer>
+</div><!-- /galaxy-zone -->
 </div><!-- /wrap -->
 <script>
 document.getElementById('yr').textContent=new Date().getFullYear();
@@ -1311,6 +1332,11 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
     const { mountLightfall } = await import('./assets/lightfall.js');
     mountLightfall('#lightfall');
   }catch(e){ /* static cover stands on its own */ }
+/* Below the cover: star field, same silent-failure contract. */
+  try{
+    const { mountGalaxy } = await import('./assets/galaxy.js');
+    mountGalaxy('#galaxy');
+  }catch(e){ /* page keeps its glow + particle background */ }
 </script>
 </body>
 </html>
