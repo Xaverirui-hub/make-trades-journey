@@ -90,9 +90,6 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 .hero{position:relative;min-height:100svh;display:flex;flex-direction:column;
   align-items:center;justify-content:center;text-align:center;padding:120px 20px 46px;overflow:hidden;}
 .hero>*{position:relative;z-index:2;}
-.hero-chart{position:absolute;left:0;right:0;bottom:0;width:100%;height:46vh;z-index:0;opacity:.3;pointer-events:none;
-  mask-image:linear-gradient(to top,#000 10%,transparent 90%);
-  -webkit-mask-image:linear-gradient(to top,#000 10%,transparent 90%);}
 .hero .logo-hero{height:clamp(84px,14vw,146px);width:auto;mix-blend-mode:lighten;
   filter:drop-shadow(0 0 30px rgba(232,200,119,.4));margin-bottom:6px;
   animation:floaty 6s ease-in-out infinite;}
@@ -532,45 +529,6 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
   if(!RM)draw();
 })();
 
-/* ---------------- hero live candle ticker ---------------- */
-(function(){
-  const cv=document.getElementById('heroChart');if(!cv||RM)return;
-  const ctx=cv.getContext('2d');let w,h,dpr=Math.min(window.devicePixelRatio||1,2);
-  function resize(){w=cv.width=cv.clientWidth*dpr;h=cv.height=cv.clientHeight*dpr;}
-  resize();addEventListener('resize',resize);
-  let candles=[],price=100,cw=16*dpr,gap=8*dpr;
-  function makeCandle(){
-    const o=price,delta=(Math.random()-0.48)*7;price=Math.max(60,Math.min(140,price+delta));
-    const c=price,hi=Math.max(o,c)+Math.random()*4,lo=Math.min(o,c)-Math.random()*4;
-    return{o,c,hi,lo,grow:0};
-  }
-  const total=()=>Math.ceil(w/(cw+gap))+2;
-  for(let i=0;i<total();i++)candles.push(makeCandle());
-  let acc=0,last=performance.now();
-  function frame(now){
-    const dt=now-last;last=now;acc+=dt;
-    if(acc>620){acc=0;candles.push(makeCandle());if(candles.length>total()+2)candles.shift();}
-    let mn=Infinity,mx=-Infinity;candles.forEach(k=>{mn=Math.min(mn,k.lo);mx=Math.max(mx,k.hi);});
-    const pad=(mx-mn)*0.15;mn-=pad;mx+=pad;
-    const Y=p=>h-((p-mn)/(mx-mn))*(h*0.9)-h*0.05;
-    ctx.clearRect(0,0,w,h);
-    const step=cw+gap;const startX=w-candles.length*step+gap/2;
-    candles.forEach((k,i)=>{
-      k.grow=Math.min(1,k.grow+0.09);
-      const x=startX+i*step+cw/2;const up=k.c>=k.o;
-      const col=up?'#2CD98A':'#FF5C63';
-      ctx.strokeStyle=col;ctx.globalAlpha=0.85*k.grow;ctx.lineWidth=1.4*dpr;
-      ctx.beginPath();ctx.moveTo(x,Y(k.hi));ctx.lineTo(x,Y(k.lo));ctx.stroke();
-      const bt=Y(Math.max(k.o,k.c)),bb=Y(Math.min(k.o,k.c));
-      const bh=Math.max((bb-bt)*k.grow,1.5);
-      ctx.fillStyle=col;ctx.globalAlpha=0.7*k.grow;
-      ctx.fillRect(x-cw/2,bt+((bb-bt)-bh)/2,cw,bh);
-    });
-    ctx.globalAlpha=1;
-    requestAnimationFrame(frame);
-  }
-  requestAnimationFrame(frame);
-})();
 </script>
 
 <script>
