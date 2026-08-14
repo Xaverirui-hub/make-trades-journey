@@ -37,17 +37,17 @@ a{color:inherit;}
 
 /* ---------- ambient background ---------- */
 #particles{position:fixed;inset:0;z-index:0;pointer-events:none;}
-/* WebThreads: this page has no hero, so the woven strand is the cover.
-   Absolute rather than fixed - a cover is meant to scroll away. Fixed kept
-   the band crossing every paragraph on the page, which the strand is far too
-   bright to do and stay readable. Masked out well before the tool cards. */
-#webthreads{position:absolute;top:0;left:0;right:0;height:100svh;z-index:0;pointer-events:none;
+/* PrismaticBurst: the page cover. Absolute, not fixed - a cover scrolls away.
+   The shader writes opaque black around the burst and is composited with
+   mix-blend-mode:lighten, so the black drops out over the page background;
+   that blend is load-bearing, not decoration. */
+#prismatic{position:absolute;top:0;left:0;right:0;height:100svh;z-index:0;overflow:hidden;pointer-events:none;
   opacity:0;transition:opacity 1.4s ease;
-  --wt-mask:linear-gradient(to bottom,#000 0%,#000 28%,rgba(0,0,0,.32) 48%,transparent 66%);
-  mask-image:var(--wt-mask);-webkit-mask-image:var(--wt-mask);}
-#webthreads.is-live{opacity:.85;}
-#webthreads canvas{display:block;width:100%;height:100%;}
-@media(prefers-reduced-motion:reduce){#webthreads{display:none;}}
+  --pb-mask:linear-gradient(to bottom,#000 0%,#000 28%,rgba(0,0,0,.34) 46%,transparent 62%);
+  mask-image:var(--pb-mask);-webkit-mask-image:var(--pb-mask);}
+#prismatic.is-live{opacity:.8;}
+#prismatic canvas{display:block;width:100%;height:100%;}
+@media(prefers-reduced-motion:reduce){#prismatic{display:none;}}
 .bg-glow{position:fixed;inset:0;z-index:0;pointer-events:none;
   background:
     radial-gradient(1100px 700px at 80% -10%, rgba(232,200,119,.10), transparent 60%),
@@ -394,7 +394,7 @@ body.lang-zh.lang-strict .hero .h-zh{font-size:clamp(19px,3.2vw,30px);color:var(
 
 
 <div class="wrap" style="padding-top:57px;">
-<div id="webthreads" aria-hidden="true"></div>
+<div id="prismatic" aria-hidden="true"></div>
 <!-- ================= TOOLS ================= -->
 <section class="divider">
   <div class="rail reveal">Lab · 实验室</div>
@@ -996,14 +996,8 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
   /* Page cover. Silent failure by design: needs WebGL2, and without it the
      existing glow + particles background stands on its own. */
   try{
-    const { mountWebThreads } = await import('./assets/webthreads.js');
-    /* Tuned to sit behind the title rather than through the paragraph:
-       raised (position .72), dimmer than the upstream .6 default, and a weak
-       cursor pull so the bright pinch point cannot wander onto body copy. */
-    mountWebThreads('#webthreads', {
-      position: 0.72, brightness: 0.38, opacity: 0.85,
-      spread: 0.17, mouseStrength: 0.14
-    });
+    const { mountPrismaticBurst } = await import('./assets/prismaticburst.js');
+    mountPrismaticBurst('#prismatic');
   }catch(e){ /* no-op */ }
 </script>
 </body>
