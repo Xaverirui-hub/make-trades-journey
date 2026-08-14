@@ -645,8 +645,8 @@ body.lang-zh.lang-strict .hero .h-zh{font-size:clamp(19px,3.2vw,30px);color:var(
       <div class="tags"><span>Checklist 清单</span><span>Five Numbers 五个指标</span><span>Verdict 判决</span></div>
       <div class="go">OPEN SOP →<span class="zh">打 开 流 程 →</span></div>
     </a>
-    <a class="mod reveal" href="courses/Backtesting_System_Design_MakeTradesJourney.html">
-      <div class="idx">MODULE 17</div>
+    <a class="mod reveal" data-mod="19" href="courses/Backtesting_System_Design_MakeTradesJourney.html">
+      <div class="idx"><span class="en">MODULE 19</span><span class="zh">模块 19</span></div>
       <h4>Backtesting &amp; System Design</h4>
       <div class="zh-t">回 测 与 系 统 设 计</div>
       <p>The reasoning behind the SOP - sample size, what counts as an edge, and why most tested systems fail the moment the sample changes. 这套流程背后的道理 —— 样本量、什么才算优势，以及为什么大部分测过的系统一换样本就垮。</p>
@@ -792,7 +792,7 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
     // 從 idx 提取模組號
     var idxEl = a.querySelector(".idx");
     if(!idxEl) continue;
-    var m = parseInt((idxEl.textContent||"").replace(/[^0-9]/g,""));
+    var m = parseInt(a.getAttribute("data-mod") || (idxEl.textContent||"").replace(/[^0-9]/g,""));
     if(isNaN(m) || m <= 3) continue;  /* Foundations stage stays open: it is the free top of funnel, and the lock is localStorage only so it protects nothing anyway */  // Module 1 永遠解鎖
     /* Global admin mode: skip all locks */
     try { if(localStorage.getItem("mtj_admin") === "1") continue; } catch(e){}
