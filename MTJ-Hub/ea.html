@@ -126,13 +126,13 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 .hero{margin-top:-114px;padding-top:clamp(96px,14vh,150px);}
 #letterglitch{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;
   opacity:0;transition:opacity 1.2s ease;
-  --lg-mask:linear-gradient(to bottom,rgba(0,0,0,.35) 0%,#000 22%,#000 62%,rgba(0,0,0,.35) 86%,transparent 100%);
+  --lg-mask:linear-gradient(to bottom,rgba(0,0,0,.6) 0%,#000 18%,#000 70%,rgba(0,0,0,.45) 88%,transparent 100%);
   mask-image:var(--lg-mask);-webkit-mask-image:var(--lg-mask);}
-#letterglitch.is-live{opacity:.5;}
+#letterglitch.is-live{opacity:.78;}
 #letterglitch canvas{display:block;width:100%;height:100%;}
 /* the glitch field is dense text - the headline needs a hole punched in it */
 .hero::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
-  background:radial-gradient(62% 46% at 50% 47%,rgba(6,6,8,.93),rgba(6,6,8,.68) 50%,rgba(6,6,8,.2) 76%,transparent 90%);}
+  background:radial-gradient(54% 44% at 50% 48%,rgba(6,6,8,.95),rgba(6,6,8,.74) 50%,rgba(6,6,8,.14) 80%,transparent 92%);}
 @media(prefers-reduced-motion:reduce){#letterglitch{display:none;}}
 .hero .scroll-cue{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);z-index:2;
   font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;
@@ -389,6 +389,15 @@ body.lang-zh.lang-strict .divider > .zh{font-size:clamp(26px,4.4vw,44px);font-we
 body.lang-zh.lang-strict .hero .h-zh{font-size:clamp(19px,3.2vw,30px);color:var(--gold,#E8C877);
   letter-spacing:.34em;}
 /* ========================================================================= */
+
+/* The strict-mode promotion sizes .h-zh up to clamp(19px,3.2vw,30px) at
+   .34em tracking. On a 375px screen a 10-character cover line plus its
+   spaces overruns the 335px content box and drops a stray character onto a
+   second line. Tighten both at narrow widths - the promotion still applies
+   everywhere else. */
+@media(max-width:560px){
+  body.lang-zh.lang-strict .hero .h-zh{font-size:clamp(15px,4.2vw,19px);letter-spacing:.16em;padding-left:.16em;}
+}
 </style>
 </head>
 <body>
@@ -433,8 +442,8 @@ body.lang-zh.lang-strict .hero .h-zh{font-size:clamp(19px,3.2vw,30px);color:var(
 <div class="wrap" style="padding-top:57px;">
 <header class="hero" id="top">
   <div id="letterglitch" aria-hidden="true"></div>
-  <h1>Write the rules once.<br>The machine keeps them.</h1>
-  <div class="h-zh">规 则 写 一 次 · 让 机 器 替 你 守</div>
+  <h1>Your trades journey<br>runs itself from here.</h1>
+  <div class="h-zh">交 易 之 旅 · 从 此 自 己 走</div>
   <p class="h-sub">Not a shortcut past the charts - the step after them.
     <span class="zh">不是绕过看图的捷径，是看懂之后的下一步。</span></p>
 

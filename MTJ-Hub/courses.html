@@ -394,6 +394,15 @@ body.lang-zh.lang-strict .divider > .zh{font-size:clamp(26px,4.4vw,44px);font-we
 body.lang-zh.lang-strict .hero .h-zh{font-size:clamp(19px,3.2vw,30px);color:var(--gold,#E8C877);
   letter-spacing:.34em;}
 /* ========================================================================= */
+
+/* The strict-mode promotion sizes .h-zh up to clamp(19px,3.2vw,30px) at
+   .34em tracking. On a 375px screen a 10-character cover line plus its
+   spaces overruns the 335px content box and drops a stray character onto a
+   second line. Tighten both at narrow widths - the promotion still applies
+   everywhere else. */
+@media(max-width:560px){
+  body.lang-zh.lang-strict .hero .h-zh{font-size:clamp(15px,4.2vw,19px);letter-spacing:.16em;padding-left:.16em;}
+}
 </style>
 </head>
 <body>
