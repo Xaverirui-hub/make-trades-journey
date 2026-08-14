@@ -136,10 +136,22 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
   box-shadow:0 0 26px rgba(232,200,119,.15);transform:translateY(-2px);}
 .btn.primary{border-color:rgba(232,200,119,.5);color:var(--gold-bright);
   background:linear-gradient(180deg,rgba(232,200,119,.14),rgba(232,200,119,.04));}
-.btn.solid{background:var(--gold);border-color:var(--gold);color:#0A0A0E;font-weight:700;}
+.btn.solid{background:var(--gold);border-color:var(--gold);color:#0A0A0E;font-weight:700;
+  animation:btnGlow 3.4s ease-in-out infinite;}
+/* Slow breath rather than a static halo - a cover CTA should read as live,
+   but a fast pulse on a purchase-shaped button reads as a pop-up ad. Hover
+   cancels the animation so the stronger hover glow is not fighting it. */
+@keyframes btnGlow{
+  0%,100%{box-shadow:0 0 0 1px rgba(232,200,119,.30),0 0 18px rgba(232,200,119,.22),0 0 40px rgba(232,200,119,.10);}
+  50%{box-shadow:0 0 0 1px rgba(232,200,119,.46),0 0 30px rgba(232,200,119,.40),0 0 64px rgba(232,200,119,.19);}
+}
 .btn.solid:hover{background:var(--gold-bright);border-color:var(--gold-bright);color:#0A0A0E;
-  box-shadow:0 0 30px rgba(232,200,119,.35);transform:translateY(-2px);}
+  animation:none;transform:translateY(-2px);
+  box-shadow:0 0 0 1px rgba(252,233,168,.55),0 0 34px rgba(232,200,119,.55),0 0 78px rgba(232,200,119,.28);}
 .btn.solid .ar{color:inherit;}
+@media(prefers-reduced-motion:reduce){
+  .btn.solid{animation:none;box-shadow:0 0 0 1px rgba(232,200,119,.38),0 0 24px rgba(232,200,119,.3);}
+}
 .btn .ar{transition:.28s;}
 .btn:hover .ar{transform:translateX(4px);}
 
