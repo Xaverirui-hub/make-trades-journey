@@ -37,17 +37,16 @@ a{color:inherit;}
 
 /* ---------- ambient background ---------- */
 #particles{position:fixed;inset:0;z-index:0;pointer-events:none;}
-/* PrismaticBurst: the page cover. Absolute, not fixed - a cover scrolls away.
-   The shader writes opaque black around the burst and is composited with
-   mix-blend-mode:lighten, so the black drops out over the page background;
-   that blend is load-bearing, not decoration. */
-#prismatic{position:absolute;top:0;left:0;right:0;height:100svh;z-index:0;overflow:hidden;pointer-events:none;
+/* GridScan: the page cover. Absolute, not fixed - a cover scrolls away.
+   Straight alpha, no blend mode: this shader outputs real transparency, so it
+   layers over the page glow without needing a lighten trick. */
+#gridscan{position:absolute;top:0;left:0;right:0;height:100svh;z-index:0;overflow:hidden;pointer-events:none;
   opacity:0;transition:opacity 1.4s ease;
-  --pb-mask:linear-gradient(to bottom,#000 0%,#000 28%,rgba(0,0,0,.34) 46%,transparent 62%);
-  mask-image:var(--pb-mask);-webkit-mask-image:var(--pb-mask);}
-#prismatic.is-live{opacity:.8;}
-#prismatic canvas{display:block;width:100%;height:100%;}
-@media(prefers-reduced-motion:reduce){#prismatic{display:none;}}
+  --gs-mask:linear-gradient(to bottom,#000 0%,#000 24%,rgba(0,0,0,.34) 44%,transparent 60%);
+  mask-image:var(--gs-mask);-webkit-mask-image:var(--gs-mask);}
+#gridscan.is-live{opacity:.7;}
+#gridscan canvas{display:block;width:100%;height:100%;}
+@media(prefers-reduced-motion:reduce){#gridscan{display:none;}}
 .bg-glow{position:fixed;inset:0;z-index:0;pointer-events:none;
   background:
     radial-gradient(1100px 700px at 80% -10%, rgba(232,200,119,.10), transparent 60%),
@@ -394,7 +393,7 @@ body.lang-zh.lang-strict .hero .h-zh{font-size:clamp(19px,3.2vw,30px);color:var(
 
 
 <div class="wrap" style="padding-top:57px;">
-<div id="prismatic" aria-hidden="true"></div>
+<div id="gridscan" aria-hidden="true"></div>
 <!-- ================= TOOLS ================= -->
 <section class="divider">
   <div class="rail reveal">Lab · 实验室</div>
@@ -993,11 +992,11 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
 })();
 </script>
 <script type="module">
-  /* Page cover. Silent failure by design: needs WebGL2, and without it the
-     existing glow + particles background stands on its own. */
+  /* Page cover. Silent failure by design: without WebGL the existing glow +
+     particles background stands on its own. */
   try{
-    const { mountPrismaticBurst } = await import('./assets/prismaticburst.js');
-    mountPrismaticBurst('#prismatic');
+    const { mountGridScan } = await import('./assets/gridscan.js');
+    mountGridScan('#gridscan');
   }catch(e){ /* no-op */ }
 </script>
 </body>
