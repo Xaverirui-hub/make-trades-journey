@@ -3,9 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#060608">
 <title>XRs Strategy Composer - XR-DRIVE // MakeTrades Journey</title>
 <style>
-:root{--void:#0A0E14;--panel:#0E141F;--panel2:#121A28;--line:rgba(210,225,255,.08);
+:root{color-scheme:dark;--void:#0A0E14;--panel:#0E141F;--panel2:#121A28;--line:rgba(210,225,255,.08);
 --kengold:#E8B44A;--spirit:#5FD4E8;--jade:#7FE0A8;--crimson:#FF5A5A;
 --dim:#7A8699;--ink:#D8E0EE;--mute:#4A5568;--mono:ui-monospace,Consolas,monospace}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -684,6 +685,22 @@ body.lang-zh.lang-strict .divider > .zh{font-size:clamp(26px,4.4vw,44px);font-we
 body.lang-zh.lang-strict .hero .h-zh{font-size:clamp(19px,3.2vw,30px);color:var(--gold,#E8C877);
   letter-spacing:.34em;}
 /* ========================================================================= */
+
+/* Keyboard focus. The inputs already swap outline for a border + ring, but
+   nothing else on the page had a focus style of its own, so custom controls
+   (.btn, .mod cards, nav links) fell back to whatever the UA drew - or to
+   nothing where a background sat on top. :focus-visible only fires for
+   keyboard/AT, so pointer users see no change. */
+:focus-visible{outline:2px solid var(--gold,#E8C877);outline-offset:3px;border-radius:4px;}
+a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width:2px;}
+
+/* prefers-reduced-motion: stop the decorative loops for anyone who asked for
+   less movement. Transitions are shortened rather than removed so state
+   changes are still legible. */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;scroll-behavior:auto !important;}
+}
 </style>
 <script src="gate_config.js"></script><!-- v2.6:可選,由 gate_config.json 生成 -->
 <script src="real_data.js"></script>
