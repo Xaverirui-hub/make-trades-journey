@@ -651,6 +651,26 @@ body.lang-zh.lang-strict .hero .h-zh{font-size:clamp(19px,3.2vw,30px);color:var(
    keyboard/AT, so pointer users see no change. */
 :focus-visible{outline:2px solid var(--gold,#E8C877);outline-offset:3px;border-radius:4px;}
 a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width:2px;}
+
+/* Post-exam CTA. Same solid + breathing glow as the cover buttons - passing a
+   chapter is the one moment on a course page that deserves that weight. */
+.btn-next{display:inline-flex;align-items:center;gap:10px;margin-top:16px;
+  font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;
+  padding:13px 26px;border-radius:34px;text-decoration:none;font-weight:700;
+  background:var(--gold);border:1px solid var(--gold);color:#0A0A0E;
+  transition:.28s;animation:btnGlow 3.4s ease-in-out infinite;}
+@keyframes btnGlow{
+  0%,100%{box-shadow:0 0 0 1px rgba(232,200,119,.30),0 0 18px rgba(232,200,119,.22),0 0 40px rgba(232,200,119,.10);}
+  50%{box-shadow:0 0 0 1px rgba(232,200,119,.46),0 0 30px rgba(232,200,119,.40),0 0 64px rgba(232,200,119,.19);}
+}
+.btn-next:hover{background:var(--gold-bright);border-color:var(--gold-bright);color:#0A0A0E;
+  animation:none;transform:translateY(-2px);
+  box-shadow:0 0 0 1px rgba(252,233,168,.55),0 0 34px rgba(232,200,119,.55),0 0 78px rgba(232,200,119,.28);}
+.btn-next .ar{transition:.28s;}
+.btn-next:hover .ar{transform:translateX(4px);}
+@media(prefers-reduced-motion:reduce){
+  .btn-next{animation:none;box-shadow:0 0 0 1px rgba(232,200,119,.38),0 0 24px rgba(232,200,119,.3);}
+}
 </style>
 </head>
 <body>
@@ -1201,7 +1221,7 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
 /* ===== MTJ EXAM MODULE - Module 21 ===== */
 const MTJ_EXAM_KEY = "mtj_exam_pass_21";
 const EXAM_QUESTIONS = [
- {"q": "LIMIT and STOP pending orders differ how?"IT?", "q_zh": "LIMIT 与 STOP 挂单的差别是？",
+ {"q": "LIMIT and STOP pending orders differ how?", "q_zh": "LIMIT 与 STOP 挂单的差别是？",
   "opts":["LIMIT is for buying, STOP is for selling","LIMIT waits for a better price; STOP waits for a breakout","STOP orders execute instantly","There is no difference"],
   "ans":1,
   "why":"LIMIT = wait for a better price (a pullback). STOP = wait for price to break through a level.",
@@ -1239,6 +1259,7 @@ function renderExam(){
     card.appendChild(head);
     var q = document.createElement("div");
     q.style.cssText = "font-weight:600;font-size:15px;color:var(--text);margin-bottom:14px;";
+    var zhMode = document.body.classList.contains("lang-zh");
     q.textContent = (zhMode && item.q_zh) ? item.q_zh : item.q;
     card.appendChild(q);
     item.opts.forEach(function(opt, oi){
@@ -1289,9 +1310,7 @@ function gradeExam(){
   }
   if(passed){
     try { localStorage.setItem(MTJ_EXAM_KEY, "1"); } catch(e){}
-    res.innerHTML = "<div style='background:rgba(44,217,138,.1);border:1px solid rgba(44,217,138,.4);border-radius:14px;padding:20px;'>"
-      + "<div style='color:var(--bull);font-size:22px;font-weight:700;'>&#10003; PASSED &nbsp;" + correct + " / " + total + " &nbsp;(" + pct + "%)</div>"
-      + "<div style='color:var(--muted);font-size:13.5px;margin-top:8px;'>You have completed the final module of the course.<br>你已完成课程的最后一课 —— 全部 21 课修毕。</div></div>";
+    res.innerHTML = "<div style='background:rgba(44,217,138,.1);border:1px solid rgba(44,217,138,.4);border-radius:14px;padding:22px;'><div style='color:var(--bull);font-weight:700;font-size:18px;margin-bottom:6px;'><span class='en'>PASSED - " + correct + "/" + total + "</span><span class='zh'>通过 - " + correct + "/" + total + "</span></div><div style='color:var(--muted);font-size:13.5px;'><span class='en'>You have finished the trading track.</span><span class='zh'>交易课程全部完成。</span></div><a class='btn-next' href='../ea.html'><span class='en'>Enter EA Courses</span><span class='zh'>进入 EA 课程</span> <span class='ar'>&#8594;</span></a></div>";
   } else {
     res.innerHTML = "<div style='background:rgba(255,92,99,.08);border:1px solid rgba(255,92,99,.35);border-radius:14px;padding:20px;'>"
       + "<div style='color:var(--bear);font-size:22px;font-weight:700;'>" + correct + " / " + total + " &nbsp;(" + pct + "%)</div>"

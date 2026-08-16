@@ -627,6 +627,26 @@ body.lang-zh.lang-strict .hero .h-zh{font-size:clamp(19px,3.2vw,30px);color:var(
    keyboard/AT, so pointer users see no change. */
 :focus-visible{outline:2px solid var(--gold,#E8C877);outline-offset:3px;border-radius:4px;}
 a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width:2px;}
+
+/* Post-exam CTA. Same solid + breathing glow as the cover buttons - passing a
+   chapter is the one moment on a course page that deserves that weight. */
+.btn-next{display:inline-flex;align-items:center;gap:10px;margin-top:16px;
+  font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;
+  padding:13px 26px;border-radius:34px;text-decoration:none;font-weight:700;
+  background:var(--gold);border:1px solid var(--gold);color:#0A0A0E;
+  transition:.28s;animation:btnGlow 3.4s ease-in-out infinite;}
+@keyframes btnGlow{
+  0%,100%{box-shadow:0 0 0 1px rgba(232,200,119,.30),0 0 18px rgba(232,200,119,.22),0 0 40px rgba(232,200,119,.10);}
+  50%{box-shadow:0 0 0 1px rgba(232,200,119,.46),0 0 30px rgba(232,200,119,.40),0 0 64px rgba(232,200,119,.19);}
+}
+.btn-next:hover{background:var(--gold-bright);border-color:var(--gold-bright);color:#0A0A0E;
+  animation:none;transform:translateY(-2px);
+  box-shadow:0 0 0 1px rgba(252,233,168,.55),0 0 34px rgba(232,200,119,.55),0 0 78px rgba(232,200,119,.28);}
+.btn-next .ar{transition:.28s;}
+.btn-next:hover .ar{transform:translateX(4px);}
+@media(prefers-reduced-motion:reduce){
+  .btn-next{animation:none;box-shadow:0 0 0 1px rgba(232,200,119,.38),0 0 24px rgba(232,200,119,.3);}
+}
 </style>
 </head>
 <body>
@@ -1600,7 +1620,7 @@ function gradeExam(){
   var res = document.getElementById("examResult");
   if(correct >= 4){
     localStorage.setItem(MTJ_EXAM_KEY, "1");
-    res.innerHTML = "<div style='background:rgba(44,217,138,.1);border:1px solid rgba(44,217,138,.4);border-radius:14px;padding:22px;'><div style='color:var(--bull);font-weight:700;font-size:18px;margin-bottom:6px;'>🎉 PASSED - " + correct + "/" + total + " 通过!</div><div style='color:var(--muted);font-size:13.5px;'>Module 11 已解锁。回到目录继续学习。</div><a href='../MakeTradesJourney.html' style='display:inline-block;margin-top:14px;background:var(--gold);color:#0a0e14;border-radius:30px;padding:10px 24px;font-weight:600;font-size:13px;text-decoration:none;'>Continue 继续</a></div>";
+    res.innerHTML = "<div style='background:rgba(44,217,138,.1);border:1px solid rgba(44,217,138,.4);border-radius:14px;padding:22px;'><div style='color:var(--bull);font-weight:700;font-size:18px;margin-bottom:6px;'><span class='en'>PASSED - " + correct + "/" + total + "</span><span class='zh'>通过 - " + correct + "/" + total + "</span></div><div style='color:var(--muted);font-size:13.5px;'><span class='en'>Module 16 is unlocked.</span><span class='zh'>模块 16 已解锁。</span></div><a class='btn-next' href='Journal_Review_MakeTradesJourney.html'><span class='en'>Next: The Journal & Review Loop</span><span class='zh'>下一课：交易日志 · 复盘</span> <span class='ar'>&#8594;</span></a></div>";
   } else {
     res.innerHTML = "<div style='background:rgba(255,92,99,.08);border:1px solid rgba(255,92,99,.35);border-radius:14px;padding:22px;'><div style='color:var(--bear);font-weight:700;font-size:18px;margin-bottom:6px;'>NOT PASSED - " + correct + "/" + total + " (" + Math.round(correct/total*100) + "%)</div><div style='color:var(--muted);font-size:13.5px;'>需要 70% (4/5)。阅读上面的错题解析，然后重试。</div></div>";
   }
