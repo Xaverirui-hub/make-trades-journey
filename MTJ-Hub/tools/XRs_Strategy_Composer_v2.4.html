@@ -2574,8 +2574,9 @@ function genMQL5(G){
   const seqBlock=sp.size.find(b=>b.type==='marti'||b.type==='antim');   // v2.7:馬丁/反馬丁允許匯出(破產風險如實保留)
   const hasSeq=!!seqBlock, hasMarti=sp.size.some(b=>b.type==='marti'), hasAntim=sp.size.some(b=>b.type==='antim');
   if(seqBlock) todos.push('馬丁/反馬丁已生成 — 破產風險如實保留在 readme');
-  const emode=(sp.emode[0]||{type:"e_mkt"}).type;
-  if(emode!=="e_mkt") todos.push(`進場方式 ${emode} 未實作,骨架退回市價進場`);
+  const emB=sp.emode[0]||{type:"e_mkt",params:{}};
+  const emode=emB.type;
+  const isPend=(emode==="e_pull"||emode==="e_brk");   // 掛單:回踩限價 / 突破停損
 
   // ---- 已實作積木表 ----
   const E_IMPL={
@@ -2690,7 +2691,7 @@ function genMQL5(G){
   const addIn=(b)=>{Object.entries(b.params||{}).forEach(([k,v])=>{
     const nm=`In_${b.id}_${k}`; if(used[nm])return; used[nm]=1;
     inputs+=`input double ${nm} = ${v};   // ${BLOCKS[b.type]?BLOCKS[b.type].name:b.type} · ${k}\n`;});};
-  [...sp.entry,...sp.filter,...sp.exit].forEach(addIn);
+  [...sp.entry,...sp.filter,...sp.exit,...sp.emode].forEach(addIn);
 
   // ---- entry expr:OR of AND-groups(long/short 各生成一條)----
   const gs={}; sp.entry.forEach(c=>{const g=c.g||0;(gs[g]=gs[g]||[]).push(c);});
@@ -2747,6 +2748,9 @@ ${tslB?`input double TrailATRmult       = ${tslB.params.m};   // Chandelier`:""}
 datetime g_lastBar=0;
 int g_entryBarCount=0;
 double g_extreme=0;
+${isPend?`ulong    g_pendTicket=0;    // 目前掛單票號,0=無
+datetime g_pendBar=0;       // 下單時那根【已收盤】K 的時間(算過期用)
+int      g_prevPos=0;       // 上一根的持倉數,用來偵測掛單成交`:''}
 ${hasSeq?`int g_loseStreak=0, g_winStreak=0;               // 馬丁/反馬丁序列計數
 struct PosRec{ ulong ticket; double profit; };
 PosRec g_known[];                                          // 追蹤被 broker SL/TP 平掉的倉位`:''}
@@ -3147,7 +3151,81 @@ void OpenPos(bool isBuy){
     PrintFormat("[Gen] OrderSend 失敗 ret=%d err=%d",res.retcode,GetLastError()); return; }
   g_entryBarCount=0; g_extreme= isBuy? iHigh(_Symbol,PERIOD_CURRENT,0): iLow(_Symbol,PERIOD_CURRENT,0);
 }
+${isPend?`
+/* ---- 掛單進場(${emode==="e_pull"?"回踩限價":"突破停損"})----------------------------
+   拼陣台的規則:信號那根收盤價 base,偏移 pips;${emode==="e_pull"
+     ?"回踩是【反向】掛,等價格回來才成交"
+     :"突破是【順向】掛,等價格衝過去才成交"};
+   expire 根內沒成交就撤單。這裡照搬,差別只在 MT5 的掛單是真的掛在市場上,
+   不像回測是每根用 high/low 去試 —— 觸價即成交,結果等價。            */
+void DeletePending(){
+  if(g_pendTicket==0) return;
+  MqlTradeRequest r; MqlTradeResult res; ZeroMemory(r); ZeroMemory(res);
+  r.action=TRADE_ACTION_REMOVE; r.order=g_pendTicket;
+  if(!OrderSend(r,res)||res.retcode!=TRADE_RETCODE_DONE)
+    PrintFormat("[Gen] 撤單失敗 ret=%d err=%d",res.retcode,GetLastError());
+  g_pendTicket=0;
+}
 
+/* 每根開頭跑:① 掛單成交了要補做 OpenPos 沒機會做的初始化
+                ② 過期撤單。必須排在 ManagePos 前面,否則 g_entryBarCount
+                   還是上一筆的值,新倉可能一進場就被 TIME/MODE_MAX 平掉。 */
+void SyncPending(){
+  int nowPos=CountMine();
+  if(nowPos>0 && g_prevPos==0){
+    g_entryBarCount=0;
+    bool isBuy=false;
+    for(int i=PositionsTotal()-1;i>=0;i--){ ulong tk=PositionGetTicket(i);
+      if(PositionSelectByTicket(tk)&&PositionGetInteger(POSITION_MAGIC)==(long)Magic
+         &&PositionGetString(POSITION_SYMBOL)==_Symbol){
+        isBuy=(PositionGetInteger(POSITION_TYPE)==POSITION_TYPE_BUY); break; } }
+    g_extreme= isBuy? iHigh(_Symbol,PERIOD_CURRENT,1): iLow(_Symbol,PERIOD_CURRENT,1);
+    g_pendTicket=0;                       // 已成交,票號不再是掛單
+  }
+  g_prevPos=nowPos;
+  if(g_pendTicket==0) return;
+  if(!OrderSelect(g_pendTicket)){ g_pendTicket=0; return; }   // 已成交或已被刪
+  // 數【根】不是數秒:週末跳空時 (t1-t0)/PeriodSeconds() 會暴增(H1 週五收到
+  // 週日開差 48 根),週五掛的單一開盤就被誤判過期 —— 而回測是按陣列索引數根的。
+  int cnt=Bars(_Symbol,PERIOD_CURRENT,g_pendBar,iTime(_Symbol,PERIOD_CURRENT,1));
+  int barsSince = cnt>0 ? cnt-1 : 0;
+  if(barsSince >= (int)In_${emB.id}_expire) DeletePending();
+}
+
+void PlacePending(bool isBuy){
+  double base=iClose(_Symbol,PERIOD_CURRENT,1);
+  double off =In_${emB.id}_pips*10*_Point;      // Composer pips → points ×10
+  double px  = isBuy? base${emode==="e_pull"?"-":"+"}off : base${emode==="e_pull"?"+":"-"}off;
+  ENUM_ORDER_TYPE ot = isBuy? ${emode==="e_pull"?"ORDER_TYPE_BUY_LIMIT":"ORDER_TYPE_BUY_STOP"}
+                            : ${emode==="e_pull"?"ORDER_TYPE_SELL_LIMIT":"ORDER_TYPE_SELL_STOP"};
+  // broker 對掛單有最小距離限制,拼陣台沒有這回事。這裡寧可跳過也不偷偷改價,
+  // 改了價就等於改了策略,回測數字就對不上了。
+  long   stops=SymbolInfoInteger(_Symbol,SYMBOL_TRADE_STOPS_LEVEL);
+  double mkt  = isBuy? SymbolInfoDouble(_Symbol,SYMBOL_ASK): SymbolInfoDouble(_Symbol,SYMBOL_BID);
+  if(stops>0 && MathAbs(px-mkt) < stops*_Point){
+    PrintFormat("[Gen] 掛單距離 %.0f 點 < broker 最小 %d 點,本根跳過",
+                MathAbs(px-mkt)/_Point,(int)stops);
+    return; }
+  double atr=ATRat(14,1), pt=_Point;
+  double sl=0, tp=0, dirn=isBuy?1:-1;
+  ${slB?`sl = px - dirn*In_${slB.id}_m*atr;`:""}
+  ${slp?`sl = px - dirn*In_${slp.id}_pips*10*pt;`:""}
+  ${tpB?`tp = px + dirn*In_${tpB.id}_m*atr;`:""}
+  ${tpp?`tp = px + dirn*In_${tpp.id}_pips*10*pt;`:""}
+  ${rrB?`if(sl>0) tp = px + dirn*In_${rrB.id}_r*MathAbs(px-sl);`:""}
+  MqlTradeRequest r; MqlTradeResult res; ZeroMemory(r); ZeroMemory(res);
+  r.action=TRADE_ACTION_PENDING; r.symbol=_Symbol; r.volume=${hasSeq?`CalcLot(isBuy)`:`FixedLotSize`};
+  r.magic=Magic; r.type=ot; r.price=NormalizeDouble(px,_Digits);
+  r.sl=NormalizeDouble(sl,_Digits); r.tp=NormalizeDouble(tp,_Digits);
+  r.type_time=ORDER_TIME_GTC;                  // 過期由 SyncPending 按【根數】算,
+                                               // 不用 ORDER_TIME_SPECIFIED —— 有些
+                                               // broker 不支援,而且回測是按根不按秒
+  if(!OrderSend(r,res)||res.retcode!=TRADE_RETCODE_DONE){
+    PrintFormat("[Gen] 掛單失敗 ret=%d err=%d",res.retcode,GetLastError()); return; }
+  g_pendTicket=res.order;
+  g_pendBar=iTime(_Symbol,PERIOD_CURRENT,1);
+}
+`:''}
 void ManagePos(){
   ${hasSeq?`// ① 偵測被 broker SL/TP 平掉的倉位(未經 ClosePos)→ 更新 streak
   for(int i=ArraySize(g_known)-1;i>=0;i--){
@@ -3201,13 +3279,15 @@ void ClosePos(ulong tk,string why){ if(!PositionSelectByTicket(tk)) return;
 
 void OnTick(){
   if(!IsNewBar()) return;               // 只在收盤後評估 — 與回測「下一根開盤成交」一致
-  ManagePos();
+  ${isPend?`SyncPending();                        // 成交初始化 / 過期撤單,必須在 ManagePos 前
+  `:''}ManagePos();
   if(CountMine()>0) return;             // 單倉鐵律
-  if(!SpreadOK()) return;
+  ${isPend?`if(g_pendTicket!=0) return;            // 已有掛單就不再掛 — 回測也是 !pos && !pending
+  `:''}if(!SpreadOK()) return;
   bool L=(TradeDirection!=2)&&EntryLong();
   bool S=(TradeDirection!=1)&&EntryShort();
-  if(L&&!S) OpenPos(true);
-  else if(S&&!L) OpenPos(false);
+  if(L&&!S) ${isPend?`PlacePending`:`OpenPos`}(true);
+  else if(S&&!L) ${isPend?`PlacePending`:`OpenPos`}(false);
 }
 //+------------------------------------------------------------------+`;
   return {code:code.split("${NAME}").join("XRs_Gen_"+G.sym+"_"+G.tf), todos:[...new Set(todos)]};
