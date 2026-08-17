@@ -26,12 +26,28 @@ const mediaBlock = [...src.matchAll(/@media[^{]*\{(?:[^{}]*\{[^}]*\})*[^{}]*\}/g
 const outsideMedia = src.replace(/@media[^{]*\{(?:[^{}]*\{[^}]*\})*[^{}]*\}/g, '');
 const baseRules = [...outsideMedia.matchAll(/(^|\})\s*(\.navbar[^{]*|\.nb-[a-z-]+[^{]*)\{([^}]*)\}/gm)]
   .map(m => m[2].trim() + '{' + m[3].trim() + '}');
-/* 抽取之外的修正:英文标签比中文长得多,375px 下五个链接排不开,原本是
-   直接被切掉两头(每一页都这样,不是登录页带来的)。允许换行,别裁。 */
+/* 抽取之外的修正与新增 */
 const NARROW_FIX = `
+/* 英文标签比中文长得多,375px 下五个链接排不开,原本是直接被切掉两头
+   (每一页都这样,不是登录页带来的)。允许换行,别裁。 */
 @media(max-width:640px){
   .navbar .nb-links{flex-wrap:wrap;row-gap:2px;}
   .navbar .nb-links a{padding:5px 7px;}
+}
+/* 登录入口。放在语言切换旁边而不是链接区 —— 账号操作不是内容分区,
+   混进去会让「当前在哪一节」的高亮逻辑说不清。
+   认证做好之后,这颗按钮换成用户菜单(头像 / 我的课程 / 登出)。 */
+.navbar .nb-auth{font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:.14em;text-transform:uppercase;font-weight:700;
+  color:var(--gold);text-decoration:none;white-space:nowrap;
+  padding:6px 14px;border-radius:20px;
+  border:1px solid rgba(232,200,119,.34);background:rgba(232,200,119,.06);
+  transition:.22s;}
+.navbar .nb-auth:hover{color:#0A0A0E;background:var(--gold);border-color:var(--gold);}
+.navbar .nb-auth[aria-current="page"]{color:var(--gold-bright);
+  background:rgba(232,200,119,.16);border-color:rgba(232,200,119,.5);}
+@media(max-width:640px){
+  .navbar .nb-auth{font-size:9px;padding:5px 10px;letter-spacing:.1em;}
 }`;
 const CSS = baseRules.join('\n') + '\n' + mediaBlock + NARROW_FIX;
 
@@ -104,7 +120,11 @@ const navJs = `/* 全站共用导航栏 — 由 scripts/extract_nav.mjs 生成�
         '<span class="nb-name">Make Trades Journey</span>' +
       '</a>' +
       '<div class="nb-links">' + links + '</div>' +
-      '<div class="nb-right"><div class="nb-lang">' +
+      '<div class="nb-right">' +
+        '<a class="nb-auth" href="' + (here === 'login.html' ? '#top' : ROOT + 'login.html') + '"' +
+          (here === 'login.html' ? ' aria-current="page"' : '') +
+          '>Sign in <span class="zh">登录</span></a>' +
+        '<div class="nb-lang">' +
         '<button id="langEn">EN</button>' +
         '<button id="langZh">\u4e2d</button>' +
       '</div></div>' +
