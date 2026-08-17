@@ -169,41 +169,8 @@ body.lang-zh.lang-strict .en:not(.en-keep){display:none !important;}
 
 
 
-/* ===== Global Navbar v3 (glass + logo + lang) ===== */
-.navbar{
-  position:fixed;top:0;left:0;right:0;z-index:95;
-  display:flex;align-items:center;justify-content:space-between;
-  gap:12px;padding:10px clamp(14px,3vw,28px);
-  background:rgba(10,10,14,.55);
-  -webkit-backdrop-filter:blur(18px) saturate(160%);
-  backdrop-filter:blur(18px) saturate(160%);
-  border-bottom:1px solid rgba(232,200,119,.14);
-  box-shadow:0 1px 0 rgba(255,255,255,.04) inset, 0 8px 32px rgba(0,0,0,.18);
-  font-family:'JetBrains Mono',ui-monospace,monospace;
-}
-.navbar .nb-brand{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;}
-.navbar .nb-brand img{height:30px;width:auto;border-radius:6px;}
-.navbar .nb-brand .nb-name{font-size:11px;font-weight:700;letter-spacing:.14em;color:var(--text);text-transform:uppercase;}
-.navbar .nb-links{display:flex;align-items:center;gap:2px;flex-wrap:nowrap;}
-.navbar .nb-links a{
-  font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
-  color:var(--muted);text-decoration:none;padding:6px 12px;border-radius:16px;transition:.25s;white-space:nowrap;
-}
-.navbar .nb-links a:hover{color:var(--gold-bright);background:rgba(232,200,119,.08);}
-.navbar .nb-links a.active{color:var(--gold-bright);border:1px solid rgba(232,200,119,.35);background:rgba(232,200,119,.1);}
-.navbar .nb-right{display:flex;align-items:center;gap:8px;flex-shrink:0;}
-.navbar .nb-lang{display:flex;align-items:center;gap:4px;background:rgba(232,200,119,.08);border:1px solid rgba(232,200,119,.2);border-radius:20px;padding:3px;}
-.navbar .nb-lang button{
-  background:none;border:none;color:var(--muted);font-family:'JetBrains Mono',monospace;
-  font-size:10px;letter-spacing:.08em;padding:4px 10px;border-radius:16px;cursor:pointer;transition:.2s;
-}
-.navbar .nb-lang button.on{color:var(--gold-bright);background:rgba(232,200,119,.18);}
-@media(max-width:640px){
-  .navbar{flex-wrap:wrap;padding:8px 10px;gap:6px;}
-  .navbar .nb-brand .nb-name{display:none;}
-  .navbar .nb-links{order:3;width:100%;justify-content:center;gap:0;}
-  .navbar .nb-links a{font-size:9px;padding:5px 8px;letter-spacing:.1em;}
-  .navbar .nb-right{margin-left:auto;}
+/* ===== Global Navbar v3 (glass + logo + lang) ===== */
+@media(max-width:640px){
 }
 
 /* ===== Chinese is not a subtitle ==========================================
@@ -254,25 +221,7 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
 </style>
 </head>
 <body>
-<nav class="navbar" id="globalNav">
-  <a class="nb-brand" href="../MakeTradesJourney.html#top">
-    <img src="data:image/png;base64,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" alt="Make Trades Journey">
-    <span class="nb-name">Make Trades Journey</span>
-  </a>
-  <div class="nb-links">
-    <a href="../MakeTradesJourney.html#top" data-sec="home">· Home <span class="zh">· 首页</span></a>
-    <a href="../courses.html" data-sec="courses">· Trading Courses <span class="zh">· 交易课程</span></a>
-    <a href="../ea.html" data-sec="ea">· EA Courses <span class="zh">· EA 课程</span></a>
-    <a href="../tools.html" data-sec="tools" class="active">· Tools <span class="zh">· 工具</span></a>
-    <a href="../about.html" data-sec="about">· About <span class="zh">· 关于</span></a>
-  </div>
-  <div class="nb-right">
-    <div class="nb-lang">
-      <button id="langEn" onclick="setLang('en')">EN</button>
-      <button id="langZh" onclick="setLang('zh')">中</button>
-    </div>
-  </div>
-</nav>
+<script src="../assets/nav.js"></script><!-- 全站共用导航,见 assets/nav.js -->
 
 <!-- ===== Global navbar ===== -->
 <div id="comingSoon" style="position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(6,8,12,.97);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);font-family:'JetBrains Mono',ui-monospace,monospace;text-align:center;padding:40px;">
