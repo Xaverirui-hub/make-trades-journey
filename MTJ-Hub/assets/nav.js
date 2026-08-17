@@ -15,6 +15,12 @@
   var me = document.currentScript;
   var ROOT = me.src.slice(0, me.src.lastIndexOf('assets/nav.js'));
 
+  /* ===== beta 开关 =====
+     beta 期间免费、不需要账号,所以导航不显示登录入口 —— 学生点进去
+     只会看到一个还不能用的页面。收费前把这里改成 true,33 个页面一起
+     出现登录钮。登录页本身是做好的,只是同时盖了 COMING SOON 遮罩。 */
+  var SHOW_AUTH = false;
+
   var ITEMS = [
     ['home',    'MakeTradesJourney.html#top', 'Home',            '首页'],
     ['courses', 'courses.html',               'Trading Courses', '交易课程'],
@@ -65,9 +71,11 @@
       '</a>' +
       '<div class="nb-links">' + links + '</div>' +
       '<div class="nb-right">' +
-        '<a class="nb-auth" href="' + (here === 'login.html' ? '#top' : ROOT + 'login.html') + '"' +
-          (here === 'login.html' ? ' aria-current="page"' : '') +
-          '>Sign in <span class="zh">登录</span></a>' +
+        (SHOW_AUTH
+          ? '<a class="nb-auth" href="' + (here === 'login.html' ? '#top' : ROOT + 'login.html') + '"' +
+            (here === 'login.html' ? ' aria-current="page"' : '') +
+            '>Sign in <span class="zh">登录</span></a>'
+          : '') +
         '<div class="nb-lang">' +
         '<button id="langEn">EN</button>' +
         '<button id="langZh">中</button>' +

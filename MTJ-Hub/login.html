@@ -661,5 +661,18 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 })();
 
 </script>
+<script type="module">
+  /* beta 期间:免费开放、不需要账号,所以整页盖 COMING SOON。
+     页面本身(表单、各种状态)是做好的,收费前把这一段删掉就能用。 */
+  try{
+    const { mountComingSoon } = await import("./assets/comingsoon.js");
+    mountComingSoon("page", {
+      badge: "Coming soon",
+      title: ["Accounts are on the way", "账号系统正在做"],
+      note:  ["The beta is free until the end of the year — no sign-up needed. Just open a course and start.",
+              "beta 到年底都免费,不用注册。直接打开课程就能上。"]
+    });
+  }catch(e){}
+</script>
 </body>
 </html>
