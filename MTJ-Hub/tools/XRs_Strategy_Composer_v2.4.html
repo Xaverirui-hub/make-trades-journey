@@ -2642,6 +2642,12 @@ function genMQL5(G){
     pa_inside_s:b=>`PaInside(false)`,
     pa_outside:b=>`PaOutside(true)`,
     pa_outside_s:b=>`PaOutside(false)`,
+    fvg:b=>`Fvg(true)`,
+    fvg_s:b=>`Fvg(false)`,
+    f_mom:b=>`(!Bad(Roc(In_${b.id}_n,1)) && Roc(In_${b.id}_n,1)>In_${b.id}_thr/100.0)`,
+    f_mom_s:b=>`(!Bad(Roc(In_${b.id}_n,1)) && Roc(In_${b.id}_n,1)< -In_${b.id}_thr/100.0)`,
+    f_rev:b=>`(!Bad(Zsc(In_${b.id}_n,1)) && Zsc(In_${b.id}_n,1)< -In_${b.id}_z)`,
+    f_rev_s:b=>`(!Bad(Zsc(In_${b.id}_n,1)) && Zsc(In_${b.id}_n,1)>In_${b.id}_z)`,
   };
   const F_IMPL={
     f_macd:(b,side)=>side==='long'?`(MACDh(In_${b.id}_fast,In_${b.id}_slow,In_${b.id}_signal,1)>0)`:`(MACDh(In_${b.id}_fast,In_${b.id}_slow,In_${b.id}_signal,1)<0)`,
@@ -2660,6 +2666,9 @@ function genMQL5(G){
     sess:b=>`(HourNow()>=In_${b.id}_from && HourNow()<In_${b.id}_to)`,
     f_pa_ctx:(b,side)=>`PaCtx(In_${b.id}_look,In_${b.id}_pct,${side==="long"?"true":"false"})`,
     f_pa_body:b=>`PaBodyX(In_${b.id}_mult)`,
+    wday:b=>`WDayOK(In_${b.id}_mon,In_${b.id}_tue,In_${b.id}_wed,In_${b.id}_thu,In_${b.id}_fri)`,
+    trend:b=>`(!Bad(R2at(1)) && R2at(1)>In_${b.id}_r2)`,
+    volf:b=>`(!Bad(AtrPctC()) && AtrPctC()>=In_${b.id}_lo && AtrPctC()<=In_${b.id}_hi)`,
   };
 
   // ---- inputs ----
@@ -2677,9 +2686,16 @@ function genMQL5(G){
       todos.push(`進場積木 ${b.type}(${BLOCKS[b.type]?BLOCKS[b.type].name:"?"})未實作 → return false`);
       return "false /* TODO: "+b.type+" */";
     }).join("\n        && ")+")").join("\n     || ");
+  // 事件積木沒有 EA 端對應物,不是「還沒寫」而是「寫不出來」——訊息要講清楚
+  // 差在哪,尤其 f_onlynews 退回 true 的效果跟拼陣台裡的設定是相反的。
+  const NOT_PORTABLE={
+    f_nonews:"f_nonews(避開高影響數據)無法移植:EA 端沒有拼陣台右欄的事件窗口,MT5 日曆 API 在策略測試器也取不到資料 → 骨架【不會】避開數據,請改用時段過濾(sess)或自行停機",
+    f_onlynews:"f_onlynews(只在數據時段交易)無法移植 → 骨架放行【全部時段】,效果與你在拼陣台的設定相反,兩邊回測結果不可比",
+    f_noswan:"f_noswan(黑天鵝期間停止交易)無法移植:_swan 是合成行情才有的標記,真實行情沒有這欄 → 骨架不做任何過濾",
+  };
   const filtSide=(side)=>sp.filter.length? sp.filter.map(b=>{
       if(F_IMPL[b.type]) return F_IMPL[b.type](b,side);
-      todos.push(`過濾積木 ${b.type} 未實作 → 暫時放行(true)`);
+      todos.push(NOT_PORTABLE[b.type] || `過濾積木 ${b.type} 未實作 → 暫時放行(true)`);
       return "true /* TODO: "+b.type+" */";
     }).join("\n     && ") : "true";
 
@@ -2960,6 +2976,64 @@ bool PaOutside(bool lng){ int sh=1;
 bool PaCtx(double look,double pct,bool lng){
   return lng ? PaNearLow(1,look,pct) : PaNearHigh(1,look,pct); }
 bool PaBodyX(double mult){ return PaBody(1) >= PaAvgBody(1)*mult; }
+
+//--- ICT:FVG 回補 ---------------------------------------------------
+// 缺口在形成後 20 根內有效;a = 缺口形成 bar 距今幾根
+bool Fvg(bool lng){ int sh=1;
+  for(int a=0;a<=20;a++){ int j=sh+a;
+    if(!PaBars(j+2)) break;
+    if(lng){ if(PaL(j)>PaH(j+2)){
+        double top=PaL(j), bot=PaH(j+2);
+        if(PaL(sh)<=top && PaC(sh)>bot) return true; } }
+    else   { if(PaH(j)<PaL(j+2)){
+        double bot=PaH(j), top=PaL(j+2);
+        if(PaH(sh)>=bot && PaC(sh)<top) return true; } }
+  } return false; }
+
+//--- 量化因子 -------------------------------------------------------
+double Roc(double n,int sh){ int p=(int)n;
+  if(p<1 || !PaBars(sh+p)) return EMPTY_VALUE;
+  double b=PaC(sh+p); if(b==0) return EMPTY_VALUE;
+  return PaC(sh)/b-1.0; }
+double Zsc(double n,int sh){ int p=(int)n;
+  if(p<2 || !PaBars(sh+p-1)) return EMPTY_VALUE;
+  double s=0; for(int j=sh;j<sh+p;j++) s+=PaC(j);
+  double m=s/p, v=0;
+  for(int j=sh;j<sh+p;j++){ double dd=PaC(j)-m; v+=dd*dd; }
+  double sd=MathSqrt(v/(p-1));
+  return sd>0 ? (PaC(sh)-m)/sd : 0.0; }
+// 趨勢強度:收盤對序號做線性迴歸的 R²(固定 20 根,與拼陣台一致)
+double R2at(int sh){ int p=20;
+  if(!PaBars(sh+p-1)) return EMPTY_VALUE;
+  double sx=0,sy=0,sxy=0,sxx=0,syy=0;
+  for(int j=0;j<p;j++){ double x=j, y=PaC(sh+p-1-j);
+    sx+=x; sy+=y; sxy+=x*y; sxx+=x*x; syy+=y*y; }
+  double cov=sxy-sx*sy/p, vx=sxx-sx*sx/p, vy=syy-sy*sy/p;
+  return (vx>0 && vy>0) ? (cov*cov)/(vx*vy) : 0.0; }
+// 波動分位:ATR14/收盤 在前 252 根(至少 60 根)裡的百分位
+double AtrPct(int sh){
+  int h=Hget("atr14"); if(h==INVALID_HANDLE) h=Hput("atr14",iATR(_Symbol,PERIOD_CURRENT,14));
+  if(h==INVALID_HANDLE) return EMPTY_VALUE;
+  double a[], cl[]; ArraySetAsSeries(a,true); ArraySetAsSeries(cl,true);
+  int got=CopyBuffer(h,0,sh,253,a);
+  if(got<61) return EMPTY_VALUE;
+  if(CopyClose(_Symbol,PERIOD_CURRENT,sh,got,cl)<got) return EMPTY_VALUE;
+  if(Bad(a[0]) || cl[0]==0) return EMPTY_VALUE;
+  double v=a[0]/cl[0]; int cnt=0, le=0;
+  for(int i=1;i<got;i++){ if(Bad(a[i]) || cl[i]==0) break;
+    double x=a[i]/cl[i]; cnt++; if(x<=v) le++; }
+  if(cnt<60) return EMPTY_VALUE;
+  return 100.0*le/cnt; }
+// 一根 K 只算一次(每次呼叫要 CopyBuffer 253 筆,過濾器會問到三遍)
+double AtrPctC(){ static datetime tt=0; static double vv=EMPTY_VALUE;
+  datetime t=iTime(_Symbol,PERIOD_CURRENT,1);
+  if(t!=tt){ tt=t; vv=AtrPct(1); } return vv; }
+bool WDayOK(double mon,double tue,double wed,double thu,double fri){
+  MqlDateTime dt; TimeToStruct(iTime(_Symbol,PERIOD_CURRENT,1),dt);
+  switch(dt.day_of_week){
+    case 1: return mon!=0; case 2: return tue!=0; case 3: return wed!=0;
+    case 4: return thu!=0; case 5: return fri!=0; }
+  return false; }   // 週末不交易,與拼陣台一致
 
 //--- 分形:往回找最近一個已確認的上/下分形(中心 bar 兩側各 2 根)------
 double FrUp(int sh){ for(int i=sh+2;i<sh+300;i++){
