@@ -120,42 +120,36 @@ function compile(gl, type, src) {
   return s;
 }
 
-/* MTJ 预设:每根光缆 = 紫色芯 + 金色边 + 金色脉冲穿行。
-   着色器里 uTunnelColor 填的是缆芯(wireMask × uTunnelOpacity),所以紫要
-   看得见就得把 tunnelOpacity 拉起来 —— 0.07 那种等于没有。
-   金仍然是主调:边缘光 ×1.3×glow、脉冲 ×3.0,两者都压过芯部的紫。
-
-   亮度只给外围。中心靠 fadeNear 挖空,页面那边再叠暗晕和井,
-   所以可以放心把 brightness / glow 调高而不影响表单可读性。 */
+/* MTJ 预设:金缆金脉冲,紫只在隧道体里留一点纵深 */
 export const MTJ_TUNNEL = {
   cableColor: '#E8C877',
-  pulseColor: '#FFF1C4',
-  tunnelColor: '#7B4DFF',
-  tunnelOpacity: 0.62,
-  speed: 0.11,
+  pulseColor: '#FCE9A8',
+  tunnelColor: '#7C4DD8',
+  tunnelOpacity: 0.07,
+  speed: 0.1,
   flowDirection: 'outward',
-  pulseSpeed: 1.9,
-  pulseLength: 0.3,
+  pulseSpeed: 1.6,
+  pulseLength: 0.26,
   pulseBlend: 1,
-  pulseWidth: 0.92,
-  cableCount: 24,
-  thickness: 0.31,
-  rimWidth: 0.16,
-  waviness: 0.34,
-  sway: 0.5,
+  pulseWidth: 0.9,
+  cableCount: 22,
+  thickness: 0.3,
+  rimWidth: 0.14,
+  waviness: 0.3,
+  sway: 0.45,
   size: 1.0,
   centerX: 0,
   centerY: 0,
-  glow: 1.45,
-  fadeNear: 0.72,
-  fadeFar: 2.05,
-  brightness: 1.3,
+  glow: 1.05,
+  fadeNear: 0.66,
+  fadeFar: 2.0,
+  brightness: 1.0,
   colorVariance: true,
   grain: true,
   grainIntensity: 0.045,
   opacity: 1.0,
   mouseInteraction: true,
-  mouseStrength: 0.12,
+  mouseStrength: 0.1,
   maxDpr: 2
 };
 

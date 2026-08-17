@@ -43,7 +43,7 @@ body{background:var(--bg);color:var(--text);
 /* ---- 隧道:铺满视口,消失点就是表单所在 ---- */
 #tunnel{position:fixed;inset:0;z-index:0;pointer-events:none;
   opacity:0;transition:opacity 1.1s ease;}
-#tunnel.is-live{opacity:.82;}
+#tunnel.is-live{opacity:.62;}
 #tunnel canvas{width:100%;height:100%;display:block;}
 /* 消失点必须是【暗】的,表单才读得出来。隧道自己在着色器里就把中心留空
    (fadeNear),这层再压一道,两层叠起来才够。 */
