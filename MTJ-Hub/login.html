@@ -61,17 +61,16 @@ body{background:var(--bg);color:var(--text);
 .plate{position:relative;width:100%;max-width:404px;padding:40px 34px 34px;}
 .plate::before{content:"";position:absolute;inset:-6px;pointer-events:none;
   background:radial-gradient(112% 80% at 50% 44%,
-    rgba(10,7,22,.95) 0%, rgba(10,7,22,.88) 52%, rgba(10,7,22,0) 100%);
+    rgba(6,6,9,.95) 0%, rgba(6,6,9,.88) 52%, rgba(6,6,9,0) 100%);
   -webkit-backdrop-filter:blur(13px) saturate(.85);
   backdrop-filter:blur(13px) saturate(.85);
   -webkit-mask-image:radial-gradient(112% 80% at 50% 44%,#000 0%,#000 54%,transparent 100%);
   mask-image:radial-gradient(112% 80% at 50% 44%,#000 0%,#000 54%,transparent 100%);}
-/* 隧道的光在井底积成一汪紫 —— 纯扩散、没有边,所以不会变成一张卡片。
-   放在 ::before 之上、内容之下。 */
+/* 隧道的光在井底积成一汪暖光。原本这里还有一层紫,但紫光就打在卡片上,
+   卡片要黑就不能留。只保留金的那半。 */
 .plate::after{content:"";position:absolute;inset:-70px -50px -40px;pointer-events:none;
   background:
-    radial-gradient(58% 42% at 50% 26%, rgba(123,77,255,.30), transparent 72%),
-    radial-gradient(46% 34% at 50% 84%, rgba(232,200,119,.13), transparent 76%);
+    radial-gradient(46% 34% at 50% 84%, rgba(232,200,119,.11), transparent 76%);
   filter:blur(18px);}
 .plate > *{position:relative;}
 
@@ -85,7 +84,7 @@ h1 .zh{display:block;font-size:.5em;font-weight:600;letter-spacing:.24em;
 
 /* ---- 登录 / 注册切换 ---- */
 .seg{display:flex;gap:4px;padding:4px;margin-bottom:26px;
-  border:1px solid var(--line);border-radius:32px;background:rgba(18,12,36,.6);
+  border:1px solid var(--line);border-radius:32px;background:rgba(12,12,17,.62);
   -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);}
 .seg button{flex:1;appearance:none;border:0;cursor:pointer;
   background:transparent;color:var(--muted);
@@ -107,7 +106,7 @@ label{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;
   stroke:var(--muted-2);fill:none;stroke-width:1.6;
   stroke-linecap:round;stroke-linejoin:round;pointer-events:none;transition:stroke .2s;}
 input{width:100%;padding:13px 14px 13px 40px;
-  background:rgba(16,11,32,.7);color:var(--text);
+  background:rgba(10,10,14,.72);color:var(--text);
   border:1px solid var(--line);border-radius:11px;
   font-family:'Sora',sans-serif;font-size:14px;
   transition:border-color .2s,background .2s,box-shadow .2s;}
@@ -117,7 +116,7 @@ input{width:100%;padding:13px 14px 13px 40px;
 input::placeholder{color:#8d8a81;}
 input:hover{border-color:rgba(123,77,255,.42);}
 /* 聚焦:内圈金(系统色)+ 外圈紫扩散,像隧道的光扫到这一格 */
-input:focus{outline:none;border-color:var(--gold);background:rgba(21,14,42,.9);
+input:focus{outline:none;border-color:var(--gold);background:rgba(14,14,19,.92);
   box-shadow:0 0 0 3px rgba(232,200,119,.14),
              0 0 0 7px rgba(123,77,255,.16),
              0 6px 26px -8px rgba(123,77,255,.55);}
