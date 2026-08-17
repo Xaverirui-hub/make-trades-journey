@@ -5,7 +5,8 @@
    Colour note: the original runs magenta against cyan. MTJ is a single
    gold accent on near black, so depth here comes from luminance instead
    of a second hue: deep amber in the far lane, cream gold in the near
-   one. Same read, no new colour in the system.
+   one. The roadside sticks are the one exception — they read as candles,
+   so they take the site's bull/bear green and red.
    ===================================================================== */
 /* three + postprocessing 是自架的,不是 CDN —— esm.sh 在大陸連不上,
    而首頁封面的失敗是無聲的,所以那邊看到的一直是一片靜止的背景。
@@ -46,7 +47,9 @@ export const MTJ_PRESET = {
     brokenLines: 0x3a3020,
     leftCars: [0xe8c877, 0xc9a227, 0xfce9a8],
     rightCars: [0x8a6d1f, 0xc9a227, 0xe8c877],
-    sticks: 0xe8c877
+    /* 路邊的立柱長得就像 K 棒,所以直接用站上的漲跌色,一根綠一根紅隨機。
+       不是新調色 —— 這兩個就是全站 K 線圖在用的 --bull / --bear。 */
+    sticks: [0x2CD98A, 0xFF5C63]
   }
 };
 
