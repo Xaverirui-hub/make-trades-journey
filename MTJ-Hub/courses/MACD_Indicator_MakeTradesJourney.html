@@ -1100,7 +1100,9 @@ function drawMACDCross(box){
   const s=svgFor(box,W,H);
   const gm=[-4.0,-3.6,-3.1,-2.6,-2.1,-1.6,-1.2,-0.9,-0.7,-0.55,-0.45,-0.35,-0.25,-0.12,0.0,0.2,0.5,0.85,1.2,1.6,2.0,2.4,2.7,2.9,3.0,2.9,2.7,2.4];
   const gs=[-2.5,-2.1,-1.7,-1.3,-1.0,-0.8,-0.65,-0.5,-0.35,-0.22,-0.12,-0.05,0.0,0.02,0.0,-0.05,-0.1,-0.05,0.1,0.35,0.7,1.1,1.5,1.9,2.3,2.6,2.7,2.55];
-  const dm=gs.map(v=>-v),ds=gm.map(v=>-v);
+  /* 死叉 = 金叉整組上下翻。两条线要各自取负:dm-ds = -(gm-gs),交叉方向才会
+     反过来。若写成 dm=-gs, ds=-gm,则 dm-ds = gm-gs,画出来还是个金叉。 */
+  const dm=gm.map(v=>-v),ds=gs.map(v=>-v);
   const pw=(W-L-R-12)/2,n=gm.length;
   function panel(px,title,ln,sg,verdict,col,arrowUp){
     const sc=scaleFor(ln.concat(sg),0.12);
@@ -1125,14 +1127,17 @@ function drawMACDCross(box){
     el('line',{x1:cxp,x2:cxp,y1:Y(sc.mx),y2:Y(sc.mn),stroke:col,'stroke-width':1.1,'stroke-dasharray':'3 3',class:'rlbl',style:'--i:20'},s);
     const cg=el('g',{style:'--i:21'},s);
     el('circle',{cx:cxp,cy:cyp,r:6,fill:col,'fill-opacity':.25,stroke:col,'stroke-width':2,class:'rlbl'},cg);
-    el('path',{d:arrowUp?'M'+cxp+' '+(cyp+16)+' l-6 -9 M'+cxp+' '+(cyp+16)+' l6 -9':'M'+cxp+' '+(cyp-16)+' l-6 9 M'+cxp+' '+(cyp-16)+' l6 9',
+    /* 箭頭是兩筆從【尖端】往外撇。尖端在上才是朝上,原本寫成尖端在下、
+       手臂往上 —— 畫出來金叉是個朝下的 V,死叉是個朝上的 ^,教反了。
+       朝上的擺在交叉點下方,朝下的擺在上方(同 MT5 買賣箭頭慣例)。 */
+    el('path',{d:arrowUp?'M'+cxp+' '+(cyp+7)+' l-6 9 M'+cxp+' '+(cyp+7)+' l6 9':'M'+cxp+' '+(cyp-7)+' l-6 -9 M'+cxp+' '+(cyp-7)+' l6 -9',
       stroke:col,'stroke-width':2.2,'fill':'none','stroke-linecap':'round',class:'rlbl',style:'--i:22'},cg);
     txt(s,px+26+plotW/2,T+plotH+22,title,{'text-anchor':'middle','font-size':10.5,fill:col,'font-weight':700,'letter-spacing':'.14em'});
     txt(s,px+26+plotW/2,T+plotH+37,verdict,{'text-anchor':'middle','font-size':9.5,fill:C.muted2,'font-family':"'Noto Sans SC',sans-serif"});
     txt(s,px+26+plotW/2,T-2,'LINE 线 / SIGNAL 信号',{'text-anchor':'middle','font-size':8.5,fill:C.muted2,'letter-spacing':'.12em'});
   }
-  panel(L,'GOLDEN CROSS 金叉','momentum turning up 动能转强','bull',true);
-  panel(L+pw+12,'DEATH CROSS 死叉','momentum turning down 动能转弱','bear',false);
+  panel(L,       'GOLDEN CROSS 金叉', gm, gs, 'momentum turning up 动能转强',   C.bull, true);
+  panel(L+pw+12, 'DEATH CROSS 死叉',  dm, ds, 'momentum turning down 动能转弱', C.bear, false);
 }
 
 /* ============ 4. histogram contraction ============ */
