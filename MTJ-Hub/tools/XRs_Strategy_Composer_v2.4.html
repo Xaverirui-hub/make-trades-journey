@@ -2648,6 +2648,19 @@ function genMQL5(G){
     f_mom_s:b=>`(!Bad(Roc(In_${b.id}_n,1)) && Roc(In_${b.id}_n,1)< -In_${b.id}_thr/100.0)`,
     f_rev:b=>`(!Bad(Zsc(In_${b.id}_n,1)) && Zsc(In_${b.id}_n,1)< -In_${b.id}_z)`,
     f_rev_s:b=>`(!Bad(Zsc(In_${b.id}_n,1)) && Zsc(In_${b.id}_n,1)>In_${b.id}_z)`,
+    // ---- 背離:kind 0=rsi 1=macd 2=stoch 3=cci,倒數第二個引數是 hidden ----
+    div_rsi:b=>`Diverge(0,In_${b.id}_period,0,0,true,false,In_${b.id}_maxAge)`,
+    div_rsi_s:b=>`Diverge(0,In_${b.id}_period,0,0,false,false,In_${b.id}_maxAge)`,
+    div_rsi_h:b=>`Diverge(0,In_${b.id}_period,0,0,true,true,In_${b.id}_maxAge)`,
+    div_rsi_h_s:b=>`Diverge(0,In_${b.id}_period,0,0,false,true,In_${b.id}_maxAge)`,
+    div_macd:b=>`Diverge(1,In_${b.id}_fast,In_${b.id}_slow,In_${b.id}_signal,true,false,In_${b.id}_maxAge)`,
+    div_macd_s:b=>`Diverge(1,In_${b.id}_fast,In_${b.id}_slow,In_${b.id}_signal,false,false,In_${b.id}_maxAge)`,
+    div_macd_h:b=>`Diverge(1,In_${b.id}_fast,In_${b.id}_slow,In_${b.id}_signal,true,true,In_${b.id}_maxAge)`,
+    div_macd_h_s:b=>`Diverge(1,In_${b.id}_fast,In_${b.id}_slow,In_${b.id}_signal,false,true,In_${b.id}_maxAge)`,
+    div_stoch:b=>`Diverge(2,In_${b.id}_k,In_${b.id}_slow,In_${b.id}_d,true,false,In_${b.id}_maxAge)`,
+    div_stoch_s:b=>`Diverge(2,In_${b.id}_k,In_${b.id}_slow,In_${b.id}_d,false,false,In_${b.id}_maxAge)`,
+    div_cci:b=>`Diverge(3,In_${b.id}_period,0,0,true,false,In_${b.id}_maxAge)`,
+    div_cci_s:b=>`Diverge(3,In_${b.id}_period,0,0,false,false,In_${b.id}_maxAge)`,
   };
   const F_IMPL={
     f_macd:(b,side)=>side==='long'?`(MACDh(In_${b.id}_fast,In_${b.id}_slow,In_${b.id}_signal,1)>0)`:`(MACDh(In_${b.id}_fast,In_${b.id}_slow,In_${b.id}_signal,1)<0)`,
@@ -2669,6 +2682,7 @@ function genMQL5(G){
     wday:b=>`WDayOK(In_${b.id}_mon,In_${b.id}_tue,In_${b.id}_wed,In_${b.id}_thu,In_${b.id}_fri)`,
     trend:b=>`(!Bad(R2at(1)) && R2at(1)>In_${b.id}_r2)`,
     volf:b=>`(!Bad(AtrPctC()) && AtrPctC()>=In_${b.id}_lo && AtrPctC()<=In_${b.id}_hi)`,
+    f_div_rsi:(b,side)=>`Diverge(0,In_${b.id}_period,0,0,${side==="long"?"true":"false"},false,In_${b.id}_maxAge)`,
   };
 
   // ---- inputs ----
@@ -3034,6 +3048,51 @@ bool WDayOK(double mon,double tue,double wed,double thu,double fri){
     case 1: return mon!=0; case 2: return tue!=0; case 3: return wed!=0;
     case 4: return thu!=0; case 5: return fri!=0; }
   return false; }   // 週末不交易,與拼陣台一致
+
+//--- 背離 -----------------------------------------------------------
+// 擺動點用分形,中心 bar 兩側各 2 根 → 要 shift ≥ 3 才【已確認】。
+// shift 0 是還在跳動的那根,永遠不碰。
+#define MTJ_SWSCAN 600     // 回掃上限(根)。拼陣台不設限,這裡為速度設界;
+                           // 實測 600 根內必有兩個分形,不影響結果。
+void SwingScan(bool lows,int &mb,int &ma){ int f=0; mb=-1; ma=-1;
+  for(int m=3;m<=MTJ_SWSCAN;m++){
+    if(!PaBars(m+2)) break;
+    bool ok = lows ? (PaL(m)<PaL(m+1) && PaL(m)<PaL(m+2) && PaL(m)<PaL(m-1) && PaL(m)<PaL(m-2))
+                   : (PaH(m)>PaH(m+1) && PaH(m)>PaH(m+2) && PaH(m)>PaH(m-1) && PaH(m)>PaH(m-2));
+    if(!ok) continue;
+    f++; if(f==1) mb=m; else { ma=m; return; } } }
+// 一根 K 只掃一次 —— 同一根上可能掛了好幾個背離積木
+bool SwingPair(bool lows,int &mb,int &ma){
+  static datetime tt=0; static int lb=-1,la=-1,hb=-1,ha=-1;
+  datetime t=iTime(_Symbol,PERIOD_CURRENT,1);
+  if(t!=tt){ tt=t; SwingScan(true,lb,la); SwingScan(false,hb,ha); }
+  if(lows){ mb=lb; ma=la; } else { mb=hb; ma=ha; }
+  return (mb>0 && ma>0); }
+// MACD 背離比的是【MACD 線】(buffer 0),不是 MACDh 的柱狀圖
+double MACDl(double f,double sl,double sg,int sh){
+  string k="macd"+(string)(int)f+"_"+(string)(int)sl+"_"+(string)(int)sg;
+  int h=Hget(k); if(h==INVALID_HANDLE) h=Hput(k,iMACD(_Symbol,PERIOD_CURRENT,(int)f,(int)sl,(int)sg,PRICE_CLOSE));
+  return Buf(h,0,sh); }
+double DivInd(int kind,double p1,double p2,double p3,int sh){
+  switch(kind){
+    case 0: return RSIat(p1,sh);            // rsi:p1=period
+    case 1: return MACDl(p1,p2,p3,sh);      // macd:fast/slow/signal
+    case 2: return StoK(p1,p2,p3,sh);       // stoch:k/slow/d
+    case 3: return CCIat(p1,sh); }          // cci:p1=period
+  return EMPTY_VALUE; }
+/* 常規看多:價格更低、指標更高(下跌動能衰竭)
+   隱藏看多:價格更高、指標更低(順勢回調結束);看空兩者對調 */
+bool Diverge(int kind,double p1,double p2,double p3,bool lng,bool hidden,double maxAge){
+  int mb,ma; bool lows=lng;               // 多頭(含隱藏)看低點,空頭看高點
+  if(!SwingPair(lows,mb,ma)) return false;
+  if(mb-1 > (int)maxAge) return false;    // 太久遠的背離不算
+  if(ma-mb < 3)          return false;    // 兩點太近
+  double pb = lows? PaL(mb) : PaH(mb);
+  double pa = lows? PaL(ma) : PaH(ma);
+  double ib = DivInd(kind,p1,p2,p3,mb), ia = DivInd(kind,p1,p2,p3,ma);
+  if(Bad(ib) || Bad(ia)) return false;
+  if(lng) return hidden ? (pb>pa && ib<ia) : (pb<pa && ib>ia);
+  return         hidden ? (pb<pa && ib>ia) : (pb>pa && ib<ia); }
 
 //--- 分形:往回找最近一個已確認的上/下分形(中心 bar 兩側各 2 根)------
 double FrUp(int sh){ for(int i=sh+2;i<sh+300;i++){
