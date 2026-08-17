@@ -1,3 +1,6 @@
 # 第三方檔案原樣保存。assets/vendor/README.md 寫了重新產生的指令,
 # 如果 git 幫忙換了行尾,重新產生後 diff 就對不上,那份指令就白寫了。
 MTJ-Hub/assets/vendor/** -text
+
+# 字体是二进制,不要做行尾转换
+MTJ-Hub/assets/fonts/files/** -text
