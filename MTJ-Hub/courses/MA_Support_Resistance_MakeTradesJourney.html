@@ -584,7 +584,7 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
 <section class="section" id="exam" style="padding-top:70px;">
   <div class="group-head reveal">
     <span class="tier">EXAM</span>
-    <div><div class="eyebrow"><span class="en">Module Check</span><span class="zh">模块测验</span></div><h2 class="title">Pass the Quiz to Unlock Module 07<span class="zh">通过测验解锁下一课</span></h2></div>
+    <div><div class="eyebrow"><span class="en">Module Check</span><span class="zh">模块测验</span></div><h2 class="title">Pass the Quiz to Unlock Module 09<span class="zh">通过测验解锁下一课</span></h2></div>
   </div>
 <div class="note" style="max-width:820px;line-height:1.9;"><span class="en">Answer all 5 questions. You need 4 of 5 (70%) to pass. Wrong answers are explained - read them, then retry.</span><span class="zh">回答全部 5 题。答对 4 题（70%） 即通过。答错的题会给出解析 —— 看完再试。</span></div>
   <div id="examBox" style="max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:22px;"></div>
@@ -838,7 +838,7 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
 </script>
 
 <script>
-/* ===== MTJ EXAM MODULE - Module 06 ===== */
+/* ===== MTJ EXAM MODULE - Module 08 ===== */
 const MTJ_EXAM_KEY = "mtj_exam_pass_8";
 const EXAM_QUESTIONS = [{"q": "What is the main difference between an SMA and an EMA?", "q_zh": "SMA 与 EMA 的主要区别？", "opts": ["SMA weighs every candle equally; EMA gives more weight to recent prices and reacts faster", "EMA is always slower than SMA", "SMA uses only the highest price", "EMA ignores closing prices"], "opts_zh": ["SMA 对每根K线一视同仁；EMA 更侧重近期价格，反应更快", "EMA 总是比 SMA 慢", "SMA 只使用最高价", "EMA 忽略收盘价"], "ans": 0, "why": "SMA weights all candles equally, while EMA favors recent prices - so the EMA turns faster and hugs price more closely.", "why_zh": "SMA 对所有蜡烛一视同仁，EMA 则更看重近期价格——因此 EMA 转向更快、更贴近价格。"}, {"q": "A golden cross happens when:", "q_zh": "金叉发生在？", "opts": ["The fast MA crosses above the slow MA", "The slow MA crosses above the fast MA", "Price touches the 200 MA", "The 50 MA goes flat"], "opts_zh": ["快线上穿慢线", "慢线上穿快线", "价格触及200均线", "50均线走平"], "ans": 0, "why": "Golden Cross = fast MA crossing above the slow MA - a bullish momentum shift. The Death Cross is the reverse.", "why_zh": "金叉 = 快线上穿慢线——看涨动能转变。死叉则相反。"}, {"q": "In an uptrend, a rising moving average acts as:", "q_zh": "上涨中上升的均线扮演什么角色？", "opts": ["Dynamic resistance", "Dynamic support", "A volume indicator", "A guaranteed sell signal"], "opts_zh": ["动态阻力", "动态支撑", "成交量指标", "确定的卖出信号"], "ans": 1, "why": "Price keeps dipping back to the rising MA and bouncing - each pullback is a potential long entry.", "why_zh": "价格不断回踩上升的均线并反弹——每一次回踩都是潜在的多头入场点。"}, {"q": "When a support level breaks and price returns to it, the old support usually becomes:", "q_zh": "支撑跌破后回踩时，旧支撑通常变成？", "opts": ["Resistance (role reversal)", "Stronger support", "A double bottom", "A gap"], "opts_zh": ["阻力（角色互换）", "更强的支撑", "双底", "跳空缺口"], "ans": 0, "why": "Role reversal - once broken, support flips into resistance. The retest is the clean entry zone.", "why_zh": "角色互换——一旦跌破，支撑就变成阻力。回踩测试就是干净的入场区域。"}, {"q": "How should support and resistance levels be treated?", "q_zh": "支撑阻力应如何对待？", "opts": ["As exact prices to the tick", "As zones, not lines", "As permanent levels", "As only valid on daily charts"], "opts_zh": ["精确到每个点的价格", "视为区域而非线条", "视为永久有效的水平位", "只在日线图上有效"], "ans": 1, "why": "Price rarely respects an exact price - treat levels as zones and read how price behaves inside them.", "why_zh": "价格很少精确到某个价位——把支撑阻力当作区域而非线条，观察价格在区域内的表现。"}];
 function renderExam(){
