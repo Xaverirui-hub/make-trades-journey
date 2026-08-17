@@ -2617,6 +2617,31 @@ function genMQL5(G){
     i_kelt_s:b=>`(iClose(_Symbol,PERIOD_CURRENT,1)<KeltLo(In_${b.id}_period,In_${b.id}_mult,1) && iClose(_Symbol,PERIOD_CURRENT,2)>=KeltLo(In_${b.id}_period,In_${b.id}_mult,2))`,
     i_hma:b=>`(HMAat(In_${b.id}_period,1)>HMAat(In_${b.id}_period,2) && HMAat(In_${b.id}_period,2)<=HMAat(In_${b.id}_period,3))`,
     i_hma_s:b=>`(HMAat(In_${b.id}_period,1)<HMAat(In_${b.id}_period,2) && HMAat(In_${b.id}_period,2)>=HMAat(In_${b.id}_period,3))`,
+    // ---- K 線形態:每支對應 EA 端一個 Pa* 函式,最後一個引數是方向 ----
+    pa_hammer:b=>`PaHammer(In_${b.id}_shadowX,In_${b.id}_ctxLook,In_${b.id}_ctxPct,true)`,
+    pa_hammer_s:b=>`PaHammer(In_${b.id}_shadowX,In_${b.id}_ctxLook,In_${b.id}_ctxPct,false)`,
+    pa_doji:b=>`PaDoji(In_${b.id}_maxBody,In_${b.id}_ctxLook,In_${b.id}_ctxPct,true)`,
+    pa_doji_s:b=>`PaDoji(In_${b.id}_maxBody,In_${b.id}_ctxLook,In_${b.id}_ctxPct,false)`,
+    pa_marubozu:b=>`PaMaru(In_${b.id}_minBody,true)`,
+    pa_marubozu_s:b=>`PaMaru(In_${b.id}_minBody,false)`,
+    pa_pinbar:b=>`PaPin(In_${b.id}_shadowPct,In_${b.id}_ctxLook,true)`,
+    pa_pinbar_s:b=>`PaPin(In_${b.id}_shadowPct,In_${b.id}_ctxLook,false)`,
+    pa_engulf:b=>`PaEngulf(In_${b.id}_trendLook,true)`,
+    pa_engulf_s:b=>`PaEngulf(In_${b.id}_trendLook,false)`,
+    pa_harami:b=>`PaHarami(In_${b.id}_trendLook,In_${b.id}_motherX,In_${b.id}_childMax,true)`,
+    pa_harami_s:b=>`PaHarami(In_${b.id}_trendLook,In_${b.id}_motherX,In_${b.id}_childMax,false)`,
+    pa_piercing:b=>`PaPierce(In_${b.id}_penetrate,In_${b.id}_trendLook,true)`,
+    pa_piercing_s:b=>`PaPierce(In_${b.id}_penetrate,In_${b.id}_trendLook,false)`,
+    pa_tweezer:b=>`PaTweezer(In_${b.id}_tolPct,In_${b.id}_ctxLook,true)`,
+    pa_tweezer_s:b=>`PaTweezer(In_${b.id}_tolPct,In_${b.id}_ctxLook,false)`,
+    pa_star:b=>`PaStar(In_${b.id}_starBody,In_${b.id}_trendLook,true)`,
+    pa_star_s:b=>`PaStar(In_${b.id}_starBody,In_${b.id}_trendLook,false)`,
+    pa_soldiers:b=>`PaSoldiers(In_${b.id}_minBody,true)`,
+    pa_soldiers_s:b=>`PaSoldiers(In_${b.id}_minBody,false)`,
+    pa_inside:b=>`PaInside(true)`,
+    pa_inside_s:b=>`PaInside(false)`,
+    pa_outside:b=>`PaOutside(true)`,
+    pa_outside_s:b=>`PaOutside(false)`,
   };
   const F_IMPL={
     f_macd:(b,side)=>side==='long'?`(MACDh(In_${b.id}_fast,In_${b.id}_slow,In_${b.id}_signal,1)>0)`:`(MACDh(In_${b.id}_fast,In_${b.id}_slow,In_${b.id}_signal,1)<0)`,
@@ -2633,6 +2658,8 @@ function genMQL5(G){
     f_st:(b,d)=>`(STdir(In_${b.id}_period,In_${b.id}_mult,1)${d==="long"?">":"<"}0)`,
     f_hma:(b,d)=>`(HMAat(In_${b.id}_period,1)${d==="long"?">":"<"}HMAat(In_${b.id}_period,2))`,
     sess:b=>`(HourNow()>=In_${b.id}_from && HourNow()<In_${b.id}_to)`,
+    f_pa_ctx:(b,side)=>`PaCtx(In_${b.id}_look,In_${b.id}_pct,${side==="long"?"true":"false"})`,
+    f_pa_body:b=>`PaBodyX(In_${b.id}_mult)`,
   };
 
   // ---- inputs ----
@@ -2795,6 +2822,144 @@ double OBVat(int sh){ string k="obv";
 double SDavg(double p,int n,int sh){ double s=0; int c=0;
   for(int i=sh;i<sh+n;i++){ double v=SDat(p,i); if(!Bad(v)){ s+=v; c++; } }
   return c>0? s/c : EMPTY_VALUE; }
+
+//--- K 線形態(Price Action)------------------------------------------
+// 索引對照:瀏覽器回測的 bars[k] 是最後一根【已收盤】K,對應 MQL5 shift 1;
+// 因此 JS 的 [k-n] 一律對應 shift n+1。改動這裡務必同步改瀏覽器端 PA_BLOCKS。
+bool   PaBars(int m){ return Bars(_Symbol,PERIOD_CURRENT) > m; }   // shift m 是否有資料
+double PaO(int sh){ return iOpen (_Symbol,PERIOD_CURRENT,sh); }
+double PaH(int sh){ return iHigh (_Symbol,PERIOD_CURRENT,sh); }
+double PaL(int sh){ return iLow  (_Symbol,PERIOD_CURRENT,sh); }
+double PaC(int sh){ return iClose(_Symbol,PERIOD_CURRENT,sh); }
+double PaBody (int sh){ return MathAbs(PaC(sh)-PaO(sh)); }
+double PaRange(int sh){ return MathMax(1e-9, PaH(sh)-PaL(sh)); }
+double PaUp   (int sh){ return PaH(sh)-MathMax(PaO(sh),PaC(sh)); }   // 上影線
+double PaDn   (int sh){ return MathMin(PaO(sh),PaC(sh))-PaL(sh); }   // 下影線
+bool   PaBull (int sh){ return PaC(sh)>PaO(sh); }
+bool   PaBear (int sh){ return PaC(sh)<PaO(sh); }
+double PaAvgBody(int sh){ int p=14;
+  if(!PaBars(sh+p)) return PaRange(sh)*0.4;
+  double s=0; for(int j=sh;j<sh+p;j++) s+=PaBody(j); return s/p; }
+// 當前收盤是否落在近 look 根區間的低/高端(pct% 容差內)
+bool PaNearLow(int sh,double look,double pct){ int lk=(int)look;
+  if(!PaBars(sh+lk)) return false;
+  double lo=1e18, hi=-1e18;
+  for(int j=sh;j<=sh+lk;j++){ lo=MathMin(lo,PaL(j)); hi=MathMax(hi,PaH(j)); }
+  if(hi<=lo) return false;
+  return (PaC(sh)-lo)/(hi-lo) <= pct/100.0; }
+bool PaNearHigh(int sh,double look,double pct){ int lk=(int)look;
+  if(!PaBars(sh+lk)) return false;
+  double lo=1e18, hi=-1e18;
+  for(int j=sh;j<=sh+lk;j++){ lo=MathMin(lo,PaL(j)); hi=MathMax(hi,PaH(j)); }
+  if(hi<=lo) return false;
+  return (hi-PaC(sh))/(hi-lo) <= pct/100.0; }
+bool PaDownT(int sh,double look){ int lk=(int)look;
+  if(!PaBars(sh+lk)) return false; return PaC(sh+1) < PaC(sh+lk); }
+bool PaUpT  (int sh,double look){ int lk=(int)look;
+  if(!PaBars(sh+lk)) return false; return PaC(sh+1) > PaC(sh+lk); }
+
+//--- 單根形態 ---
+bool PaHammer(double shadowX,double ctxLook,double ctxPct,bool lng){ int sh=1;
+  if(!PaBars(sh+(int)ctxLook)) return false;
+  double bd=PaBody(sh), rg=PaRange(sh);
+  if(bd < rg*0.05) return false;                       // 排除十字
+  if(lng) return PaDn(sh)>=bd*shadowX && PaUp(sh)<=bd*0.6 && PaNearLow (sh,ctxLook,ctxPct);
+  return         PaUp(sh)>=bd*shadowX && PaDn(sh)<=bd*0.6 && PaNearHigh(sh,ctxLook,ctxPct); }
+
+bool PaDoji(double maxBody,double ctxLook,double ctxPct,bool lng){ int sh=1;
+  if(!PaBars(sh+(int)ctxLook)) return false;
+  if(PaBody(sh) > PaRange(sh)*maxBody/100.0) return false;
+  return lng ? PaNearLow(sh,ctxLook,ctxPct) : PaNearHigh(sh,ctxLook,ctxPct); }
+
+bool PaMaru(double minBody,bool lng){ int sh=1;
+  if(PaBody(sh) < PaRange(sh)*minBody/100.0) return false;
+  return lng ? PaBull(sh) : PaBear(sh); }
+
+bool PaPin(double shadowPct,double ctxLook,bool lng){ int sh=1;
+  if(!PaBars(sh+(int)ctxLook)) return false;
+  double rg=PaRange(sh);
+  if(lng) return PaDn(sh)>=rg*shadowPct/100.0 && PaNearLow (sh,ctxLook,25.0);
+  return         PaUp(sh)>=rg*shadowPct/100.0 && PaNearHigh(sh,ctxLook,25.0); }
+
+//--- 兩根形態 ---
+bool PaEngulf(double trendLook,bool lng){ int sh=1;
+  if(!PaBars(sh+(int)trendLook)) return false;
+  if(lng) return PaBull(sh) && PaBear(sh+1)
+              && PaC(sh)>=PaO(sh+1) && PaO(sh)<=PaC(sh+1) && PaDownT(sh,trendLook);
+  return         PaBear(sh) && PaBull(sh+1)
+              && PaC(sh)<=PaO(sh+1) && PaO(sh)>=PaC(sh+1) && PaUpT(sh,trendLook); }
+
+bool PaHarami(double trendLook,double motherX,double childMax,bool lng){ int sh=1;
+  if(!PaBars(sh+(int)trendLook)) return false;
+  double mother=PaBody(sh+1), child=PaBody(sh);
+  if(mother < PaAvgBody(sh+1)*motherX) return false;   // 母線須是大實體
+  if(child > mother*childMax/100.0)    return false;
+  bool inside = MathMax(PaO(sh),PaC(sh)) <= MathMax(PaO(sh+1),PaC(sh+1))
+             && MathMin(PaO(sh),PaC(sh)) >= MathMin(PaO(sh+1),PaC(sh+1));
+  if(!inside) return false;
+  if(lng) return PaBull(sh) && PaBear(sh+1) && PaDownT(sh,trendLook);
+  return         PaBear(sh) && PaBull(sh+1) && PaUpT(sh,trendLook); }
+
+// 刺透/烏雲蓋頂:FX 24h 連續交易幾乎不跳空,故用「開在前根收盤附近或更差」的通行變體
+bool PaPierce(double penetrate,double trendLook,bool lng){ int sh=1;
+  if(!PaBars(sh+(int)trendLook)) return false;
+  double pen=penetrate/100.0;
+  double bd1=MathAbs(PaO(sh+1)-PaC(sh+1));
+  if(bd1 < PaAvgBody(sh+1)*0.6) return false;          // 前根須是像樣的實體
+  if(lng){ double tgt=PaC(sh+1)+bd1*pen;
+    return PaBear(sh+1) && PaBull(sh) && PaO(sh) <= PaC(sh+1)*1.0005
+        && PaC(sh) > tgt && PaC(sh) < PaO(sh+1) && PaDownT(sh,trendLook); }
+  double tgtS=PaC(sh+1)-bd1*pen;
+  return PaBull(sh+1) && PaBear(sh) && PaO(sh) >= PaC(sh+1)*0.9995
+      && PaC(sh) < tgtS && PaC(sh) > PaO(sh+1) && PaUpT(sh,trendLook); }
+
+bool PaTweezer(double tolPct,double ctxLook,bool lng){ int sh=1;
+  if(!PaBars(sh+(int)MathMax(2.0,ctxLook))) return false;
+  double tol=PaRange(sh)*tolPct/100.0;
+  if(lng) return MathAbs(PaL(sh)-PaL(sh+1))<=tol && PaBull(sh) && PaBear(sh+1)
+              && PaNearLow(sh,ctxLook,25.0);
+  return         MathAbs(PaH(sh)-PaH(sh+1))<=tol && PaBear(sh) && PaBull(sh+1)
+              && PaNearHigh(sh,ctxLook,25.0); }
+
+//--- 三根形態 ---
+// 晨星/夜星:同刺透,「星向下跳空」放寬為「星的實體不高於第一根收盤區」
+bool PaStar(double starBody,double trendLook,bool lng){ int i3=1,i2=2,i1=3;
+  if(!PaBars(i1+(int)trendLook)) return false;
+  if(PaBody(i2) > PaAvgBody(i2)*starBody/100.0) return false;   // 中間須是小實體
+  double mid1=(PaO(i1)+PaC(i1))/2.0;
+  double tol =PaAvgBody(i2)*0.3;
+  if(lng) return PaBear(i1) && PaBody(i1)>PaAvgBody(i1)*0.6
+              && MathMax(PaO(i2),PaC(i2)) <= PaC(i1)+tol
+              && PaBull(i3) && PaC(i3)>mid1 && PaDownT(i1,trendLook);
+  return         PaBull(i1) && PaBody(i1)>PaAvgBody(i1)*0.6
+              && MathMin(PaO(i2),PaC(i2)) >= PaC(i1)-tol
+              && PaBear(i3) && PaC(i3)<mid1 && PaUpT(i1,trendLook); }
+
+bool PaSoldiers(double minBody,bool lng){ int sh=1;
+  if(!PaBars(sh+2)) return false;
+  bool big0=PaBody(sh)  >=PaAvgBody(sh)  *minBody/100.0;
+  bool big1=PaBody(sh+1)>=PaAvgBody(sh+1)*minBody/100.0;
+  bool big2=PaBody(sh+2)>=PaAvgBody(sh+2)*minBody/100.0;
+  if(!(big0&&big1&&big2)) return false;
+  if(lng) return PaBull(sh)&&PaBull(sh+1)&&PaBull(sh+2)
+              && PaC(sh)>PaC(sh+1) && PaC(sh+1)>PaC(sh+2);
+  return         PaBear(sh)&&PaBear(sh+1)&&PaBear(sh+2)
+              && PaC(sh)<PaC(sh+1) && PaC(sh+1)<PaC(sh+2); }
+
+bool PaInside(bool lng){ int sh=1;
+  if(!PaBars(sh+2)) return false;
+  if(!(PaH(sh+1)<=PaH(sh+2) && PaL(sh+1)>=PaL(sh+2))) return false;
+  return lng ? PaC(sh)>PaH(sh+2) : PaC(sh)<PaL(sh+2); }
+
+bool PaOutside(bool lng){ int sh=1;
+  if(!PaBars(sh+1)) return false;
+  if(!(PaH(sh)>PaH(sh+1) && PaL(sh)<PaL(sh+1))) return false;
+  return lng ? PaBull(sh) : PaBear(sh); }
+
+//--- 形態過濾器 ---
+bool PaCtx(double look,double pct,bool lng){
+  return lng ? PaNearLow(1,look,pct) : PaNearHigh(1,look,pct); }
+bool PaBodyX(double mult){ return PaBody(1) >= PaAvgBody(1)*mult; }
 
 //--- 分形:往回找最近一個已確認的上/下分形(中心 bar 兩側各 2 根)------
 double FrUp(int sh){ for(int i=sh+2;i<sh+300;i++){
