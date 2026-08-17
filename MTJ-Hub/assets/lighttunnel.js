@@ -120,36 +120,44 @@ function compile(gl, type, src) {
   return s;
 }
 
-/* MTJ 预设:金缆金脉冲,紫只在隧道体里留一点纵深 */
+/* MTJ 预设:整条光缆都是金的 —— 深金实心芯 + 亮金边 + 近白热金脉冲穿行。
+   三层同一个色相、不同明度,所以再怎么加强都不会偏色。
+
+   缆芯(uTunnelColor × uTunnelOpacity)之前填的是紫、透明度 0.07,等于
+   光缆只有一圈描边、中间是空的。现在填深金并把透明度拉到 0.34,光缆变
+   实心,这是「更炫」最有效的一档 —— 而且完全没离开金色。
+
+   亮度只加在外围:中心靠 fadeNear 挖空,页面那边还有暗晕和井兜着,
+   所以 glow / brightness 调高不吃表单可读性(改完实测过对比度)。 */
 export const MTJ_TUNNEL = {
-  cableColor: '#E8C877',
-  pulseColor: '#FCE9A8',
-  tunnelColor: '#7C4DD8',
-  tunnelOpacity: 0.07,
-  speed: 0.1,
+  cableColor: '#E8C877',      // 缆身:亮金
+  pulseColor: '#FFEFC0',      // 脉冲:近白的热金,冲过去时最亮的一点
+  tunnelColor: '#D9AE3A',     // 缆芯:深金,给光缆厚度
+  tunnelOpacity: 0.44,
+  speed: 0.11,
   flowDirection: 'outward',
-  pulseSpeed: 1.6,
-  pulseLength: 0.26,
+  pulseSpeed: 2.4,            // 脉冲跑得更快
+  pulseLength: 0.32,          // 拖尾更长
   pulseBlend: 1,
-  pulseWidth: 0.9,
-  cableCount: 22,
+  pulseWidth: 0.95,
+  cableCount: 26,             // 更密
   thickness: 0.3,
-  rimWidth: 0.14,
-  waviness: 0.3,
-  sway: 0.45,
+  rimWidth: 0.17,             // 边缘光更宽
+  waviness: 0.38,
+  sway: 0.55,
   size: 1.0,
   centerX: 0,
   centerY: 0,
-  glow: 1.05,
-  fadeNear: 0.66,
+  glow: 1.28,
+  fadeNear: 0.66,             // 中心留空,别动 —— 表单靠它
   fadeFar: 2.0,
-  brightness: 1.0,
+  brightness: 1.1,
   colorVariance: true,
   grain: true,
   grainIntensity: 0.045,
   opacity: 1.0,
   mouseInteraction: true,
-  mouseStrength: 0.1,
+  mouseStrength: 0.12,
   maxDpr: 2
 };
 
