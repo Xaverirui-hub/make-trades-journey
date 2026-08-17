@@ -26,7 +26,14 @@ const mediaBlock = [...src.matchAll(/@media[^{]*\{(?:[^{}]*\{[^}]*\})*[^{}]*\}/g
 const outsideMedia = src.replace(/@media[^{]*\{(?:[^{}]*\{[^}]*\})*[^{}]*\}/g, '');
 const baseRules = [...outsideMedia.matchAll(/(^|\})\s*(\.navbar[^{]*|\.nb-[a-z-]+[^{]*)\{([^}]*)\}/gm)]
   .map(m => m[2].trim() + '{' + m[3].trim() + '}');
-const CSS = baseRules.join('\n') + '\n' + mediaBlock;
+/* 抽取之外的修正:英文标签比中文长得多,375px 下五个链接排不开,原本是
+   直接被切掉两头(每一页都这样,不是登录页带来的)。允许换行,别裁。 */
+const NARROW_FIX = `
+@media(max-width:640px){
+  .navbar .nb-links{flex-wrap:wrap;row-gap:2px;}
+  .navbar .nb-links a{padding:5px 7px;}
+}`;
+const CSS = baseRules.join('\n') + '\n' + mediaBlock + NARROW_FIX;
 
 console.log('logo', (LOGO.length / 1024).toFixed(0) + 'KB | CSS 规则', baseRules.length, '+ 1 media 块 |', CSS.length, '字符');
 
@@ -68,7 +75,10 @@ const navJs = `/* 全站共用导航栏 — 由 scripts/extract_nav.mjs 生成�
           : (inDir('tools')   || here === 'tools.html')   ? 'tools'
           : (here === 'ea.html' || here === 'backtest.html') ? 'ea'
           : (here === 'about.html')                          ? 'about'
-          : 'home';
+          /* login 之类的独立页不属于任何一节 —— 与其点亮「首页」误导,
+             不如一个都不点 */
+          : (here === 'MakeTradesJourney.html' || here === '') ? 'home'
+          : '';
 
   var links = ITEMS.map(function (it) {
     /* 指向自己时用 #top:与原本一致,scroll-spy 靠「href 以 # 开头」判断同页锚点 */
