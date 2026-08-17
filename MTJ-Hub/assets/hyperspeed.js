@@ -7,10 +7,12 @@
    of a second hue: deep amber in the far lane, cream gold in the near
    one. Same read, no new colour in the system.
    ===================================================================== */
-import * as THREE from 'https://esm.sh/three@0.166.0';
+/* three + postprocessing 是自架的,不是 CDN —— esm.sh 在大陸連不上,
+   而首頁封面的失敗是無聲的,所以那邊看到的一直是一片靜止的背景。
+   要換版本看 assets/vendor/README.md,那支檔案不要手改。 */
 import {
-  BloomEffect, EffectComposer, EffectPass, RenderPass, SMAAEffect, SMAAPreset
-} from 'https://esm.sh/postprocessing@6.36.0?deps=three@0.166.0';
+  THREE, BloomEffect, EffectComposer, EffectPass, RenderPass, SMAAEffect, SMAAPreset
+} from './vendor/three-postprocessing.js';
 
 export const MTJ_PRESET = {
   distortion: 'turbulentDistortion',

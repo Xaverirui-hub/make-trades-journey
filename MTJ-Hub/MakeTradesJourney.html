@@ -905,10 +905,16 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
 </script>
 <script type="module">
   /* Cover only. Failure here is silent by design: the hero already has its
-     own background, so a blocked CDN or missing WebGL just means no road. */
+     own background, so missing WebGL just means no road. (There is no CDN
+     left to block — three + postprocessing are served from assets/vendor/.) */
   try{
-    const { mountHyperspeed } = await import('./assets/hyperspeed.js');
-    mountHyperspeed('#hyperspeed');
+    /* hyperspeed.js 內部也擋 reduced-motion,但那是 import 完才跑到的 ——
+       three + postprocessing 是自架的 800KB,CSS 既然已經把它 display:none,
+       就不該先把檔案抓下來再丟掉。 */
+    if(!window.matchMedia('(prefers-reduced-motion:reduce)').matches){
+      const { mountHyperspeed } = await import('./assets/hyperspeed.js');
+      mountHyperspeed('#hyperspeed');
+    }
   }catch(e){ /* static cover stands on its own */ }
 
   /* Below the hero: star field, same silent-failure contract. */
