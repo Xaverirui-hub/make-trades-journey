@@ -687,6 +687,7 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
     <div class="pattern-desc">
       <p>The <b>middle band</b> is simply the average of the last 20 closing prices. Each new candle pushes the oldest one out, and the line glides along with the market. Nothing more.
         <span class="zh"><b>中轨</b>就是最近 20 根 K 线收盘价的平均值。每来一根新 K 线，最老那根就被挤出去，中轨随之滑动。仅此而已。</span></p>
+<div class="rchart reveal" data-r="bbBuild"></div>
       <p>The <b>standard deviation (SD)</b> answers one question: on average, how far do prices sit from that middle line? Big swings make the SD large and the bands wide; quiet trading shrinks it. The 2 × SD setting means the bands cover roughly <b>95% of prices</b> in a normal distribution - so a touch of a band is genuinely an extreme event, not a routine one.
         <span class="zh"><b>标准差（SD）</b>只回答一个问题：平均而言，价格离中轨有多远？波动大，SD 就大，通道就宽；行情安静，SD 就缩小。2 倍标准差意味着通道大约覆盖正态分布下 <b>95% 的价格</b>——所以触轨确实是小概率的极端事件，不是家常便饭。</span></p>
       <div class="calcbox">
@@ -743,6 +744,7 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
     <div class="pattern-desc">
       <p>When the bands tighten until they almost touch, that is a <b>Squeeze</b> - volatility has been squeezed out of the market. Price is coiling like a spring. The squeeze is not a trade signal by itself; it is a <b>countdown</b>: a breakout is coming, but its direction is still unknown.
         <span class="zh">当通道收窄到几乎贴在一起，就是 <b>挤压（Squeeze）</b>——波动率被从市场里挤干了。价格像弹簧一样在蓄力。挤压本身不是交易信号，它是<b>倒计时</b>：突破终将到来，但方向未知。</span></p>
+<div class="rchart reveal" data-r="bbSqueeze"></div>
       <p><b>Expansion</b> is what follows: volatility fires, the bands swing open and a trend takes off. The skill is not guessing the breakout direction during the squeeze - it is <b>standing ready</b>, then following the move once price breaks the band with volume and closes outside it.
         <span class="zh"><b>扩张（Expansion）</b>随之而来：波动率爆发，通道张开，趋势启动。本事不在于挤压时猜方向，而在于<b>提前待命</b>，等价格放量突破轨道并收在轨道之外时再顺势跟随。</span></p>
       <ul class="points">
@@ -851,6 +853,7 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
     <div class="pattern-desc">
       <p>In a strong uptrend, price does not bounce between the bands - it <b>walks along the upper band</b>, and pullbacks often end at the middle band or barely touch it. This is the Walk.
         <span class="zh">强上升趋势里，价格不会在两条轨道之间来回弹——它<b>贴着上轨行走</b>，回调通常只到中轨，甚至摸不到。这就是贴轨行走（The Walk）。</span></p>
+<div class="rchart reveal" data-r="bbWalk"></div>
       <p>Read it correctly and the bands become a trend map: the <b>middle band</b> is dynamic support in an uptrend, the <b>lower band</b> is the emergency support, and a close below it is usually the first warning that the trend is breaking.
         <span class="zh">读对了，布林带就变成一张趋势地图：上升趋势里<b>中轨</b>是动态支撑，<b>下轨</b>是最后防线，收线跌破下轨通常是趋势走坏的第一声警报。</span></p>
       <ul class="points">
@@ -1057,6 +1060,149 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
 <script>
 document.getElementById('yr').textContent=new Date().getFullYear();
 const RM=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+
+/* ---------------- SVG 绘图工具(与其他课程页同一套)---------------- */
+const NS='http://www.w3.org/2000/svg';
+const C={bull:'#2CD98A',bear:'#FF5C63',gold:'#E8C877',goldB:'#FCE9A8',goldD:'#C9A227',
+         muted:'#9A968C',muted2:'#6f6c64',cyan:'#2FE0D6',text:'#EDEBE2'};
+const MONO="'JetBrains Mono',monospace";
+function el(t,a,p){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e;}
+function txt(p,x,y,s,o){const t=el('text',Object.assign({x:x,y:y,'font-family':MONO,'font-size':11,fill:C.muted},o||{}),p);t.textContent=s;return t;}
+function svgFor(box,w,h){const s=el('svg',{viewBox:'0 0 '+w+' '+h,preserveAspectRatio:'xMidYMid meet'});box.appendChild(s);return s;}
+/* ============ Bollinger 图表 ============
+   BB.A 三条线怎么来的  —— 中轨是均线,上下轨是中轨 ± 2 个标准差
+   BB.B 挤压与扩张      —— 带子收窄 = 平静在积累,不是没事发生
+   BB.C 贴轨行走        —— 触轨在趋势里是「继续」,在震荡里才是「反转」
+*/
+
+/* ---- A. 20 ± 2 是什么意思 ---- */
+function drawBBBuild(box){
+  const W=720,H=300,L=48,R=142,T=32,B=52;
+  const s=svgFor(box,W,H);
+  const px=[50,53,49,56,60,57,63,66,62,68,72,69,74,71,66,63,68,72,76,73];
+  const n=px.length, pw=W-L-R, ph=H-T-B, top=88, bot=32;
+  const Y=v=>T+ph*(top-v)/(top-bot), X=i=>L+pw*i/(n-1);
+  const sma=(a,w,i)=>{const sl=a.slice(Math.max(0,i-w+1),i+1);return sl.reduce((p,q)=>p+q,0)/sl.length;};
+  const sd=(a,w,i)=>{const sl=a.slice(Math.max(0,i-w+1),i+1);const m=sl.reduce((p,q)=>p+q,0)/sl.length;
+    return Math.sqrt(sl.reduce((p,q)=>p+(q-m)*(q-m),0)/sl.length);};
+  const mid=px.map((_,i)=>sma(px,6,i));
+  const up=px.map((_,i)=>mid[i]+2*sd(px,6,i)), lo=px.map((_,i)=>mid[i]-2*sd(px,6,i));
+  const path=a=>a.map((v,i)=>(i?'L':'M')+X(i).toFixed(1)+','+Y(v).toFixed(1)).join(' ');
+
+  /* 带内填充 */
+  el('path',{d:path(up)+' '+up.map((_,i)=>'L'+X(n-1-i).toFixed(1)+','+Y(lo[n-1-i]).toFixed(1)).join(' ')+' Z',
+    fill:C.gold,'fill-opacity':.07,stroke:'none',class:'rlbl',style:'--i:1'},s);
+  el('path',{d:path(up),stroke:C.gold,'stroke-width':1.8,fill:'none',class:'rlbl',style:'--i:2'},s);
+  el('path',{d:path(lo),stroke:C.gold,'stroke-width':1.8,fill:'none',class:'rlbl',style:'--i:2'},s);
+  el('path',{d:path(mid),stroke:C.cyan,'stroke-width':2,fill:'none','stroke-dasharray':'6 4',
+    class:'rlbl',style:'--i:3'},s);
+  el('path',{d:path(px),stroke:C.text,'stroke-width':1.6,fill:'none',class:'rlbl',style:'--i:0'},s);
+
+  /* 在最后一根标出 ±2σ 的距离 */
+  const k=n-4;
+  el('line',{x1:X(k),x2:X(k),y1:Y(mid[k]),y2:Y(up[k]),stroke:C.goldB,'stroke-width':1.4,
+    class:'rlbl',style:'--i:4'},s);
+  el('line',{x1:X(k),x2:X(k),y1:Y(mid[k]),y2:Y(lo[k]),stroke:C.goldB,'stroke-width':1.4,
+    class:'rlbl',style:'--i:4'},s);
+  txt(s,X(k)+8,Y((mid[k]+up[k])/2)+4,'+2σ',{fill:C.goldB,'font-size':11,'font-weight':700,
+    class:'rlbl',style:'--i:5'});
+  txt(s,X(k)+8,Y((mid[k]+lo[k])/2)+4,'-2σ',{fill:C.goldB,'font-size':11,'font-weight':700,
+    class:'rlbl',style:'--i:5'});
+
+  const key=(y,col,dash,en,zh,i)=>{
+    el('line',{x1:L+pw+16,x2:L+pw+38,y1:y,y2:y,stroke:col,'stroke-width':2.4,
+      'stroke-dasharray':dash,class:'rlbl',style:'--i:'+i},s);
+    txt(s,L+pw+44,y+4,en,{fill:col,'font-size':10,'font-weight':700,class:'rlbl',style:'--i:'+i});
+    txt(s,L+pw+44,y+17,zh,{fill:C.muted,'font-size':9,'font-family':"'Noto Sans SC',sans-serif",
+      class:'rlbl',style:'--i:'+i});
+  };
+  key(T+14,C.gold,'','UPPER / LOWER','上轨 / 下轨',6);
+  key(T+52,C.cyan,'6 4','MIDDLE = MA20','中轨 = 20 均线',7);
+  key(T+90,C.text,'','PRICE','价格',8);
+
+  txt(s,L,H-16,'Middle = the 20-period average. Bands = that average, plus and minus two standard deviations.',
+    {fill:C.goldB,'font-size':10.5,'font-weight':700,class:'rlbl',style:'--i:9'});
+  txt(s,L,H-2,'中轨就是 20 根的均线；上下轨是「中轨 ± 2 个标准差」。标准差衡量的是最近波动有多大 —— 所以带子会自己变宽变窄。',
+    {fill:C.muted,'font-size':9.5,'font-family':"'Noto Sans SC',sans-serif",class:'rlbl',style:'--i:10'});
+}
+
+/* ---- B. 挤压 → 扩张 ---- */
+function drawBBSqueeze(box){
+  const W=720,H=290,L=48,R=34,T=48,B=56;
+  const s=svgFor(box,W,H);
+  const n=40, pw=W-L-R, ph=H-T-B, top=86, bot=26;
+  const Y=v=>T+ph*(top-v)/(top-bot), X=i=>L+pw*i/(n-1);
+  const px=[],up=[],lo=[];
+  for(let i=0;i<n;i++){
+    let base=56, w;
+    if(i<8){ w=9-i*0.5; base=56+Math.sin(i*1.1)*3; }
+    else if(i<22){ w=Math.max(2.2,5-(i-8)*0.22); base=56+Math.sin(i*0.9)*1.2; }
+    else { w=2.2+(i-22)*0.52; base=54+(i-22)*0.85; }
+    px.push(base+Math.sin(i*1.7)*(w*0.28));
+    up.push(base+w); lo.push(base-w);
+  }
+  const path=a=>a.map((v,i)=>(i?'L':'M')+X(i).toFixed(1)+','+Y(v).toFixed(1)).join(' ');
+  el('path',{d:path(up)+' '+up.map((_,i)=>'L'+X(n-1-i).toFixed(1)+','+Y(lo[n-1-i]).toFixed(1)).join(' ')+' Z',
+    fill:C.gold,'fill-opacity':.08,stroke:'none',class:'rlbl',style:'--i:1'},s);
+  el('path',{d:path(up),stroke:C.gold,'stroke-width':1.7,fill:'none',class:'rlbl',style:'--i:2'},s);
+  el('path',{d:path(lo),stroke:C.gold,'stroke-width':1.7,fill:'none',class:'rlbl',style:'--i:2'},s);
+  el('path',{d:path(px),stroke:C.text,'stroke-width':1.7,fill:'none',class:'rlbl',style:'--i:0'},s);
+
+  const zone=(a,b,col,en,zh,i)=>{
+    el('rect',{x:X(a),y:T-10,width:X(b)-X(a),height:ph+20,fill:col,'fill-opacity':.07,
+      stroke:col,'stroke-opacity':.3,'stroke-width':1,rx:5,class:'rlbl',style:'--i:'+i},s);
+    txt(s,(X(a)+X(b))/2,T-18,en,{'text-anchor':'middle',fill:col,'font-size':10.5,'font-weight':700,
+      'letter-spacing':'.1em',class:'rlbl',style:'--i:'+i});
+    txt(s,(X(a)+X(b))/2,H-34,zh,{'text-anchor':'middle',fill:col,'font-size':10,
+      'font-family':"'Noto Sans SC',sans-serif",class:'rlbl',style:'--i:'+i});
+  };
+  zone(9,21,C.cyan,'THE SQUEEZE','挤压：带子收到最窄',3);
+  zone(22,39,C.bull,'THE EXPANSION','扩张：方向出来了',4);
+
+  txt(s,L,H-14,'A squeeze is not "nothing is happening". It is volatility winding up - and it always unwinds.',
+    {fill:C.goldB,'font-size':10.5,'font-weight':700,class:'rlbl',style:'--i:5'});
+  txt(s,L,H-1,'带子收窄不代表「没事发生」，而是波动在积蓄。它迟早会放出来 —— 但收窄本身不告诉你往哪个方向放。',
+    {fill:C.muted,'font-size':9.5,'font-family':"'Noto Sans SC',sans-serif",class:'rlbl',style:'--i:6'});
+}
+
+/* ---- C. 触轨:反转还是继续? ---- */
+function drawBBWalk(box){
+  const W=720,H=270,T=40,B=64;
+  const s=svgFor(box,W,H);
+  const pw=(W-54)/2, ph=H-T-B;
+  const panels=[
+    ['RANGE  震荡区','TOUCH = FADE  触轨 = 反转',C.cyan,
+      [50,58,52,60,50,59,51,58,50],[62,62,62,62,62,62,62,62,62],[46,46,46,46,46,46,46,46,46],
+      '带子平、价格来回撞两边 —— 触轨才有反转意义。'],
+    ['TREND  趋势中','TOUCH = CONTINUE  触轨 = 继续',C.bull,
+      [46,50,55,58,62,65,69,72,76],[50,54,59,62,66,69,73,76,80],[40,43,47,50,54,57,61,64,68],
+      '带子整体上抬、价格贴着上轨走 —— 这时候做反转就是逆势。']
+  ];
+  panels.forEach((p,k)=>{
+    const x0=18+k*(pw+18), g=el('g',{class:'rlbl',style:'--i:'+(k*2)},s);
+    const Y=v=>T+ph*(84-v)/(84-34), X=i=>x0+14+(pw-28)*i/8;
+    el('rect',{x:x0,y:T-10,width:pw,height:ph+20,rx:12,fill:'rgba(20,20,26,.45)',
+      stroke:p[2],'stroke-opacity':.28,'stroke-width':1},g);
+    const path=a=>a.map((v,i)=>(i?'L':'M')+X(i).toFixed(1)+','+Y(v).toFixed(1)).join(' ');
+    el('path',{d:path(p[4])+' '+p[4].map((_,i)=>'L'+X(8-i).toFixed(1)+','+Y(p[5][8-i]).toFixed(1)).join(' ')+' Z',
+      fill:p[2],'fill-opacity':.09,stroke:'none'},g);
+    el('path',{d:path(p[4]),stroke:p[2],'stroke-width':1.5,fill:'none'},g);
+    el('path',{d:path(p[5]),stroke:p[2],'stroke-width':1.5,fill:'none'},g);
+    el('path',{d:path(p[3]),stroke:C.text,'stroke-width':2.2,fill:'none'},g);
+    txt(s,x0+pw/2,T-20,p[0],{'text-anchor':'middle',fill:p[2],'font-size':11,'font-weight':700,
+      'letter-spacing':'.12em',class:'rlbl',style:'--i:'+(k*2+1)});
+    txt(s,x0+pw/2,T+ph+26,p[1],{'text-anchor':'middle',fill:p[2],'font-size':10.5,'font-weight':700,
+      class:'rlbl',style:'--i:'+(k*2+1)});
+    txt(s,x0+pw/2,T+ph+46,p[6],{'text-anchor':'middle',fill:C.muted,'font-size':9.5,
+      'font-family':"'Noto Sans SC',sans-serif",class:'rlbl',style:'--i:'+(k*2+1)});
+  });
+  txt(s,18,20,'The same touch means opposite things. Read the band slope first, then decide.',
+    {fill:C.muted,'font-size':10,class:'rlbl',style:'--i:5'});
+}
+
+const RENDER={bbBuild:drawBBBuild,bbSqueeze:drawBBSqueeze,bbWalk:drawBBWalk};
+document.querySelectorAll('.rchart[data-r]').forEach(b=>{const f=RENDER[b.dataset.r];if(f)f(b);});
 
 /* ---------------- reveal on scroll ---------------- */
 const io=new IntersectionObserver((ents)=>{
