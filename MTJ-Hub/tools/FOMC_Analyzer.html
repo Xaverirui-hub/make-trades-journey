@@ -362,14 +362,24 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
     <span class="zh">用一套固定结构记录：美联储实际做了什么、市场实际怎么反应、两者如何对上 —— 让每次会议变成你日志里的一个资料点，而不是一条新闻标题。</span></p>
 </header>
 
+<!-- ============ NEXT FOMC ============ -->
+<section class="section" id="fomcNextWrap" hidden>
+  <div class="group-head reveal"><span class="tier">→</span>
+    <div><div class="eyebrow">Upcoming <span class="zh">· 下一场</span></div>
+    <h2 class="title">Next FOMC<span class="zh">下一次 FOMC</span></h2></div>
+  </div>
+  <div id="fomcNext"></div>
+</section>
+
 <!-- ============ 01 DECISIONS (auto) ============ -->
 <section class="section">
   <div class="group-head reveal"><span class="tier">01</span>
     <div><div class="eyebrow">Decisions <span class="zh">· 决议记录</span></div>
     <h2 class="title">Every Decision, Already Written Up<span class="zh">每一次决议，都已经整理好</span></h2></div>
   </div>
-  <div class="note reveal">// Nothing to fill in. Summary rows here - the full write-up is in section 03 below.
-    <span class="zh">不需要你填任何东西。这里是每场决议的摘要，完整版报告在下面第 03 节。</span></div>
+  <div class="note reveal">// Nothing to fill in. Summary rows here - the full write-up is in section 02 below.
+    <span class="zh">不需要你填任何东西。这里是每场决议的摘要，完整版报告在下面第 02 节。</span></div>
+  <div id="fomcPick" class="btnrow" style="margin:0 0 18px;flex-wrap:wrap;"></div>
   <div id="fomcList"></div>
 </section>
 
@@ -400,7 +410,7 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
 
 <!-- ============ 03 LATEST REPORT (native) ============ -->
 <section class="section" style="padding-top:0;">
-  <div class="group-head reveal"><span class="tier">03</span>
+  <div class="group-head reveal"><span class="tier">02</span>
     <div><div class="eyebrow">Archive <span class="zh">· 决议存档</span></div><h2 class="title">Latest Report<span class="zh">最新决议报告</span></h2></div></div>
 
   <!-- ---------- Report page 1 ---------- -->
@@ -960,7 +970,79 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
     if(window.setLang) window.setLang(document.body.classList.contains('lang-en')?'en':'zh');
     box.querySelectorAll('.reveal').forEach(function(e){ e.classList.add('in'); });
   }
-  render(window.FOMC_RECORDS||[]);
+
+  /* ---- 日期选择:多于一场决议时才出现 ---- */
+  var ALL=(window.FOMC_RECORDS||[]).slice();
+  /* 新的排前面 */
+  ALL.sort(function(x,y){ return String(y.date).localeCompare(String(x.date)); });
+  var picked=null;
+
+  function drawPicker(){
+    var box=document.getElementById('fomcPick');
+    if(!box) return;
+    if(ALL.length<2){ box.innerHTML=''; return; }
+    box.innerHTML='<span style="font-family:\'JetBrains Mono\',monospace;font-size:10px;'+
+      'letter-spacing:.16em;color:var(--muted);align-self:center;margin-right:4px;">'+
+      'SHOW <span class="zh">· 看哪一场</span></span>'+
+      ALL.map(function(r,i){
+        var on=(picked===null? i===0 : picked===r.date);
+        return '<button class="btn'+(on?'':' ghost')+'" data-d="'+esc(r.date)+'" '+
+          'style="padding:7px 14px;font-size:11px;">'+esc(r.date)+'</button>';
+      }).join('')+
+      '<button class="btn'+(picked==='__all'?'':' ghost')+'" data-d="__all" style="padding:7px 14px;font-size:11px;">'+
+      'ALL <span class="zh">· 全部</span></button>';
+    box.querySelectorAll('button[data-d]').forEach(function(b){
+      b.addEventListener('click',function(){
+        picked=b.dataset.d==='__all'?'__all':b.dataset.d;
+        apply();
+      });
+    });
+  }
+  function apply(){
+    var list;
+    if(picked==='__all') list=ALL;
+    else if(picked===null) list=ALL.slice(0,1);
+    else list=ALL.filter(function(r){ return r.date===picked; });
+    render(list);
+    drawPicker();
+  }
+
+  /* ---- NEXT FOMC:挑出还没到的最近一场 ---- */
+  function drawNext(){
+    var wrap=document.getElementById('fomcNextWrap'), box=document.getElementById('fomcNext');
+    var up=(window.FOMC_UPCOMING||[]).slice();
+    if(!wrap||!box||!up.length) return;
+    var today=new Date(); today.setHours(0,0,0,0);
+    var toD=function(d){ var p=String(d).split(/[.\-\/]/); return new Date(+p[0],(+p[1]||1)-1,+p[2]||1); };
+    up=up.filter(function(u){ return toD(u.date)>=today; })
+         .sort(function(x,y){ return toD(x.date)-toD(y.date); });
+    if(!up.length) return;                       /* 全过期了就不显示,而不是显示一个过去的日期 */
+    var n=up[0];
+    var days=Math.round((toD(n.date)-today)/86400000);
+    wrap.hidden=false;
+    box.innerHTML='<div class="report">'+
+      '<div class="rhead">'+
+        '<span class="rtag">Next Meeting</span>'+
+        '<span class="rdate">'+esc(n.date)+'</span>'+
+        '<span class="rcredit">'+(days===0?'today':(days+' days'))+
+          ' <span class="zh">'+(days===0?'就是今天':('还有 '+days+' 天'))+'</span></span>'+
+      '</div>'+
+      '<div class="rbody" style="padding-top:16px;">'+
+        '<h3 class="rtitle" style="margin:0;">'+esc(n.label_en||'FOMC')+
+          '<span class="zh">'+esc(n.label_zh||'FOMC')+'</span></h3>'+
+        (up.length>1?('<div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap;">'+
+          up.slice(1).map(function(u){
+            return '<span style="font-family:\'JetBrains Mono\',monospace;font-size:10.5px;'+
+              'padding:5px 12px;border-radius:16px;border:1px solid var(--line-soft);'+
+              'color:var(--muted);">'+esc(u.date)+'</span>'; }).join('')+
+          '</div>'):'')+
+      '</div></div>';
+    if(window.setLang) window.setLang(document.body.classList.contains('lang-en')?'en':'zh');
+  }
+
+  drawNext();
+  apply();
+
 
   /* ---- 管理员导入 ---- */
   var isAdmin=false;
@@ -1014,7 +1096,8 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
         }).filter(function(o){ return o.date; });
         if(!recs.length) throw new Error('没有一行带 date,无法当成决议记录');
 
-        render(recs);                                   /* 立刻预览 */
+        ALL=recs.slice().sort(function(x,y){ return String(y.date).localeCompare(String(x.date)); });
+        picked='__all'; apply();                        /* 立刻预览 */
         built='window.FOMC_RECORDS = '+JSON.stringify(recs,null,2)+';\n';
         copyBtn.disabled=false;
         msg.innerHTML='<span style="color:var(--bull,#2CD98A)">// 解析成功:'+recs.length+

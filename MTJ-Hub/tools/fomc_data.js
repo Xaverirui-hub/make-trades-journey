@@ -12,6 +12,16 @@
    CSV 表头(顺序不限,缺的栏位留空即可):
      date,rate,hold,hike,cut,statement,dxy,gold,goldchg,us10y,equities,timeline,next
    =================================================================== */
+/* 未来的会议日期 —— 页面顶部的 NEXT FOMC 用它。
+   过了就把该笔删掉(或整场决议搬进下面的 FOMC_RECORDS)。
+   这几个日期是这支工具原本就带的,不是新编的。 */
+window.FOMC_UPCOMING = [
+  { date: '2026.09.16', label_en: 'September FOMC', label_zh: '9 月 FOMC' },
+  { date: '2026.11.04', label_en: 'November FOMC', label_zh: '11 月 FOMC' },
+  { date: '2026.12.16', label_en: 'December FOMC', label_zh: '12 月 FOMC' },
+  { date: '2027.01.27', label_en: 'January FOMC', label_zh: '1 月 FOMC' }
+];
+
 window.FOMC_RECORDS = [
   {
     date: '2026.07.29',
