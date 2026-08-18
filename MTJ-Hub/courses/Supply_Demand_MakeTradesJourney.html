@@ -460,8 +460,25 @@ body.lang-zh.lang-strict .en:not(.en-keep){display:none !important;}
 
 
 
-/* ===== Global Navbar v3 (glass + logo + lang) ===== */
-@media(max-width:640px){
+/* ===== Global Navbar v3 (glass + logo + lang) ===== */
+
+
+
+
+
+
+
+
+
+
+
+
+@media(max-width:640px){
+
+
+
+
+
 }
 
 /* ===== Chinese is not a subtitle ==========================================
@@ -1370,7 +1387,7 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
 <script>
 /* ===== MTJ EXAM MODULE - Module 07 ===== */
 const MTJ_EXAM_KEY = "mtj_exam_pass_7";
-const EXAM_QUESTIONS = [{"q": "Why do prices often return to retest a supply zone after it forms?", "q_zh": "為什麼供需區形成後,價格常常會回來回測(retest)?", "opts": ["因為交易所會強制撮合所有掛單", "因為機構未成交的掛單仍留在原地,會把價格拉回來", "因為畫線工具會自動吸附價格", "因為每次突破都一定會失敗"], "opts_zh": ["因為交易所會強制撮合所有掛單", "因為機構未成交的掛單仍留在原地,會把價格拉回來", "因為畫線工具會自動吸附價格", "因為每次突破都一定會失敗"], "ans": 1, "why": "Zones are leftover resting orders from institutional accumulation. Unfilled orders pull price back - that is exactly why zones get retested.", "why_zh": "供需区是机构吸筹后留下的未成交挂单。未成交的挂单会把价格拉回来——这正是供需区会被反复回测的原因。"}, {"q": "What exactly does a demand zone refer to?", "q_zh": "需求區(demand zone)本身,指的是哪一部分?", "opts": ["急跌的最低點那一根影線", "起爆那根大陽線", "起爆前那段緊湊安靜的橫盤帶(base)", "從起爆點到目標的整段上漲"], "opts_zh": ["因為交易所會強制撮合所有掛單", "因為機構未成交的掛單仍留在原地,會把價格拉回來", "因為畫線工具會自動吸附價格", "因為每次突破都一定會失敗"], "ans": 2, "why": "The zone is the base - the tight 3-7 candle consolidation right before the ignition. Mark the whole band top to bottom; it is not the low of the drop.", "why_zh": "供需区指的是起爆前那段 3-7 根K线的紧凑横盘带（base）。要自上而下标记整条带子；它不是急跌的最低点。"}, {"q": "A supply zone that has been tapped five times - how should you view it?", "q_zh": "一個已經被反覆觸碰五次的供應區,你應該怎麼看?", "opts": ["它更強了,因為經過了考驗", "它的燃料大部分已耗盡,排名應該降低", "每次觸碰都會補充新的掛單", "它和全新供應區完全一樣"], "opts_zh": ["因為交易所會強制撮合所有掛單", "因為機構未成交的掛單仍留在原地,會把價格拉回來", "因為畫線工具會自動吸附價格", "因為每次突破都一定會失敗"], "ans": 1, "why": "Zones are consumable - every touch removes resting orders. Old, repeatedly-tapped zones are noise; trade only fresh and violent zones.", "why_zh": "供需区是可消耗的——每一次触碰都会消耗挂单。被反复触碰的旧区域只是噪音；只交易新鲜而有力的区域。"}, {"q": "Under the RTB (retest) rules, where should the stop loss be placed?", "q_zh": "按 RTB(回測進場)的規則,止損應該放在哪裡?", "opts": ["橫盤帶正中間,離進場價最近", "橫盤帶內部,反應K線下方", "橫盤帶之外加一點緩衝,絕不放區間裡面", "前一個擺動高點"], "opts_zh": ["因為交易所會強制撮合所有掛單", "因為機構未成交的掛單仍留在原地,會把價格拉回來", "因為畫線工具會自動吸附價格", "因為每次突破都一定會失敗"], "ans": 2, "why": "Stop goes beyond the zone with a small buffer, never inside it. The zone is where price breathes; a stop inside it gets hunted by the overshoot.", "why_zh": "止损放在区域之外并留一点缓冲，绝不放区域内部。区域是价格喘息的地方；止损放里面会被过冲扫掉。"}, {"q": "What does it take for a demand zone to be truly invalidated?", "q_zh": "什麼情況才說明需求區真正失效了?", "opts": ["影線向下穿透整條帶子", "價格第二次回測帶子", "出現一根大陰線但收盤又收回帶內", "收盤穿過整條帶子,並連續兩三根K線同方向確認"], "opts_zh": ["因為交易所會強制撮合所有掛單", "因為機構未成交的掛單仍留在原地,會把價格拉回來", "因為畫線工具會自動吸附價格", "因為每次突破都一定會失敗"], "ans": 3, "why": "A wick through is a test; a close through the whole band with follow-through is the verdict. The resting orders are gone - the zone has no fuel left.", "why_zh": "影线穿透只是试探；收盘穿过整条带子并连续确认才是失效的判决。挂单已经耗尽——区域再也没有燃料。"}];
+const EXAM_QUESTIONS = [{"q": "Why do prices often return to retest a supply zone after it forms?", "q_zh": "為什麼供需區形成後,價格常常會回來回測(retest)?", "opts": ["Because the exchange force-matches all resting orders", "Because unfilled institutional orders stay in place and pull price back", "Because charting tools automatically snap price to the zone", "Because every breakout is bound to fail"], "opts_zh": ["因為交易所會強制撮合所有掛單", "因為機構未成交的掛單仍留在原地,會把價格拉回來", "因為畫線工具會自動吸附價格", "因為每次突破都一定會失敗"], "ans": 1, "why": "Zones are leftover resting orders from institutional accumulation. Unfilled orders pull price back - that is exactly why zones get retested.", "why_zh": "供需区是机构吸筹后留下的未成交挂单。未成交的挂单会把价格拉回来——这正是供需区会被反复回测的原因。"}, {"q": "What exactly does a demand zone refer to?", "q_zh": "需求區(demand zone)本身,指的是哪一部分?", "opts": ["The wick of the lowest drop candle", "The ignition candle", "The tight quiet consolidation band (base) before ignition", "The whole rally from ignition to target"], "opts_zh": ["急跌的最低點那一根影線", "起爆那根大陽線", "起爆前那段緊湊安靜的橫盤帶(base)", "從起爆點到目標的整段上漲"], "ans": 2, "why": "The zone is the base - the tight 3-7 candle consolidation right before the ignition. Mark the whole band top to bottom; it is not the low of the drop.", "why_zh": "供需区指的是起爆前那段 3-7 根K线的紧凑横盘带（base）。要自上而下标记整条带子；它不是急跌的最低点。"}, {"q": "A supply zone that has been tapped five times - how should you view it?", "q_zh": "一個已經被反覆觸碰五次的供應區,你應該怎麼看?", "opts": ["It is stronger, because it has passed the test", "Its fuel is mostly spent, and it should rank lower", "Each touch refills it with fresh resting orders", "It is exactly the same as a brand-new supply zone"], "opts_zh": ["它更強了,因為經過了考驗", "它的燃料大部分已耗盡,排名應該降低", "每次觸碰都會補充新的掛單", "它和全新供應區完全一樣"], "ans": 1, "why": "Zones are consumable - every touch removes resting orders. Old, repeatedly-tapped zones are noise; trade only fresh and violent zones.", "why_zh": "供需区是可消耗的——每一次触碰都会消耗挂单。被反复触碰的旧区域只是噪音；只交易新鲜而有力的区域。"}, {"q": "Under the RTB (retest) rules, where should the stop loss be placed?", "q_zh": "按 RTB(回測進場)的規則,止損應該放在哪裡?", "opts": ["In the middle of the consolidation band, closest to the entry price", "Inside the band, below the reaction candle", "Outside the band with a small buffer, never inside the zone", "At the previous swing high"], "opts_zh": ["橫盤帶正中間,離進場價最近", "橫盤帶內部,反應K線下方", "橫盤帶之外加一點緩衝,絕不放區間裡面", "前一個擺動高點"], "ans": 2, "why": "Stop goes beyond the zone with a small buffer, never inside it. The zone is where price breathes; a stop inside it gets hunted by the overshoot.", "why_zh": "止损放在区域之外并留一点缓冲，绝不放区域内部。区域是价格喘息的地方；止损放里面会被过冲扫掉。"}, {"q": "What does it take for a demand zone to be truly invalidated?", "q_zh": "什麼情況才說明需求區真正失效了?", "opts": ["A wick pierces down through the whole band", "Price retests the band a second time", "A big bearish candle prints but closes back inside the band", "Price closes through the whole band, confirmed by two or three candles in the same direction"], "opts_zh": ["影線向下穿透整條帶子", "價格第二次回測帶子", "出現一根大陰線但收盤又收回帶內", "收盤穿過整條帶子,並連續兩三根K線同方向確認"], "ans": 3, "why": "A wick through is a test; a close through the whole band with follow-through is the verdict. The resting orders are gone - the zone has no fuel left.", "why_zh": "影线穿透只是试探；收盘穿过整条带子并连续确认才是失效的判决。挂单已经耗尽——区域再也没有燃料。"}];
 function renderExam(){
   var box = document.getElementById("examBox"); if(!box) return;
   EXAM_QUESTIONS.forEach(function(item, qi){

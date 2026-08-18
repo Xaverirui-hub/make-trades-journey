@@ -578,8 +578,25 @@ body.lang-zh.lang-strict .en:not(.en-keep){display:none !important;}
 
 
 
-/* ===== Global Navbar v3 (glass + logo + lang) ===== */
-@media(max-width:640px){
+/* ===== Global Navbar v3 (glass + logo + lang) ===== */
+
+
+
+
+
+
+
+
+
+
+
+
+@media(max-width:640px){
+
+
+
+
+
 }
 
 /* ===== Chinese is not a subtitle ==========================================
@@ -1182,26 +1199,31 @@ const MTJ_EXAM_KEY = "mtj_exam_pass_21";
 const EXAM_QUESTIONS = [
  {"q": "LIMIT and STOP pending orders differ how?", "q_zh": "LIMIT 与 STOP 挂单的差别是？",
   "opts":["LIMIT is for buying, STOP is for selling","LIMIT waits for a better price; STOP waits for a breakout","STOP orders execute instantly","There is no difference"],
+  "opts_zh":["LIMIT 用于买入，STOP 用于卖出","LIMIT 等更好的价格；STOP 等突破","STOP 单立即成交","没有差别"],
   "ans":1,
   "why":"LIMIT = wait for a better price (a pullback). STOP = wait for price to break through a level.",
   "why_zh":"LIMIT = 等更好的价格（回撤进场）；STOP = 等价格突破某个价位才进场。"},
  {"q": "A Buy Stop order is placed where?", "q_zh": "Buy Stop 挂在哪里？",
   "opts":["Below the current price","Above the current price","At the current price","At the stop loss level"],
+  "opts_zh":["当前价格下方","当前价格上方","在当前价格处","在止损位"],
   "ans":1,
   "why":"A Buy Stop sits ABOVE the current price - you only want to be long once price breaks resistance.",
   "why_zh":"Buy Stop 放在现价上方 —— 你只想在价格突破阻力、证明自己之后才做多。"},
  {"q": "When should the Stop Loss be filled in?", "q_zh": "止损应该什么时候填？",
   "opts":["After the trade moves against you","Before sending the order","Only if the trade is large","It is optional on MT5"],
+  "opts_zh":["交易对你不利之后","送出订单之前","只有交易规模大时才填","在 MT5 上可填可不填"],
   "ans":1,
   "why":"Fill it BEFORE sending. MT5 will happily send an order with the stop blank - that is how planned trades become unplanned ones.",
   "why_zh":"在送出订单之前就要填好。MT5 允许你不填止损直接送出 —— 计画好的交易就是这样变成没计画的。"},
  {"q": "Which cost do you pay on every single trade, guaranteed?", "q_zh": "哪一项成本每笔交易都一定付？",
   "opts":["Swap","Slippage","Spread","Overnight financing"],
+  "opts_zh":["隔夜费","滑点","点差","隔夜融资"],
   "ans":2,
   "why":"You buy at Ask and sell at Bid, so the spread is paid on entry every time. Swap only applies if you hold overnight; slippage varies.",
   "why_zh":"你用 Ask 买、用 Bid 卖，所以点差每一笔进场就付掉了。隔夜费只有持仓过夜才收，滑点则时有时无。"},
  {"q": "The same fixed cost hurts which style most?", "q_zh": "同样的固定成本，对哪种风格伤害最大？",
   "opts":["Wide-stop swing trading","Tight-stop scalping","It affects both equally","Neither - costs are negligible"],
+  "opts_zh":["宽止损的波段交易","紧止损的剥头皮交易","对两者影响相同","都不会受影响——成本可忽略不计"],
   "ans":1,
   "why":"Cost is a share of your 1R. A round-trip cost worth one dollar of price eats the whole of a one-dollar stop, but only five percent of a twenty-dollar stop. The tighter you trade, the more of your edge goes to costs.",
   "why_zh":"成本是 1R 的一部分。等值 1 元价格的来回成本，对上 1 元的止损会吃掉整个 1R，对上 20 元的止损只吃 5%。你做得越短，优势被成本拿走的比例越高。"}

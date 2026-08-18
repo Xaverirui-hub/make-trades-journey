@@ -464,8 +464,25 @@ body.lang-zh.lang-strict .en:not(.en-keep){display:none !important;}
 
 
 
-/* ===== Global Navbar v3 (glass + logo + lang) ===== */
-@media(max-width:640px){
+/* ===== Global Navbar v3 (glass + logo + lang) ===== */
+
+
+
+
+
+
+
+
+
+
+
+
+@media(max-width:640px){
+
+
+
+
+
 }
 
 /* ===== Chinese is not a subtitle ==========================================
@@ -1292,7 +1309,7 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
 <script>
 /* ===== MTJ EXAM MODULE - Module 18 ===== */
 const MTJ_EXAM_KEY = "mtj_exam_pass_18";
-const EXAM_QUESTIONS = [{"q": "According to the golden rule, which of the following is 'widening the stop'?", "q_zh": "根據黃金法則,下列哪一種做法是「加寬止損」?", "opts": ["+1R 後把止損移到成本價", "價格創新高後,把止損移到更高的擺動低點下方", "虧損單把止損往下移,「給它一點空間」", "到了時間止損點按計劃離場"], "opts_zh": ["+1R 後把止損移到成本價", "價格創新高後,把止損移到更高的擺動低點下方", "虧損單把止損往下移,「給它一點空間」", "到了時間止損點按計劃離場"], "ans": 2, "why": "A stop only moves in the direction of the trade and never widens. Widening a stop is not management - it is hope wearing a disguise, and a brand-new unknown risk.", "why_zh": "止损只能朝交易有利的方向移动，绝不加宽。加宽止损不是管理——那是披着伪装的希望，以及一笔全新的未知风险。"}, {"q": "With the default thirds template - 1/3 closes at 1R, 1/3 at 2R, final 1/3 at 3R - what is the realized R?", "q_zh": "三等分默認模板:1/3 在 1R 平倉、1/3 在 2R 平倉、最後 1/3 拿到 3R,已實現 R 是多少?", "opts": ["1.0R", "1.5R", "2.0R", "3.0R"], "opts_zh": ["+1R 後把止損移到成本價", "價格創新高後,把止損移到更高的擺動低點下方", "虧損單把止損往下移,「給它一點空間」", "到了時間止損點按計劃離場"], "ans": 2, "why": "Realized R = (1/3 x 1R) + (1/3 x 2R) + (1/3 x 3R) = 2.0R. The 1R you give up is the insurance cost for a much higher win rate.", "why_zh": "已实现 R = (1/3 x 1R) + (1/3 x 2R) + (1/3 x 3R) = 2.0R。你放弃的那 1R，是为更高胜率付出的保险费。"}, {"q": "When should you move the stop to break-even?", "q_zh": "什麼時候才應該把止損移到成本價(break-even)?", "opts": ["一進場立刻移,保護本金", "+0.2R 時,早移早安心", "+1R 之後,價格已經為風險付過一次錢", "虧損 -0.5R 時,減少損失"], "opts_zh": ["+1R 後把止損移到成本價", "價格創新高後,把止損移到更高的擺動低點下方", "虧損單把止損往下移,「給它一點空間」", "到了時間止損點按計劃離場"], "ans": 2, "why": "The standard trigger is +1R - price has paid for the risk once, so the trade is free to run. Moving at +0.2R just donates the trade to normal noise.", "why_zh": "标准触发点是 +1R——价格已经为风险付过一次钱，交易可以自由奔跑。在 +0.2R 就移动止损，只是把交易白白送给正常波动。"}, {"q": "Under the N-bar time stop rule, what counts as 'meaningful progress'?", "q_zh": "關於時間止損的 N-bar 規則,什麼才算「有意義的進展」?", "opts": ["價格在小區間內橫盤整理", "到達 1R,或突破一個有意義的結構位", "帳戶權益小幅回升", "持倉時間超過一週"], "opts_zh": ["+1R 後把止損移到成本價", "價格創新高後,把止損移到更高的擺動低點下方", "虧損單把止損往下移,「給它一點空間」", "到了時間止損點按計劃離場"], "ans": 1, "why": "Progress means reaching 1R or breaking a meaningful structure level - nothing else. A trade that stops moving is telling you the setup is not working; time is the resource you cannot buy back.", "why_zh": "有意义的进展指到达 1R 或突破有意义的结构位——仅此而已。不再移动的交易是在告诉你这个形态没有起作用；时间是你买不回来的资源。"}, {"q": "Which of the following is a 'fatal combination'?", "q_zh": "哪一個是「致命的搭配」?", "opts": ["趨勢系統 + 固定止損", "區間系統 + 固定止損", "趨勢系統 + 結構追蹤", "區間系統 + 固定目標"], "opts_zh": ["+1R 後把止損移到成本價", "價格創新高後,把止損移到更高的擺動低點下方", "虧損單把止損往下移,「給它一點空間」", "到了時間止損點按計劃離場"], "ans": 0, "why": "A trend system with a fixed stop cuts every trend, and a range system with a trail gives back every range. Fixed stops fit range systems; trails fit trend systems.", "why_zh": "趋势系统用固定止损会把每段趋势都砍掉，区间系统用移动止损会把每段区间都还回去。固定止损适合区间系统；移动止损适合趋势系统。"}];
+const EXAM_QUESTIONS = [{"q": "According to the golden rule, which of the following is 'widening the stop'?", "q_zh": "根據黃金法則,下列哪一種做法是「加寬止損」?", "opts": ["Move the stop to break-even after +1R", "After price makes a new high, move the stop below the higher swing low", "On a losing trade, move the stop down to 'give it some room'", "Exit as planned when the time stop is hit"], "opts_zh": ["+1R 後把止損移到成本價", "價格創新高後,把止損移到更高的擺動低點下方", "虧損單把止損往下移,「給它一點空間」", "到了時間止損點按計劃離場"], "ans": 2, "why": "A stop only moves in the direction of the trade and never widens. Widening a stop is not management - it is hope wearing a disguise, and a brand-new unknown risk.", "why_zh": "止损只能朝交易有利的方向移动，绝不加宽。加宽止损不是管理——那是披着伪装的希望，以及一笔全新的未知风险。"}, {"q": "With the default thirds template - 1/3 closes at 1R, 1/3 at 2R, final 1/3 at 3R - what is the realized R?", "q_zh": "三等分默認模板:1/3 在 1R 平倉、1/3 在 2R 平倉、最後 1/3 拿到 3R,已實現 R 是多少?", "opts": ["1.0R", "1.5R", "2.0R", "3.0R"], "opts_zh": ["1.0R", "1.5R", "2.0R", "3.0R"], "ans": 2, "why": "Realized R = (1/3 x 1R) + (1/3 x 2R) + (1/3 x 3R) = 2.0R. The 1R you give up is the insurance cost for a much higher win rate.", "why_zh": "已实现 R = (1/3 x 1R) + (1/3 x 2R) + (1/3 x 3R) = 2.0R。你放弃的那 1R，是为更高胜率付出的保险费。"}, {"q": "When should you move the stop to break-even?", "q_zh": "什麼時候才應該把止損移到成本價(break-even)?", "opts": ["Move it immediately on entry to protect capital", "At +0.2R, move it early for peace of mind", "After +1R, price has already paid for the risk once", "At -0.5R, to reduce the loss"], "opts_zh": ["一進場立刻移,保護本金", "+0.2R 時,早移早安心", "+1R 之後,價格已經為風險付過一次錢", "虧損 -0.5R 時,減少損失"], "ans": 2, "why": "The standard trigger is +1R - price has paid for the risk once, so the trade is free to run. Moving at +0.2R just donates the trade to normal noise.", "why_zh": "标准触发点是 +1R——价格已经为风险付过一次钱，交易可以自由奔跑。在 +0.2R 就移动止损，只是把交易白白送给正常波动。"}, {"q": "Under the N-bar time stop rule, what counts as 'meaningful progress'?", "q_zh": "關於時間止損的 N-bar 規則,什麼才算「有意義的進展」?", "opts": ["Price consolidates sideways in a small range", "Reaching 1R, or breaking a meaningful structure level", "Account equity recovers slightly", "Holding the position for more than a week"], "opts_zh": ["價格在小區間內橫盤整理", "到達 1R,或突破一個有意義的結構位", "帳戶權益小幅回升", "持倉時間超過一週"], "ans": 1, "why": "Progress means reaching 1R or breaking a meaningful structure level - nothing else. A trade that stops moving is telling you the setup is not working; time is the resource you cannot buy back.", "why_zh": "有意义的进展指到达 1R 或突破有意义的结构位——仅此而已。不再移动的交易是在告诉你这个形态没有起作用；时间是你买不回来的资源。"}, {"q": "Which of the following is a 'fatal combination'?", "q_zh": "哪一個是「致命的搭配」?", "opts": ["Trend system + fixed stop", "Range system + fixed stop", "Trend system + structure trailing stop", "Range system + fixed target"], "opts_zh": ["趨勢系統 + 固定止損", "區間系統 + 固定止損", "趨勢系統 + 結構追蹤", "區間系統 + 固定目標"], "ans": 0, "why": "A trend system with a fixed stop cuts every trend, and a range system with a trail gives back every range. Fixed stops fit range systems; trails fit trend systems.", "why_zh": "趋势系统用固定止损会把每段趋势都砍掉，区间系统用移动止损会把每段区间都还回去。固定止损适合区间系统；移动止损适合趋势系统。"}];
 function renderExam(){
   var box = document.getElementById("examBox"); if(!box) return;
   EXAM_QUESTIONS.forEach(function(item, qi){
