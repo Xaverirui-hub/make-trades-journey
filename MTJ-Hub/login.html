@@ -665,6 +665,9 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
   /* beta 期间:免费开放、不需要账号,所以整页盖 COMING SOON。
      页面本身(表单、各种状态)是做好的,收费前把这一段删掉就能用。 */
   try{
+    const admin = (new URLSearchParams(location.search).get("admin") === "xrs2026")
+                || (function(){ try{ return localStorage.getItem("mtj_admin") === "1"; }catch(e){ return false; } })();
+    if(admin) throw 0;                       /* 管理员看真页面 */
     const { mountComingSoon } = await import("./assets/comingsoon.js");
     mountComingSoon("page", {
       badge: "Coming soon",

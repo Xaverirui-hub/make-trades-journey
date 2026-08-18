@@ -38,9 +38,30 @@ const CSS = `
   font-family:'Noto Sans SC',sans-serif;letter-spacing:.04em;color:var(--gold,#E8C877);}
 .mtj-cs-note{font-size:13.5px;line-height:1.75;color:var(--muted,#9A968C);margin:0;}
 .mtj-cs-note .zh{font-family:'Noto Sans SC',sans-serif;}
+/* 出口放在遮罩【里面】。宿主页面的导航层级各不相同(Composer 的是
+   position:relative;z-index:1),盖上去就点不到了 —— 与其跟每一页的
+   层级较劲,不如自己带一个出口。 */
+.mtj-cs-back{display:inline-flex;align-items:center;gap:8px;margin-top:24px;
+  font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.16em;
+  text-transform:uppercase;font-weight:700;text-decoration:none;
+  color:var(--gold,#E8C877);border:1px solid rgba(232,200,119,.34);
+  background:rgba(232,200,119,.06);border-radius:22px;padding:9px 18px;transition:.22s;}
+.mtj-cs-back:hover{color:#0A0A0E;background:var(--gold,#E8C877);border-color:var(--gold,#E8C877);}
+.mtj-cs-back .zh{font-family:'Noto Sans SC',sans-serif;letter-spacing:.08em;}
 @media(max-width:640px){
   .mtj-cs-panel{top:30vh;margin-top:30vh;}
 }
+/* 紧凑模式:盖一张卡片而不是一整段页面。面板居中、不黏,字号收小。 */
+.mtj-cs.is-compact{align-items:center;
+  background:linear-gradient(180deg,rgba(6,6,9,.82),rgba(6,6,9,.9));
+  -webkit-backdrop-filter:blur(11px) saturate(.6);backdrop-filter:blur(11px) saturate(.6);}
+.mtj-cs.is-compact .mtj-cs-panel{position:static;margin:0 20px;align-self:center;
+  transform:none;max-width:330px;}
+.mtj-cs.is-compact .mtj-cs-badge{margin-bottom:13px;}
+.mtj-cs.is-compact .mtj-cs-title{font-size:clamp(18px,2.2vw,22px);margin-bottom:9px;}
+.mtj-cs.is-compact .mtj-cs-note{font-size:12.5px;}
+/* 被「提上来」的元素:留在遮罩之上,不被磨砂糊到 */
+.mtj-cs-lift{position:relative;z-index:61;}
 `;
 
 let cssDone = false;
@@ -70,12 +91,19 @@ export function mountComingSoon(target, opts = {}) {
   const badge = opts.badge || 'Coming soon';
 
   const el = document.createElement('div');
-  el.className = 'mtj-cs' + (isPage ? ' is-page' : '');
+  el.className = 'mtj-cs' + (isPage ? ' is-page' : '') + (opts.compact ? ' is-compact' : '');
+  /* opts.z:宿主页面自己已经有高层级的东西时用。Composer 有一层 z-index
+     100 的 MEMBERS ONLY 门禁,那一页把功能卖点全摊开了,要盖在它上面。 */
+  if (opts.z) el.style.setProperty('z-index', String(opts.z), 'important');
   el.innerHTML =
     '<div class="mtj-cs-panel">' +
       '<div class="mtj-cs-badge">' + badge + '</div>' +
       '<h2 class="mtj-cs-title">' + pair(title[0], title[1]) + '</h2>' +
       '<p class="mtj-cs-note">' + pair(note[0], note[1]) + '</p>' +
+      (opts.back
+        ? '<a class="mtj-cs-back" href="' + opts.back.href + '">&#8592; ' +
+          pair(opts.back.label[0], opts.back.label[1]) + '</a>'
+        : '') +
     '</div>';
 
   /* 盖住的内容不能还能用 Tab 走进去 —— 看不见却能聚焦是最糟的无障碍问题。
@@ -84,13 +112,25 @@ export function mountComingSoon(target, opts = {}) {
      露在外面,访客得能靠它走开。 */
   const keep = isPage ? (opts.keep || '#globalNav') : null;
   if (!isPage && getComputedStyle(host).position === 'static') host.style.position = 'relative';
-  Array.prototype.forEach.call(host.children, (c) => {
-    if (c === el) return;
-    if (keep && c.matches(keep)) return;
-    c.setAttribute('inert', '');
-    c.setAttribute('aria-hidden', 'true');
-    if (!('inert' in HTMLElement.prototype)) c.style.pointerEvents = 'none';
-  });
+
+  /* opts.inert === false:宿主里没有可聚焦元素时(例如工具卡片,按钮是个
+     span),就不必 inert。inert 同时会对读屏器隐藏,能不加就不加 —— 让
+     读屏用户照样听得到卡片在讲什么。 */
+  if (opts.inert !== false) {
+    Array.prototype.forEach.call(host.children, (c) => {
+      if (c === el) return;
+      if (keep && c.matches(keep)) return;
+      c.setAttribute('inert', '');
+      c.setAttribute('aria-hidden', 'true');
+      if (!('inert' in HTMLElement.prototype)) c.style.pointerEvents = 'none';
+    });
+  }
+
+  /* opts.lift:这些元素浮在遮罩之上,不被糊掉 —— 工具卡片要「留名字、
+     盖介绍」就靠它。 */
+  if (opts.lift) {
+    host.querySelectorAll(opts.lift).forEach((n) => n.classList.add('mtj-cs-lift'));
+  }
 
   host.appendChild(el);
 

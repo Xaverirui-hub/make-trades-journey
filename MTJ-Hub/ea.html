@@ -1127,6 +1127,9 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
   /* beta 期间:EA 课程内容还没做完,封面以下盖 COMING SOON。
      上线时删掉这一段即可。注意这【不是】权限控制,只是告知。 */
   try{
+    const admin = (new URLSearchParams(location.search).get("admin") === "xrs2026")
+                || (function(){ try{ return localStorage.getItem("mtj_admin") === "1"; }catch(e){ return false; } })();
+    if(admin) throw 0;                       /* 管理员看真页面 */
     const { mountComingSoon } = await import("./assets/comingsoon.js");
     mountComingSoon(".galaxy-zone", {
       badge: "Coming soon",

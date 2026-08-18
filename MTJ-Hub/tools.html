@@ -379,6 +379,8 @@ body.lang-zh.lang-strict .hero .h-zh{font-size:clamp(19px,3.2vw,30px);color:var(
    keyboard/AT, so pointer users see no change. */
 :focus-visible{outline:2px solid var(--gold,#E8C877);outline-offset:3px;border-radius:4px;}
 a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width:2px;}
+#toolPos,#toolComposer{grid-template-columns:1fr;}
+#toolPos .tool-side,#toolComposer .tool-side{display:none;}
 </style>
 </head>
 <body>
@@ -481,12 +483,13 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
     </div>
   </div>
 
-  <div class="tool reveal" style="margin-top:16px;">
+  <div id="toolPos" class="tool reveal" style="margin-top:16px;">
     <div class="tool-body">
       <span class="tag" style="color:var(--gold);border-color:rgba(232,200,119,.35);background:rgba(232,200,119,.06);"><span class="en">Risk Tool</span><span class="zh">风控工具</span></span>
       <h3><span class="en">Position Size Calculator</span><span class="zh">仓 位 计 算 器</span></h3>
       <div class="zh-t">仓 位 计 算 机</div>
-      <p>Put in your balance, risk %, entry and stop - it returns the lot size, the margin it locks up, your 1:1 / 1:2 / 1:3 targets, and how many straight losses the account can absorb before your drawdown cap is breached.
+      <div class="tool-veil">
+<p>Put in your balance, risk %, entry and stop - it returns the lot size, the margin it locks up, your 1:1 / 1:2 / 1:3 targets, and how many straight losses the account can absorb before your drawdown cap is breached.
         <span class="zh">输入余额、风险%、进场与止损，直接得出手数、占用保证金、1:1 / 1:2 / 1:3 目标价，以及帐户在触及回撤上限前还能承受几次连亏。</span></p>
       <div class="tool-feats">
         <div><b><span class="en">Symbols</span><span class="zh">品种</span></b>Gold · Silver · FX majors</div>
@@ -499,6 +502,7 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
         <span class="acc-mem">会员专属</span>
       </div>
     </div>
+</div>
     <div class="tool-side" style="background:radial-gradient(600px 300px at 100% 0%,rgba(232,200,119,.08),transparent 65%);">
       <div class="warnline"><b style="color:var(--gold);">// RISK FIRST 风险优先</b><br>Fix the risk, place the stop, then let the lot size fall out of the arithmetic.<br>先定风险，再放止损，手数是算出来的结果。</div>
       <div class="warnline"><b style="color:var(--gold);">// ROUND DOWN 向下取整</b><br>Rounding up quietly pushes you past your own limit.<br>向上取整等于悄悄突破自己设的上限。</div>
@@ -506,12 +510,13 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
     </div>
   </div>
 
-  <div class="tool reveal" style="margin-top:16px;">
+  <div id="toolComposer" class="tool reveal" style="margin-top:16px;">
     <div class="tool-body">
       <span class="tag" style="color:var(--bear);border-color:rgba(255,92,99,.32);background:rgba(255,92,99,.05);"><span class="en">Strategy Lab</span><span class="zh">策略实验室</span></span>
       <h3><span class="en">XRs Strategy Composer</span></h3>
       <div class="zh-t">策 略 拼 阵 台</div>
-      <p>Drag entry, filter, exit and sizing blocks into a zone and the engine assembles them into a testable strategy - then scores it, sketches an equity curve, and tells you where it breaks.
+      <div class="tool-veil">
+<p>Drag entry, filter, exit and sizing blocks into a zone and the engine assembles them into a testable strategy - then scores it, sketches an equity curve, and tells you where it breaks.
         <span class="zh">把「进场 / 过滤 / 出场 / 仓位」积木拖进区域，引擎会自动组装成一套可测试的策略，给出评分、画出资金曲线，并指出它会在哪里失效。</span></p>
       <div class="tool-feats">
         <div><b><span class="en">Blocks</span><span class="zh">积木</span></b>Entry · Filter · Exit · Sizing</div>
@@ -524,6 +529,7 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
         <span class="acc-mem">会员专属</span>
       </div>
     </div>
+</div>
     <div class="tool-side">
       <div class="warnline"><b>// RED LINE 红线</b><br>This tool never places an order.<br>本工具永不下单。</div>
       <div class="warnline"><b>// SCORE ≠ PROFIT</b><span class="zh">分 数 ≠ 利 润</span><br>A high score does not mean it makes money. Backtests, including OOS, guarantee nothing.<br>评分高 ≠ 能赚钱；回测（含 OOS）不保证未来。</div>
@@ -986,6 +992,21 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
     const { mountGalaxy } = await import('./assets/galaxy.js');
     mountGalaxy('#galaxy');
   }catch(e){ /* page keeps its glow + particle background */ }
+</script>
+<script type="module">
+  /* beta:仓位计算器与 Composer 还没开放。卡片留【工具名】,其余介绍盖掉 ——
+     保留惊喜。这两张卡片本来就没有链接,按钮是个 span,所以不需要 inert。
+     上线时删掉这一段即可。 */
+  try{
+    const { mountComingSoon } = await import("./assets/comingsoon.js");
+    const veil = {
+      compact: true, inert: false,
+      badge: "Coming soon",
+      title: ["Not open yet", "还没开放"],
+      note:  ["We are keeping this one under wraps a little longer.", "先卖个关子,再等等。"]
+    };
+    ["#toolPos .tool-veil", "#toolComposer .tool-veil"].forEach(sel => mountComingSoon(sel, veil));
+  }catch(e){}
 </script>
 </body>
 </html>

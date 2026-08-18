@@ -959,5 +959,30 @@ calc();
   }catch(e){}
 })();
 </script>
+<script type="module">
+  /* beta:这个工具还没开放。上线时删掉这一段即可。
+     这不是权限控制 —— 内容仍在页面里,详见 assets/comingsoon.js 开头。
+
+     做法:把这页【自带】的那层门禁(z-index 100)藏掉,换成统一的 COMING SOON。
+     不叠在它上面,是因为叠上去要 z>100,就会连导航(z 95)一起盖住,
+     学生看到一面墙却走不开。藏掉之后我这层用默认 60,导航露在外面能用。
+
+     admin 参数照旧放行,你自己还进得去。 */
+  try{
+    const admin = (new URLSearchParams(location.search).get("admin") === "xrs2026")
+                || (function(){ try{ return localStorage.getItem("mtj_admin") === "1"; }catch(e){ return false; } })();
+    if(!admin){                              /* 管理员看真页面 */
+      const own = document.getElementById("comingSoon");
+      if(own) own.style.setProperty("display","none","important");
+      const { mountComingSoon } = await import("../assets/comingsoon.js");
+      mountComingSoon("page", {
+        badge: "Coming soon",
+        title: ["Not open yet","还没开放"],
+        note:  ["The position calculator opens with the paid track. The risk course teaches you to do it by hand first — that part is free and open now.","仓位计算器跟付费课程一起开。风控那一课先教你手算 —— 那部分现在就是免费开放的。"],
+        back: { href: "../tools.html", label: ["Back to tools", "回到工具栏"] }
+      });
+    }
+  }catch(e){}
+</script>
 </body>
 </html>
