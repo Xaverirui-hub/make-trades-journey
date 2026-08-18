@@ -262,8 +262,25 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
 
 
 
-/* ===== Global Navbar v3 (glass + logo + lang) ===== */
-@media(max-width:640px){
+/* ===== Global Navbar v3 (glass + logo + lang) ===== */
+
+
+
+
+
+
+
+
+
+
+
+
+@media(max-width:640px){
+
+
+
+
+
 }
 
 /* ===== Chinese is not a subtitle ==========================================
@@ -867,6 +884,25 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
       document.body.appendChild(b);
     }
   }catch(e){}
+})();
+</script>
+<script>
+/* ===== Reveal on scroll (FOMC fix 2026-08-18: reveal elements had no trigger) ===== */
+(function(){
+  var els = document.querySelectorAll('.reveal');
+  if(!els.length) return;
+  if(!('IntersectionObserver' in window)){
+    els.forEach(function(e){ e.classList.add('in'); });
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+    });
+  }, {rootMargin:'0px 0px -40px 0px', threshold:.05});
+  els.forEach(function(e){ io.observe(e); });
+  /* 首屏元素立即顯示 */
+  els.forEach(function(e){ var r=e.getBoundingClientRect(); if(r.top < window.innerHeight) e.classList.add('in'); });
 })();
 </script>
 </body>
