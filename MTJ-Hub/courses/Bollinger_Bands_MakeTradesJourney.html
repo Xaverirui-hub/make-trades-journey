@@ -1070,6 +1070,23 @@ const MONO="'JetBrains Mono',monospace";
 function el(t,a,p){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e;}
 function txt(p,x,y,s,o){const t=el('text',Object.assign({x:x,y:y,'font-family':MONO,'font-size':11,fill:C.muted},o||{}),p);t.textContent=s;return t;}
 function svgFor(box,w,h){const s=el('svg',{viewBox:'0 0 '+w+' '+h,preserveAspectRatio:'xMidYMid meet'});box.appendChild(s);return s;}
+
+/* 由收盘序列反推 OHLC 再画 K 线 —— 涨青跌红,与 Ichimoku 同一套 */
+const PXC={up:'#2FE0D6',down:'#FF5C63'};
+function candles(s,px,X,Y,bw,startIdx){
+  px.forEach((c,i)=>{
+    const o=i?px[i-1]:c-0.7;
+    const amp=Math.abs(c-o)*0.55+0.45;
+    const hi=Math.max(o,c)+amp, lo=Math.min(o,c)-amp, up=c>=o;
+    const col=up?PXC.up:PXC.down;
+    const g=el('g',{class:'rlbl',style:'--i:'+Math.min((startIdx||0)+i,16)},s);
+    el('line',{x1:X(i),x2:X(i),y1:Y(hi),y2:Y(lo),stroke:col,'stroke-width':1},g);
+    el('rect',{x:X(i)-bw/2,y:Y(Math.max(o,c)),width:bw,
+      height:Math.max(Math.abs(Y(o)-Y(c)),1.4),rx:1,
+      fill:col,'fill-opacity':.55,stroke:col,'stroke-width':.85},g);
+  });
+}
+
 /* ============ Bollinger 图表 ============
    BB.A 三条线怎么来的  —— 中轨是均线,上下轨是中轨 ± 2 个标准差
    BB.B 挤压与扩张      —— 带子收窄 = 平静在积累,不是没事发生
@@ -1097,7 +1114,7 @@ function drawBBBuild(box){
   el('path',{d:path(lo),stroke:C.gold,'stroke-width':1.8,fill:'none',class:'rlbl',style:'--i:2'},s);
   el('path',{d:path(mid),stroke:C.cyan,'stroke-width':2,fill:'none','stroke-dasharray':'6 4',
     class:'rlbl',style:'--i:3'},s);
-  el('path',{d:path(px),stroke:C.text,'stroke-width':1.6,fill:'none',class:'rlbl',style:'--i:0'},s);
+  candles(s,px,i=>X(i),Y,pw/n*0.42,0);
 
   /* 在最后一根标出 ±2σ 的距离 */
   const k=n-4;
@@ -1119,7 +1136,8 @@ function drawBBBuild(box){
   };
   key(T+14,C.gold,'','UPPER / LOWER','上轨 / 下轨',6);
   key(T+52,C.cyan,'6 4','MIDDLE = MA20','中轨 = 20 均线',7);
-  key(T+90,C.text,'','PRICE','价格',8);
+  txt(s,L+pw+16,T+96,'PRICE 价格',{fill:C.muted,'font-size':10,class:'rlbl',style:'--i:8'});
+  txt(s,L+pw+16,T+110,'涨 = 青 · 跌 = 红',{fill:C.muted2,'font-size':9,'font-family':"'Noto Sans SC',sans-serif",class:'rlbl',style:'--i:8'});
 
   txt(s,L,H-16,'Middle = the 20-period average. Bands = that average, plus and minus two standard deviations.',
     {fill:C.goldB,'font-size':10.5,'font-weight':700,class:'rlbl',style:'--i:9'});
@@ -1147,7 +1165,7 @@ function drawBBSqueeze(box){
     fill:C.gold,'fill-opacity':.08,stroke:'none',class:'rlbl',style:'--i:1'},s);
   el('path',{d:path(up),stroke:C.gold,'stroke-width':1.7,fill:'none',class:'rlbl',style:'--i:2'},s);
   el('path',{d:path(lo),stroke:C.gold,'stroke-width':1.7,fill:'none',class:'rlbl',style:'--i:2'},s);
-  el('path',{d:path(px),stroke:C.text,'stroke-width':1.7,fill:'none',class:'rlbl',style:'--i:0'},s);
+  candles(s,px,i=>X(i),Y,pw/n*0.4,0);
 
   const zone=(a,b,col,en,zh,i)=>{
     el('rect',{x:X(a),y:T-10,width:X(b)-X(a),height:ph+20,fill:col,'fill-opacity':.07,
@@ -1189,7 +1207,7 @@ function drawBBWalk(box){
       fill:p[2],'fill-opacity':.09,stroke:'none'},g);
     el('path',{d:path(p[4]),stroke:p[2],'stroke-width':1.5,fill:'none'},g);
     el('path',{d:path(p[5]),stroke:p[2],'stroke-width':1.5,fill:'none'},g);
-    el('path',{d:path(p[3]),stroke:C.text,'stroke-width':2.2,fill:'none'},g);
+    candles(g,p[3],i=>X(i),Y,(pw-28)/9*0.44,k*2);
     txt(s,x0+pw/2,T-20,p[0],{'text-anchor':'middle',fill:p[2],'font-size':11,'font-weight':700,
       'letter-spacing':'.12em',class:'rlbl',style:'--i:'+(k*2+1)});
     txt(s,x0+pw/2,T+ph+26,p[1],{'text-anchor':'middle',fill:p[2],'font-size':10.5,'font-weight':700,
