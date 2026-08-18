@@ -719,8 +719,10 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
   <article class="pattern reveal">
     <div class="pattern-head"><span class="idx">ICH.03<span class="zh">案例 03</span></span><h3>The Five Lines in Plain Words<span class="zh">五条线的大白话</span></h3><span class="tag neu"><span class="en">Intuition</span><span class="zh">直觉</span></span></div>
     <div class="pattern-desc">
-      <p>Every line is just a midpoint or an average, drawn on a different part of the chart. Once you see that, the whole system stops being mysterious.
-        <span class="zh">每条线都只是某个中点或平均，画在图表的不同位置。看穿这一点，整套系统就不再神秘。</span></p>
+      <p class="lead reveal"><span class="en">Forget the Japanese names for one minute. Every Ichimoku line answers the same question: <b>what was the middle of the range over the last N candles?</b> Not the average of closes - the middle between the highest high and the lowest low. That is the whole trick.</span><span class="zh">先把日文名字放一边。一目均衡表的每一条线，问的都是同一个问题：<b>过去 N 根 K 线，正中间在哪？</b>注意不是收盘价的平均，是最高点和最低点的正中间。整套系统就建在这一件事上。</span></p>
+<div class="rchart reveal" data-r="ichMid"></div>
+<p class="lead reveal"><span class="en">Change N and you change the personality of the line. That is the only difference between Tenkan and Kijun.</span><span class="zh">把 N 换个数字，这条线的性格就变了。Tenkan 和 Kijun 的差别，就只有这一个。</span></p>
+<div class="rchart reveal" data-r="ichSpeed"></div>
       <div class="calcbox">
         <div class="fx"><b><span class="en">Tenkan</span><span class="zh">转换线</span></b><span class="op">=</span>(<span class="en">High</span><span class="zh">最高</span> + <span class="en">Low</span><span class="zh">最低</span>) ÷ 2 <span class="op">·</span> <b><span class="en">last 9 periods</span><span class="zh">最近 9 期</span></b></div>
         <div class="cap"><span class="en">Tenkan = (High + Low) ÷ 2, last 9 periods</span><span class="zh">转换线 = 最近 9 期（最高 + 最低）÷ 2</span></div>
@@ -776,8 +778,11 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
     </div>
       <figcaption>Three states: above, inside, below - that is the whole bias<span class="zh">三种状态：云上、云内、云下——这就是全部方向判断</span></figcaption></figure>
     <div class="pattern-desc">
-      <p>The cloud (Kumo) is the space between Senkou Span A and Senkou Span B. It is drawn 26 periods into the future, which makes it a projection of where the market sees equilibrium - and where price is most likely to react.
-        <span class="zh">云是先行带 A 与先行带 B 之间的区域。它画在未来 26 期，是对市场均衡位置的投影——也是最可能发生反应的地方。</span></p>
+      <p class="lead reveal"><span class="en">Here is the part that confuses everyone, so take it slowly. The cloud is built from two lines you already understand - both are midpoints. Then Ichimoku does something no other indicator does: <b>it takes that band and draws it 26 candles to the right, into empty space where price has not arrived yet.</b></span><span class="zh">这一段是所有人都会卡住的地方，慢慢看。云是由两条线夹出来的，而那两条线你已经懂了 —— 都是「中点」。接着一目均衡表做了一件别的指标都不做的事：<b>把这条带子整个往右挪 26 根，画到价格还没走到的空白处。</b></span></p>
+<div class="rchart reveal" data-r="ichShift"></div>
+<p class="lead reveal"><span class="en">So the cloud ahead of price is not a prediction. It is today's balance zone, shown early. When price finally walks over there, it meets a level that was decided 26 candles ago - which is exactly why so many traders watch it.</span><span class="zh">所以价格前方的那片云<b>不是预测</b>，它是「今天算出来的平衡区，提前摆在那里」。等价格真的走过去，碰到的是 26 根之前就定下的位置 —— 这也正是它会有效的原因：很多人都在看同一条线。</span></p>
+<p class="lead reveal"><span class="en">Once that clicks, the rest is just reading position and thickness.</span><span class="zh">这一层想通了，剩下的就只是看两件事：价格站在云的哪一边，以及这片云有多厚。</span></p>
+<div class="rchart reveal" data-r="ichStates"></div>
       <p>Three properties do all the work: <b>thickness</b> (how strong the level is), <b>color</b> (who is in control) and <b>position</b> (price above, inside or below the cloud).
         <span class="zh">真正起作用的是三个属性：<b>厚度</b>（关键位有多强）、<b>颜色</b>（谁在掌控）、<b>位置</b>（价格在云上、云内还是云下）。</span></p>
       <ul class="points">
@@ -1040,8 +1045,180 @@ function txt(p,x,y,s,o){const t=el('text',Object.assign({x:x,y:y,'font-family':M
 function svgFor(box,w,h){const s=el('svg',{viewBox:'0 0 '+w+' '+h,preserveAspectRatio:'xMidYMid meet'});box.appendChild(s);return s;}
 
 /* ============ RSI.01 levels 70/30 ============ */
-/* RSI 绘图代码已移除:这页没有 .rchart 容器,那些函数永不执行。
-   Ichimoku 的图表另做,见交接说明。 */
+/* ============ Ichimoku 图表 ============
+   针对三处「小白看不懂」各做一张:
+   ICH.A 中点到底是什么      —— 拆开 (最高+最低)÷2
+   ICH.B 快线慢线差在哪      —— 同一段行情上并排看
+   ICH.C 云为什么画在未来    —— 把「前移 26 根」画出来,这是最反直觉的一步
+   ICH.D 价格站在哪          —— 云上 / 云内 / 云下三种处境
+*/
+
+/* ---- A. 中点 = (最高 + 最低) ÷ 2 ---- */
+function drawIchMid(box){
+  const W=720,H=300,L=54,R=150,T=34,B=48;
+  const s=svgFor(box,W,H);
+  const hi=[62,58,66,71,64,55,60,68,63], lo=[38,34,41,46,40,30,36,44,39];
+  const oc=[[46,57],[52,40],[44,60],[60,50],[48,58],[42,36],[52,44],[50,62],[58,46]];
+  const n=hi.length, pw=W-L-R, ph=H-T-B;
+  const top=76, bot=24;
+  const Y=v=>T+ph*(top-v)/(top-bot);
+  const X=i=>L+pw*(i+0.5)/n, bw=pw/n*0.5;
+
+  const HH=Math.max(...hi), LL=Math.min(...lo), MID=(HH+LL)/2;
+
+  /* 9 根 K 线 */
+  hi.forEach((h,i)=>{
+    const g=el('g',{class:'rlbl',style:'--i:'+i},s);
+    const up=oc[i][1]>oc[i][0];
+    el('line',{x1:X(i),x2:X(i),y1:Y(h),y2:Y(lo[i]),stroke:up?C.bull:C.bear,'stroke-width':1.4},g);
+    el('rect',{x:X(i)-bw/2,y:Y(Math.max(oc[i][0],oc[i][1])),width:bw,
+      height:Math.max(Math.abs(Y(oc[i][0])-Y(oc[i][1])),2),rx:1,
+      fill:up?C.bull:C.bear,'fill-opacity':.55,stroke:up?C.bull:C.bear,'stroke-width':1},g);
+  });
+
+  /* 最高 / 最低 / 中点 */
+  const mk=(v,col,lbl,zh,idx)=>{
+    const g=el('g',{class:'rlbl',style:'--i:'+idx},s);
+    el('line',{x1:L-8,x2:L+pw+10,y1:Y(v),y2:Y(v),stroke:col,'stroke-width':1.2,
+      'stroke-dasharray':lbl==='MID'?'':'5 4'},g);
+    txt(s,L+pw+18,Y(v)+4,lbl,{fill:col,'font-size':11,'font-weight':700,class:'rlbl',style:'--i:'+idx});
+    txt(s,L+pw+18,Y(v)+18,zh,{fill:C.muted,'font-size':9.5,'font-family':"'Noto Sans SC',sans-serif",
+      class:'rlbl',style:'--i:'+idx});
+  };
+  mk(HH,C.muted,'HIGHEST HIGH','这 9 根里最高的一点',10);
+  mk(LL,C.muted,'LOWEST LOW','这 9 根里最低的一点',11);
+  mk(MID,C.gold,'MIDPOINT = TENKAN','正中间 —— 转换线就是它',12);
+
+  /* 中点高亮 */
+  el('rect',{x:L-8,y:Y(HH),width:pw+18,height:Y(LL)-Y(HH),fill:C.gold,'fill-opacity':.05,
+    class:'rlbl',style:'--i:9'},s);
+  el('circle',{cx:L+pw/2,cy:Y(MID),r:5,fill:C.goldB,class:'rlbl',style:'--i:13'},s);
+
+  txt(s,L,H-16,'(HIGHEST HIGH + LOWEST LOW) ÷ 2  —  not an average of closes',
+    {fill:C.gold,'font-size':10.5,'font-weight':700,class:'rlbl',style:'--i:14'});
+  txt(s,L,H-2,'（最高 + 最低）÷ 2 —— 不是收盘价的平均，而是这段行情的正中间',
+    {fill:C.muted,'font-size':9.5,'font-family':"'Noto Sans SC',sans-serif",class:'rlbl',style:'--i:15'});
+}
+
+/* ---- B. 快线 vs 慢线 ---- */
+function drawIchSpeed(box){
+  const W=720,H=280,L=48,R=132,T=30,B=46;
+  const s=svgFor(box,W,H);
+  const px=[40,44,41,48,53,50,58,62,59,66,71,68,74,70,64,60,66,71,76,73];
+  const n=px.length, pw=W-L-R, ph=H-T-B, top=82, bot=32;
+  const Y=v=>T+ph*(top-v)/(top-bot), X=i=>L+pw*i/(n-1);
+  const mid=(a,w,i)=>{const sl=a.slice(Math.max(0,i-w+1),i+1);return (Math.max(...sl)+Math.min(...sl))/2;};
+  const tk=px.map((_,i)=>mid(px,4,i)), kj=px.map((_,i)=>mid(px,10,i));
+  const path=a=>a.map((v,i)=>(i?'L':'M')+X(i).toFixed(1)+','+Y(v).toFixed(1)).join(' ');
+
+  el('path',{d:path(px),stroke:C.muted2,'stroke-width':1.6,fill:'none',class:'rlbl',style:'--i:0'},s);
+  el('path',{d:path(kj),stroke:C.cyan,'stroke-width':2.4,fill:'none',class:'rlbl',style:'--i:2'},s);
+  el('path',{d:path(tk),stroke:C.gold,'stroke-width':2.4,fill:'none',class:'rlbl',style:'--i:1'},s);
+
+  const key=(y,col,en,zh,i)=>{
+    el('line',{x1:L+pw+14,x2:L+pw+34,y1:y,y2:y,stroke:col,'stroke-width':2.6,class:'rlbl',style:'--i:'+i},s);
+    txt(s,L+pw+40,y+4,en,{fill:col,'font-size':10.5,'font-weight':700,class:'rlbl',style:'--i:'+i});
+    txt(s,L+pw+40,y+18,zh,{fill:C.muted,'font-size':9,'font-family':"'Noto Sans SC',sans-serif",
+      class:'rlbl',style:'--i:'+i});
+  };
+  key(T+16,C.gold,'TENKAN 9','快：跟着价格跑',3);
+  key(T+56,C.cyan,'KIJUN 26','慢：这一波的脊梁',4);
+  key(T+96,C.muted2,'PRICE','价格本身',5);
+
+  txt(s,L,H-16,'Same price. Same formula. Only the window changes.',
+    {fill:C.goldB,'font-size':11,'font-weight':700,class:'rlbl',style:'--i:6'});
+  txt(s,L,H-2,'同一段行情、同一个公式 —— 只是一个看 9 根，一个看 26 根。快线经常反复，慢线才是方向。',
+    {fill:C.muted,'font-size':9.5,'font-family':"'Noto Sans SC',sans-serif",class:'rlbl',style:'--i:7'});
+}
+
+/* ---- C. 云为什么画在未来(最关键的一张)---- */
+function drawIchShift(box){
+  const W=720,H=320,L=44,R=26,T=52,B=64;
+  const s=svgFor(box,W,H);
+  const n=22, pw=W-L-R, ph=H-T-B, top=80, bot=30;
+  const Y=v=>T+ph*(top-v)/(top-bot), X=i=>L+pw*i/(n+7);
+  const a=[52,54,53,57,60,58,62,65,63,67,70,68,72,70,66,63,67,70,74,72,75,73];
+  const b=[46,47,46,49,51,50,53,55,54,57,59,58,61,60,57,55,58,60,63,62,64,63];
+  const SH=6;   /* 图上用 6 根示意「前移 26 根」,画面才放得下 */
+
+  /* 今天算出来的位置(灰,虚线)*/
+  const band=(arr1,arr2,off,fill,op,dash,cls,sc)=>{
+    const d=arr1.map((v,i)=>(i?'L':'M')+X(i+off).toFixed(1)+','+Y(v).toFixed(1)).join(' ')
+      +' '+arr2.map((v,i)=>'L'+X(arr2.length-1-i+off).toFixed(1)+','+Y(arr2[arr2.length-1-i]).toFixed(1)).join(' ')+' Z';
+    el('path',{d:d,fill:fill,'fill-opacity':op,stroke:'none',class:cls,style:'--i:1'},s);
+    [arr1,arr2].forEach((ar,k)=>el('path',{
+      d:ar.map((v,i)=>(i?'L':'M')+X(i+off).toFixed(1)+','+Y(v).toFixed(1)).join(' '),
+      stroke:sc?sc:(k?C.bear:C.bull),'stroke-width':sc?1.2:1.8,fill:'none','stroke-dasharray':dash,
+      class:cls,style:'--i:1'},s));
+  };
+  band(a,b,0,C.muted2,.05,'4 4','rlbl',C.muted2);
+  band(a,b,SH,C.gold,.22,'','rlbl');
+
+  /* 价格:只到 K 线结束处 */
+  const px=[50,51,50,53,56,55,58,61,59,63,66,64,68,66,62,60,63,66,70,68,71,69];
+  el('path',{d:px.map((v,i)=>(i?'L':'M')+X(i).toFixed(1)+','+Y(v).toFixed(1)).join(' '),
+    stroke:C.text,'stroke-width':2,fill:'none',class:'rlbl',style:'--i:0'},s);
+
+  /* 今天这条竖线 */
+  el('line',{x1:X(n-1),x2:X(n-1),y1:T-14,y2:H-B+8,stroke:C.goldB,'stroke-width':1.2,
+    'stroke-dasharray':'3 3',class:'rlbl',style:'--i:2'},s);
+  txt(s,X(n-1)-16,T-20,'NOW',{fill:C.goldB,'font-size':10,'font-weight':700,class:'rlbl',style:'--i:2'});
+  txt(s,X(n-1)-14,T-6,'今天',{fill:C.muted,'font-size':9,'font-family':"'Noto Sans SC',sans-serif",
+    class:'rlbl',style:'--i:2'});
+
+  /* 前移箭头 */
+  const ay=H-B+20;
+  el('path',{d:'M'+X(n-9)+' '+ay+' L'+X(n-1+SH)+' '+ay,stroke:C.gold,'stroke-width':1.6,
+    class:'rlbl',style:'--i:3'},s);
+  el('path',{d:'M'+(X(n-1+SH))+' '+ay+' l-9 -4 M'+(X(n-1+SH))+' '+ay+' l-9 4',
+    stroke:C.gold,'stroke-width':1.8,fill:'none','stroke-linecap':'round',class:'rlbl',style:'--i:3'},s);
+  txt(s,X(n-9),ay-9,'SHIFT FORWARD 26',{fill:C.gold,'font-size':10.5,'font-weight':700,
+    class:'rlbl',style:'--i:3'});
+  txt(s,X(n-9),ay+16,'向前推 26 根',{fill:C.muted,'font-size':9.5,
+    'font-family':"'Noto Sans SC',sans-serif",class:'rlbl',style:'--i:3'});
+
+  txt(s,L,T-34,'The grey band is where the maths lands today. The gold band is that same band, pushed 26 bars ahead.',
+    {fill:C.muted,'font-size':10,class:'rlbl',style:'--i:4'});
+  txt(s,L,H-10,'灰色是今天算出来的平衡区；金色是同一块，往前推了 26 根。所以你能看到前方还没走到的支撑阻力。',
+    {fill:C.goldB,'font-size':10,'font-family':"'Noto Sans SC',sans-serif",'font-weight':700,
+      class:'rlbl',style:'--i:5'});
+}
+
+/* ---- D. 价格站在哪 ---- */
+function drawIchStates(box){
+  const W=720,H=250,T=34,B=58;
+  const s=svgFor(box,W,H);
+  const pw=(W-60)/3, ph=H-T-B;
+  const cases=[
+    ['ABOVE','云 上',C.bull,'Cloud is the floor','云是地板 —— 只找做多',[70,72,69,74,77],62],
+    ['INSIDE','云 内',C.muted,'No edge here','没有优势 —— 等它走出去',[55,56,54,56,55],55],
+    ['BELOW','云 下',C.bear,'Cloud is the ceiling','云是天花板 —— 只找做空',[42,39,44,38,35],48]
+  ];
+  cases.forEach((c,k)=>{
+    const x0=18+k*(pw+12), g=el('g',{class:'rlbl',style:'--i:'+(k*2)},s);
+    const Y=v=>T+ph*(84-v)/(84-28), X=i=>x0+12+(pw-24)*i/4;
+    el('rect',{x:x0,y:T-8,width:pw,height:ph+16,rx:12,fill:'rgba(20,20,26,.5)',
+      stroke:c[2],'stroke-opacity':.3,'stroke-width':1},g);
+    /* 云带 */
+    el('rect',{x:x0+8,y:Y(c[6]+7),width:pw-16,height:Y(c[6]-7)-Y(c[6]+7),rx:3,
+      fill:c[2],'fill-opacity':.14,stroke:c[2],'stroke-opacity':.35,'stroke-width':1},g);
+    /* 价格 */
+    el('path',{d:c[5].map((v,i)=>(i?'L':'M')+X(i).toFixed(1)+','+Y(v).toFixed(1)).join(' '),
+      stroke:c[2],'stroke-width':2.4,fill:'none'},g);
+    txt(s,x0+pw/2,T+ph+26,c[0],{'text-anchor':'middle',fill:c[2],'font-size':11.5,'font-weight':700,
+      'letter-spacing':'.14em',class:'rlbl',style:'--i:'+(k*2+1)});
+    txt(s,x0+pw/2,T+ph+42,c[1],{'text-anchor':'middle',fill:c[2],'font-size':10,
+      'font-family':"'Noto Sans SC',sans-serif",'letter-spacing':'.2em',class:'rlbl',style:'--i:'+(k*2+1)});
+    txt(s,x0+pw/2,T+ph+58,c[4],{'text-anchor':'middle',fill:C.muted,'font-size':9.5,
+      'font-family':"'Noto Sans SC',sans-serif",class:'rlbl',style:'--i:'+(k*2+1)});
+  });
+  txt(s,18,20,'Ignore every line for a second. Where is price relative to the cloud? That answers most of it.',
+    {fill:C.muted,'font-size':10,class:'rlbl',style:'--i:7'});
+}
+
+const RENDER={ichMid:drawIchMid,ichSpeed:drawIchSpeed,ichShift:drawIchShift,ichStates:drawIchStates};
+document.querySelectorAll('.rchart[data-r]').forEach(b=>{const f=RENDER[b.dataset.r];if(f)f(b);});
+
 
 
 
