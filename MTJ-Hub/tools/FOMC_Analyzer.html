@@ -337,6 +337,7 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
     transition-duration:.001ms !important;scroll-behavior:auto !important;}
 }
 </style>
+<script src="fomc_data.js"></script>
 </head>
 <body>
 <script src="../assets/nav.js"></script><!-- 全站共用导航,见 assets/nav.js -->
@@ -361,53 +362,40 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
     <span class="zh">用一套固定结构记录：美联储实际做了什么、市场实际怎么反应、两者如何对上 —— 让每次会议变成你日志里的一个资料点，而不是一条新闻标题。</span></p>
 </header>
 
-<!-- ============ 01 SELECT ============ -->
+<!-- ============ 01 DECISIONS (auto) ============ -->
 <section class="section">
   <div class="group-head reveal"><span class="tier">01</span>
-    <div><div class="eyebrow">Select <span class="zh">· 选择</span></div><h2 class="title">Which Meeting?<span class="zh">哪一次会议</span></h2></div></div>
-  <div class="card reveal" style="max-width:480px;">
-    <div class="n">MEETING DATE <span class="zh">· 会议日期</span></div>
-    <label>FOMC Decision <span class="zh">决议日期</span></label>
-    <select id="f_date">
-      <option value="2026.09.16" selected>2026.09.16 · September FOMC</option>
-      <option value="2026.11.04">2026.11.04 · November FOMC</option>
-      <option value="2026.12.16">2026.12.16 · December FOMC</option>
-      <option value="2027.01.27">2027.01.27 · January FOMC</option>
-    </select>
-    <div class="hint">// Records are kept in your own journal - nothing here is uploaded.
-      <span class="zh">纪录只留在你自己的日志里，不会上传。</span></div>
+    <div><div class="eyebrow">Decisions <span class="zh">· 决议记录</span></div>
+    <h2 class="title">Every Decision, Already Written Up<span class="zh">每一次决议，都已经整理好</span></h2></div>
   </div>
+  <div class="note reveal">// Nothing to fill in. Summary rows here - the full write-up is in section 03 below.
+    <span class="zh">不需要你填任何东西。这里是每场决议的摘要，完整版报告在下面第 03 节。</span></div>
+  <div id="fomcList"></div>
 </section>
 
-<!-- ============ 02 DATA ============ -->
-<section class="section" style="padding-top:0;">
-  <div class="group-head reveal"><span class="tier">02</span>
-    <div><div class="eyebrow">Input <span class="zh">· 输入</span></div><h2 class="title">Enter What Happened<span class="zh">输入决议与市场数据</span></h2></div></div>
-  <div class="fgrid">
-    <div class="card reveal"><div class="n">01</div><label>Fed Funds Rate <span class="zh">利率区间</span></label><input type="text" id="f_rate" value="3.50–3.75%"></div>
-    <div class="card reveal"><div class="n">02</div><label>Vote · Hold <span class="zh">维持票数</span></label><input type="number" id="f_hold" value="9" min="0" max="12"></div>
-    <div class="card reveal"><div class="n">03</div><label>Vote · Hike <span class="zh">加息票数</span></label><input type="number" id="f_hike" value="3" min="0" max="12"></div>
-    <div class="card reveal"><div class="n">04</div><label>Vote · Cut <span class="zh">降息票数</span></label><input type="number" id="f_cut" value="0" min="0" max="12"></div>
-    <div class="card reveal"><div class="n">05</div><label>Statement <span class="zh">声明要点</span></label><input type="text" id="f_stmt" value="声明精简，删除前瞻指引，保留经济稳步扩张表述"></div>
-    <div class="card reveal"><div class="n">06</div><label>DXY <span class="zh">美元指数反应</span></label><input type="text" id="f_dxy" value="101.2 → 100.8 (走弱 -0.4%)"></div>
-    <div class="card reveal"><div class="n">07</div><label>XAUUSD <span class="zh">黄金价格</span></label><input type="text" id="f_gold" value="$4,120"></div>
-    <div class="card reveal"><div class="n">08</div><label>Gold Change % <span class="zh">黄金涨跌%</span></label><input type="number" id="f_goldchg" value="0.8" step="0.1"></div>
-    <div class="card reveal"><div class="n">09</div><label>US10Y <span class="zh">10年期收益率</span></label><input type="text" id="f_us10y" value="4.55% ↓ -6bp"></div>
-    <div class="card reveal"><div class="n">10</div><label>US Equities <span class="zh">美股</span></label><input type="text" id="f_eq" value="+0.9%"></div>
-    <div class="card reveal"><div class="n">11</div><label>Gold Timeline <span class="zh">黄金走势</span></label><input type="text" id="f_tl" value="决议前 $4,080 → 决议后冲 $4,150 → 收盘 $4,120"></div>
-    <div class="card reveal"><div class="n">12</div><label>Next Event <span class="zh">关注下一事件</span></label><input type="text" id="f_next" value="11月 FOMC (Nov 4-5) · 10月 NFP · CPI"></div>
+<!-- ============ ADMIN IMPORT (hidden unless admin) ============ -->
+<section class="section" id="fomcAdmin" hidden>
+  <div class="group-head reveal"><span class="tier">·</span>
+    <div><div class="eyebrow">Admin <span class="zh">· 管理员</span></div>
+    <h2 class="title">Import a CSV<span class="zh">导入 CSV</span></h2></div>
   </div>
-  <div class="btnrow">
-    <button class="btn" onclick="analyzeFOMC()">Build the Record <span>→</span></button>
-    <button class="btn ghost" onclick="clearResult()">Clear <span class="zh">· 清空</span></button>
+  <div class="card" style="max-width:760px;">
+    <div class="n">CSV → RECORDS</div>
+    <label>Choose file <span class="zh">选择档案</span></label>
+    <input type="file" id="fomcCsv" accept=".csv,text/csv">
+    <div class="hint" style="margin-top:10px;">
+      // Header: date,rate,hold,hike,cut,statement,dxy,gold,goldchg,us10y,equities,timeline,next
+      <span class="zh">表头顺序不限，缺的栏位留空即可。解析只在你的浏览器里进行，不会上传。</span>
+    </div>
+    <div id="fomcMsg" class="hint" style="margin-top:12px;"></div>
+    <div class="btnrow" style="margin-top:14px;">
+      <button class="btn" id="fomcCopy" disabled>Copy fomc_data.js <span class="zh">· 复制档案内容</span></button>
+    </div>
+    <div class="hint" style="margin-top:10px;">
+      // Paste over tools/fomc_data.js and commit - that is what makes it live for students.
+      <span class="zh">把复制到的内容覆盖 tools/fomc_data.js 并提交，学生那边才会更新。现在站点是纯静态，没有服务器可以接收上传。</span>
+    </div>
   </div>
-  <div class="note">// This tool classifies and formats what you enter. It does not forecast prices and does not tell you what to trade.
-    <span class="zh">本工具只把你输入的内容分类与排版。它不预测价格，也不告诉你该交易什么。</span></div>
-</section>
-
-<!-- ============ RESULT ============ -->
-<section class="section" style="padding-top:0;">
-  <div class="result" id="resultPanel"></div>
 </section>
 
 <!-- ============ 03 LATEST REPORT (native) ============ -->
@@ -903,6 +891,156 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
   els.forEach(function(e){ io.observe(e); });
   /* 首屏元素立即顯示 */
   els.forEach(function(e){ var r=e.getBoundingClientRect(); if(r.top < window.innerHeight) e.classList.add('in'); });
+})();
+</script>
+
+<script>
+/* ---- FOMC:自动渲染 + 管理员导入 ---------------------------------
+   读者看到的每一条都来自 tools/fomc_data.js,零输入。
+   导入面板只有管理员看得到 —— 判断沿用全站的 localStorage.mtj_admin。
+   这不是权限控制(前端标记谁都能设),它挡的是「误触」不是「入侵」;
+   反正解析全在本地进行,也没有东西会被上传。 */
+(function(){
+  var esc=function(t){ return String(t==null?'':t)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); };
+
+  function tone(r){
+    var h=+r.hold||0, k=+r.hike||0, c=+r.cut||0;
+    if(k>c) return ['HAWKISH','偏鹰','var(--bear,#FF5C63)'];
+    if(c>k) return ['DOVISH','偏鸽','var(--bull,#2CD98A)'];
+    return ['NEUTRAL','中性','var(--gold,#E8C877)'];
+  }
+  function cell(k,zh,v){
+    if(v===''||v==null) return '';
+    return '<div style="padding:12px 14px;border:1px solid var(--line-soft);border-radius:12px;">'+
+      '<div style="font-family:\'JetBrains Mono\',monospace;font-size:9.5px;letter-spacing:.16em;'+
+      'text-transform:uppercase;color:var(--muted);margin-bottom:5px;">'+esc(k)+
+      ' <span class="zh">'+esc(zh)+'</span></div>'+
+      '<div style="font-size:13.5px;color:var(--text);line-height:1.5;">'+esc(v)+'</div></div>';
+  }
+  function card(r){
+    var t=tone(r), votes=(+r.hold||0)+'-'+(+r.hike||0)+'-'+(+r.cut||0);
+    var chg=(r.goldchg===''||r.goldchg==null)?'':((+r.goldchg>=0?'+':'')+r.goldchg+'%');
+    return '<div class="report reveal">'+
+      '<div class="rhead">'+
+        '<span class="rtag">Decision Brief</span>'+
+        '<span class="rdate">'+esc(r.date)+'</span>'+
+        '<span class="rcredit">XRs Trading Lab</span>'+
+      '</div>'+
+      '<div class="rbody">'+
+        '<div class="rsub">FOMC Decision <span class="zh">FOMC 决议</span></div>'+
+        '<h3 class="rtitle">'+esc(r.title_en||'FOMC Decision')+
+          '<span class="zh">'+esc(r.title_zh||'FOMC 决议')+'</span></h3>'+
+        '<div style="display:inline-block;margin:2px 0 16px;padding:4px 12px;border-radius:20px;'+
+          'font-family:\'JetBrains Mono\',monospace;font-size:10px;letter-spacing:.14em;font-weight:700;'+
+          'color:'+t[2]+';border:1px solid '+t[2]+';">'+t[0]+' <span class="zh">'+t[1]+'</span></div>'+
+        '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;">'+
+          cell('Rate','利率',r.rate)+
+          cell('Vote  hold-hike-cut','票数 维持-加息-降息',votes)+
+          cell('Statement','声明',r.statement)+
+          cell('DXY','美元指数',r.dxy)+
+          cell('Gold','黄金',r.gold+(chg?('  '+chg):''))+
+          cell('US10Y','10年期',r.us10y)+
+          cell('US Equities','美股',r.equities)+
+          cell('Gold Timeline','黄金走势',r.timeline)+
+          cell('Next','关注下一事件',r.next)+
+        '</div>'+
+      '</div></div>';
+  }
+
+  function render(list){
+    var box=document.getElementById('fomcList');
+    if(!box) return;
+    if(!list||!list.length){
+      box.innerHTML='<div class="note"><span class="en">No decisions on file yet.</span>'+
+        '<span class="zh">档案里还没有决议记录。</span></div>';
+      return;
+    }
+    box.innerHTML=list.map(card).join('');
+    if(window.setLang) window.setLang(document.body.classList.contains('lang-en')?'en':'zh');
+    box.querySelectorAll('.reveal').forEach(function(e){ e.classList.add('in'); });
+  }
+  render(window.FOMC_RECORDS||[]);
+
+  /* ---- 管理员导入 ---- */
+  var isAdmin=false;
+  try{ isAdmin = localStorage.getItem('mtj_admin')==='1' ||
+        new URLSearchParams(location.search).get('admin')==='xrs2026'; }catch(e){}
+  var panel=document.getElementById('fomcAdmin');
+  if(!isAdmin || !panel) return;
+  panel.hidden=false;
+
+  var FIELDS=['date','rate','hold','hike','cut','statement','dxy','gold','goldchg',
+              'us10y','equities','timeline','next','title_en','title_zh'];
+
+  /* 逗号分隔,支援双引号包住的栏位(里面可以有逗号) */
+  function parseCSV(text){
+    var rows=[], row=[], cur='', q=false;
+    text=text.replace(/\r\n?/g,'\n');
+    for(var i=0;i<text.length;i++){
+      var ch=text[i];
+      if(q){
+        if(ch==='"'){ if(text[i+1]==='"'){ cur+='"'; i++; } else q=false; }
+        else cur+=ch;
+      }else{
+        if(ch==='"') q=true;
+        else if(ch===','){ row.push(cur); cur=''; }
+        else if(ch==='\n'){ row.push(cur); rows.push(row); row=[]; cur=''; }
+        else cur+=ch;
+      }
+    }
+    if(cur!==''||row.length){ row.push(cur); rows.push(row); }
+    return rows.filter(function(r){ return r.some(function(c){ return c.trim()!==''; }); });
+  }
+
+  var msg=document.getElementById('fomcMsg'), copyBtn=document.getElementById('fomcCopy');
+  var built='';
+  document.getElementById('fomcCsv').addEventListener('change', function(ev){
+    var f=ev.target.files&&ev.target.files[0];
+    if(!f) return;
+    var rd=new FileReader();
+    rd.onload=function(){
+      try{
+        var rows=parseCSV(String(rd.result));
+        if(rows.length<2) throw new Error('至少要有表头 + 一行资料');
+        var head=rows[0].map(function(h){ return h.trim().toLowerCase(); });
+        var unknown=head.filter(function(h){ return h && FIELDS.indexOf(h)<0; });
+        var recs=rows.slice(1).map(function(r){
+          var o={};
+          head.forEach(function(h,i){ if(FIELDS.indexOf(h)>=0) o[h]=(r[i]||'').trim(); });
+          ['hold','hike','cut','goldchg'].forEach(function(k){
+            if(o[k]!=='' && o[k]!=null && !isNaN(+o[k])) o[k]=+o[k]; });
+          return o;
+        }).filter(function(o){ return o.date; });
+        if(!recs.length) throw new Error('没有一行带 date,无法当成决议记录');
+
+        render(recs);                                   /* 立刻预览 */
+        built='window.FOMC_RECORDS = '+JSON.stringify(recs,null,2)+';\n';
+        copyBtn.disabled=false;
+        msg.innerHTML='<span style="color:var(--bull,#2CD98A)">// 解析成功:'+recs.length+
+          ' 笔。上面已经是预览效果。'+(unknown.length?(' 忽略了未知栏位:'+unknown.join(', ')):'')+'</span>';
+      }catch(e){
+        copyBtn.disabled=true; built='';
+        msg.innerHTML='<span style="color:var(--bear,#FF5C63)">// 解析失败:'+esc(e.message)+'</span>';
+      }
+    };
+    rd.readAsText(f,'utf-8');
+  });
+
+  copyBtn.addEventListener('click', function(){
+    if(!built) return;
+    var head='/* 由 FOMC_Analyzer 的管理员导入面板产生 —— 覆盖 tools/fomc_data.js 并提交 */\n';
+    var out=head+built;
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(out).then(function(){
+        msg.innerHTML='<span style="color:var(--bull,#2CD98A)">// 已复制。覆盖 tools/fomc_data.js 再提交即可。</span>';
+      });
+    }else{
+      var ta=document.createElement('textarea'); ta.value=out;
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove();
+      msg.innerHTML='<span style="color:var(--bull,#2CD98A)">// 已复制。</span>';
+    }
+  });
 })();
 </script>
 </body>
