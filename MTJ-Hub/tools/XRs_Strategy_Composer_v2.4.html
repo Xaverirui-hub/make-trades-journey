@@ -4739,9 +4739,7 @@ syncCost(); render(); reload();
       if(own) own.style.setProperty("display","none","important");
       const { mountComingSoon } = await import("../assets/comingsoon.js");
       mountComingSoon("page", {
-        badge: "Coming soon",
-        title: ["Not open yet","还没开放"],
-        note:  ["The Strategy Composer is still under wraps. It opens with the EA track.","策略拼阵台暂时卖个关子，跟 EA 课程一起开。"],
+        title: ["Coming soon", "敬请期待"],
         back: { href: "../tools.html", label: ["Back to tools", "回到工具栏"] }
       });
     }

@@ -1132,10 +1132,7 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
     if(admin) throw 0;                       /* 管理员看真页面 */
     const { mountComingSoon } = await import("./assets/comingsoon.js");
     mountComingSoon(".galaxy-zone", {
-      badge: "Coming soon",
-      title: ["EA courses are being built",  "EA 课程正在制作中"],
-      note:  ["The trading track is fully open in the meantime — start there, the EA track builds on it.",
-              "交易课程已经全部开放,先从那边开始 —— EA 这条线是建在它上面的。"]
+      title: ["Coming soon", "敬请期待"]
     });
   }catch(e){}
 </script>

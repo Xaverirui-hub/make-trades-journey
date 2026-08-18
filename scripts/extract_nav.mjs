@@ -72,10 +72,10 @@ const navJs = `/* 全站共用导航栏 — 由 scripts/extract_nav.mjs 生成�
   var ROOT = me.src.slice(0, me.src.lastIndexOf('assets/nav.js'));
 
   /* ===== beta 开关 =====
-     beta 期间免费、不需要账号,所以导航不显示登录入口 —— 学生点进去
-     只会看到一个还不能用的页面。收费前把这里改成 true,33 个页面一起
-     出现登录钮。登录页本身是做好的,只是同时盖了 COMING SOON 遮罩。 */
-  var SHOW_AUTH = false;
+     登录入口露出来,但登录页自己盖着 COMING SOON —— 学生看得到「以后
+     要登录」这件事,点进去知道还没开放。收费时把登录页末尾那段遮罩
+     脚本删掉即可,这里不用再动。 */
+  var SHOW_AUTH = true;
 
   var ITEMS = [
     ['home',    'MakeTradesJourney.html#top', 'Home',            '首页'],

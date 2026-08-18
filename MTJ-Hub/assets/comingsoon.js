@@ -86,9 +86,8 @@ export function mountComingSoon(target, opts = {}) {
     : (typeof target === 'string' ? document.querySelector(target) : target);
   if (!host) return null;
 
-  const title = opts.title || ['Coming soon', '即将上线'];
-  const note = opts.note || ['This part is still being built.', '这部分还在做。'];
-  const badge = opts.badge || 'Coming soon';
+  /* 只有 title 是必给的。badge / note 不给就不画 —— 面板可以只剩一行字。 */
+  const title = opts.title || ['Coming soon', '敬请期待'];
 
   const el = document.createElement('div');
   el.className = 'mtj-cs' + (isPage ? ' is-page' : '') + (opts.compact ? ' is-compact' : '');
@@ -97,9 +96,9 @@ export function mountComingSoon(target, opts = {}) {
   if (opts.z) el.style.setProperty('z-index', String(opts.z), 'important');
   el.innerHTML =
     '<div class="mtj-cs-panel">' +
-      '<div class="mtj-cs-badge">' + badge + '</div>' +
+      (opts.badge ? '<div class="mtj-cs-badge">' + opts.badge + '</div>' : '') +
       '<h2 class="mtj-cs-title">' + pair(title[0], title[1]) + '</h2>' +
-      '<p class="mtj-cs-note">' + pair(note[0], note[1]) + '</p>' +
+      (opts.note ? '<p class="mtj-cs-note">' + pair(opts.note[0], opts.note[1]) + '</p>' : '') +
       (opts.back
         ? '<a class="mtj-cs-back" href="' + opts.back.href + '">&#8592; ' +
           pair(opts.back.label[0], opts.back.label[1]) + '</a>'

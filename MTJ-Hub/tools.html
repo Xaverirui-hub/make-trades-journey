@@ -1001,9 +1001,7 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
     const { mountComingSoon } = await import("./assets/comingsoon.js");
     const veil = {
       compact: true, inert: false,
-      badge: "Coming soon",
-      title: ["Not open yet", "还没开放"],
-      note:  ["We are keeping this one under wraps a little longer.", "先卖个关子,再等等。"]
+      title: ["Coming soon", "敬请期待"],
     };
     ["#toolPos .tool-veil", "#toolComposer .tool-veil"].forEach(sel => mountComingSoon(sel, veil));
   }catch(e){}

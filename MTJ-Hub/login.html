@@ -670,10 +670,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
     if(admin) throw 0;                       /* 管理员看真页面 */
     const { mountComingSoon } = await import("./assets/comingsoon.js");
     mountComingSoon("page", {
-      badge: "Coming soon",
-      title: ["Accounts are on the way", "账号系统正在做"],
-      note:  ["The beta is free until the end of the year — no sign-up needed. Just open a course and start.",
-              "beta 到年底都免费,不用注册。直接打开课程就能上。"]
+      title: ["Coming soon", "敬请期待"]
     });
   }catch(e){}
 </script>
