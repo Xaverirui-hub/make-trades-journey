@@ -306,8 +306,25 @@ body.lang-zh.lang-strict .en:not(.en-keep){display:none !important;}
 
 
 
-/* ===== Global Navbar v3 (glass + logo + lang) ===== */
-@media(max-width:640px){
+/* ===== Global Navbar v3 (glass + logo + lang) ===== */
+
+
+
+
+
+
+
+
+
+
+
+
+@media(max-width:640px){
+
+
+
+
+
 }
 
 /* ===== Chinese is not a subtitle ==========================================
@@ -504,7 +521,7 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
 <section class="section" id="exam" style="padding-top:70px;">
   <div class="group-head reveal">
     <span class="tier">EXAM</span>
-    <div><div class="eyebrow"><span class="en">Module Check</span><span class="zh">模块测验</span></div><h2 class="title">Pass the Quiz to Unlock Module 04<span class="zh">通过测验解锁下一课</span></h2></div>
+    <div><div class="eyebrow"><span class="en">Module Check</span><span class="zh">模块测验</span></div><h2 class="title">Pass the Quiz to Unlock Module 05<span class="zh">通过测验解锁下一课</span></h2></div>
   </div>
 <div class="note" style="max-width:820px;line-height:1.9;"><span class="en">Answer all 5 questions. You need 4 of 5 (70%) to pass. Wrong answers are explained - read them, then retry.</span><span class="zh">回答全部 5 题。答对 4 题（70%） 即通过。答错的题会给出解析 —— 看完再试。</span></div>
   <div id="examBox" style="max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:22px;"></div>
@@ -848,7 +865,7 @@ function gradeExam(){
   var res = document.getElementById("examResult");
   if(correct >= 4){
     localStorage.setItem(MTJ_EXAM_KEY, "1");
-    res.innerHTML = "<div style='background:rgba(44,217,138,.1);border:1px solid rgba(44,217,138,.4);border-radius:14px;padding:22px;'><div style='color:var(--bull);font-weight:700;font-size:18px;margin-bottom:6px;'><span class='en'>PASSED - " + correct + "/" + total + "</span><span class='zh'>通过 - " + correct + "/" + total + "</span></div><div style='color:var(--muted);font-size:13.5px;'><span class='en'>Module 04 is unlocked.</span><span class='zh'>模块 04 已解锁。</span></div><a class='btn-next' href='Candlestick_Patterns_MakeTradesJourney.html'><span class='en'>Next: Candlestick Patterns</span><span class='zh'>下一课：K 线形态</span> <span class='ar'>&#8594;</span></a></div>";
+    res.innerHTML = "<div style='background:rgba(44,217,138,.1);border:1px solid rgba(44,217,138,.4);border-radius:14px;padding:22px;'><div style='color:var(--bull);font-weight:700;font-size:18px;margin-bottom:6px;'><span class='en'>PASSED - " + correct + "/" + total + "</span><span class='zh'>通过 - " + correct + "/" + total + "</span></div><div style='color:var(--muted);font-size:13.5px;'><span class='en'>Module 06 is unlocked.</span><span class='zh'>模块 05 已解锁。</span></div><a class='btn-next' href='Trading_Instruments_MakeTradesJourney.html'><span class='en'>Next: Trading Instruments</span><span class='zh'>下一课：交易品种</span> <span class='ar'>&#8594;</span></a></div>";
   } else {
     res.innerHTML = "<div style='background:rgba(255,92,99,.08);border:1px solid rgba(255,92,99,.35);border-radius:14px;padding:22px;'><div style='color:var(--bear);font-weight:700;font-size:18px;margin-bottom:6px;'>NOT PASSED - " + correct + "/" + total + " (" + Math.round(correct/total*100) + "%)</div><div style='color:var(--muted);font-size:13.5px;'>需要 70% (4/5)。阅读上面的错题解析，然后重试。</div></div>";
   }

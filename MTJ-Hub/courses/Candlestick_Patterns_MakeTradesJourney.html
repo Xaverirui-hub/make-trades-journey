@@ -279,8 +279,25 @@ body.lang-zh.lang-strict .en:not(.en-keep){display:none !important;}
 
 
 
-/* ===== Global Navbar v3 (glass + logo + lang) ===== */
-@media(max-width:640px){
+/* ===== Global Navbar v3 (glass + logo + lang) ===== */
+
+
+
+
+
+
+
+
+
+
+
+
+@media(max-width:640px){
+
+
+
+
+
 }
 
 /* ===== Chinese is not a subtitle ==========================================
@@ -625,7 +642,7 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
 <section class="section" id="exam" style="padding-top:70px;">
   <div class="group-head reveal">
     <span class="tier">EXAM</span>
-    <div><div class="eyebrow"><span class="en">Module Check</span><span class="zh">模块测验</span></div><h2 class="title">Pass the Quiz to Unlock Module 05<span class="zh">通过测验解锁下一课</span></h2></div>
+    <div><div class="eyebrow"><span class="en">Module Check</span><span class="zh">模块测验</span></div><h2 class="title">Pass the Quiz to Unlock Module 06<span class="zh">通过测验解锁下一课</span></h2></div>
   </div>
 <div class="note" style="max-width:820px;line-height:1.9;"><span class="en">Answer all 5 questions. You need 4 of 5 (70%) to pass. Wrong answers are explained - read them, then retry.</span><span class="zh">回答全部 5 题。答对 4 题（70%） 即通过。答错的题会给出解析 —— 看完再试。</span></div>
   <div id="examBox" style="max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:22px;"></div>
@@ -897,8 +914,8 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
 </script>
 
 <script>
-/* ===== MTJ EXAM MODULE - Module 04 ===== */
-const MTJ_EXAM_KEY = "mtj_exam_pass_4";
+/* ===== MTJ EXAM MODULE - Module 05 ===== */
+const MTJ_EXAM_KEY = "mtj_exam_pass_5";
 const EXAM_QUESTIONS = [{"q": "What does the body of a candlestick show?", "q_zh": "蜡烛实体表示什么？", "opts": ["The open-to-close range", "The session high and low", "Total traded volume", "The closing price only"], "opts_zh": ["开盘到收盘的区间", "当日的最高价和最低价", "总成交量", "仅收盘价"], "ans": 0, "why": "The body spans open to close. The wicks (shadows) show the high and low of the period.", "why_zh": "实体涵盖开盘到收盘的区间。影线（上下影）显示该周期的最高价与最低价。"}, {"q": "A doji has almost no body. What does it signal?", "q_zh": "几乎无实体的十字星代表什么？", "opts": ["Strong buying pressure", "Balance and indecision between buyers and sellers", "A guaranteed reversal", "Heavy volume"], "opts_zh": ["强烈的买盘压力", "多空双方力量均衡、犹豫不决", "必定反转", "巨大成交量"], "ans": 1, "why": "Open and close land at nearly the same price - total balance. Treat it as indecision and wait for confirmation.", "why_zh": "开盘价与收盘价几乎落在同一价位——完全均衡。把它视为犹豫不决，等待确认信号。"}, {"q": "Which pattern is a bullish reversal signal after a downtrend?", "q_zh": "下跌末端哪个是看涨反转信号？", "opts": ["Hanging Man", "Shooting Star", "Three Red Crows", "Hammer"], "opts_zh": ["吊颈线", "射击之星", "三只乌鸦", "锤子线"], "ans": 3, "why": "A hammer - small body on top with a long lower shadow - appears after a downtrend and hints that buyers fought back.", "why_zh": "锤子线——小实体在上方、带长下影线——出现在下跌趋势之后，暗示买方已开始反击。"}, {"q": "In a bullish engulfing pattern, which candle swallows which?", "q_zh": "看涨吞没中谁吞谁？", "opts": ["A small green candle swallows a large red one", "A large red candle swallows a small green one", "A large green candle completely swallows the prior small red candle", "Two equal candles overlap"], "opts_zh": ["一根小的阳线吞没一根大的阴线", "一根大的阴线吞没一根小的阳线", "一根大的阳线完全吞没前一根小的阴线", "两根大小相同的K线相互重叠"], "ans": 2, "why": "Bullish engulfing = a big green body completely covers the previous small red body, hinting the trend may turn up.", "why_zh": "看涨吞没 = 一根大阳线实体完全吞没前一根小阴线实体，暗示趋势可能转涨。"}, {"q": "A marubozu candle has no shadows at all. What does that tell you?", "q_zh": "无影线的光头光脚线说明什么？", "opts": ["Indecision between the two sides", "Strong one-sided momentum", "A guaranteed reversal", "Very low volume"], "opts_zh": ["多空双方犹豫不决", "强劲的单边动能", "必定反转", "极低的成交量"], "ans": 1, "why": "No shadows means price never pulled back - pure one-sided pressure in the direction of the candle.", "why_zh": "没有影线意味着价格从未回撤——完全单边的力量，方向与蜡烛一致。"}];
 function renderExam(){
   var box = document.getElementById("examBox"); if(!box) return;
@@ -963,7 +980,7 @@ function gradeExam(){
   var res = document.getElementById("examResult");
   if(correct >= 4){
     localStorage.setItem(MTJ_EXAM_KEY, "1");
-    res.innerHTML = "<div style='background:rgba(44,217,138,.1);border:1px solid rgba(44,217,138,.4);border-radius:14px;padding:22px;'><div style='color:var(--bull);font-weight:700;font-size:18px;margin-bottom:6px;'><span class='en'>PASSED - " + correct + "/" + total + "</span><span class='zh'>通过 - " + correct + "/" + total + "</span></div><div style='color:var(--muted);font-size:13.5px;'><span class='en'>Module 05 is unlocked.</span><span class='zh'>模块 05 已解锁。</span></div><a class='btn-next' href='Chart_Patterns_MakeTradesJourney.html'><span class='en'>Next: Chart Patterns</span><span class='zh'>下一课：图表形态</span> <span class='ar'>&#8594;</span></a></div>";
+    res.innerHTML = "<div style='background:rgba(44,217,138,.1);border:1px solid rgba(44,217,138,.4);border-radius:14px;padding:22px;'><div style='color:var(--bull);font-weight:700;font-size:18px;margin-bottom:6px;'><span class='en'>PASSED - " + correct + "/" + total + "</span><span class='zh'>通过 - " + correct + "/" + total + "</span></div><div style='color:var(--muted);font-size:13.5px;'><span class='en'>Module 07 is unlocked.</span><span class='zh'>模块 06 已解锁。</span></div><a class='btn-next' href='Chart_Patterns_MakeTradesJourney.html'><span class='en'>Next: Chart Patterns</span><span class='zh'>下一课：图表形态</span> <span class='ar'>&#8594;</span></a></div>";
   } else {
     res.innerHTML = "<div style='background:rgba(255,92,99,.08);border:1px solid rgba(255,92,99,.35);border-radius:14px;padding:22px;'><div style='color:var(--bear);font-weight:700;font-size:18px;margin-bottom:6px;'>NOT PASSED - " + correct + "/" + total + " (" + Math.round(correct/total*100) + "%)</div><div style='color:var(--muted);font-size:13.5px;'>需要 70% (4/5)。阅读上面的错题解析，然后重试。</div></div>";
   }

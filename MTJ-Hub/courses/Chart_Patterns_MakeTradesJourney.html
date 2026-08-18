@@ -317,8 +317,25 @@ body.lang-zh.lang-strict .en:not(.en-keep){display:none !important;}
 
 
 
-/* ===== Global Navbar v3 (glass + logo + lang) ===== */
-@media(max-width:640px){
+/* ===== Global Navbar v3 (glass + logo + lang) ===== */
+
+
+
+
+
+
+
+
+
+
+
+
+@media(max-width:640px){
+
+
+
+
+
 }
 
 /* ===== Chinese is not a subtitle ==========================================
@@ -529,7 +546,7 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
 <section class="section" id="exam" style="padding-top:70px;">
   <div class="group-head reveal">
     <span class="tier">EXAM</span>
-    <div><div class="eyebrow"><span class="en">Module Check</span><span class="zh">模块测验</span></div><h2 class="title">Pass the Quiz to Unlock Module 06<span class="zh">通过测验解锁下一课</span></h2></div>
+    <div><div class="eyebrow"><span class="en">Module Check</span><span class="zh">模块测验</span></div><h2 class="title">Pass the Quiz to Unlock Module 07<span class="zh">通过测验解锁下一课</span></h2></div>
   </div>
 <div class="note" style="max-width:820px;line-height:1.9;"><span class="en">Answer all 5 questions. You need 4 of 5 (70%) to pass. Wrong answers are explained - read them, then retry.</span><span class="zh">回答全部 5 题。答对 4 题（70%） 即通过。答错的题会给出解析 —— 看完再试。</span></div>
   <div id="examBox" style="max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:22px;"></div>
@@ -816,8 +833,8 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
 </script>
 
 <script>
-/* ===== MTJ EXAM MODULE - Module 05 ===== */
-const MTJ_EXAM_KEY = "mtj_exam_pass_5";
+/* ===== MTJ EXAM MODULE - Module 06 ===== */
+const MTJ_EXAM_KEY = "mtj_exam_pass_6";
 const EXAM_QUESTIONS = [{"q": "What is a double top?", "q_zh": "什么是双顶？", "opts": ["Two failed attempts at the same high, then a break below the neckline", "Two equal lows followed by a rally", "Three peaks with a higher middle peak", "A small pullback after a strong rally"], "opts_zh": ["两次在相同高点失败，随后跌破颈线", "两个相同的低点后迎来上涨", "三个峰顶且中间峰最高", "强劲上涨后的小幅回调"], "ans": 0, "why": "The M-shape fails twice at resistance, then breaks the neckline - a bearish reversal.", "why_zh": "M 形两次在阻力位失败，随后跌破颈线——这是看跌反转形态。"}, {"q": "In a head and shoulders pattern, when is the reversal confirmed?", "q_zh": "头肩顶何时确认反转？", "opts": ["When price touches the head", "When price breaks the neckline connecting the two valleys", "When the right shoulder forms", "When volume doubles"], "opts_zh": ["当价格触及头部时", "当价格跌破连接两个谷底的颈线时", "当右肩形成时", "当成交量翻倍时"], "ans": 1, "why": "The neckline break is the confirmation; the head and shoulders are just the setup.", "why_zh": "跌破颈线才是确认信号；头肩形态本身只是形态结构（前奏）。"}, {"q": "A symmetrical triangle usually breaks out in which direction?", "q_zh": "对称三角形通常向哪个方向突破？", "opts": ["The direction of the prior trend", "Always against the prior trend", "Sideways with no clear direction", "Only at the very tip"], "opts_zh": ["原有趋势的方向", "总是逆着原有趋势", "横盘整理，方向不明", "只在最末端突破"], "ans": 0, "why": "It is a continuation pattern - price usually keeps moving in the trend that existed before the triangle.", "why_zh": "它是持续形态——价格通常会延续三角形形成之前的原有趋势继续运行。"}, {"q": "In a bull flag, what is the flag?", "q_zh": "牛旗中旗面指什么？", "opts": ["The sharp initial rally", "The small counter-trend pullback after the pole", "The measured-move target", "The neckline"], "opts_zh": ["初期陡峭的上涨", "旗杆之后小幅逆势回调", "量度目标位", "颈线"], "ans": 1, "why": "The pole is the sharp move; the flag is the small pause against the trend before the breakout continues up.", "why_zh": "旗杆是凌厉的拉升；旗面是突破继续向上之前、逆势的小幅回调整理。"}, {"q": "How is the measured-move target of a double bottom calculated?", "q_zh": "双底的量度目标怎么算？", "opts": ["Projecting the pattern height from the neckline", "Doubling the width of the pattern", "Adding the flag pole height", "Halving the whole range"], "opts_zh": ["从颈线向上投射形态的高度", "将形态的宽度翻倍", "加上旗杆的高度", "将整个区间减半"], "ans": 0, "why": "Target = the pattern height projected from the neckline - the standard measured move.", "why_zh": "目标位 = 从颈线向上投射形态高度——标准的量度移动目标。"}];
 function renderExam(){
   var box = document.getElementById("examBox"); if(!box) return;
@@ -882,7 +899,7 @@ function gradeExam(){
   var res = document.getElementById("examResult");
   if(correct >= 4){
     localStorage.setItem(MTJ_EXAM_KEY, "1");
-    res.innerHTML = "<div style='background:rgba(44,217,138,.1);border:1px solid rgba(44,217,138,.4);border-radius:14px;padding:22px;'><div style='color:var(--bull);font-weight:700;font-size:18px;margin-bottom:6px;'><span class='en'>PASSED - " + correct + "/" + total + "</span><span class='zh'>通过 - " + correct + "/" + total + "</span></div><div style='color:var(--muted);font-size:13.5px;'><span class='en'>Module 06 is unlocked.</span><span class='zh'>模块 06 已解锁。</span></div><a class='btn-next' href='Trendlines_Channels_MakeTradesJourney.html'><span class='en'>Next: Trendlines & Channels</span><span class='zh'>下一课：趋势线与通道</span> <span class='ar'>&#8594;</span></a></div>";
+    res.innerHTML = "<div style='background:rgba(44,217,138,.1);border:1px solid rgba(44,217,138,.4);border-radius:14px;padding:22px;'><div style='color:var(--bull);font-weight:700;font-size:18px;margin-bottom:6px;'><span class='en'>PASSED - " + correct + "/" + total + "</span><span class='zh'>通过 - " + correct + "/" + total + "</span></div><div style='color:var(--muted);font-size:13.5px;'><span class='en'>Module 08 is unlocked.</span><span class='zh'>模块 07 已解锁。</span></div><a class='btn-next' href='Trendlines_Channels_MakeTradesJourney.html'><span class='en'>Next: Trendlines & Channels</span><span class='zh'>下一课：趋势线与通道</span> <span class='ar'>&#8594;</span></a></div>";
   } else {
     res.innerHTML = "<div style='background:rgba(255,92,99,.08);border:1px solid rgba(255,92,99,.35);border-radius:14px;padding:22px;'><div style='color:var(--bear);font-weight:700;font-size:18px;margin-bottom:6px;'>NOT PASSED - " + correct + "/" + total + " (" + Math.round(correct/total*100) + "%)</div><div style='color:var(--muted);font-size:13.5px;'>需要 70% (4/5)。阅读上面的错题解析，然后重试。</div></div>";
   }
