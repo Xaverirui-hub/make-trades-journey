@@ -350,8 +350,25 @@ body.lang-zh .zh-t{display:block !important;}
 
 
 
-/* ===== Global Navbar v3 (glass + logo + lang) ===== */
-@media(max-width:640px){
+/* ===== Global Navbar v3 (glass + logo + lang) ===== */
+
+
+
+
+
+
+
+
+
+
+
+
+@media(max-width:640px){
+
+
+
+
+
 }
 
 /* ===== Chinese is not a subtitle ==========================================
@@ -462,7 +479,7 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
   <div class="journey-progress reveal" id="journeyProgress" aria-live="polite">
     <div class="jp-top">
       <div class="jp-title">Journey Progress <span class="zh">旅程进度</span></div>
-      <div class="jp-count"><span id="journeyDone">0</span>/7</div>
+      <div class="jp-count"><span id="journeyDone">0</span>/6</div>
     </div>
     <div class="jp-track"><div class="jp-fill" id="journeyFill"></div></div>
     <div class="jp-note">Complete every exam in a stage to close the loop.
@@ -918,7 +935,7 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
   var done = document.getElementById('journeyDone');
   var fill = document.getElementById('journeyFill');
   if(done) done.textContent = completeStages;
-  if(fill) fill.style.transform = 'scaleX(' + (completeStages / 7) + ')';
+  if(fill) fill.style.transform = 'scaleX(' + (completeStages / 6) + ')';
 })();
 </script>
 
