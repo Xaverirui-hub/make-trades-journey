@@ -1,7 +1,0 @@
-{
-  "A trendline with only one touch is…": ["只被触碰过一次的趋势线是……", ["事实", "猜测——一厢情愿，而不是有效价位", "通道", "已确认的阻力位"]],
-  "In an uptrend, the trendline is drawn…": ["上升趋势中，趋势线应画在……", ["摆动高点上方", "穿过蜡烛实体", "不断抬高的摆动低点下方——买方的地板", "水平横穿整个区间"]],
-  "A wick pokes through the trendline but the candle closes back inside. This is…": ["影线刺穿了趋势线，但蜡烛收盘回到线内。这是……", ["有效突破——立即入场", "假突破——收盘价才是最终判定", "通道的开始", "已确认的趋势反转"]],
-  "In an ascending channel, where is the defined edge to trade?": ["在上升通道中，明确的交易边界在哪里？", ["通道中间", "上轨——做空它", "下轨——在回撤时买入，止损设在下轨下方，目标看上轨", "通道内任意位置"]],
-  "An uptrend line broken from above changes its role to…": ["上升趋势线被自上方跌破后，其角色转变为……", ["支撑——它仍然是地板", "没有任何作用——这条线已经失效", "阻力——回测时测试的正是这一点", "一条新的趋势线"]]
-}

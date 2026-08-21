@@ -1,7 +1,0 @@
-{
-  "What does a pip usually represent in most forex pairs?": ["在多数货币对中，一个点（pip）通常代表什么？", ["价格的 0.01", "价格的 0.0001", "价格的 1%", "价格的 0.10"]],
-  "Which pair is considered a major currency pair?": ["哪个货币对被认为是主要货币对？", ["EUR/USD", "USD/MXN", "EUR/TRY", "GBP/NZD"]],
-  "If EUR/USD moves from 1.10000 to 1.10020, the move is:": ["如果 EUR/USD 从 1.10000 移动到 1.10020，这是多少点？", ["2 点", "20 点", "200 点", "2,000 点"]],
-  "In the quote EUR/USD = 1.1000, the base currency is:": ["在报价 EUR/USD = 1.1000 中，基准货币是？", ["USD", "都不是", "EUR", "两者都是"]],
-  "What is price action?": ["什么是价格行为？", ["新闻指标", "直接在图表上阅读价格运动", "一种订单类型", "基本面数据"]]
-}

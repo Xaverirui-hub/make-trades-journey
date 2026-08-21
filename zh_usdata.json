@@ -1,7 +1,0 @@
-{
-  "What actually creates the price spike when a major US release comes out?": ["美国重要数据公布时，真正造成价格飙升的是什么？", ["前一个月的数值", "预测值", "意外程度：实际值与预测值之间的差距", "仅看标题数字本身"]],
-  "Which measure does the Fed officially target at 2%?": ["美联储官方以 2% 为目标的指标是哪个？", ["核心 PCE 同比", "整体 CPI", "PPI（生产者物价指数）", "零售销售"]],
-  "When is the NFP (Non-Farm Payrolls) report released each month?": ["非农就业报告（NFP）每月何时发布？", ["每 6 周一次", "每月第一个周五，美东时间 08:30", "月中", "最后一个交易日"]],
-  "CPI comes in hotter than expected. What is the typical market reaction?": ["CPI 高于预期时，市场通常如何反应？", ["美元下跌，黄金上涨", "完全没有反应", "美元上涨，黄金下跌（鹰派）", "收益率大幅下跌"]],
-  "Inflation is falling toward 2% and the job market is weakening. The Fed is most likely to…": ["通胀正回落至 2% 且就业市场走弱，美联储最可能……", ["加息", "降息——美元下跌，黄金上涨（鸽派）", "永远按兵不动", "上调 2% 的目标"]]
-}

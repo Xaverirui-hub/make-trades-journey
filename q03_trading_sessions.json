@@ -1,7 +1,0 @@
-[
-{"q":"外匯市場流動性與波動最高的時段是?","opts":["亞盤開盤","倫敦與紐約重疊時段(13:00–17:00 UTC)","週五收盤前","東京午休"],"ans":1,"why":"Liquidity and volatility peak where London and New York overlap (13:00-17:00 UTC / 21:00-01:00 Beijing) — the best window to trade majors and gold."},
-{"q":"亞盤(東京)的主要特徵是?","opts":["波動最大,趨勢最明顯","最安靜,流動性薄,常區間震盪,並奠定當天的初始區間","成交量最大,點差最窄","主要由美國數據主導"],"ans":1,"why":"Asia is the quietest shift — thin liquidity, low volatility, lots of ranging. It often sets the day's initial range that London later breaks; it favours JPY/AUD/NZD pairs."},
-{"q":"歐盤(倫敦)的主要特徵是?","opts":["成交量最大,開盤常出現強烈方向性行情並突破亞盤區間","流動性最差,點差最寬","最適合做區間交易","黃金波動最小"],"ans":0,"why":"London is the biggest session by volume — liquidity surges, spreads tighten, and the open often makes a strong directional move that breaks the Asian range. Real trends begin here."},
-{"q":"黃金(XAU/USD)什麼時候最活躍?","opts":["亞盤時段","歐盤開盤與倫敦–紐約重疊時段(21:00–01:00 北京時間)","週一凌晨","美盤收盤之後"],"ans":1,"why":"Gold is calm in Asia, wakes at the London open, and peaks in the London-NY overlap (21:00-01:00 Beijing) — that is where the clean, tradeable gold moves live."},
-{"q":"為什麼做黃金必須尊重數據公布(NFP、CPI、FOMC)?","opts":["數據公布時點差會自動變小","非農、CPI 與美聯儲決議可能在幾秒內讓黃金波動數十美元","數據只影響股票,不影響外匯","數據行情更適合重倉進場"],"ans":1,"why":"NFP, CPI and Fed decisions can move gold dozens of dollars in seconds. Always respect news releases — plan around them or stay flat."}
-]

@@ -22,3 +22,6 @@ dom_out.html
 head_new.html
 head_tpl.html
 new_body.html
+
+# 一次性脚本 / 抽取产物的暂存区（这里的东西不进版本库）
+_scratch/

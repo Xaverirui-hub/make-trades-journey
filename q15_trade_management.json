@@ -1,7 +1,0 @@
-[
-{"q":"根據黃金法則,下列哪一種做法是「加寬止損」?","opts":["+1R 後把止損移到成本價","價格創新高後,把止損移到更高的擺動低點下方","虧損單把止損往下移,「給它一點空間」","到了時間止損點按計劃離場"],"ans":2,"why":"A stop only moves in the direction of the trade and never widens. Widening a stop is not management — it is hope wearing a disguise, and a brand-new unknown risk."},
-{"q":"三等分默認模板:1/3 在 1R 平倉、1/3 在 2R 平倉、最後 1/3 拿到 3R,已實現 R 是多少?","opts":["1.0R","1.5R","2.0R","3.0R"],"ans":2,"why":"Realized R = (1/3 x 1R) + (1/3 x 2R) + (1/3 x 3R) = 2.0R. The 1R you give up is the insurance cost for a much higher win rate."},
-{"q":"什麼時候才應該把止損移到成本價(break-even)?","opts":["一進場立刻移,保護本金","+0.2R 時,早移早安心","+1R 之後,價格已經為風險付過一次錢","虧損 -0.5R 時,減少損失"],"ans":2,"why":"The standard trigger is +1R — price has paid for the risk once, so the trade is free to run. Moving at +0.2R just donates the trade to normal noise."},
-{"q":"關於時間止損的 N-bar 規則,什麼才算「有意義的進展」?","opts":["價格在小區間內橫盤整理","到達 1R,或突破一個有意義的結構位","帳戶權益小幅回升","持倉時間超過一週"],"ans":1,"why":"Progress means reaching 1R or breaking a meaningful structure level — nothing else. A trade that stops moving is telling you the setup is not working; time is the resource you cannot buy back."},
-{"q":"哪一個是「致命的搭配」?","opts":["趨勢系統 + 固定止損","區間系統 + 固定止損","趨勢系統 + 結構追蹤","區間系統 + 固定目標"],"ans":0,"why":"A trend system with a fixed stop cuts every trend, and a range system with a trail gives back every range. Fixed stops fit range systems; trails fit trend systems."}
-]

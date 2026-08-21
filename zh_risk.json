@@ -1,7 +1,0 @@
-{
-  "You lose 50% of your account. What gain gets you back to break-even?": ["你的账户亏损了 50%。需要盈利多少才能回到盈亏平衡？", ["50%", "100%", "25%", "150%"]],
-  "With a 50% win rate over 100 trades, a run of 5 consecutive losses is…": ["在 100 笔交易中胜率为 50% 的情况下，连续 5 笔亏损是……", ["系统失效的证据", "不可能发生", "几乎必然——正常的随机波动", "加倍仓位的信号"]],
-  "What is the correct order for sizing a trade?": ["确定交易仓位大小的正确顺序是什么？", ["先选手数，再放止损", "先确定风险百分比，把止损放在失效位置，再推导手数", "先选杠杆，再选手数，最后放止损", "先定目标，再定风险"]],
-  "For EURUSD, 1.00 standard lot: one pip (0.0001) is worth…": ["对于 EURUSD，1.00 标准手：一个点（0.0001）价值……", ["$1", "$100", "$0.10", "$10"]],
-  "0.10 lots of gold with a $5 stop at 1:20 vs 1:500 leverage — the loss is…": ["0.10 手黄金，$5 止损，1:20 与 1:500 杠杆——亏损是……", ["两种情况都是 $50——杠杆不决定风险", "1:20 时是 $50，但 1:500 时是 $1,250", "杠杆越高亏损越大", "1:500 时为零"]]
-}

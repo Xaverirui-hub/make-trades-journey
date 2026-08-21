@@ -1,7 +1,0 @@
-[
-{"q":"為什麼供需區形成後,價格常常會回來回測(retest)?","opts":["因為交易所會強制撮合所有掛單","因為機構未成交的掛單仍留在原地,會把價格拉回來","因為畫線工具會自動吸附價格","因為每次突破都一定會失敗"],"ans":1,"why":"Zones are leftover resting orders from institutional accumulation. Unfilled orders pull price back — that is exactly why zones get retested."},
-{"q":"需求區(demand zone)本身,指的是哪一部分?","opts":["急跌的最低點那一根影線","起爆那根大陽線","起爆前那段緊湊安靜的橫盤帶(base)","從起爆點到目標的整段上漲"],"ans":2,"why":"The zone is the base — the tight 3-7 candle consolidation right before the ignition. Mark the whole band top to bottom; it is not the low of the drop."},
-{"q":"一個已經被反覆觸碰五次的供應區,你應該怎麼看?","opts":["它更強了,因為經過了考驗","它的燃料大部分已耗盡,排名應該降低","每次觸碰都會補充新的掛單","它和全新供應區完全一樣"],"ans":1,"why":"Zones are consumable — every touch removes resting orders. Old, repeatedly-tapped zones are noise; trade only fresh and violent zones."},
-{"q":"按 RTB(回測進場)的規則,止損應該放在哪裡?","opts":["橫盤帶正中間,離進場價最近","橫盤帶內部,反應K線下方","橫盤帶之外加一點緩衝,絕不放區間裡面","前一個擺動高點"],"ans":2,"why":"Stop goes beyond the zone with a small buffer, never inside it. The zone is where price breathes; a stop inside it gets hunted by the overshoot."},
-{"q":"什麼情況才說明需求區真正失效了?","opts":["影線向下穿透整條帶子","價格第二次回測帶子","出現一根大陰線但收盤又收回帶內","收盤穿過整條帶子,並連續兩三根K線同方向確認"],"ans":3,"why":"A wick through is a test; a close through the whole band with follow-through is the verdict. The resting orders are gone — the zone has no fuel left."}
-]
