@@ -9,7 +9,7 @@
 <link href="../assets/fonts/fonts.css" rel="stylesheet"><!-- 自架字体,不走 CDN:大陆连不上 Google Fonts -->
 <style>
 :root{color-scheme:dark;
-  --ma1:#FCE9A8;--ma2:#8FB6CE;--ma3:#C9925A;--cyan:#2FE0D6;
+  --ma1:#E8C877;--ma2:#8FB6CE;--ma3:#9B6BF2;--cyan:#2FE0D6;
   --bg:#060608;
   --bg-2:#0b0b10;
   --panel:rgba(20,20,26,.55);
@@ -401,6 +401,12 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
 @media(prefers-reduced-motion:reduce){
   .btn-next{animation:none;box-shadow:0 0 0 1px rgba(232,200,119,.38),0 0 24px rgba(232,200,119,.3);}
 }
+
+/* 均线名称直接标在线的末端 —— 学员反馈图例在图外、快慢线分不清 */
+.ma-tag text{stroke:none;font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:.03em;}
+.ma-tag text.ma-tag-sub{font-size:8.5px;font-weight:600;opacity:.9;}
+.ma-tag.ma1 text{fill:var(--ma1);} .ma-tag.ma2 text{fill:var(--ma2);} .ma-tag.ma3 text{fill:var(--ma3);}
+.ma-tag-lead{stroke-width:1.6;opacity:.7;fill:none;}
 </style>
 </head>
 <body>
@@ -649,6 +655,18 @@ function badge(svg,x,y,num,col,label,dy,delay){
   t.setAttribute('fill','#08080a');t.textContent=num;
   if(label){const lt=el('text',{x:x,y:y+dy,'text-anchor':'middle','font-family':"'JetBrains Mono',monospace",'font-size':'9','font-weight':'600'},g);lt.setAttribute('fill',col);lt.textContent=label;}
 }
+/* 教学标签被画布切掉就等于没写 —— 贴边的往内拉回来。
+   量宽度要等真正的字体到位:JetBrains Mono 是非同步载入的,首次量到的是
+   后备字体的宽度,所以这支函式会被呼叫多次(渲染当下 / 字体就绪 / 改变视窗)。
+   只在超出边界时才移动,重复呼叫不会累加。 */
+function clampLabels(svg){
+  const W=svg.viewBox.baseVal.width;
+  svg.querySelectorAll('text').forEach(t=>{
+    const b=t.getBBox(); if(!b.width) return;
+    const dx = b.x<2 ? 2-b.x : (b.x+b.width>W-2 ? W-2-(b.x+b.width) : 0);
+    if(dx) t.setAttribute('x',(parseFloat(t.getAttribute('x'))||0)+dx);
+  });
+}
 function renderCandleChart(container){
   const spec=CHARTS[container.dataset.chart];if(!spec)return;
   const S=spec.series,n=S.length;
@@ -658,7 +676,7 @@ function renderCandleChart(container){
   const all=real.concat(follow);
   const W=720,H=350,padL=12,padR=98,padT=30,padB=28;
   const step=(W-padL-padR)/all.length,bodyW=Math.min(step*0.62,22);
-  const overlays=(spec.overlays||[]).map(o=>({cls:o.cls,_d:(o.type==='ema'?ema(S,o.period):sma(S,o.period))}));
+  const overlays=(spec.overlays||[]).map(o=>({cls:o.cls,type:o.type,period:o.period,_d:(o.type==='ema'?ema(S,o.period):sma(S,o.period))}));
   let vals=[];all.forEach(c=>{vals.push(c.h,c.l);});
   overlays.forEach(o=>o._d.forEach(v=>{if(v!=null)vals.push(v);}));
   (spec.levels||[]).forEach(l=>vals.push(l.price));
@@ -694,9 +712,37 @@ function renderCandleChart(container){
     el('line',{x1:cx,x2:cx,y1:Y(c.h),y2:Y(c.l),class:'wick '+cls},g);
     const top=Y(Math.max(c.o,c.c)),bot=Y(Math.min(c.o,c.c));
     el('rect',{x:cx-bodyW/2,y:top,width:bodyW,height:Math.max(bot-top,2),rx:2.5,class:'body '+cls},g);});
-  // overlays (MA) on top
+  // 每条均线在右端自报家门 —— 不必回头去对图外的图例
+  const _per=overlays.map(o=>o.period);
+  const _twoMA=overlays.length===2, _sameP=_twoMA&&_per[0]===_per[1];
+  const _ends=[];
   overlays.forEach(o=>{const p2=[];o._d.forEach((v,i)=>{if(v!=null)p2.push([Xc(i),Y(v)]);});
-    if(p2.length>1)el('path',{d:pathFrom(p2),class:'ma-line '+(o.cls||'ma1'),pathLength:1},svg);});
+    if(p2.length<2)return;
+    el('path',{d:pathFrom(p2),class:'ma-line '+(o.cls||'ma1'),pathLength:1},svg);
+    // 同周期(EMA vs SMA 对照)就不谈快慢,只标类型
+    const role=(!_twoMA||_sameP)?'':(o.period===Math.min.apply(null,_per)?'fast 快线':'slow 慢线');
+    const last=p2[p2.length-1];
+    _ends.push({x:last[0],y:last[1],y0:last[1],cls:o.cls||'ma1',
+                name:(o.type==='ema'?'EMA ':'SMA ')+o.period,role:role});});
+  // 入场框那一带还挤着「回踩 / 反弹」之类的标记文字,一并算进禁区
+  const _half=e=>e.role?11:7;
+  if(ez){_ends.forEach(e=>{
+    const T=ez.yT-26, B=ez.yB+26, mid=(ez.yT+ez.yB)/2;   // 26 ≈ 标记文字伸出去的距离
+    if(e.y+_half(e)>T && e.y-_half(e)<B && e.x+70>ez.x0)
+      e.y = e.y<=mid ? T-_half(e) : B+_half(e);
+  });}
+  // 挤开之后两条可能又靠在一起,再拉开
+  if(_ends.length===2){const gap=Math.abs(_ends[0].y-_ends[1].y), need=_half(_ends[0])+_half(_ends[1])+6;
+    if(gap<need){const push=(need-gap)/2, up=_ends[0].y<=_ends[1].y?0:1;
+      _ends[up].y-=push; _ends[1-up].y+=push;}}
+  _ends.forEach(e=>{e.y=Math.max(padT+_half(e),Math.min(H-padB-_half(e),e.y));});
+  _ends.forEach(e=>{
+    const g=el('g',{class:'ma-tag '+e.cls},svg);
+    // 引线从线的末端连到标注 —— 被挤开也看得出这名字属于哪条线
+    el('path',{d:'M'+(e.x+2)+','+e.y0+' L'+(e.x+8)+','+e.y,fill:'none',class:'ma-tag-lead '+e.cls},g);
+    const t=el('text',{x:e.x+11,y:e.y+(e.role?0:3.4)},g);t.textContent=e.name;
+    if(e.role){const t2=el('text',{x:e.x+11,y:e.y+11.5,class:'ma-tag-sub'},g);t2.textContent=e.role;}
+  });
   // entry box + dual-entry markers
   if(ez){el('rect',{x:ez.x0,y:ez.yT,width:ez.x1-ez.x0,height:ez.yB-ez.yT,rx:5,class:'entry-box'},svg);
     const dir=entry.dir,key=container.dataset.chart,dyU=dir==='up'?-13:18;
@@ -743,8 +789,13 @@ function renderCandleChart(container){
     const ang=Math.atan2(yy2-yy1,x2-x1),ah=8;
     el('path',{d:'M'+x2+','+yy2+' L'+(x2-ah*Math.cos(ang-0.5))+','+(yy2-ah*Math.sin(ang-0.5))+' M'+x2+','+yy2+' L'+(x2-ah*Math.cos(ang+0.5))+','+(yy2-ah*Math.sin(ang+0.5)),class:'proj-head'},arw);}
   container.appendChild(svg);
+  clampLabels(svg);
 }
 document.querySelectorAll('.pchart[data-chart]').forEach(renderCandleChart);
+/* 字体载入完宽度会变,视窗改变也会 —— 两个时机各重校一次贴边 */
+const clampAllCharts=()=>document.querySelectorAll('.pchart[data-chart] svg').forEach(clampLabels);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(clampAllCharts);
+addEventListener('resize',clampAllCharts,{passive:true});
 
 /* ---------------- reveal on scroll ---------------- */
 const io=new IntersectionObserver((ents)=>{
