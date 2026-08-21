@@ -624,7 +624,76 @@ function badge(svg,x,y,num,col,label,dy,delay){
   el('circle',{cx:x,cy:y,r:8,fill:col,stroke:'#08080a','stroke-width':1.5,class:'mk-ring'},g);
   const t=el('text',{x:x,y:y+3.2,'text-anchor':'middle','font-family':"'JetBrains Mono',monospace",'font-weight':'700','font-size':'10'},g);
   t.setAttribute('fill','#08080a');t.textContent=num;
-  if(label){const lt=el('text',{x:x,y:y+dy,'text-anchor':'middle','font-family':"'JetBrains Mono',monospace",'font-size':'9','font-weight':'600'},g);lt.setAttribute('fill',col);lt.textContent=label;}
+  if(label){const lt=el('text',{x:x,y:y+dy,'text-anchor':'middle','font-family':"'JetBrains Mono',monospace",'font-size':'9','font-weight':'600','data-ax':x,'data-ay':y,'data-dir':dy<0?'up':'down'},g);lt.setAttribute('fill',col);lt.textContent=label;}
+}
+/* ===== 标签自动找空位 =====
+   锚点(data-ax/ay)是标签在讲的那个东西;data-dir 是偏好方向。
+   由近而远、先偏好方向,试到不撞 K 线、不撞别的标签、也不出界为止。
+   要等字体到位才量得准,所以跟 clampLabels 一样会被呼叫多次。 */
+function placeChartLabels(svg){
+  const vb=svg.viewBox&&svg.viewBox.baseVal; if(!vb||!vb.width) return;
+  const W=vb.width,H=vb.height;
+  const box=e=>{try{const b=e.getBBox();return (b.width||b.height)?b:null;}catch(x){return null;}};
+  const grow=(b,m)=>({x:b.x-m,y:b.y-m,width:b.width+2*m,height:b.height+2*m});
+  const over=(a,b)=>Math.min(a.x+a.width,b.x+b.width)-Math.max(a.x,b.x)>0.5 &&
+                    Math.min(a.y+a.height,b.y+b.height)-Math.max(a.y,b.y)>0.5;
+
+  /* 障碍:K 线实体与影线、标记圆点、入场框 */
+  const obst=[];
+  svg.querySelectorAll('rect.body,line.wick,circle.mk-ring,rect.entry-box,rect.entry-zone')
+     .forEach(e=>{const b=box(e); if(b) obst.push(grow(b,1));});
+
+  const placed=[];
+  svg.querySelectorAll('text[data-ax]').forEach(t=>{
+    const b=box(t); if(!b) return;
+    const ax=parseFloat(t.dataset.ax), ay=parseFloat(t.dataset.ay);
+    const down=t.dataset.dir==='down';
+    /* 目前的位置当首选 —— 没冲突就别动它 */
+    const cur={dx:b.x+b.width/2-ax, dy:b.y+b.height/2-ay};
+    const cands=[cur];
+    /* 横向比纵向多让一点:图是宽的,左右的空位比上下多 */
+    const dirs = down
+      ? [[0,1],[1,1],[-1,1],[1,0],[-1,0],[1,-1],[-1,-1],[0,-1]]
+      : [[0,-1],[1,-1],[-1,-1],[1,0],[-1,0],[1,1],[-1,1],[0,1]];
+    [18,28,40,54,70,88].forEach(r=>dirs.forEach(d=>{
+      const L=Math.hypot(d[0],d[1])||1;
+      cands.push({dx:d[0]/L*r*1.7, dy:d[1]/L*r});
+    }));
+
+    let win=null;
+    for(const c of cands){
+      const r={x:ax+c.dx-b.width/2, y:ay+c.dy-b.height/2, width:b.width, height:b.height};
+      if(r.x<2||r.x+r.width>W-2||r.y<2||r.y+r.height>H-2) continue;
+      const pad=grow(r,2);
+      if(obst.some(o=>over(pad,o))) continue;
+      if(placed.some(o=>over(pad,o))) continue;
+      win=c; break;
+    }
+    if(!win) win=cur;                      /* 真的没空位就维持原样,别乱丢 */
+
+    /* 用位移量搬:x/y 的语意随 text-anchor 而异,靠差值才通用 */
+    const nx=ax+win.dx-b.width/2, ny=ay+win.dy-b.height/2;
+    t.setAttribute('x',(parseFloat(t.getAttribute('x'))||0)+(nx-b.x));
+    t.setAttribute('y',(parseFloat(t.getAttribute('y'))||0)+(ny-b.y));
+    placed.push({x:nx,y:ny,width:b.width,height:b.height});
+
+    /* 挪远了就拉引线回锚点,否则看不出这句话在讲哪里 */
+    const old=t.parentNode.querySelector('line.lbl-lead[data-for="'+(t.dataset.ax)+'_'+(t.dataset.ay)+'"]');
+    if(old) old.remove();
+    const cxp=nx+b.width/2, cyp=ny+b.height/2;
+    if(Math.hypot(cxp-ax,cyp-ay)>26){
+      const ang=Math.atan2(cyp-ay,cxp-ax);
+      const ex=cxp-Math.cos(ang)*(b.width/2+3), ey=cyp-Math.sin(ang)*(b.height/2+3);
+      const ln=document.createElementNS('http://www.w3.org/2000/svg','line');
+      ln.setAttribute('x1',ax); ln.setAttribute('y1',ay);
+      ln.setAttribute('x2',ex); ln.setAttribute('y2',ey);
+      ln.setAttribute('class','lbl-lead');
+      ln.setAttribute('data-for',t.dataset.ax+'_'+t.dataset.ay);
+      ln.setAttribute('stroke',t.getAttribute('fill')||'#9A968C');
+      ln.setAttribute('stroke-width','1'); ln.setAttribute('opacity','.45');
+      t.parentNode.insertBefore(ln,t);
+    }
+  });
 }
 function renderCandleChart(container){
   const spec=CHARTS[container.dataset.chart];if(!spec)return;
@@ -664,8 +733,8 @@ function renderCandleChart(container){
     el('circle',{cx:Xc(FIB.li),cy:Y(FIB.loP),r:2.8,fill:C.gold,stroke:'#08080a','stroke-width':1,class:'fib-anchor'},svg);
     el('circle',{cx:Xc(FIB.hh),cy:Y(FIB.hiP),r:2.8,fill:C.gold,stroke:'#08080a','stroke-width':1,class:'fib-anchor'},svg);
     const zI=FIB.dir==='up'?FIB.hh:FIB.li,oI=FIB.dir==='up'?FIB.li:FIB.hh;
-    const q0=el('text',{x:Xc(zI),y:Y(FIB.Lv(0))+(FIB.dir==='up'?-9:17),'text-anchor':'middle',class:'fib-anchor-lbl'},svg);q0.setAttribute('fill',C.gold);q0.textContent='0%';
-    const q1=el('text',{x:Xc(oI),y:Y(FIB.Lv(1))+(FIB.dir==='up'?17:-9),'text-anchor':'middle',class:'fib-anchor-lbl'},svg);q1.setAttribute('fill',C.gold);q1.textContent='100%';}
+    const q0=el('text',{x:Xc(zI),y:Y(FIB.Lv(0))+(FIB.dir==='up'?-9:17),'text-anchor':'middle',class:'fib-anchor-lbl','data-ax':Xc(zI),'data-ay':Y(FIB.Lv(0)),'data-dir':FIB.dir==='up'?'up':'down'},svg);q0.setAttribute('fill',C.gold);q0.textContent='0%';
+    const q1=el('text',{x:Xc(oI),y:Y(FIB.Lv(1))+(FIB.dir==='up'?17:-9),'text-anchor':'middle',class:'fib-anchor-lbl','data-ax':Xc(oI),'data-ay':Y(FIB.Lv(1)),'data-dir':FIB.dir==='up'?'down':'up'},svg);q1.setAttribute('fill',C.gold);q1.textContent='100%';}
   // entry zone fill (behind)
   let ez=null;
   if(entry){
@@ -704,7 +773,8 @@ function renderCandleChart(container){
       if(all[n])badge(svg,Xc(n),Y(all[n].c),'2',C.cyan,'Bounce 反弹',entry.dir==='up'?-13:18,1.35);}
     else badge(svg,Xc(n-1),Y(real[n-1].c),'2',C.cyan,'Retest 回踩',entry.dir==='up'?18:-13,1.35);}
   // labels
-  (spec.labels||[]).forEach(lb=>{const tt=el('text',{x:Xc(Math.round(lb.x*(n-1))),y:Y(lb.p)+(lb.dy||-10),'text-anchor':lb.anchor||'middle',class:'plabel'},svg);
+  (spec.labels||[]).forEach(lb=>{const _lx=Xc(Math.round(lb.x*(n-1))),_ly=Y(lb.p);
+    const tt=el('text',{x:_lx,y:_ly+(lb.dy||-10),'text-anchor':lb.anchor||'middle',class:'plabel','data-ax':_lx,'data-ay':_ly,'data-dir':(lb.dy||-10)>0?'down':'up'},svg);
     tt.setAttribute('fill',lb.c||C.muted);tt.textContent=lb.t;});
   // projection arrow
   if(entry){const x1=Xc(n-1),yy1=Y(real[n-1].c),x2=Xc(all.length-1),yy2=Y(all[all.length-1].c);
@@ -713,8 +783,15 @@ function renderCandleChart(container){
     const ang=Math.atan2(yy2-yy1,x2-x1),ah=8;
     el('path',{d:'M'+x2+','+yy2+' L'+(x2-ah*Math.cos(ang-0.5))+','+(yy2-ah*Math.sin(ang-0.5))+' M'+x2+','+yy2+' L'+(x2-ah*Math.cos(ang+0.5))+','+(yy2-ah*Math.sin(ang+0.5)),class:'proj-head'},arw);}
   container.appendChild(svg);
+  placeChartLabels(svg);
 }
 document.querySelectorAll('.pchart[data-chart]').forEach(renderCandleChart);
+/* 字体载入完文字宽度会变,得重新找一次空位 */
+function replaceChartLabelsOnFonts(){
+  document.querySelectorAll('.pchart[data-chart] svg').forEach(placeChartLabels);
+}
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(replaceChartLabelsOnFonts);
+addEventListener('resize',replaceChartLabelsOnFonts,{passive:true});
 
 /* ---------------- reveal on scroll ---------------- */
 const io=new IntersectionObserver((ents)=>{
@@ -1212,6 +1289,65 @@ renderExam();
    量宽度必须等真正的字体到位:JetBrains Mono 与 Sora 都是非同步载入的,
    画的当下量到的是后备字体的宽度。改变视窗时也要重校。
    只在超出边界时才移动,所以重复呼叫不会累加。 */
+/* ===== 图表文字自动错开 =====
+   挪「比较长」的那个:长句多半是说明,位置不挑;短标签在指东西,不能乱挪。
+   上下挪不开就缩字。跟回拉一样要等字体到位,所以会被呼叫多次。 */
+function mtjDeoverlapSvgLabels(){
+  document.querySelectorAll('svg').forEach(function(svg){
+    var vb=svg.viewBox&&svg.viewBox.baseVal; if(!vb||!vb.width) return;
+    var items=[];
+    svg.querySelectorAll('text').forEach(function(t){
+      for(var a=t;a&&a!==svg;a=a.parentNode)
+        if(a.transform&&a.transform.baseVal&&a.transform.baseVal.numberOfItems) return;
+      /* 标记圆点里的编号本来就该盖在圆盘上,不算叠字 */
+      if(t.textContent.trim().length<=2&&t.parentNode.querySelector&&t.parentNode.querySelector('circle')) return;
+      var b; try{ b=t.getBBox(); }catch(e){ return; }
+      if(!b.width) return;
+      items.push({t:t,b:b,len:t.textContent.trim().length});
+    });
+    if(items.length<2) return;
+    var over=function(A,B){
+      return Math.min(A.x+A.width,B.x+B.width)-Math.max(A.x,B.x)>4 &&
+             Math.min(A.y+A.height,B.y+B.height)-Math.max(A.y,B.y)>5;};
+    /* 关键:候选位置要对「所有其他文字」都不冲突 ——
+       只看当前这一对的话,挪开这个就会去撞第三个 */
+    var conflicts=function(it){
+      for(var q=0;q<items.length;q++)
+        if(items[q]!==it&&over(it.b,items[q].b)) return true;
+      return false;};
+    var moveY=function(it,dy){
+      it.t.setAttribute('y',(parseFloat(it.t.getAttribute('y'))||0)+dy);
+      it.b=it.t.getBBox();};
+    for(var pass=0;pass<3;pass++){
+      var moved=false;
+      for(var i=0;i<items.length;i++)for(var j=i+1;j<items.length;j++){
+        if(!over(items[i].b,items[j].b)) continue;
+        /* 挪「比较长」的那个:长句多半是说明,位置不挑;短标签在指东西 */
+        var mv = items[i].len>=items[j].len ? items[i] : items[j];
+        var ok=false;
+        for(var k=0;k<4&&!ok;k++){
+          var dy=(k%2?-1:1)*(11+9*Math.floor(k/2));
+          moveY(mv,dy);
+          if(!conflicts(mv)&&mv.b.y>2&&mv.b.y+mv.b.height<vb.height-2) ok=true;
+          else moveY(mv,-dy);
+        }
+        if(!ok){
+          /* 并排而且太宽,上下挪不开 —— 缩一点字 */
+          var fs0=parseFloat(getComputedStyle(mv.t).fontSize)||10;
+          for(var f=0.92;f>=0.74&&!ok;f-=0.06){
+            mv.t.style.fontSize=(fs0*f).toFixed(2)+'px';
+            mv.b=mv.t.getBBox();
+            if(!conflicts(mv)) ok=true;
+          }
+          /* 还是解不开就还原 —— 宁可维持原样,也别搬去制造新的冲突 */
+          if(!ok){ mv.t.style.fontSize=''; mv.b=mv.t.getBBox(); }
+        }
+        if(ok) moved=true;
+      }
+      if(!moved) break;
+    }
+  });
+}
 function mtjClampSvgLabels(){
   document.querySelectorAll('svg').forEach(function(svg){
     var vb=svg.viewBox&&svg.viewBox.baseVal; if(!vb||!vb.width) return;
@@ -1226,9 +1362,10 @@ function mtjClampSvgLabels(){
     });
   });
 }
-if(document.fonts&&document.fonts.ready)document.fonts.ready.then(mtjClampSvgLabels);
-addEventListener('load',mtjClampSvgLabels);
-addEventListener('resize',mtjClampSvgLabels,{passive:true});
+function mtjTidySvgLabels(){ mtjDeoverlapSvgLabels(); mtjClampSvgLabels(); }
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(mtjTidySvgLabels);
+addEventListener('load',mtjTidySvgLabels);
+addEventListener('resize',mtjTidySvgLabels,{passive:true});
 </script>
 </body>
 </html>

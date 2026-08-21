@@ -1354,6 +1354,65 @@ renderExam();
    量宽度必须等真正的字体到位:JetBrains Mono 与 Sora 都是非同步载入的,
    画的当下量到的是后备字体的宽度。改变视窗时也要重校。
    只在超出边界时才移动,所以重复呼叫不会累加。 */
+/* ===== 图表文字自动错开 =====
+   挪「比较长」的那个:长句多半是说明,位置不挑;短标签在指东西,不能乱挪。
+   上下挪不开就缩字。跟回拉一样要等字体到位,所以会被呼叫多次。 */
+function mtjDeoverlapSvgLabels(){
+  document.querySelectorAll('svg').forEach(function(svg){
+    var vb=svg.viewBox&&svg.viewBox.baseVal; if(!vb||!vb.width) return;
+    var items=[];
+    svg.querySelectorAll('text').forEach(function(t){
+      for(var a=t;a&&a!==svg;a=a.parentNode)
+        if(a.transform&&a.transform.baseVal&&a.transform.baseVal.numberOfItems) return;
+      /* 标记圆点里的编号本来就该盖在圆盘上,不算叠字 */
+      if(t.textContent.trim().length<=2&&t.parentNode.querySelector&&t.parentNode.querySelector('circle')) return;
+      var b; try{ b=t.getBBox(); }catch(e){ return; }
+      if(!b.width) return;
+      items.push({t:t,b:b,len:t.textContent.trim().length});
+    });
+    if(items.length<2) return;
+    var over=function(A,B){
+      return Math.min(A.x+A.width,B.x+B.width)-Math.max(A.x,B.x)>4 &&
+             Math.min(A.y+A.height,B.y+B.height)-Math.max(A.y,B.y)>5;};
+    /* 关键:候选位置要对「所有其他文字」都不冲突 ——
+       只看当前这一对的话,挪开这个就会去撞第三个 */
+    var conflicts=function(it){
+      for(var q=0;q<items.length;q++)
+        if(items[q]!==it&&over(it.b,items[q].b)) return true;
+      return false;};
+    var moveY=function(it,dy){
+      it.t.setAttribute('y',(parseFloat(it.t.getAttribute('y'))||0)+dy);
+      it.b=it.t.getBBox();};
+    for(var pass=0;pass<3;pass++){
+      var moved=false;
+      for(var i=0;i<items.length;i++)for(var j=i+1;j<items.length;j++){
+        if(!over(items[i].b,items[j].b)) continue;
+        /* 挪「比较长」的那个:长句多半是说明,位置不挑;短标签在指东西 */
+        var mv = items[i].len>=items[j].len ? items[i] : items[j];
+        var ok=false;
+        for(var k=0;k<4&&!ok;k++){
+          var dy=(k%2?-1:1)*(11+9*Math.floor(k/2));
+          moveY(mv,dy);
+          if(!conflicts(mv)&&mv.b.y>2&&mv.b.y+mv.b.height<vb.height-2) ok=true;
+          else moveY(mv,-dy);
+        }
+        if(!ok){
+          /* 并排而且太宽,上下挪不开 —— 缩一点字 */
+          var fs0=parseFloat(getComputedStyle(mv.t).fontSize)||10;
+          for(var f=0.92;f>=0.74&&!ok;f-=0.06){
+            mv.t.style.fontSize=(fs0*f).toFixed(2)+'px';
+            mv.b=mv.t.getBBox();
+            if(!conflicts(mv)) ok=true;
+          }
+          /* 还是解不开就还原 —— 宁可维持原样,也别搬去制造新的冲突 */
+          if(!ok){ mv.t.style.fontSize=''; mv.b=mv.t.getBBox(); }
+        }
+        if(ok) moved=true;
+      }
+      if(!moved) break;
+    }
+  });
+}
 function mtjClampSvgLabels(){
   document.querySelectorAll('svg').forEach(function(svg){
     var vb=svg.viewBox&&svg.viewBox.baseVal; if(!vb||!vb.width) return;
@@ -1368,9 +1427,10 @@ function mtjClampSvgLabels(){
     });
   });
 }
-if(document.fonts&&document.fonts.ready)document.fonts.ready.then(mtjClampSvgLabels);
-addEventListener('load',mtjClampSvgLabels);
-addEventListener('resize',mtjClampSvgLabels,{passive:true});
+function mtjTidySvgLabels(){ mtjDeoverlapSvgLabels(); mtjClampSvgLabels(); }
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(mtjTidySvgLabels);
+addEventListener('load',mtjTidySvgLabels);
+addEventListener('resize',mtjTidySvgLabels,{passive:true});
 </script>
 </body>
 </html>
