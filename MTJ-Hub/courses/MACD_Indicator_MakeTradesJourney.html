@@ -1001,13 +1001,21 @@ function drawMACDLayout(box){
   el('path',{d:pathFor(d.macd.map((v,i)=>[X(i),Y(v)])),stroke:C.gold,'stroke-width':2.2,class:'macdline'},s);
   el('path',{d:pathFor(d.sig.map((v,i)=>[X(i),Y(v)])),stroke:C.cyan,'stroke-width':1.7,class:'macdline',style:'transition-delay:.4s'},s);
   txt(s,L,16,'MACD (12, 26, 9)',{'font-size':11,fill:C.goldB,'font-weight':700,'letter-spacing':'.1em'});
-  el('line',{x1:L+128,x2:L+146,y1:12,y2:12,stroke:C.gold,'stroke-width':2.4},s);
-  txt(s,L+150,16,'MACD line',{'font-size':9,fill:C.muted});
-  el('line',{x1:L+224,x2:L+242,y1:12,y2:12,stroke:C.cyan,'stroke-width':2.4},s);
-  txt(s,L+246,16,'Signal',{'font-size':9,fill:C.muted});
-  el('rect',{x:L+296,y:8,width:10,height:8,rx:2,fill:C.bull,'fill-opacity':.72},s);
-  el('rect',{x:L+310,y:8,width:10,height:8,rx:2,fill:C.bear,'fill-opacity':.66},s);
-  txt(s,L+324,16,'Histogram',{'font-size':9,fill:C.muted});
+  /* 图例:依序排版。原本 x 是写死的,补上中文就会叠字。
+     宽度用等宽字估:拉丁 ~5.4px、中日韩 ~9.5px @ 9px 字级。 */
+  var lgX=L+128;
+  const lgItem=(draw,en,zh)=>{
+    lgX=draw(lgX);
+    txt(s,lgX,16,en+' '+zh,{'font-size':9,fill:C.muted});
+    lgX+=en.length*5.4+zh.length*9.5+22;
+  };
+  lgItem(x=>{el('line',{x1:x,x2:x+18,y1:12,y2:12,stroke:C.gold,'stroke-width':2.4},s);return x+22;},
+         'MACD line','主线');
+  lgItem(x=>{el('line',{x1:x,x2:x+18,y1:12,y2:12,stroke:C.cyan,'stroke-width':2.4},s);return x+22;},
+         'Signal','信号线');
+  lgItem(x=>{el('rect',{x:x,y:8,width:10,height:8,rx:2,fill:C.bull,'fill-opacity':.72},s);
+            el('rect',{x:x+14,y:8,width:10,height:8,rx:2,fill:C.bear,'fill-opacity':.66},s);return x+28;},
+         'Histogram','柱状图');
   txt(s,L+plotW/2,zeroY-14,'ABOVE ZERO = BULLS 零轴上方 = 多方控盘',{'text-anchor':'middle','font-size':9.5,fill:C.bull,'font-family':"'Noto Sans SC',sans-serif",class:'rlbl',style:'--i:23'});
   txt(s,L+plotW/2,zeroY+22,'BELOW ZERO = BEARS 零轴下方 = 空方控盘',{'text-anchor':'middle','font-size':9.5,fill:C.bear,'font-family':"'Noto Sans SC',sans-serif",class:'rlbl',style:'--i:24'});
 }
