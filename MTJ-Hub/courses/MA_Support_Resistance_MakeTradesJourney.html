@@ -404,7 +404,7 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
 
 /* 均线名称直接标在线的末端 —— 学员反馈图例在图外、快慢线分不清 */
 .ma-tag text{stroke:none;font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:.03em;}
-.ma-tag text.ma-tag-sub{font-size:8.5px;font-weight:600;opacity:.9;}
+.ma-tag text.ma-tag-sub{font-size:8px;font-weight:600;opacity:.72;letter-spacing:.08em;}
 .ma-tag.ma1 text{fill:var(--ma1);} .ma-tag.ma2 text{fill:var(--ma2);} .ma-tag.ma3 text{fill:var(--ma3);}
 .ma-tag-lead{stroke-width:1.6;opacity:.7;fill:none;}
 </style>
@@ -653,12 +653,81 @@ function badge(svg,x,y,num,col,label,dy,delay){
   el('circle',{cx:x,cy:y,r:8,fill:col,stroke:'#08080a','stroke-width':1.5,class:'mk-ring'},g);
   const t=el('text',{x:x,y:y+3.2,'text-anchor':'middle','font-family':"'JetBrains Mono',monospace",'font-weight':'700','font-size':'10'},g);
   t.setAttribute('fill','#08080a');t.textContent=num;
-  if(label){const lt=el('text',{x:x,y:y+dy,'text-anchor':'middle','font-family':"'JetBrains Mono',monospace",'font-size':'9','font-weight':'600'},g);lt.setAttribute('fill',col);lt.textContent=label;}
+  if(label){const lt=el('text',{x:x,y:y+dy,'text-anchor':'middle','font-family':"'JetBrains Mono',monospace",'font-size':'9','font-weight':'600','data-ax':x,'data-ay':y,'data-dir':dy<0?'up':'down'},g);lt.setAttribute('fill',col);lt.textContent=label;}
 }
 /* 教学标签被画布切掉就等于没写 —— 贴边的往内拉回来。
    量宽度要等真正的字体到位:JetBrains Mono 是非同步载入的,首次量到的是
    后备字体的宽度,所以这支函式会被呼叫多次(渲染当下 / 字体就绪 / 改变视窗)。
    只在超出边界时才移动,重复呼叫不会累加。 */
+/* ===== 标签自动找空位 =====
+   锚点(data-ax/ay)是标签在讲的那个东西;data-dir 是偏好方向。
+   由近而远、先偏好方向,试到不撞 K 线、不撞别的标签、也不出界为止。
+   要等字体到位才量得准,所以跟 clampLabels 一样会被呼叫多次。 */
+function placeChartLabels(svg){
+  const vb=svg.viewBox&&svg.viewBox.baseVal; if(!vb||!vb.width) return;
+  const W=vb.width,H=vb.height;
+  const box=e=>{try{const b=e.getBBox();return (b.width||b.height)?b:null;}catch(x){return null;}};
+  const grow=(b,m)=>({x:b.x-m,y:b.y-m,width:b.width+2*m,height:b.height+2*m});
+  const over=(a,b)=>Math.min(a.x+a.width,b.x+b.width)-Math.max(a.x,b.x)>0.5 &&
+                    Math.min(a.y+a.height,b.y+b.height)-Math.max(a.y,b.y)>0.5;
+
+  /* 障碍:K 线实体与影线、标记圆点、入场框 */
+  const obst=[];
+  svg.querySelectorAll('rect.body,line.wick,circle.mk-ring,rect.entry-box,rect.entry-zone')
+     .forEach(e=>{const b=box(e); if(b) obst.push(grow(b,1));});
+
+  const placed=[];
+  svg.querySelectorAll('text[data-ax]').forEach(t=>{
+    const b=box(t); if(!b) return;
+    const ax=parseFloat(t.dataset.ax), ay=parseFloat(t.dataset.ay);
+    const down=t.dataset.dir==='down';
+    /* 目前的位置当首选 —— 没冲突就别动它 */
+    const cur={dx:b.x+b.width/2-ax, dy:b.y+b.height/2-ay};
+    const cands=[cur];
+    /* 横向比纵向多让一点:图是宽的,左右的空位比上下多 */
+    const dirs = down
+      ? [[0,1],[1,1],[-1,1],[1,0],[-1,0],[1,-1],[-1,-1],[0,-1]]
+      : [[0,-1],[1,-1],[-1,-1],[1,0],[-1,0],[1,1],[-1,1],[0,1]];
+    [18,28,40,54,70,88].forEach(r=>dirs.forEach(d=>{
+      const L=Math.hypot(d[0],d[1])||1;
+      cands.push({dx:d[0]/L*r*1.7, dy:d[1]/L*r});
+    }));
+
+    let win=null;
+    for(const c of cands){
+      const r={x:ax+c.dx-b.width/2, y:ay+c.dy-b.height/2, width:b.width, height:b.height};
+      if(r.x<2||r.x+r.width>W-2||r.y<2||r.y+r.height>H-2) continue;
+      const pad=grow(r,2);
+      if(obst.some(o=>over(pad,o))) continue;
+      if(placed.some(o=>over(pad,o))) continue;
+      win=c; break;
+    }
+    if(!win) win=cur;                      /* 真的没空位就维持原样,别乱丢 */
+
+    /* 用位移量搬:x/y 的语意随 text-anchor 而异,靠差值才通用 */
+    const nx=ax+win.dx-b.width/2, ny=ay+win.dy-b.height/2;
+    t.setAttribute('x',(parseFloat(t.getAttribute('x'))||0)+(nx-b.x));
+    t.setAttribute('y',(parseFloat(t.getAttribute('y'))||0)+(ny-b.y));
+    placed.push({x:nx,y:ny,width:b.width,height:b.height});
+
+    /* 挪远了就拉引线回锚点,否则看不出这句话在讲哪里 */
+    const old=t.parentNode.querySelector('line.lbl-lead[data-for="'+(t.dataset.ax)+'_'+(t.dataset.ay)+'"]');
+    if(old) old.remove();
+    const cxp=nx+b.width/2, cyp=ny+b.height/2;
+    if(Math.hypot(cxp-ax,cyp-ay)>26){
+      const ang=Math.atan2(cyp-ay,cxp-ax);
+      const ex=cxp-Math.cos(ang)*(b.width/2+3), ey=cyp-Math.sin(ang)*(b.height/2+3);
+      const ln=document.createElementNS('http://www.w3.org/2000/svg','line');
+      ln.setAttribute('x1',ax); ln.setAttribute('y1',ay);
+      ln.setAttribute('x2',ex); ln.setAttribute('y2',ey);
+      ln.setAttribute('class','lbl-lead');
+      ln.setAttribute('data-for',t.dataset.ax+'_'+t.dataset.ay);
+      ln.setAttribute('stroke',t.getAttribute('fill')||'#9A968C');
+      ln.setAttribute('stroke-width','1'); ln.setAttribute('opacity','.45');
+      t.parentNode.insertBefore(ln,t);
+    }
+  });
+}
 function clampLabels(svg){
   const W=svg.viewBox.baseVal.width;
   svg.querySelectorAll('text').forEach(t=>{
@@ -722,26 +791,28 @@ function renderCandleChart(container){
     // 同周期(EMA vs SMA 对照)就不谈快慢,只标类型
     const role=(!_twoMA||_sameP)?'':(o.period===Math.min.apply(null,_per)?'fast 快线':'slow 慢线');
     const last=p2[p2.length-1];
-    _ends.push({x:last[0],y:last[1],y0:last[1],cls:o.cls||'ma1',
+    // x 是引线起点(线的末端);标签本身放到右边距,免得压着 K 线
+    _ends.push({x:last[0],lx:W-padR+6,y:last[1],y0:last[1],cls:o.cls||'ma1',
                 name:(o.type==='ema'?'EMA ':'SMA ')+o.period,role:role});});
   // 入场框那一带还挤着「回踩 / 反弹」之类的标记文字,一并算进禁区
-  const _half=e=>e.role?11:7;
+  const _half=e=>e.role?13:7;   // 一组约 24px 高,半高 13
   if(ez){_ends.forEach(e=>{
     const T=ez.yT-26, B=ez.yB+26, mid=(ez.yT+ez.yB)/2;   // 26 ≈ 标记文字伸出去的距离
-    if(e.y+_half(e)>T && e.y-_half(e)<B && e.x+70>ez.x0)
+    if(e.y+_half(e)>T && e.y-_half(e)<B && e.lx+70>ez.x0)
       e.y = e.y<=mid ? T-_half(e) : B+_half(e);
   });}
   // 挤开之后两条可能又靠在一起,再拉开
-  if(_ends.length===2){const gap=Math.abs(_ends[0].y-_ends[1].y), need=_half(_ends[0])+_half(_ends[1])+6;
+  // +14 是组与组之间的留白 —— 只留 6 的话四行会黏成一坨
+  if(_ends.length===2){const gap=Math.abs(_ends[0].y-_ends[1].y), need=_half(_ends[0])+_half(_ends[1])+14;
     if(gap<need){const push=(need-gap)/2, up=_ends[0].y<=_ends[1].y?0:1;
       _ends[up].y-=push; _ends[1-up].y+=push;}}
   _ends.forEach(e=>{e.y=Math.max(padT+_half(e),Math.min(H-padB-_half(e),e.y));});
   _ends.forEach(e=>{
     const g=el('g',{class:'ma-tag '+e.cls},svg);
     // 引线从线的末端连到标注 —— 被挤开也看得出这名字属于哪条线
-    el('path',{d:'M'+(e.x+2)+','+e.y0+' L'+(e.x+8)+','+e.y,fill:'none',class:'ma-tag-lead '+e.cls},g);
-    const t=el('text',{x:e.x+11,y:e.y+(e.role?0:3.4)},g);t.textContent=e.name;
-    if(e.role){const t2=el('text',{x:e.x+11,y:e.y+11.5,class:'ma-tag-sub'},g);t2.textContent=e.role;}
+    el('path',{d:'M'+(e.x+2)+','+e.y0+' L'+(e.lx-3)+','+e.y,fill:'none',class:'ma-tag-lead '+e.cls},g);
+    const t=el('text',{x:e.lx,y:e.y+(e.role?0:3.4)},g);t.textContent=e.name;
+    if(e.role){const t2=el('text',{x:e.lx,y:e.y+13,class:'ma-tag-sub'},g);t2.textContent=e.role;}
   });
   // entry box + dual-entry markers
   if(ez){el('rect',{x:ez.x0,y:ez.yT,width:ez.x1-ez.x0,height:ez.yB-ez.yT,rx:5,class:'entry-box'},svg);
@@ -750,9 +821,24 @@ function renderCandleChart(container){
       badge(svg,Xc(n-1),Y(real[n-1].c),'1',C.gold,'Tap 触及',dir==='up'?18:-13,1.0);
       badge(svg,Xc(n),Y(all[n].c),'2',C.cyan,'Bounce 反弹',dir==='up'?-13:18,1.35);
     }else if(spec.entryStyle==='cross'){
-      const a=overlays[0]._d,bb=overlays[1]._d;let ci=Math.round(n*0.4);
-      for(let i=1;i<n;i++){if(a[i-1]!=null&&bb[i-1]!=null&&(a[i-1]-bb[i-1])<=0&&(a[i]-bb[i])>0){ci=i;break;}}
-      badge(svg,Xc(ci),Y(bb[ci]),'1',C.gold,'Golden Cross 金叉',-13,1.0);
+      const a=overlays[0]._d,bb=overlays[1]._d;
+      // 均线刚起算那几根还没站稳,交叉是假的 —— 从慢线周期之后才开始找
+      const warm=Math.max(1,...overlays.map(o=>o.period||0));
+      // 找出所有金叉,挑「交叉之后分得最开」的那个 ——
+      // 两条线黏在一起的交叉,肉眼分不出谁上谁下,拿来教等于没教
+      let ci=-1,best=-1;
+      for(let i=warm;i<n;i++){
+        if(a[i-1]==null||bb[i-1]==null)continue;
+        if(!((a[i-1]-bb[i-1])<=0&&(a[i]-bb[i])>0))continue;
+        let sep=0;
+        for(let k=i;k<Math.min(n,i+10);k++) sep=Math.max(sep,a[k]-bb[k]);
+        if(sep>best){best=sep;ci=i;}
+      }
+      if(ci>=0){
+        // 标在两条线的交会点上,不是任选一条
+        const cy=Y((a[ci]+bb[ci])/2);
+        badge(svg,Xc(ci),cy,'1',C.gold,'Golden Cross 金叉',-13,1.0);
+      }
       badge(svg,Xc(n-1),Y(real[n-1].c),'2',C.cyan,'Pullback 回踩',dyU,1.35);
     }else{
       const neck=NECK[key];
@@ -767,13 +853,13 @@ function renderCandleChart(container){
     const col=dt.color==='bull'?C.bull:dt.color==='bear'?C.bear:C.gold;const yy=Y(real[i].c);
     el('circle',{cx:Xc(i),cy:yy,r:5,class:'mk-ring',fill:'none',stroke:col,'stroke-width':2},g);
     el('circle',{cx:Xc(i),cy:yy,r:2,fill:col},g);
-    if(dt.label){const tx=el('text',{x:Xc(i),y:yy-14,'text-anchor':'middle',class:'mk-lbl'},g);tx.setAttribute('fill',col);tx.textContent=dt.label;}});
+    if(dt.label){const tx=el('text',{x:Xc(i),y:yy-14,'text-anchor':'middle',class:'mk-lbl','data-ax':Xc(i),'data-ay':yy,'data-dir':'up'},g);tx.setAttribute('fill',col);tx.textContent=dt.label;}});
   // breaks
   (spec.breaks||[]).forEach((bk,bi)=>{const i=Math.round(bk.x*(n-1));const g=el('g',{class:'mk'},svg);g.style.transitionDelay=(1.05+bi*0.1)+'s';
     const x=Xc(i),y0=Y(real[i].c),dir=bk.dir==='up'?-1:1,col=bk.dir==='up'?C.bull:C.bear;
     el('line',{x1:x,y1:y0-dir*15,x2:x,y2:y0+dir*17,stroke:col,'stroke-width':2},g);
     el('path',{d:'M'+x+','+(y0+dir*19)+' L'+(x-4)+','+(y0+dir*11)+' M'+x+','+(y0+dir*19)+' L'+(x+4)+','+(y0+dir*11),stroke:col,'stroke-width':2,fill:'none','stroke-linecap':'round'},g);
-    if(bk.label){const tx=el('text',{x:x,y:y0+dir*31,'text-anchor':'middle',class:'mk-lbl'},g);tx.setAttribute('fill',col);tx.textContent=bk.label;}});
+    if(bk.label){const tx=el('text',{x:x,y:y0+dir*31,'text-anchor':'middle',class:'mk-lbl','data-ax':x,'data-ay':y0,'data-dir':dir>0?'down':'up'},g);tx.setAttribute('fill',col);tx.textContent=bk.label;}});
   // MA crossovers
   if(spec.crossDetect&&overlays.length>=2){const a=overlays[0]._d,b=overlays[1]._d;
     for(let i=1;i<n;i++){if(a[i]==null||b[i]==null||a[i-1]==null||b[i-1]==null)continue;
@@ -781,7 +867,7 @@ function renderCandleChart(container){
       if((prev<=0&&cur>0)||(prev>=0&&cur<0)){const golden=cur>0;const g=el('g',{class:'mk'},svg);g.style.transitionDelay='1.2s';
         const x=Xc(i),yv=Y((a[i]+b[i])/2),col=golden?C.bull:C.bear;
         el('rect',{x:x-4.5,y:yv-4.5,width:9,height:9,transform:'rotate(45 '+x+' '+yv+')',fill:'none',stroke:col,'stroke-width':2},g);
-        const tx=el('text',{x:x,y:golden?yv+24:yv-13,'text-anchor':'middle',class:'mk-lbl'},g);tx.setAttribute('fill',col);tx.textContent=golden?'Golden Cross 金叉':'Death Cross 死叉';}}}
+        const tx=el('text',{x:x,y:golden?yv+24:yv-13,'text-anchor':'middle',class:'mk-lbl','data-ax':x,'data-ay':yv,'data-dir':golden?'down':'up'},g);tx.setAttribute('fill',col);tx.textContent=golden?'Golden Cross 金叉':'Death Cross 死叉';}}}
   // projection arrow
   if(entry){const x1=Xc(n-1),yy1=Y(real[n-1].c),x2=Xc(all.length-1),yy2=Y(all[all.length-1].c);
     const arw=el('g',{class:'proj-arrow '+entry.dir},svg);
@@ -789,11 +875,12 @@ function renderCandleChart(container){
     const ang=Math.atan2(yy2-yy1,x2-x1),ah=8;
     el('path',{d:'M'+x2+','+yy2+' L'+(x2-ah*Math.cos(ang-0.5))+','+(yy2-ah*Math.sin(ang-0.5))+' M'+x2+','+yy2+' L'+(x2-ah*Math.cos(ang+0.5))+','+(yy2-ah*Math.sin(ang+0.5)),class:'proj-head'},arw);}
   container.appendChild(svg);
+  placeChartLabels(svg);
   clampLabels(svg);
 }
 document.querySelectorAll('.pchart[data-chart]').forEach(renderCandleChart);
 /* 字体载入完宽度会变,视窗改变也会 —— 两个时机各重校一次贴边 */
-const clampAllCharts=()=>document.querySelectorAll('.pchart[data-chart] svg').forEach(clampLabels);
+const clampAllCharts=()=>document.querySelectorAll('.pchart[data-chart] svg').forEach(function(s){placeChartLabels(s);clampLabels(s);});
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(clampAllCharts);
 addEventListener('resize',clampAllCharts,{passive:true});
 
