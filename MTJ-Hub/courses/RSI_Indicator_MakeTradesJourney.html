@@ -1680,5 +1680,30 @@ renderExam();
     mountMoltenMetal('.hero-molten');
   }catch(e){ /* static hero stands on its own */ }
 </script>
+<script>
+/* ===== 图表标签贴边回拉 =====
+   教学标签被画布切掉就等于没写 —— 而且切掉的偏偏是要教的那个词
+   (超买/超卖/阻力/支撑/量度目标…)。
+   量宽度必须等真正的字体到位:JetBrains Mono 与 Sora 都是非同步载入的,
+   画的当下量到的是后备字体的宽度。改变视窗时也要重校。
+   只在超出边界时才移动,所以重复呼叫不会累加。 */
+function mtjClampSvgLabels(){
+  document.querySelectorAll('svg').forEach(function(svg){
+    var vb=svg.viewBox&&svg.viewBox.baseVal; if(!vb||!vb.width) return;
+    svg.querySelectorAll('text').forEach(function(t){
+      /* 自己或祖先带 transform 的话,getBBox 的座标系跟 viewBox 对不上,跳过 */
+      for(var a=t;a&&a!==svg;a=a.parentNode)
+        if(a.transform&&a.transform.baseVal&&a.transform.baseVal.numberOfItems) return;
+      var b; try{ b=t.getBBox(); }catch(e){ return; }
+      if(!b.width) return;
+      var dx = b.x<2 ? 2-b.x : (b.x+b.width>vb.width-2 ? vb.width-2-(b.x+b.width) : 0);
+      if(dx) t.setAttribute('x',(parseFloat(t.getAttribute('x'))||0)+dx);
+    });
+  });
+}
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(mtjClampSvgLabels);
+addEventListener('load',mtjClampSvgLabels);
+addEventListener('resize',mtjClampSvgLabels,{passive:true});
+</script>
 </body>
 </html>
