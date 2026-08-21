@@ -25,6 +25,7 @@ uniform vec2 iResolution;
 uniform float iTime;
 uniform float uSpeed, uWaveDepth, uZoom, uDensity, uSpread, uStepSize;
 uniform float uGlow, uExposure, uColorShift, uContrast, uBrightness, uOpacity, uSteps;
+uniform float uBloom, uBloomAt;
 uniform vec3 uColor1, uColor2, uColor3;
 uniform vec2 uMouse;
 uniform float uMouseStrength, uMouseRadius, uEnableMouse, uMouseActive;
@@ -71,7 +72,14 @@ void main(){
   col = mix(col, uColor3, smoothstep(0.55, 1.0, v));
   col *= v;
 
-  float a = clamp(v, 0.0, 1.0) * uOpacity;
+  /* 晶面之间那些最亮的棱,额外补一圈热光晕。
+     遮罩取 v 的高段,所以只有本来就亮的边会发光,暗处不会整片泛白;
+     halo 用饱和金、只有最核心才推到浅金,免得溢出后变成银白 —— 这站的金
+     不能烧掉。 */
+  float hot = smoothstep(uBloomAt, 1.0, v);
+  col += mix(uColor2, uColor3, hot) * hot * hot * uBloom;
+
+  float a = clamp(v + hot * hot * uBloom * 0.45, 0.0, 1.0) * uOpacity;
   vec3 outRgb = col * a;                    // 预乘 alpha
   if(uGrain > 0.5){
     float g = (fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233)) + iTime) * 43758.5453) - 0.5) * uGrainIntensity;
@@ -111,12 +119,14 @@ export const MTJ_ACID = {
   waveDepth: 1,
   zoom: 1.35,
   density: 10.0,
-  glow: 1.0,
-  exposure: 2900,
+  glow: 1.35,
+  exposure: 2200,
+  bloom: 0.85,        // 热光晕强度
+  bloomAt: 0.52,      // 从哪一段亮度开始发光,越低发光范围越大
   spread: 0.3,
   stepSize: 0.002,
   colorShift: 0.35,
-  contrast: 1.05,
+  contrast: 1.12,
   brightness: 1.0,
   opacity: 1.0,
   mouseInteraction: true,
@@ -178,6 +188,7 @@ export function mountAcidSquares(target, opts = {}) {
   f('uSpread', o.spread);      f('uStepSize', o.stepSize);
   f('uGlow', o.glow);          f('uExposure', o.exposure);
   f('uColorShift', o.colorShift); f('uContrast', o.contrast);
+  f('uBloom', o.bloom);        f('uBloomAt', o.bloomAt);
   f('uBrightness', o.brightness); f('uOpacity', o.opacity);
   f('uSteps', STEPS[o.detail] || STEPS.medium);
   v3('uColor1', hexToRgb(o.color1));
