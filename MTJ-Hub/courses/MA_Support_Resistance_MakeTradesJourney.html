@@ -291,7 +291,9 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 /* legends */
 .chart-fig .lg{display:inline-flex;align-items:center;gap:5px;margin:0 7px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:0;text-transform:none;}
 .chart-fig .lg::before{content:"";width:14px;height:3px;border-radius:2px;background:currentColor;}
-.lg-k{color:var(--bull);}.lg-1{color:var(--ma1);}.lg-2{color:var(--ma3);}.lg-2b{color:var(--ma2);}.lg-r{color:var(--bear);}.lg-s{color:var(--bull);}.lg-e{color:var(--cyan);}
+/* 这几条要带 .chart-fig 前缀 —— 否则 .chart-fig .lg 的 muted 会赢,
+   图例就全变灰的,颜色对应等于白做 */
+.chart-fig .lg.lg-k{color:var(--bull);}.chart-fig .lg.lg-1{color:var(--ma1);}.chart-fig .lg.lg-2{color:var(--ma3);}.chart-fig .lg.lg-2b{color:var(--ma2);}.chart-fig .lg.lg-r{color:var(--bear);}.chart-fig .lg.lg-s{color:var(--bull);}.chart-fig .lg.lg-e{color:var(--cyan);}
 .chart-fig.wide{width:100%;flex:1 1 100%;}
 
 /* ---------- brand watermark 品牌浮水印 ---------- */
@@ -843,9 +845,14 @@ function renderCandleChart(container){
         if(sep>best){best=sep;ci=i;}
       }
       if(ci>=0){
-        // 标在两条线的交会点上,不是任选一条
-        const cy=Y((a[ci]+bb[ci])/2);
-        badge(svg,Xc(ci),cy,'1',C.gold,'Golden Cross 金叉',-13,1.0);
+        const xg=Xc(ci), mid=Y((a[ci]+bb[ci])/2);
+        // 圆盘直径 16px,交叉处两条线却只差几个 px —— 圆盘压上去就把
+        // 交叉本身遮掉了。改成:垂直指引线标出「什么时候」,圆盘挪到
+        // 线的下方标出「这是什么」,中间那段交叉留着让人看。
+        const g=el('g',{class:'mk'},svg);g.style.transitionDelay='0.9s';
+        el('line',{x1:xg,x2:xg,y1:mid-16,y2:mid+30,stroke:C.gold,'stroke-width':1,
+          'stroke-dasharray':'3 3',opacity:.55},g);
+        badge(svg,xg,mid+44,'1',C.gold,'Golden Cross 金叉',18,1.0);
       }
       badge(svg,Xc(n-1),Y(real[n-1].c),'2',C.cyan,'Pullback 回踩',dyU,1.35);
     }else{

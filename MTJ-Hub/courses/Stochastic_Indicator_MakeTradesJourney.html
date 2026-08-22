@@ -1126,7 +1126,8 @@ function drawSTOTrend(box){
   [6,12].forEach(i=>el('line',{x1:X(i),x2:X(i),y1:pT,y2:Yo(0),stroke:'rgba(232,200,119,.22)','stroke-width':1,'stroke-dasharray':'3 5',class:'rline'},s));
   [[6,45],[12,52]].forEach((p,i)=>{
     const g=el('g',{style:'--i:'+(14+i)},s);
-    el('circle',{cx:X(p[0]),cy:Yo(p[1]),r:5,fill:C.bull,class:'rlbl'},g);
+    /* 空心环 —— 这两点正好落在 %K 与 %D 的交叉处,实心圆会把交叉盖掉 */
+    el('circle',{cx:X(p[0]),cy:Yo(p[1]),r:6,fill:'none',stroke:C.bull,'stroke-width':2,class:'rlbl'},g);
     txt(g,X(p[0]),Yo(p[1])+(i?20:-12),'BUY DIP 回调买入',{'text-anchor':'middle','font-size':10,'font-weight':700,fill:C.bull,'font-family':"'Noto Sans SC',sans-serif"});
   });
   txt(s,L+plotW/2,H-6,'IN AN UPTREND, BUY THE TURN - NOT THE 20 LINE',{'text-anchor':'middle','font-size':9.5,fill:C.muted2,'letter-spacing':'.16em'});
