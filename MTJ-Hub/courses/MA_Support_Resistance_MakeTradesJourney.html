@@ -633,7 +633,9 @@ const CHARTS={
   ma_trend:{series:makeSeries([{x:0,p:46},{x:.28,p:60},{x:.48,p:54},{x:.68,p:47},{x:1,p:63}],32,2,9),overlays:[{type:'sma',period:8,cls:'ma1'}],trendShade:true},
   ma_dynamic:{series:makeSeries([{x:0,p:42},{x:.12,p:50},{x:.2,p:46},{x:.34,p:56},{x:.44,p:51},{x:.6,p:62},{x:.7,p:57},{x:.85,p:66},{x:1,p:59}],28,1.3,3),
     overlays:[{type:'ema',period:9,cls:'ma1'}],dots:[{x:.2,color:'bull'},{x:.44,color:'bull'}],entry:{dir:'up',pad:2.6,back:2},entryStyle:'bounce'},
-  ma_cross:{series:makeSeries([{x:0,p:62},{x:.28,p:46},{x:.5,p:59},{x:.62,p:54},{x:.78,p:59},{x:.9,p:55.5},{x:1,p:55.8}],40,1.3,2),overlays:[{type:'ema',period:6,cls:'ma1'},{type:'ema',period:16,cls:'ma3'}],entry:{dir:'up',pad:2,back:2},entryStyle:'cross'},
+  /* 深跌 → 底部盘整 → 强力拉升:交叉才张得开。原本后半段在 54~59 来回,
+     两条 EMA 有 7 根黏在一起,交叉是蹭出来的,看不出谁穿过谁。 */
+  ma_cross:{series:makeSeries([{x:0,p:48},{x:.16,p:66},{x:.42,p:38},{x:.56,p:37},{x:.80,p:74},{x:.91,p:65},{x:1,p:72}],40,1.3,2),overlays:[{type:'ema',period:6,cls:'ma1'},{type:'ema',period:16,cls:'ma3'}],entry:{dir:'up',pad:2,back:2},entryStyle:'cross'},
 
   sr_basics:{series:makeSeries([{x:0,p:50},{x:.12,p:61},{x:.24,p:49.5},{x:.36,p:61},{x:.48,p:49.5},{x:.6,p:61},{x:.72,p:49.5},{x:.85,p:60.5},{x:1,p:53}],30,0.8,8),
     levels:[{price:61,kind:'res',label:'Resistance 阻力'},{price:49.5,kind:'sup',label:'Support 支撑'}],
@@ -753,7 +755,7 @@ function renderCandleChart(container){
   const entry=spec.entry;
   const follow=entry?genFollow(real[n-1].c,entry.dir,3):[];
   const all=real.concat(follow);
-  const W=720,H=350,padL=12,padR=98,padT=30,padB=28;
+  const W=720,H=350,padL=12,padR=118,padT=30,padB=28;
   const step=(W-padL-padR)/all.length,bodyW=Math.min(step*0.62,22);
   const overlays=(spec.overlays||[]).map(o=>({cls:o.cls,type:o.type,period:o.period,_d:(o.type==='ema'?ema(S,o.period):sma(S,o.period))}));
   let vals=[];all.forEach(c=>{vals.push(c.h,c.l);});
@@ -805,7 +807,7 @@ function renderCandleChart(container){
     _ends.push({x:last[0],lx:W-padR+6,y:last[1],y0:last[1],cls:o.cls||'ma1',
                 name:(o.type==='ema'?'EMA ':'SMA ')+o.period,role:role});});
   // 入场框那一带还挤着「回踩 / 反弹」之类的标记文字,一并算进禁区
-  const _half=e=>e.role?13:7;   // 一组约 24px 高,半高 13
+  const _half=e=>7;             // 现在都是一行,半高 7
   if(ez){_ends.forEach(e=>{
     const T=ez.yT-26, B=ez.yB+26, mid=(ez.yT+ez.yB)/2;   // 26 ≈ 标记文字伸出去的距离
     if(e.y+_half(e)>T && e.y-_half(e)<B && e.lx+70>ez.x0)
@@ -821,8 +823,9 @@ function renderCandleChart(container){
     const g=el('g',{class:'ma-tag '+e.cls},svg);
     // 引线从线的末端连到标注 —— 被挤开也看得出这名字属于哪条线
     el('path',{d:'M'+(e.x+2)+','+e.y0+' L'+(e.lx-3)+','+e.y,fill:'none',class:'ma-tag-lead '+e.cls},g);
-    const t=el('text',{x:e.lx,y:e.y+(e.role?0:3.4)},g);t.textContent=e.name;
-    if(e.role){const t2=el('text',{x:e.lx,y:e.y+13,class:'ma-tag-sub'},g);t2.textContent=e.role;}
+    /* 一行写完 —— 拆成两行的话,两条线四行小字挤在窄栏里就是一坨 */
+    const t=el('text',{x:e.lx,y:e.y+3.4},g);
+    t.textContent=e.name+(e.role?' · '+e.role:'');
   });
   // entry box + dual-entry markers
   if(ez){el('rect',{x:ez.x0,y:ez.yT,width:ez.x1-ez.x0,height:ez.yB-ez.yT,rx:5,class:'entry-box'},svg);
@@ -832,27 +835,44 @@ function renderCandleChart(container){
       badge(svg,Xc(n),Y(all[n].c),'2',C.cyan,'Bounce 反弹',dir==='up'?-13:18,1.35);
     }else if(spec.entryStyle==='cross'){
       const a=overlays[0]._d,bb=overlays[1]._d;
-      // 均线刚起算那几根还没站稳,交叉是假的 —— 从慢线周期之后才开始找
-      const warm=Math.max(1,...overlays.map(o=>o.period||0));
-      // 找出所有金叉,挑「交叉之后分得最开」的那个 ——
-      // 两条线黏在一起的交叉,肉眼分不出谁上谁下,拿来教等于没教
-      let ci=-1,best=-1;
-      for(let i=warm;i<n;i++){
-        if(a[i-1]==null||bb[i-1]==null)continue;
-        if(!((a[i-1]-bb[i-1])<=0&&(a[i]-bb[i])>0))continue;
-        let sep=0;
-        for(let k=i;k<Math.min(n,i+10);k++) sep=Math.max(sep,a[k]-bb[k]);
-        if(sep>best){best=sep;ci=i;}
-      }
-      if(ci>=0){
-        const xg=Xc(ci), mid=Y((a[ci]+bb[ci])/2);
-        // 圆盘直径 16px,交叉处两条线却只差几个 px —— 圆盘压上去就把
-        // 交叉本身遮掉了。改成:垂直指引线标出「什么时候」,圆盘挪到
-        // 线的下方标出「这是什么」,中间那段交叉留着让人看。
+      /* 起算那几根两条线还同值,那种交叉是假的。门槛取 8 —— 慢线周期(16)
+         过于保守:EMA6 到第 8 根已收敛,之后的交叉都是真的价格动作。 */
+      const warm=8;
+      /* 两条线黏在一起的交叉,肉眼分不出谁上谁下,拿来教等于没教。
+         所以金叉死叉都挑「交叉之后分得最开」的那一个。 */
+      const pick=up=>{let idx=-1,best=-1;
+        for(let i=warm;i<n;i++){
+          if(a[i-1]==null||bb[i-1]==null)continue;
+          const prev=a[i-1]-bb[i-1],cur=a[i]-bb[i];
+          if(up?!(prev<=0&&cur>0):!(prev>=0&&cur<0))continue;
+          let sep=0;
+          for(let k=i;k<Math.min(n,i+10);k++) sep=Math.max(sep,Math.abs(a[k]-bb[k]));
+          if(sep>best){best=sep;idx=i;}
+        }
+        return idx;};
+      /* 圆盘直径 16px,交叉处两条线却只差几个 px —— 圆盘压上去就把交叉
+         本身遮掉。改成:垂直指引线标出「什么时候」,标记挪开标出「这是
+         什么」,中间那段交叉留着让人看。 */
+      const guide=(i,col,dir)=>{
+        const xg=Xc(i), mid=Y((a[i]+bb[i])/2);
         const g=el('g',{class:'mk'},svg);g.style.transitionDelay='0.9s';
-        el('line',{x1:xg,x2:xg,y1:mid-16,y2:mid+30,stroke:C.gold,'stroke-width':1,
-          'stroke-dasharray':'3 3',opacity:.55},g);
-        badge(svg,xg,mid+44,'1',C.gold,'Golden Cross 金叉',18,1.0);
+        el('line',{x1:xg,x2:xg,y1:mid-(dir<0?30:16),y2:mid+(dir<0?16:30),stroke:col,
+          'stroke-width':1,'stroke-dasharray':'3 3',opacity:.55},g);
+        return {x:xg,y:mid+dir*44,g:g};};
+      /* 死叉:标题写着「金叉与死叉」,图上就该两个都有。
+         不给编号 —— 编号留给下面那组可交易的进场顺序。 */
+      const di=pick(false);
+      if(di>=0){
+        const q=guide(di,C.bear,-1);
+        el('circle',{cx:q.x,cy:q.y,r:6,fill:'none',stroke:C.bear,'stroke-width':2},q.g);
+        const t=el('text',{x:q.x,y:q.y-13,'text-anchor':'middle',class:'mk-lbl',
+          'data-ax':q.x,'data-ay':q.y,'data-dir':'up'},q.g);
+        t.setAttribute('fill',C.bear);t.textContent='Death Cross 死叉';
+      }
+      const ci=pick(true);
+      if(ci>=0){
+        const q=guide(ci,C.gold,1);
+        badge(svg,q.x,q.y,'1',C.gold,'Golden Cross 金叉',18,1.0);
       }
       badge(svg,Xc(n-1),Y(real[n-1].c),'2',C.cyan,'Pullback 回踩',dyU,1.35);
     }else{
