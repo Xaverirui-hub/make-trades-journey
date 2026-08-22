@@ -671,10 +671,18 @@ function placeChartLabels(svg){
   const over=(a,b)=>Math.min(a.x+a.width,b.x+b.width)-Math.max(a.x,b.x)>0.5 &&
                     Math.min(a.y+a.height,b.y+b.height)-Math.max(a.y,b.y)>0.5;
 
-  /* 障碍:K 线实体与影线、标记圆点、入场框 */
+  /* 障碍:K 线实体与影线、标记圆点、入场框,以及形态线本身 ——
+     颈线 / 趋势线 / 通道边 / 斐波那契价位线也会从字中间穿过去。 */
   const obst=[];
-  svg.querySelectorAll('rect.body,line.wick,circle.mk-ring,rect.entry-box,rect.entry-zone')
-     .forEach(e=>{const b=box(e); if(b) obst.push(grow(b,1));});
+  const OBST_SEL='rect.body,line.wick,circle.mk-ring,rect.entry-box,rect.entry-zone,'+
+    'path.pline,path[class^="pline"],path.proj-line,line.lvl-line,line.fib-line,line.fib-ext,line.fib-anchor';
+  svg.querySelectorAll(OBST_SEL).forEach(e=>{
+    const b=box(e); if(!b) return;
+    /* 水平线的 bbox 高度是 0、垂直线宽度是 0 —— 不补厚度就永远测不到相交 */
+    const t=Math.max(2,(parseFloat(getComputedStyle(e).strokeWidth)||1)/2+1.5);
+    obst.push(grow({x:b.x,y:b.y,
+                    width:Math.max(b.width,0.5),height:Math.max(b.height,0.5)},t));
+  });
 
   const placed=[];
   svg.querySelectorAll('text[data-ax]').forEach(t=>{
@@ -772,7 +780,7 @@ function renderCandleChart(container){
   // levels behind candles
   (spec.levels||[]).forEach(l=>{el('line',{x1:padL,x2:W-padR,y1:Y(l.price),y2:Y(l.price),class:'lvl-line lvl-'+l.kind},svg);
     const col=l.kind==='res'?C.bear:l.kind==='sup'?C.bull:C.gold;
-    const tt=el('text',{x:W-padR+8,y:Y(l.price)+3,class:'lvl-label'},svg);tt.setAttribute('fill',col);tt.textContent=l.label||'';});
+    const tt=el('text',{x:W-padR-6,y:Y(l.price)-7,'text-anchor':'end',class:'lvl-label','data-ax':W-padR-6,'data-ay':Y(l.price),'data-dir':'up'},svg);tt.setAttribute('fill',col);tt.textContent=l.label||'';});
   // candles
   all.forEach((c,i)=>{const isP=!!c.proj,cx=Xc(i);
     const g=el('g',{class:'cndl'+(isP?' proj':'')},svg);g.style.setProperty('--i',i);
