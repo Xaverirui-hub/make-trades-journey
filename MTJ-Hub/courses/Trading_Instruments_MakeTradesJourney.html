@@ -1459,6 +1459,101 @@ renderExam();
    量宽度必须等真正的字体到位:JetBrains Mono 与 Sora 都是非同步载入的,
    画的当下量到的是后备字体的宽度。改变视窗时也要重校。
    只在超出边界时才移动,所以重复呼叫不会累加。 */
+/* ===== 把被线划穿的文字挪开 =====
+   同色的线不算(标签在标注自己那条线);虚线指引线不算。
+   只往上下挪,挪不开就维持原样 —— 宁可被划到,也不要跑到离它讲的东西很远。 */
+function mtjUnstrikeSvgLabels(){
+  var guideDash=function(s){
+    if(!s||s==='none') return false;
+    var v=s.split(/[ ,]+/).map(parseFloat).filter(function(x){return !isNaN(x);});
+    /* 真虚线的 dash 只有几 px;描线动画的 dasharray 是整条路径长度 */
+    return v.length>0 && Math.min.apply(null,v)<20;
+  };
+  document.querySelectorAll('svg').forEach(function(svg){
+    var vb=svg.viewBox&&svg.viewBox.baseVal; if(!vb||!vb.width) return;
+    var polys=[];
+    svg.querySelectorAll('path,polyline').forEach(function(p){
+      var st=getComputedStyle(p);
+      if(st.fill!=='none'&&st.fill!=='rgba(0, 0, 0, 0)') return;
+      if(parseFloat(st.strokeOpacity||'1')<0.35) return;
+      if(parseFloat(st.strokeWidth||'1')<1.2) return;
+      if(guideDash(st.strokeDasharray)) return;
+      var dd=p.getAttribute('d')||p.getAttribute('points')||'';
+      var pts=dd.replace(/^M/,'').split(/[ML ]+/).map(function(t){return t.split(',').map(Number);})
+                .filter(function(q){return q.length===2&&!isNaN(q[0])&&!isNaN(q[1]);});
+      if(pts.length>4) polys.push({col:st.stroke,pts:pts});
+    });
+    if(!polys.length) return;
+
+    var items=[];
+    svg.querySelectorAll('text').forEach(function(t){
+      for(var a=t;a&&a!==svg;a=a.parentNode)
+        if(a.transform&&a.transform.baseVal&&a.transform.baseVal.numberOfItems) return;
+      if(t.textContent.trim().length<=2&&t.parentNode.querySelector&&t.parentNode.querySelector('circle')) return;
+      var b; try{ b=t.getBBox(); }catch(e){ return; }
+      if(!b.width) return;
+      items.push({t:t,b:b,col:getComputedStyle(t).fill});
+    });
+
+    var struck=function(it){
+      var R={x:it.b.x+2,y:it.b.y+2,w:it.b.width-4,h:it.b.height-4};
+      if(R.w<=0||R.h<=0) return false;
+      for(var q=0;q<polys.length;q++){
+        if(polys[q].col===it.col) continue;          /* 标注自己那条线,刻意的 */
+        var pts=polys[q].pts;
+        for(var i=1;i<pts.length;i++){
+          var x1=pts[i-1][0],y1=pts[i-1][1],x2=pts[i][0],y2=pts[i][1];
+          var n=Math.max(2,Math.ceil(Math.abs(x2-x1)/3));
+          for(var s=0;s<=n;s++){
+            var xx=x1+(x2-x1)*s/n, yy=y1+(y2-y1)*s/n;
+            if(xx>=R.x&&xx<=R.x+R.w&&yy>=R.y&&yy<=R.y+R.h) return true;
+          } } }
+      return false;
+    };
+    var hitsText=function(it){
+      for(var q=0;q<items.length;q++){
+        if(items[q]===it) continue;
+        var A=it.b,B=items[q].b;
+        if(Math.min(A.x+A.width,B.x+B.width)-Math.max(A.x,B.x)>4 &&
+           Math.min(A.y+A.height,B.y+B.height)-Math.max(A.y,B.y)>5) return true;
+      } return false;
+    };
+    var moveY=function(it,dy){
+      it.t.setAttribute('y',(parseFloat(it.t.getAttribute('y'))||0)+dy);
+      it.b=it.t.getBBox();
+    };
+
+    items.forEach(function(it){
+      if(!struck(it)) return;
+      var ok=false;
+      /* 由近而远,上下交替 —— 挪最少就好 */
+      var steps=[9,-9,16,-16,24,-24,34,-34];
+      for(var k=0;k<steps.length&&!ok;k++){
+        moveY(it,steps[k]);
+        if(!struck(it)&&!hitsText(it)&&it.b.y>2&&it.b.y+it.b.height<vb.height-2) ok=true;
+        else moveY(it,-steps[k]);
+      }
+      /* 挪不开就垫底色 —— 硬挪只会让标签离所讲的东西更远。
+         垫片插在文字前面才画在下面;有记号,重复呼叫不会叠好几层。 */
+      var prev=it.t.previousSibling;
+      var halo=(prev&&prev.classList&&prev.classList.contains('mtj-halo'))?prev:null;
+      if(!ok&&struck(it)&&!halo){
+        halo=document.createElementNS('http://www.w3.org/2000/svg','rect');
+        halo.setAttribute('rx','3');
+        halo.setAttribute('fill','rgba(9,9,12,.86)');
+        halo.setAttribute('class','mtj-halo');
+        it.t.parentNode.insertBefore(halo,it.t);
+      }
+      /* 垫片是独立的 rect,文字之后可能被别的处理挪走 —— 每次重新对齐,
+         否则会留在原地变成一块孤立的暗块 */
+      if(halo){
+        var pad=2.5, bb2=it.t.getBBox();
+        halo.setAttribute('x',bb2.x-pad); halo.setAttribute('y',bb2.y-pad);
+        halo.setAttribute('width',bb2.width+pad*2); halo.setAttribute('height',bb2.height+pad*2);
+      }
+    });
+  });
+}
 /* ===== 图表文字自动错开 =====
    挪「比较长」的那个:长句多半是说明,位置不挑;短标签在指东西,不能乱挪。
    上下挪不开就缩字。跟回拉一样要等字体到位,所以会被呼叫多次。 */
@@ -1532,7 +1627,12 @@ function mtjClampSvgLabels(){
     });
   });
 }
-function mtjTidySvgLabels(){ mtjDeoverlapSvgLabels(); mtjClampSvgLabels(); }
+/* 顺序:先把被线划穿的挪开,再处理文字互叠,最后收回边界内 */
+function mtjTidySvgLabels(){
+  /* 跑两轮:第一轮 deoverlap 为了避开别的文字,可能把某个标签挪回线上;
+     第二轮把它收拾掉。每一步都只在真有问题时才动,所以会收敛。 */
+  for(var i=0;i<2;i++){ mtjUnstrikeSvgLabels(); mtjDeoverlapSvgLabels(); mtjClampSvgLabels(); }
+}
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(mtjTidySvgLabels);
 addEventListener('load',mtjTidySvgLabels);
 addEventListener('resize',mtjTidySvgLabels,{passive:true});
