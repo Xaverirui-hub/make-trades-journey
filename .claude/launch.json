@@ -4,8 +4,21 @@
     {
       "name": "mtj",
       "runtimeExecutable": "node",
-      "runtimeArgs": [".claude/devserver.mjs", "MTJ-Hub"],
+      "runtimeArgs": [
+        ".claude/devserver.mjs",
+        "MTJ-Hub"
+      ],
       "port": 4173
+    },
+    {
+      "name": "fund",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        ".claude/devserver.mjs",
+        "../mtj-fundamentals",
+        "4180"
+      ],
+      "port": 4180
     }
   ]
 }

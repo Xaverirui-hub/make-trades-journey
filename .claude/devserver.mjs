@@ -6,7 +6,8 @@ import { readFile, stat } from 'node:fs/promises';
 import { extname, join, normalize } from 'node:path';
 
 const ROOT = process.argv[2] || process.cwd();
-const PORT = Number(process.env.PORT) || 4173;
+/* 第三个参数可指定 port —— 好同时开第二个站(例如另一个 repo 的预览) */
+const PORT = Number(process.argv[3]) || Number(process.env.PORT) || 4173;
 
 const TYPES = {
   '.html': 'text/html; charset=utf-8',
