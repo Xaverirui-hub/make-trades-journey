@@ -566,6 +566,17 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
 .quizfig-pic{border-radius:8px;overflow:hidden;background:rgba(9,9,12,.5);}
 .quizfig-cap{margin-top:7px;font-size:12px;line-height:1.5;color:var(--muted);text-align:center;}
 @media(max-width:560px){.quizfig-grid{grid-template-columns:1fr;}}
+
+/* 逐选项短评:答完才出现,每行只讲一件事 —— 比一整段解析好读 */
+.opt-why{display:none;}
+.opt-why.is-on{display:block;margin-top:6px;font-size:12px;line-height:1.6;
+  font-weight:400;text-align:left;}
+.opt-why.ok{color:var(--bull);}
+.opt-why.no{color:var(--muted);}
+/* 文字选项本来是单行 flex,塞进短评要改成上下排 */
+label:has(> .opt-why.is-on){align-items:flex-start;flex-wrap:wrap;}
+label:has(> .opt-why.is-on) .opt-why{flex:1 0 100%;padding-left:26px;}
+.quizfig-opt .opt-why.is-on{padding-left:0;text-align:center;}
 </style>
 </head>
 <body>
@@ -1446,6 +1457,9 @@ function renderExam(){
           cap.textContent = optsArr[oi];
           flabel.appendChild(cap);
         }
+        var fow = document.createElement("div");
+        fow.className = "opt-why"; fow.id = "optwhy_" + qi + "_" + oi;
+        flabel.appendChild(fow);
         grid.appendChild(flabel);
       });
       card.appendChild(grid);
@@ -1458,6 +1472,10 @@ function renderExam(){
       radio.style.cssText = "accent-color:var(--gold);";
       label.appendChild(radio);
       label.appendChild(document.createTextNode(opt));
+      /* 短评槽:判卷后才填,平常是空的 */
+      var ow = document.createElement("div");
+      ow.className = "opt-why"; ow.id = "optwhy_" + qi + "_" + oi;
+      label.appendChild(ow);
       card.appendChild(label);
     });
     var fb = document.createElement("div");
@@ -1485,6 +1503,14 @@ function gradeExam(){
         fb.innerHTML = "<span style='color:var(--bear);font-weight:600;'>✗ Wrong 错误</span><br><span style='color:var(--muted);font-size:12.5px;'>你的答案: <b>" + item.opts[user] + "</b> · 正确答案: <b>" + item.opts[item.ans] + "</b><br>为什么错: " + whyTxt + "</span>";
       }
       fb.style.display = "block";
+      /* 逐选项短评 —— 贴在选项旁边,不必回头对照 A/B/C/D */
+      var ows = (zhMode && item.optWhy_zh) ? item.optWhy_zh : item.optWhy;
+      if(ows) ows.forEach(function(t, oi){
+        var slot = document.getElementById("optwhy_" + qi + "_" + oi);
+        if(!slot || !t) return;
+        slot.textContent = (oi === item.ans ? "✓ " : "✗ ") + t;
+        slot.className = "opt-why is-on " + (oi === item.ans ? "ok" : "no");
+      });
     } else {
       fb.innerHTML = "<span style='color:var(--muted);'>⚠ 未作答</span>";
       fb.style.display = "block";
