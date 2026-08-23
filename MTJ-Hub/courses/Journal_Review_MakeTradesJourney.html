@@ -1010,7 +1010,7 @@ label:has(> .opt-why.is-on) .opt-why{flex:1 0 100%;padding-left:26px;}
     <span class="tier">EXAM</span>
     <div><div class="eyebrow"><span class="en">Module Check</span><span class="zh">模块测验</span></div><h2 class="title">Pass the Quiz to Unlock Module 20<span class="zh">通过测验解锁下一课</span></h2></div>
   </div>
-<div class="note" style="max-width:820px;line-height:1.9;"><span class="en">Answer all 5 questions. You need 4 of 5 (70%) to pass. Wrong answers are explained - read them, then retry.</span><span class="zh">回答全部 5 题。答对 4 题（70%） 即通过。答错的题会给出解析 —— 看完再试。</span></div>
+<div class="note" id="examIntro" style="max-width:820px;line-height:1.9;"></div>
   <div id="examBox" style="max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:22px;"></div>
   <div style="max-width:820px;margin:26px auto 0;text-align:center;">
     <button id="examSubmit" onclick="gradeExam()" style="background:var(--gold);color:#0a0e14;border:none;border-radius:30px;padding:14px 40px;font-family:'Sora',sans-serif;font-weight:700;font-size:15px;cursor:pointer;letter-spacing:.05em;"><span class="en">Submit Answers</span><span class="zh">提交答案</span></button>
@@ -1346,9 +1346,18 @@ function renderExam(){
     box.appendChild(card);
   });
 }
+function fillExamIntro(){
+  var el = document.getElementById("examIntro"); if(!el) return;
+  var n = EXAM_QUESTIONS.length, k = Math.ceil(n * 0.7);
+  el.innerHTML = '<span class="en">Answer all ' + n + ' questions. You need ' + k +
+    ' of ' + n + ' (70%) to pass. Wrong answers are explained - read them, then retry.</span>' +
+    '<span class="zh">回答全部 ' + n + ' 题。答对 ' + k + ' 题（70%） 即通过。答错的题会给出解析 —— 看完再试。</span>';
+}
 function gradeExam(){
   var correct = 0, answered = 0;
   var total = EXAM_QUESTIONS.length;
+  /* 70% 及格,从题数现算 —— 不要再写死 */
+  var need = Math.ceil(total * 0.7);
   EXAM_QUESTIONS.forEach(function(item, qi){
     var sel = document.querySelector("input[name=exam_q" + qi + "]:checked");
     var fb = document.getElementById("exam_fb_" + qi);
@@ -1382,16 +1391,16 @@ function gradeExam(){
     return;
   }
   var res = document.getElementById("examResult");
-  if(correct >= 4){
+  if(correct >= need){
     localStorage.setItem(MTJ_EXAM_KEY, "1");
     res.innerHTML = "<div style='background:rgba(44,217,138,.1);border:1px solid rgba(44,217,138,.4);border-radius:14px;padding:22px;'><div style='color:var(--bull);font-weight:700;font-size:18px;margin-bottom:6px;'><span class='en'>PASSED - " + correct + "/" + total + "</span><span class='zh'>通过 - " + correct + "/" + total + "</span></div><div style='color:var(--muted);font-size:13.5px;'><span class='en'>Module 20 is unlocked.</span><span class='zh'>模块 20 已解锁。</span></div><a class='btn-next' href='Psychology_Discipline_MakeTradesJourney.html'><span class='en'>Next: Psychology & Discipline</span><span class='zh'>下一课：交易心理 · 纪律</span> <span class='ar'>&#8594;</span></a></div>";
   } else {
-    res.innerHTML = "<div style='background:rgba(255,92,99,.08);border:1px solid rgba(255,92,99,.35);border-radius:14px;padding:22px;'><div style='color:var(--bear);font-weight:700;font-size:18px;margin-bottom:6px;'>NOT PASSED - " + correct + "/" + total + " (" + Math.round(correct/total*100) + "%)</div><div style='color:var(--muted);font-size:13.5px;'>需要 70% (4/5)。阅读上面的错题解析，然后重试。</div></div>";
+    res.innerHTML = "<div style='background:rgba(255,92,99,.08);border:1px solid rgba(255,92,99,.35);border-radius:14px;padding:22px;'><div style='color:var(--bear);font-weight:700;font-size:18px;margin-bottom:6px;'>NOT PASSED - " + correct + "/" + total + " (" + Math.round(correct/total*100) + "%)</div><div style='color:var(--muted);font-size:13.5px;'>需要 70% (" + need + "/" + total + ")。阅读上面的错题解析，然后重试。</div></div>";
   }
   document.getElementById("examSubmit").style.display = "none";
   res.scrollIntoView({behavior:"smooth"});
 }
-renderExam();
+renderExam(); fillExamIntro();
 </script>
 
 <script>
@@ -1607,7 +1616,7 @@ renderExam();
     if(typeof renderExam === 'function' && document.getElementById('examBox')){
       var box = document.getElementById('examBox'), picked = [];
       box.querySelectorAll('input[type=radio]:checked').forEach(function(r){ picked.push([r.name, r.value]); });
-      box.innerHTML = ''; renderExam();
+      box.innerHTML = ''; renderExam(); fillExamIntro();
       picked.forEach(function(p){
         var r = box.querySelector('input[name="' + p[0] + '"][value="' + p[1] + '"]');
         if(r) r.checked = true;

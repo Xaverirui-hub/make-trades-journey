@@ -336,10 +336,14 @@
       out += txt(vx + (W - vx) / 2, H / 2, '?', { c: C.gold, s: mini ? 22 : 34, w: 700 });
     }
 
-    /* ---------- 角落标签(A/B/C/D 之类) ---------- */
+    /* ---------- 角落标签 ----------
+       本来只打算放 A/B/C/D,底框写死 20px 宽、文字置中在 x=16。
+       放长一点的字(GUIDANCE、DECISION DAY)就会伸到画布左边外面。
+       改成照字数撑宽,单个字母的宽度仍维持 20px。 */
     if (spec.tag) {
-      out += el('rect', { x: 6, y: 6, width: 20, height: 16, rx: 4, fill: 'rgba(232,200,119,.16)', stroke: C.gold, 'stroke-opacity': .5 });
-      out += txt(16, 18, spec.tag, { c: C.goldB, s: 10, w: 700 });
+      var tagW = Math.max(20, String(spec.tag).length * 6.1 + 10);
+      out += el('rect', { x: 6, y: 6, width: esc(tagW), height: 16, rx: 4, fill: 'rgba(232,200,119,.16)', stroke: C.gold, 'stroke-opacity': .5 });
+      out += txt(6 + tagW / 2, 18, spec.tag, { c: C.goldB, s: 10, w: 700 });
     }
     if (spec.cap && !mini) out += txt(W / 2, H - 5, spec.cap, { c: C.muted2, s: 9, cjk: /[一-龥]/.test(spec.cap) });
 
