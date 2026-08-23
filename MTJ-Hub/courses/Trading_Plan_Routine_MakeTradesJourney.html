@@ -550,6 +550,22 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
 @media(prefers-reduced-motion:reduce){
   .btn-next{animation:none;box-shadow:0 0 0 1px rgba(232,200,119,.38),0 0 24px rgba(232,200,119,.3);}
 }
+
+/* ===== 看图作答 ===== */
+/* 测验原本全是文字,一题四个选项读下来很累 —— 交易本来是看图的事 */
+.quizfig-wrap{margin:2px 0 14px;border:1px solid var(--line-soft);border-radius:12px;
+  background:rgba(12,12,16,.6);padding:8px;overflow:hidden;}
+.quizfig-wrap svg,.quizfig-pic svg{width:100%;height:auto;display:block;}
+.quizfig-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:4px 0 2px;}
+.quizfig-opt{position:relative;display:block;border:1px solid var(--line-soft);border-radius:12px;
+  padding:8px;cursor:pointer;transition:border-color .18s ease,background .18s ease;}
+.quizfig-opt:hover{border-color:rgba(232,200,119,.45);background:rgba(232,200,119,.04);}
+/* 单选钮挪到角落,让图本身当主角 */
+.quizfig-opt input{position:absolute;top:10px;left:10px;accent-color:var(--gold);z-index:2;}
+.quizfig-opt:has(input:checked){border-color:var(--gold);background:rgba(232,200,119,.08);}
+.quizfig-pic{border-radius:8px;overflow:hidden;background:rgba(9,9,12,.5);}
+.quizfig-cap{margin-top:7px;font-size:12px;line-height:1.5;color:var(--muted);text-align:center;}
+@media(max-width:560px){.quizfig-grid{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -1299,6 +1315,7 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
 
 </script>
 
+<script src="../assets/quizfig.js"></script>
 <script>
 /* ===== MTJ EXAM MODULE - Module 23 ===== */
 const MTJ_EXAM_KEY = "mtj_exam_pass_23";
@@ -1318,8 +1335,39 @@ function renderExam(){
     q.style.cssText = "font-weight:600;font-size:15px;color:var(--text);margin-bottom:14px;";
     q.textContent = (zhMode && item.q_zh) ? item.q_zh : item.q;
     card.appendChild(q);
+    /* 看图作答:题目上方一张大图。绘图库没载入就静静跳过,题目仍可作答。 */
+    if(item.fig && window.MTJQuizFig){
+      var figWrap = document.createElement("div");
+      figWrap.className = "quizfig-wrap";
+      figWrap.innerHTML = window.MTJQuizFig(item.fig);
+      card.appendChild(figWrap);
+    }
     var optsArr = (zhMode && item.opts_zh) ? item.opts_zh : item.opts;
-    optsArr.forEach(function(opt, oi){
+    var useFigOpts = !!(item.figOpts && window.MTJQuizFig);
+    if(useFigOpts){
+      var grid = document.createElement("div");
+      grid.className = "quizfig-grid";
+      item.figOpts.forEach(function(fg, oi){
+        var flabel = document.createElement("label");
+        flabel.className = "quizfig-opt";
+        var fradio = document.createElement("input");
+        fradio.type = "radio"; fradio.name = "exam_q" + qi; fradio.value = oi;
+        flabel.appendChild(fradio);
+        var pic = document.createElement("div");
+        pic.className = "quizfig-pic";
+        pic.innerHTML = window.MTJQuizFig(fg, {mini:1});
+        flabel.appendChild(pic);
+        if(optsArr && optsArr[oi]){
+          var cap = document.createElement("div");
+          cap.className = "quizfig-cap";
+          cap.textContent = optsArr[oi];
+          flabel.appendChild(cap);
+        }
+        grid.appendChild(flabel);
+      });
+      card.appendChild(grid);
+    }
+    if(!useFigOpts) optsArr.forEach(function(opt, oi){
       var label = document.createElement("label");
       label.style.cssText = "display:flex;align-items:center;gap:10px;padding:10px 14px;margin:6px 0;border:1px solid var(--line-soft);border-radius:8px;cursor:pointer;font-size:14px;color:var(--text);transition:.2s;";
       var radio = document.createElement("input");
