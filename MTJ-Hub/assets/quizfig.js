@@ -120,6 +120,7 @@
       }
       (spec.lv || []).forEach(function (l) { vals.push(l.p); });
       (spec.tl || []).forEach(function (t) { vals.push(t.p1, t.p2); });
+      if (spec.cloud) vals = vals.concat(spec.cloud.a).concat(spec.cloud.b);
       (spec.zone || []).forEach(function (z) { vals.push(z.from, z.to); });
       var mn = Math.min.apply(null, vals), mx = Math.max.apply(null, vals);
       var pd = (mx - mn) * 0.12 || 1; mn -= pd; mx += pd;
@@ -140,6 +141,31 @@
                             rx: 4, fill: col, 'fill-opacity': .1, stroke: col, 'stroke-opacity': .34 });
         if (z.t && !mini) out += txt(padL + 6, Y(z.to) - 5, z.t, { a: 'start', c: col, s: 9, cjk: /[一-龥]/.test(z.t) });
       });
+      /* 云:两条先行带之间填色。A 在 B 上是青(上升云),在下是红。
+         中途可能换色,所以逐段切开画 —— 整片一个颜色会把交叉那一刻抹掉。 */
+      if (spec.cloud) {
+        var ca = spec.cloud.a, cb = spec.cloud.b, cn = Math.min(ca.length, cb.length);
+        var run = [], runUp = ca[0] >= cb[0];
+        var flush = function () {
+          if (run.length < 2) { run = []; return; }
+          var top = run.map(function (i) { return (i === run[0] ? 'M' : 'L') + esc(X(i)) + ',' + esc(Y(ca[i])); }).join(' ');
+          var bot = run.slice().reverse().map(function (i) { return 'L' + esc(X(i)) + ',' + esc(Y(cb[i])); }).join(' ');
+          out += el('path', { d: top + ' ' + bot + ' Z', fill: runUp ? C.cyan : C.bear,
+                              'fill-opacity': .16, stroke: 'none' });
+          run = [];
+        };
+        for (var ci = 0; ci < cn; ci++) {
+          var up = ca[ci] >= cb[ci];
+          if (up !== runUp) { if (run.length) { run.push(ci); flush(); } runUp = up; }
+          run.push(ci);
+        }
+        flush();
+        /* 云的两条边界线画细一点 —— 主角是那片色块 */
+        [[ca, C.cyan], [cb, C.bear]].forEach(function (pair) {
+          out += el('path', { d: pair[0].slice(0, cn).map(function (v, i) { return (i ? 'L' : 'M') + esc(X(i)) + ',' + esc(Y(v)); }).join(' '),
+                              stroke: pair[1], 'stroke-width': 1, fill: 'none', 'stroke-opacity': .5 });
+        });
+      }
       /* 斜线:趋势线、通道边。x 用 0~1 的比例,p 用价格 */
       (spec.tl || []).forEach(function (t) {
         var tcol = t.kind === 'bad' ? C.bear : t.kind === 'sup' ? C.bull : C.gold;
