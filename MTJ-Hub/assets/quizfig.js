@@ -267,6 +267,51 @@
       });
     }
 
+
+    /* ---------- 纯折线(权益曲线之类) ---------- */
+    if (spec.lines && spec.lines.length) {
+      var lw = W - padL - padR, lh = H - padT - padB - (spec.xlab ? 12 : 0);
+      var allv = [];
+      spec.lines.forEach(function (L) { allv = allv.concat(L.v); });
+      (spec.hline || []).forEach(function (h) { allv.push(h.v); });
+      var lmn = Math.min.apply(null, allv), lmx = Math.max.apply(null, allv);
+      var lpd = (lmx - lmn) * 0.12 || 1; lmn -= lpd; lmx += lpd;
+      var LN = Math.max.apply(null, spec.lines.map(function (L) { return L.v.length; }));
+      var LX = function (i) { return padL + lw * i / (LN - 1); };
+      var LY = function (v) { return padT + (lmx - v) / (lmx - lmn) * lh; };
+      (spec.hline || []).forEach(function (h) {
+        out += el('line', { x1: padL, x2: W - padR, y1: esc(LY(h.v)), y2: esc(LY(h.v)),
+          stroke: C[h.c] || C.muted2, 'stroke-width': 1, 'stroke-dasharray': '5 4', 'stroke-opacity': .7 });
+        if (h.t && !mini) out += txt(padL + 4, LY(h.v) - 5, h.t, { a: 'start', c: C[h.c] || C.muted2, s: 9, cjk: /[一-龥]/.test(h.t) });
+      });
+      spec.lines.forEach(function (L) {
+        var col = C[L.c] || ROLE[L.role] || C.gold;
+        out += el('path', { d: L.v.map(function (v, i) { return (i ? 'L' : 'M') + esc(LX(i)) + ',' + esc(LY(v)); }).join(' '),
+          stroke: col, 'stroke-width': mini ? 1.6 : 2.2, fill: 'none' });
+        if (L.t && !mini) out += txt(LX(L.v.length - 1) - 3, LY(L.v[L.v.length - 1]) - 7, L.t,
+          { a: 'end', c: col, s: 9.5, w: 700, cjk: /[一-龥]/.test(L.t) });
+      });
+      if (spec.xlab && !mini) out += txt(W / 2, H - 5, spec.xlab, { c: C.muted2, s: 9, cjk: /[一-龥]/.test(spec.xlab) });
+    }
+
+    /* ---------- 对比条(成本拆解、胜率比较之类) ---------- */
+    if (spec.bars && spec.bars.length) {
+      var bwid = W - padL - padR, bhgt = H - padT - padB - 16;
+      var bmx = Math.max.apply(null, spec.bars.map(function (b) { return Math.abs(b.v); })) || 1;
+      var slot = bwid / spec.bars.length;
+      var bb = Math.min(slot * 0.5, mini ? 26 : 54);
+      spec.bars.forEach(function (b, i) {
+        var cx = padL + slot * (i + 0.5);
+        var hgt = Math.abs(b.v) / bmx * bhgt;
+        var col = C[b.c] || C.gold;
+        out += el('rect', { x: esc(cx - bb / 2), y: esc(padT + bhgt - hgt), width: esc(bb), height: esc(Math.max(hgt, 2)),
+          rx: 4, fill: col, 'fill-opacity': .28, stroke: col, 'stroke-opacity': .8 });
+        if (!mini) {
+          out += txt(cx, padT + bhgt - hgt - 6, b.n === undefined ? b.v : b.n, { c: col, s: 10.5, w: 700 });
+          out += txt(cx, padT + bhgt + 14, b.t, { c: C.muted, s: 9.5, cjk: /[一-龥]/.test(b.t) });
+        }
+      });
+    }
     /* ---------- 标记 ---------- */
     (spec.mark || []).forEach(function (m) {
       var mx2 = padL + (W - padL - padR) * m.x;
