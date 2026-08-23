@@ -24,11 +24,13 @@
   var ITEMS = [
     ['home',    'MakeTradesJourney.html#top', 'Home',            '首页'],
     ['courses', 'courses.html',               'Trading Courses', '交易课程'],
+    ['advanced','advanced.html',              'Advanced Trading Course', '进阶交易课程'],
     ['ea',      'ea.html',                    'EA Courses',      'EA 课程'],
     ['tools',   'tools.html',                 'Tools',           '工具'],
     ['about',   'about.html',                 'About',           '关于']
   ];
   var SELF = { home:'MakeTradesJourney.html', courses:'courses.html',
+               advanced:'advanced.html',
                ea:'ea.html', tools:'tools.html', about:'about.html' };
 
   var pathn = location.pathname;
@@ -37,7 +39,8 @@
   /* 当前页归属哪一节 —— 课程内页归「交易课程」,工具内页归「工具」,
      backtest 是从 EA 课程链过去的,归「EA 课程」 */
   var inDir = function (d) { return pathn.indexOf('/' + d + '/') > -1; };
-  var cur = (inDir('courses') || here === 'courses.html') ? 'courses'
+  var cur = (here === 'advanced.html')                        ? 'advanced'
+          : (inDir('courses') || here === 'courses.html') ? 'courses'
           : (inDir('tools')   || here === 'tools.html')   ? 'tools'
           : (here === 'ea.html' || here === 'backtest.html') ? 'ea'
           : (here === 'about.html')                          ? 'about'
