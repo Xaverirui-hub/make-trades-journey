@@ -486,8 +486,8 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
 <!-- ================= LEARNING PATH ================= -->
 <section class="divider">
   <div class="rail reveal">The Route · 学习路线</div>
-  <h2 class="reveal">Six Stages</h2>
-  <div class="zh reveal">六 个 阶 段</div>
+  <h2 class="reveal">Three Stages</h2>
+  <div class="zh reveal">三 个 阶 段</div>
 </section>
 
 <section class="section" id="path">
@@ -499,7 +499,7 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
   <div class="journey-progress reveal" id="journeyProgress" aria-live="polite">
     <div class="jp-top">
       <div class="jp-title">Journey Progress <span class="zh">旅程进度</span></div>
-      <div class="jp-count"><span id="journeyDone">0</span>/6</div>
+      <div class="jp-count"><span id="journeyDone">0</span>/<span id="journeyTotal">0</span></div>
     </div>
     <div class="jp-track"><div class="jp-fill" id="journeyFill"></div></div>
     <div class="jp-note">Complete every exam in a stage to close the loop.
@@ -519,27 +519,8 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
       <p>Everything you do on a chart, in one stage: candles and patterns, the structure they form, the levels and ratios you measure them against, and the indicators that confirm - never lead - the price.<span class="zh">在图表上做的每一件事，都放在这一段：K 线与形态、它们构成的结构、用来丈量它们的关键位与比例，以及只用来确认、绝不用来带路的指标。</span></p>
       <div class="cnt">10 Modules · 十课</div>
     </a>
-    <a class="stage reveal" data-stage="3" data-courses="17" href="#stage-market">
+    <a class="stage reveal" data-stage="3" data-courses="24" href="#stage-platform">
       <div class="num">03</div>
-      <h3>Market Context<span class="zh">市 场 脉 络</span></h3>
-      <p>The data and central-bank decisions that move price in the first place - and why the surprise matters more than the number.<span class="zh">最初推动价格的那些数据与央行决议 —— 以及为什么意外幅度比数字本身更重要。</span></p>
-      <div class="cnt">1 Module · 一课</div>
-    </a>
-
-    <a class="stage reveal" data-stage="4" data-courses="18,19,20" href="#stage-execution">
-      <div class="num">04</div>
-      <h3>Execution &amp; Risk<span class="zh">执 行 与 风 控</span></h3>
-      <p>Reading a chart is half the job. This is the other half - how much to put on, where the stop belongs, the loop that turns every trade into feedback, and the discipline to actually follow it.<span class="zh">看懂图只是一半。另一半在这里 —— 下多大、止损放哪、把每笔交易变成回馈的闭环，以及真的照做的纪律。</span></p>
-      <div class="cnt">3 Modules · 三课</div>
-    </a>
-    <a class="stage reveal" data-stage="5" data-courses="21,22,23" href="#stage-system">
-      <div class="num">05</div>
-      <h3>System &amp; Execution<span class="zh">系 统 与 执 行</span></h3>
-      <p>Trade management, backtesting and the daily routine — turning decisions into a repeatable system.<span class="zh">交易管理、回测与每日流程 —— 把决策变成可重复的系统。</span></p>
-      <div class="cnt">3 Modules · 三课</div>
-    </a>
-    <a class="stage reveal" data-stage="6" data-courses="24" href="#stage-platform">
-      <div class="num">06</div>
       <h3>Platform<span class="zh">平 台 实 操</span></h3>
       <p>Order types, filling the ticket correctly, and the four costs that quietly subtract from every trade.<span class="zh">挂单类型、下单视窗怎么填，以及每笔交易里悄悄扣掉的四项成本。</span></p>
       <div class="cnt">1 Module · 一课</div>
@@ -555,7 +536,7 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
 
 <section class="section" id="courses">
   <div class="eyebrow reveal">Trading modules · 交易课程</div>
-  <h2 class="title reveal">Twenty-four modules.<br>One journey.<span class="zh">二十四个模块，一段旅程。</span></h2>
+  <h2 class="title reveal">Seventeen modules.<br>The first half of the journey.<span class="zh">十七个模块，旅程的前半段。</span></h2>
   <p class="lead reveal" style="margin-bottom:52px;">Click any card to open the full lesson.
     <span class="zh">点击任意卡片即可打开完整课程。</span></p>
 
@@ -715,88 +696,7 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
 
   </div>
 
-  <div class="group-head reveal" id="stage-market"><span class="tier">03</span>
-    <div><h3>Market Context</h3><div class="zh">市 场 脉 络 · 由 上 而 下</div></div>
-  </div>
-  <div class="grid">
-    <a class="mod reveal" data-mod="17" href="courses/US_High_Impact_Data_MakeTradesJourney.html">
-      <div class="idx"><span class="en">MODULE 17</span><span class="zh">模块 17</span></div>
-      <h4>US High-Impact Data<span class="zh">美 国 高 影 响 数 据</span></h4>
-      <div class="zh-t">美 国 高 影 响 数 据</div>
-      <p>From the data → to inflation → to the Fed's next move. NFP, CPI, PCE and rate decisions: what they measure and why price reacts the way it does.
-        <span class="zh">从数据 → 通胀 → 美联储的下一步：非农、CPI、PCE 与利率决议衡量什么，价格为何这样反应。</span></p>
-      <div class="chips"><span>The Data 数据</span><span>Inflation 通胀</span><span>The Fed 加减息</span></div>
-      <div class="go">Open Module <span class="ar">→</span></div>
-    </a>
-  </div>
-
-  <div class="group-head reveal" id="stage-execution"><span class="tier">04</span>
-    <div><h3>Execution & Risk</h3><div class="zh">执 行 与 风 控 · 活 下 来 的 关 键</div></div>
-  </div>
-  <div class="grid">
-    <a class="mod reveal" data-mod="18" href="courses/Risk_Management_MakeTradesJourney.html">
-      <div class="idx"><span class="en">MODULE 18</span><span class="zh">模块 18</span></div>
-      <h4>Risk &amp; Position Sizing<span class="zh">风 控 · 仓 位 计 算</span></h4>
-      <div class="zh-t">风 控 · 仓 位 计 算</div>
-      <p>Entries make the story - position size decides whether you're still here to tell it. The loss math, how to derive lot size, where the stop belongs, R:R, leverage and the three caps that keep an account alive.
-        <span class="zh">进场决定故事精不精彩，仓位决定你还在不在场上。亏损的数学、手数怎么算、止损放哪、盈亏比、杠杆真相，以及让帐户活下来的三道防线。</span></p>
-      <div class="chips"><span>Position Size 仓位</span><span>Stop Loss 止损</span><span>R:R 盈亏比</span><span>Leverage 杠杆</span></div>
-      <div class="go">Open Module <span class="ar">→</span></div>
-    </a>
-    <a class="mod reveal" data-mod="19" href="courses/Journal_Review_MakeTradesJourney.html">
-      <div class="idx"><span class="en">MODULE 19</span><span class="zh">模块 19</span></div>
-      <h4>The Journal &amp; Review Loop<span class="zh">交 易 日 志 · 复 盘</span></h4>
-      <div class="zh-t">交 易 日 志 · 复 盘</div>
-      <p>Memory is not a record - it's a story you tell yourself. What to log, the four quadrants of process vs. outcome, the daily / weekly / monthly loop, and how many trades it actually takes before your numbers mean anything.
-        <span class="zh">记忆不是记录，是你说给自己听的故事。记什么、过程与结果的四象限、每日／每周／每月的复盘节奏，以及要做几笔交易，你的统计数字才开始有意义。</span></p>
-      <div class="chips"><span>Four Quadrants 四象限</span><span>Review SOP 复盘</span><span>Expectancy 期望值</span><span>Sample Size 样本数</span></div>
-      <div class="go">Open Module <span class="ar">→</span></div>
-    </a>
-    <a class="mod reveal" data-mod="20" href="courses/Psychology_Discipline_MakeTradesJourney.html">
-      <div class="idx"><span class="en">MODULE 20</span><span class="zh">模块 20</span></div>
-      <h4>Psychology &amp; Discipline<span class="zh">交 易 心 理 · 纪 律</span></h4>
-      <div class="zh-t">交 易 心 理 · 纪 律</div>
-      <p>You already know what to do - this is about doing it at 2am, down three trades. Loss aversion, the four killers, surviving a drawdown, the danger after a winning run, and how to externalise rules so they don't depend on willpower.
-        <span class="zh">你早就知道该怎么做 —— 这一课处理的是凌晨两点连亏三单时还做不做得到。损失厌恶、四大杀手、连亏期怎么撑、赢钱之后的危险，以及如何把规则外部化，让纪律不再依赖意志力。</span></p>
-      <div class="chips"><span>Loss Aversion 损失厌恶</span><span>Four Killers 四大杀手</span><span>Drawdown 连亏期</span><span>Daily SOP 每日流程</span></div>
-      <div class="go">Open Module <span class="ar">→</span></div>
-    </a>
-  </div>
-
-  <div class="group-head reveal" id="stage-system"><span class="tier">05</span>
-    <div><h3>System & Execution</h3><div class="zh">系 统 与 执 行</div></div>
-  </div>
-  <div class="grid">
-    <a class="mod reveal" data-mod="21" href="courses/Trade_Management_MakeTradesJourney.html">
-      <div class="idx"><span class="en">MODULE 21</span><span class="zh">模块 21</span></div>
-      <h4>Trade Management<span class="zh">交 易 管 理</span></h4>
-      <div class="zh-t">持 仓 管 理</div>
-      <p>Entry decides whether a trade can win; management decides whether it does. Three kinds of stop moves, scaling out, when to move to breakeven, and the time stop that ends a stalled trade.
-        <span class="zh">进场决定一笔交易能不能赢；持仓管理决定它是否真的赢。三种止损移动、分批止盈、何时移到保本、以及结束僵持交易的时间止损。</span></p>
-      <div class="chips"><span>Trailing 追踪</span><span>Scaling Out 分批止盈</span><span>Breakeven 保本</span><span>Time Stop 时间止损</span></div>
-      <div class="go">Open Module <span class="ar">→</span></div>
-    </a>
-    <a class="mod reveal" data-mod="22" href="courses/Backtesting_System_Design_MakeTradesJourney.html">
-      <div class="idx"><span class="en">MODULE 22</span><span class="zh">模块 22</span></div>
-      <h4>Backtesting &amp; System Design<span class="zh">回 测 与 系 统 设 计</span></h4>
-      <div class="zh-t">回 测 与 系 统 设 计</div>
-      <p>Luck wears a disguise. Test before you trust: sample size, the five metrics that matter, overfitting traps, and the paper-trading bridge between a backtest and your real account.
-        <span class="zh">运气会伪装。先测试再相信：样本量、五个关键指标、过拟合陷阱、以及连接回测与实盘账户的模拟交易桥梁。</span></p>
-      <div class="chips"><span>Sample Size 样本量</span><span>Metrics 指标</span><span>Overfitting 过拟合</span><span>Paper Trade 模拟</span></div>
-      <div class="go">Open Module <span class="ar">→</span></div>
-    </a>
-    <a class="mod reveal" data-mod="23" href="courses/Trading_Plan_Routine_MakeTradesJourney.html">
-      <div class="idx"><span class="en">MODULE 23</span><span class="zh">模块 23</span></div>
-      <h4>Trading Plan &amp; Routine<span class="zh">交 易 计 划 · 日 常</span></h4>
-      <div class="zh-t">交 易 计 划 与 日 常</div>
-      <p>A plan turns impulse into process. Pre-market checklist, in-session execution, the five-question review, cooldown rules that protect you from yourself, and the 30-day habit loop that makes it stick.
-        <span class="zh">计划把冲动变成流程。盘前清单、盘中执行、盘后五问、保护你免于失控的冷却规则、以及让纪律生根的三十天习惯循环。</span></p>
-      <div class="chips"><span>Checklist 清单</span><span>Cooldown 冷却</span><span>Review 复盘</span><span>30-Day Habit 习惯</span></div>
-      <div class="go">Open Module <span class="ar">→</span></div>
-    </a>
-  </div>
-
-  <div class="group-head reveal" id="stage-platform"><span class="tier">06</span>
+  <div class="group-head reveal" id="stage-platform"><span class="tier">03</span>
     <div><h3>Platform</h3><div class="zh">平 台 实 操</div></div>
   </div>
   <div class="grid">
@@ -807,6 +707,22 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
       <p>The four pending order types, filling the order ticket correctly, and how spread, commission, swap and slippage quietly subtract from your expectancy. 四种挂单的位置、下单视窗怎么填，以及点差、佣金、隔夜费与滑点如何悄悄从期望值里扣钱。</p>
       <div class="tags"><span>Order Types 挂单</span><span>Costs 成本</span><span>Demo → Live 上实盘</span></div>
       <div class="go">OPEN MODULE →<span class="zh">打 开 课 程 →</span></div>
+    </a>
+  </div>
+
+  <!-- 这三段搬去进阶交易课程了。留一张指路卡,不然老学员会以为课不见了。
+       课本身没有变动,仍然是同样的档案与同样的模块编号。 -->
+  <div class="group-head reveal" id="stage-moved"><span class="tier">→</span>
+    <div><h3>Moved<span class="zh">已 移 至 进 阶</span></h3></div>
+  </div>
+  <div class="grid">
+    <a class="mod reveal" href="advanced.html">
+      <div class="idx"><span class="en">NOW ON</span><span class="zh">现在在</span></div>
+      <h4>Advanced Trading Course<span class="zh">进 阶 交 易 课 程</span></h4>
+      <div class="zh-t">市 场 脉 络 · 执 行 与 风 控 · 系 统 与 执 行</div>
+      <p>Market Context, Execution &amp; Risk and System &amp; Execution now live on the advanced page, alongside the fundamentals track. 市场脉络、执行与风控、系统与执行这三段已经移到进阶页面，与基本面课程放在一起。</p>
+      <div class="tags"><span>Modules 17-23 模块</span></div>
+      <div class="go">Open Advanced <span class="ar">→</span></div>
     </a>
   </div>
 
@@ -964,6 +880,12 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
     var courses = (stage.getAttribute('data-courses') || '').split(',').map(function(v){ return parseInt(v, 10); }).filter(Boolean);
     var passed = courses.filter(examPassed).length;
     var total = courses.length;
+
+    /* 课数写死在卡片文字里,已经跟 data-courses 对不上了(写「三课」实际四课)。
+       改成由 data-courses 现算,以後加课也不会再飘。 */
+    var CN = ["","一","二","三","四","五","六","七","八","九","十","十一","十二","十三","十四","十五"];
+    var cnt = stage.querySelector(".cnt");
+    if(cnt && total) cnt.textContent = total + (total === 1 ? " Module · " : " Modules · ") + (CN[total] || total) + "课";
     var badge = stage.querySelector('.stage-badge');
     if(!badge){
       badge = document.createElement('div');
@@ -986,7 +908,9 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
   var done = document.getElementById('journeyDone');
   var fill = document.getElementById('journeyFill');
   if(done) done.textContent = completeStages;
-  if(fill) fill.style.transform = 'scaleX(' + (completeStages / 6) + ')';
+  var totalEl = document.getElementById('journeyTotal');
+  if(totalEl) totalEl.textContent = stages.length;
+  if(fill) fill.style.transform = 'scaleX(' + (stages.length ? completeStages / stages.length : 0) + ')';
 })();
 </script>
 
