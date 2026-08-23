@@ -425,6 +425,26 @@ body.lang-zh.lang-strict .hero .h-zh{font-size:clamp(19px,3.2vw,30px);color:var(
    keyboard/AT, so pointer users see no change. */
 :focus-visible{outline:2px solid var(--gold,#E8C877);outline-offset:3px;border-radius:4px;}
 a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width:2px;}
+
+/* ===== 基本面预告 ===== */
+.stage.is-soon{position:relative;}
+.stage.is-soon .num{color:var(--gold);opacity:.8;}
+.stage.is-soon::after{content:"";position:absolute;inset:0;border-radius:inherit;
+  border:1px dashed rgba(232,200,119,.34);pointer-events:none;}
+.fund-intro{max-width:72ch;margin:6px 0 26px;font-size:14.5px;line-height:1.85;color:var(--muted);}
+.fund-stage{margin:0 0 20px;padding:16px 18px;border:1px solid var(--line-soft);border-radius:14px;
+  background:rgba(12,12,16,.5);}
+.fund-stage-head{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.fund-tag{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.14em;
+  color:var(--gold);border:1px solid rgba(232,200,119,.4);border-radius:6px;padding:2px 8px;}
+.fund-stage-zh{font-size:14px;font-weight:600;color:var(--text);}
+.fund-list{list-style:none;margin:0;padding:0;}
+.fund-list li{display:flex;align-items:baseline;gap:10px;padding:5px 0;font-size:13.5px;
+  line-height:1.7;color:var(--muted);border-top:1px solid rgba(255,255,255,.045);}
+.fund-list li:first-child{border-top:0;}
+.fund-id{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);
+  opacity:.85;flex:0 0 30px;}
+.fund-note{margin-top:6px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted-2);}
 </style>
 </head>
 <body>
@@ -504,6 +524,14 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
       <h3>Market Context<span class="zh">市 场 脉 络</span></h3>
       <p>The data and central-bank decisions that move price in the first place - and why the surprise matters more than the number.<span class="zh">最初推动价格的那些数据与央行决议 —— 以及为什么意外幅度比数字本身更重要。</span></p>
       <div class="cnt">1 Module · 一课</div>
+    </a>
+
+    <!-- 基本面 —— 收费课程的预告。这里只有标题与大纲,正文在私有 repo。 -->
+    <a class="stage reveal is-soon" data-stage="F" data-courses="" href="#stage-fundamentals">
+      <div class="num">F</div>
+      <h3>Fundamentals<span class="zh">基 本 面 交 易</span></h3>
+      <p>Why price moves at all: rates, the Fed, and how a number turns into a candle.<span class="zh">价格为什么会动：利率、美联储，以及一个数字如何变成一根 K 线。</span></p>
+      <div class="cnt"><span class="en">14 Modules · Coming soon</span><span class="zh">14 课 · 敬请期待</span></div>
     </a>
     <a class="stage reveal" data-stage="4" data-courses="18,19,20" href="#stage-execution">
       <div class="num">04</div>
@@ -817,6 +845,56 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
   <div class="quote reveal">学 习 · 交 易 · 盈 利 · 享 受</div>
   <div class="qsub reveal">Once hope it possible</div>
 </section>
+
+  <!-- ===== 基本面预告 ===== -->
+  <!-- 只列标题与大纲。课程正文在私有 repo mtj-fundamentals,
+       上线前必须由服务器决定要不要送出 —— 前端遮罩挡不住任何东西。 -->
+  <section class="stage-block reveal" id="stage-fundamentals">
+    <div class="group-head">
+      <span class="tier">F</span>
+      <div>
+        <div class="eyebrow"><span class="en">Paid track · in production</span><span class="zh">收费课程 · 制作中</span></div>
+        <h2 class="title"><span class="en">Fundamentals</span><span class="zh">基本面交易</span></h2>
+      </div>
+    </div>
+    <p class="fund-intro"><span class="en">Technical analysis tells you where to enter. Fundamentals tell you why the thing moved in the first place. This track walks one chain end to end: a data surprise becomes a rate expectation, a rate expectation becomes a dollar move, and a dollar move becomes the candle you are looking at.</span><span class="zh">技术面告诉你在哪里进场，基本面告诉你它为什么会动。这套课把一条链从头走到尾：数据的意外变成利率预期，利率预期变成美元的动作，美元的动作变成你正在看的那根 K 线。</span></p>
+      <div class="fund-stage">
+        <div class="fund-stage-head"><span class="fund-tag">F1</span><span class="fund-stage-zh">地基：钱的价格</span></div>
+        <ul class="fund-list">
+          <li><span class="fund-id">F01</span><span class="en">Interest Rates</span><span class="zh">利率是什么，为什么它决定一切</span></li>
+          <li><span class="fund-id">F02</span><span class="en">What a Central Bank Does</span><span class="zh">央行到底在干什么</span></li>
+          <li><span class="fund-id">F03</span><span class="en">Measuring Inflation</span><span class="zh">通胀怎么量：CPI / 核心PCE / PPI 的差别</span></li>
+        </ul>
+      </div>
+      <div class="fund-stage">
+        <div class="fund-stage-head"><span class="fund-tag">F2</span><span class="fund-stage-zh">读懂美联储</span></div>
+        <ul class="fund-list">
+          <li><span class="fund-id">F04</span><span class="en">The FOMC</span><span class="zh">FOMC 是什么、谁有票</span></li>
+          <li><span class="fund-id">F05</span><span class="en">Reading the Statement</span><span class="zh">声明怎么读 —— 变了哪几个字才是重点</span></li>
+          <li><span class="fund-id">F06</span><span class="en">Dot Plot & Projections</span><span class="zh">点阵图是预期，不是承诺</span></li>
+          <li><span class="fund-id">F07</span><span class="en">The Press Conference</span><span class="zh">记者会：哪几句真的会动市场</span></li>
+          <li><span class="fund-id">F08</span><span class="en">Minutes & Speeches</span><span class="zh">会议纪要为什么三周后还能动行情</span></li>
+        </ul>
+      </div>
+      <div class="fund-stage">
+        <div class="fund-stage-head"><span class="fund-tag">F3</span><span class="fund-stage-zh">从数据到价格</span></div>
+        <ul class="fund-list">
+          <li><span class="fund-id">F09</span><span class="en">The Surprise Is the Fuel</span><span class="zh">驱动的是意外，不是数字本身</span></li>
+          <li><span class="fund-id">F10</span><span class="en">The Transmission Chain</span><span class="zh">利率预期 → 美元 → 黄金 / 指数</span></li>
+          <li><span class="fund-id">F11</span><span class="en">Good News, Bad News</span><span class="zh">好消息为什么会变成坏消息</span></li>
+          <li><span class="fund-id">F12</span><span class="en">What Is Priced In</span><span class="zh">市场已经定价了什么</span></li>
+        </ul>
+      </div>
+      <div class="fund-stage">
+        <div class="fund-stage-head"><span class="fund-tag">F4</span><span class="fund-stage-zh">怎么交易</span></div>
+        <ul class="fund-list">
+          <li><span class="fund-id">F13</span><span class="en">Before the Event</span><span class="zh">事件前的仓位管理</span></li>
+          <li><span class="fund-id">F14</span><span class="en">After the Event</span><span class="zh">第一波常是假动作，回踩才是机会</span></li>
+          <li><span class="fund-id">F15</span><span class="en">Fundamentals × Technicals</span><span class="zh">基本面给方向，技术面给进场</span></li>
+        </ul>
+      </div>
+    <div class="fund-note"><span class="en">// The free Module 17 (US High-Impact Data) stays free — it is the trailer.</span><span class="zh">免费的第 17 课《美国重要数据》留在免费区 —— 那是预告片。</span></div>
+  </section>
 <footer class="footer">
   <div class="footer-in">
     <div class="disc-title reveal">Disclaimer · 免责声明</div>
