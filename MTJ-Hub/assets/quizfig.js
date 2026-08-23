@@ -102,9 +102,12 @@
 
     /* ---------- 价格面板 ---------- */
     var X, Y, n;
-    if (spec.k && spec.k.length) {
-      var k = spec.k; n = k.length;
-      var vals = k.slice();
+    if ((spec.k && spec.k.length) || (spec.ohlc && spec.ohlc.length)) {
+      /* ohlc 是逐根指定的:认形态的题要精确的实体/影线比例,由收盘价反推做不到 */
+      var raw = spec.ohlc || null;
+      var k = raw ? raw.map(function (c) { return c.c; }) : spec.k;
+      n = k.length;
+      var vals = raw ? raw.reduce(function (a, c) { return a.concat([c.o, c.h, c.l, c.c]); }, []) : k.slice();
       var mas = (spec.ma || []).map(function (m) { return { d: ema(k, m.p), role: m.role || 'fast', p: m.p }; });
       mas.forEach(function (m) { vals = vals.concat(m.d); });
       var bU, bM, bL;
@@ -122,7 +125,9 @@
       var pw = W - padL - padR;
       X = function (i) { return padL + pw * (i + 0.5) / n; };
       Y = function (v) { return padT + (mx - v) / (mx - mn) * priceH; };
-      var bw = Math.min(pw / n * 0.55, mini ? 8 : 14);
+      /* 宽度上限本来是照密集排列设的;只有一两根时那样会细得像根针 */
+      var cap = n <= 3 ? (mini ? 26 : 46) : (mini ? 8 : 14);
+      var bw = Math.min(pw / n * 0.55, cap);
       ATTACH.k = function (fx) { return Y(k[Math.min(n - 1, Math.round(fx * (n - 1)))]); };
       if (mas.length) { ATTACH.fast = function (fx) { return Y(mas[0].d[Math.min(n - 1, Math.round(fx * (n - 1)))]); };
         if (mas[1]) ATTACH.slow = function (fx) { return Y(mas[1].d[Math.min(n - 1, Math.round(fx * (n - 1)))]); }; }
@@ -153,7 +158,7 @@
       }
 
       /* K 线 */
-      ohlc(k, spec.seed).forEach(function (c, i) {
+      (raw || ohlc(k, spec.seed)).forEach(function (c, i) {
         var col = c.c >= c.o ? C.bull : C.bear, x = X(i);
         out += el('line', { x1: esc(x), x2: esc(x), y1: esc(Y(c.h)), y2: esc(Y(c.l)), stroke: col, 'stroke-width': 1.2 });
         out += el('rect', { x: esc(x - bw / 2), y: esc(Y(Math.max(c.o, c.c))), width: esc(bw),
