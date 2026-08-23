@@ -119,6 +119,7 @@
         vals = vals.concat(bU).concat(bL);
       }
       (spec.lv || []).forEach(function (l) { vals.push(l.p); });
+      (spec.tl || []).forEach(function (t) { vals.push(t.p1, t.p2); });
       (spec.zone || []).forEach(function (z) { vals.push(z.from, z.to); });
       var mn = Math.min.apply(null, vals), mx = Math.max.apply(null, vals);
       var pd = (mx - mn) * 0.12 || 1; mn -= pd; mx += pd;
@@ -138,6 +139,16 @@
         out += el('rect', { x: padL, y: esc(Y(z.to)), width: esc(pw), height: esc(Math.abs(Y(z.from) - Y(z.to))),
                             rx: 4, fill: col, 'fill-opacity': .1, stroke: col, 'stroke-opacity': .34 });
         if (z.t && !mini) out += txt(padL + 6, Y(z.to) - 5, z.t, { a: 'start', c: col, s: 9, cjk: /[一-龥]/.test(z.t) });
+      });
+      /* 斜线:趋势线、通道边。x 用 0~1 的比例,p 用价格 */
+      (spec.tl || []).forEach(function (t) {
+        var tcol = t.kind === 'bad' ? C.bear : t.kind === 'sup' ? C.bull : C.gold;
+        var xa = padL + pw * t.x1, xb = padL + pw * t.x2;
+        out += el('line', { x1: esc(xa), y1: esc(Y(t.p1)), x2: esc(xb), y2: esc(Y(t.p2)),
+          stroke: tcol, 'stroke-width': mini ? 1.5 : 2,
+          'stroke-dasharray': t.dash ? '5 4' : null,
+          'stroke-opacity': t.kind === 'bad' ? .9 : .85 });
+        if (t.t && !mini) out += txt(xb - 4, Y(t.p2) - 7, t.t, { a: 'end', c: tcol, s: 9, cjk: /[一-龥]/.test(t.t) });
       });
       (spec.lv || []).forEach(function (l) {
         var col = l.kind === 'sup' ? C.bull : l.kind === 'res' ? C.bear : C.gold;
