@@ -8,9 +8,9 @@
    one. The roadside sticks are the one exception — they read as candles,
    so they take the site's bull/bear green and red.
    ===================================================================== */
-/* three + postprocessing 是自架的,不是 CDN —— esm.sh 在大陸連不上,
-   而首頁封面的失敗是無聲的,所以那邊看到的一直是一片靜止的背景。
-   要換版本看 assets/vendor/README.md,那支檔案不要手改。 */
+/* three + postprocessing 是自架的,不是 CDN —— esm.sh 在大陆连不上,
+   而首页封面的失败是无声的,所以那边看到的一直是一片静止的背景。
+   要换版本看 assets/vendor/README.md,那支档案不要手改。 */
 import {
   THREE, BloomEffect, EffectComposer, EffectPass, RenderPass, SMAAEffect, SMAAPreset
 } from './vendor/three-postprocessing.js';
@@ -47,8 +47,8 @@ export const MTJ_PRESET = {
     brokenLines: 0x3a3020,
     leftCars: [0xe8c877, 0xc9a227, 0xfce9a8],
     rightCars: [0x8a6d1f, 0xc9a227, 0xe8c877],
-    /* 路邊的立柱長得就像 K 棒,所以直接用站上的漲跌色,一根綠一根紅隨機。
-       不是新調色 —— 這兩個就是全站 K 線圖在用的 --bull / --bear。 */
+    /* 路边的立柱长得就像 K 棒,所以直接用站上的涨跌色,一根绿一根红随机。
+       不是新调色 —— 这两个就是全站 K 线图在用的 --bull / --bear。 */
     sticks: [0x2CD98A, 0xFF5C63]
   }
 };

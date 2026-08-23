@@ -1041,13 +1041,7 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
 <script>
 /* ===== MTJ EXAM MODULE - Module 04 ===== */
 const MTJ_EXAM_KEY = "mtj_exam_pass_4";
-const EXAM_QUESTIONS = [
-{"q": "为什么交易外汇以外的品种？", "q_en": "Why trade instruments beyond forex?", "opts": ["Forex always offers the best volatility", "To diversify - different instruments move on different drivers, so opportunities exist around the clock", "Non-forex instruments never trend", "Forex charts use different analysis rules"], "opts_zh": ["外汇永远提供最好的波动", "为了分散——不同品种由不同因素驱动，机会全天候存在", "外汇以外的品种从不走趋势", "外汇图表使用不同的分析规则"], "ans": 1, "why": "Metals, oil and indices move on their own drivers and peak at different hours. Adding them diversifies your opportunities instead of betting everything on one market.", "why_zh": "金属、原油、指数各有驱动因素、各有高峰时段。多交易它们就是分散机会，而不是把一切都押在单一市场上。"},
-{"q": "黄金（XAUUSD）的核心属性是什么？", "q_en": "What is the core character of gold (XAUUSD)?", "opts": ["It moves in lockstep with the US dollar", "It is an industrial metal driven mainly by manufacturing demand", "It is a safe haven and inflation hedge that usually moves inversely to the US dollar", "It only reacts to oil prices"], "opts_zh": ["与美元同步涨跌", "工业金属，主要由制造业需求驱动", "避险资产 + 通胀对冲，通常与美元负相关", "只对油价有反应"], "ans": 2, "why": "Gold is the classic safe haven and inflation hedge. Because it is priced in dollars, a stronger dollar usually pushes gold down and a weaker dollar pushes it up.", "why_zh": "黄金是经典避险资产与通胀对冲。因为它以美元计价，美元走强通常压金价，美元走弱通常抬金价。"},
-{"q": "WTI 与布伦特（Brent）的区别是什么？", "q_en": "What is the difference between WTI and Brent?", "opts": ["WTI is the US benchmark (USOIL), Brent is the global benchmark (UKOIL) - same product, different origins and pricing", "WTI is natural gas, Brent is crude oil", "They are exactly the same contract on every broker", "WTI is a metal, Brent is an oil product"], "opts_zh": ["WTI 是美国基准（USOIL），布伦特是全球基准（UKOIL）——同一种商品，产地与定价不同", "WTI 是天然气，布伦特是原油", "在任何平台都是完全相同的合约", "WTI 是金属，布伦特是油品"], "ans": 0, "why": "WTI (West Texas Intermediate) is the US benchmark delivered at Cushing; Brent (North Sea) is the global benchmark behind about two-thirds of world oil pricing. WTI reacts more to US inventories, Brent to OPEC and geopolitics.", "why_zh": "WTI（西德州轻质原油）是美国基准，交割地库欣；布伦特（北海）是全球基准，全球约三分之二的原油以它定价。WTI 更跟美国库存，布伦特更跟欧佩克与地缘。"},
-{"q": "交易 US30 / NAS100 / SPX500 实际是在交易什么？", "q_en": "What does trading US30 / NAS100 / SPX500 actually mean?", "opts": ["Three different currencies", "A basket of stocks - 30 blue chips, 100 tech-heavy Nasdaq names, and the 500-stock S&P market benchmark", "Three grades of crude oil", "Three silver contracts"], "opts_zh": ["三种不同的货币", "一篮子股票——30 家蓝筹（道指）、100 家科技权重股（纳指）、500 家大盘股（标普）", "三种等级的原油", "三种白银合约"], "ans": 1, "why": "An index is not a company; it is a basket of companies measured as one number. US30 = 30 blue chips, NAS100 = the Nasdaq 100 (tech-heavy), SPX500 = the S&P 500 broad-market benchmark.", "why_zh": "指数不是一家公司，而是一篮子公司打包成一个数字。US30 = 30 家蓝筹，NAS100 = 纳斯达克 100（科技权重高），SPX500 = 标普 500 大盘基准。"},
-{"q": "为什么原油（WTI）特别容易出现跳空（gap）？", "q_en": "Why is oil (WTI) especially prone to gaps?", "opts": ["Oil markets never close", "Spreads on oil are always zero", "After weekends or sudden geopolitical / OPEC headlines, liquidity vanishes at the reopen and price can jump straight past your stop", "Oil prices are fixed by governments"], "opts_zh": ["原油市场从不休市", "原油点差永远为零", "周末休市后或突发地缘 / 欧佩克消息时，开盘流动性骤变，价格可以直接越过你的止损", "油价由政府固定"], "ans": 2, "why": "Oil closes on weekends while headlines (wars, sanctions, OPEC surprises, shipping disruptions) keep coming. At the reopen, price gaps beyond your stop and fills with slippage - a reason to size down and widen stops on oil.", "why_zh": "原油周末休市，而头条（战争、制裁、欧佩克意外、航运中断）不停。开盘时价格跳空越过止损、成交产生滑点——所以原油要减仓、放宽止损。"}
-];
+const EXAM_QUESTIONS = [{"q":"Why trade instruments beyond forex?","q_zh":"为什么交易外汇以外的品种？","opts":["Forex always offers the best volatility","To diversify - different instruments move on different drivers, so opportunities exist around the clock","Non-forex instruments never trend","Forex charts use different analysis rules"],"opts_zh":["外汇永远提供最好的波动","为了分散——不同品种由不同因素驱动，机会全天候存在","外汇以外的品种从不走趋势","外汇图表使用不同的分析规则"],"ans":1,"why":"Metals, oil and indices move on their own drivers and peak at different hours. Adding them diversifies your opportunities instead of betting everything on one market.","why_zh":"金属、原油、指数各有驱动因素、各有高峰时段。多交易它们就是分散机会，而不是把一切都押在单一市场上。"},{"q":"What is the core character of gold (XAUUSD)?","q_zh":"黄金（XAUUSD）的核心属性是什么？","opts":["It moves in lockstep with the US dollar","It is an industrial metal driven mainly by manufacturing demand","It is a safe haven and inflation hedge that usually moves inversely to the US dollar","It only reacts to oil prices"],"opts_zh":["与美元同步涨跌","工业金属，主要由制造业需求驱动","避险资产 + 通胀对冲，通常与美元负相关","只对油价有反应"],"ans":2,"why":"Gold is the classic safe haven and inflation hedge. Because it is priced in dollars, a stronger dollar usually pushes gold down and a weaker dollar pushes it up.","why_zh":"黄金是经典避险资产与通胀对冲。因为它以美元计价，美元走强通常压金价，美元走弱通常抬金价。"},{"q":"What is the difference between WTI and Brent?","q_zh":"WTI 与布伦特（Brent）的区别是什么？","opts":["WTI is the US benchmark (USOIL), Brent is the global benchmark (UKOIL) - same product, different origins and pricing","WTI is natural gas, Brent is crude oil","They are exactly the same contract on every broker","WTI is a metal, Brent is an oil product"],"opts_zh":["WTI 是美国基准（USOIL），布伦特是全球基准（UKOIL）——同一种商品，产地与定价不同","WTI 是天然气，布伦特是原油","在任何平台都是完全相同的合约","WTI 是金属，布伦特是油品"],"ans":0,"why":"WTI (West Texas Intermediate) is the US benchmark delivered at Cushing; Brent (North Sea) is the global benchmark behind about two-thirds of world oil pricing. WTI reacts more to US inventories, Brent to OPEC and geopolitics.","why_zh":"WTI（西德州轻质原油）是美国基准，交割地库欣；布伦特（北海）是全球基准，全球约三分之二的原油以它定价。WTI 更跟美国库存，布伦特更跟欧佩克与地缘。"},{"q":"What does trading US30 / NAS100 / SPX500 actually mean?","q_zh":"交易 US30 / NAS100 / SPX500 实际是在交易什么？","opts":["Three different currencies","A basket of stocks - 30 blue chips, 100 tech-heavy Nasdaq names, and the 500-stock S&P market benchmark","Three grades of crude oil","Three silver contracts"],"opts_zh":["三种不同的货币","一篮子股票——30 家蓝筹（道指）、100 家科技权重股（纳指）、500 家大盘股（标普）","三种等级的原油","三种白银合约"],"ans":1,"why":"An index is not a company; it is a basket of companies measured as one number. US30 = 30 blue chips, NAS100 = the Nasdaq 100 (tech-heavy), SPX500 = the S&P 500 broad-market benchmark.","why_zh":"指数不是一家公司，而是一篮子公司打包成一个数字。US30 = 30 家蓝筹，NAS100 = 纳斯达克 100（科技权重高），SPX500 = 标普 500 大盘基准。"},{"q":"Why is oil (WTI) especially prone to gaps?","q_zh":"为什么原油（WTI）特别容易出现跳空（gap）？","opts":["Oil markets never close","Spreads on oil are always zero","After weekends or sudden geopolitical / OPEC headlines, liquidity vanishes at the reopen and price can jump straight past your stop","Oil prices are fixed by governments"],"opts_zh":["原油市场从不休市","原油点差永远为零","周末休市后或突发地缘 / 欧佩克消息时，开盘流动性骤变，价格可以直接越过你的止损","油价由政府固定"],"ans":2,"why":"Oil closes on weekends while headlines (wars, sanctions, OPEC surprises, shipping disruptions) keep coming. At the reopen, price gaps beyond your stop and fills with slippage - a reason to size down and widen stops on oil.","why_zh":"原油周末休市，而头条（战争、制裁、欧佩克意外、航运中断）不停。开盘时价格跳空越过止损、成交产生滑点——所以原油要减仓、放宽止损。"}];
 function renderExam(){
   var box = document.getElementById("examBox"); if(!box) return;
   EXAM_QUESTIONS.forEach(function(item, qi){
@@ -1061,7 +1055,8 @@ function renderExam(){
     var zhMode = document.body.classList.contains('lang-zh');
     var q = document.createElement("div");
     q.style.cssText = "font-weight:600;font-size:15px;color:var(--text);margin-bottom:14px;";
-    q.textContent = (zhMode && item.q) ? item.q : (item.q_en || item.q);
+    /* 与其余 23 课统一:q 是英文、q_zh 是中文 */
+    q.textContent = (zhMode && item.q_zh) ? item.q_zh : item.q;
     card.appendChild(q);
     var optsArr = (zhMode && item.opts_zh) ? item.opts_zh : item.opts;
     /* 看图作答:题目上方一张大图。绘图库没载入就静静跳过,题目仍可作答。 */
@@ -1415,11 +1410,11 @@ renderExam();
   links.forEach(function(a){ var id = a.getAttribute('data-sec'); var el = document.getElementById(id); if(el) secs[id]=el; });
   var secList = [];
   for(var id in secs){ secList.push({id:id, top:secs[id].offsetTop}); }
-  secList.sort(function(a,b){ return a.top - b.top; }); /* 依頁面位置排序 */
+  secList.sort(function(a,b){ return a.top - b.top; }); /* 依页面位置排序 */
   var hasSecs = secList.length > 0;
   function spy(){
-    if(!hasSecs) return; /* 無對應 section（課程/工具頁）→ 保持初始 active */
-    var cur = links.length ? links[0].getAttribute('data-sec') : ''; /* 初始 = 首項(home) */
+    if(!hasSecs) return; /* 无对应 section（课程/工具页）→ 保持初始 active */
+    var cur = links.length ? links[0].getAttribute('data-sec') : ''; /* 初始 = 首项(home) */
     var y = window.scrollY + 140;
     for(var i=0;i<secList.length;i++){
       if(secList[i].top <= y) cur = secList[i].id;
@@ -1436,7 +1431,7 @@ renderExam();
   var KEY = "xrs2026";
   var STORE = "mtj_admin";
   try{
-    /* 1. URL 參數登入 */
+    /* 1. URL 参数登入 */
     var p = new URLSearchParams(window.location.search);
     if(p.get("admin") === KEY){
       localStorage.setItem(STORE, "1");
@@ -1445,22 +1440,22 @@ renderExam();
       window.location.replace(window.location.pathname + (q ? "?" + q : ""));
       return;
     }
-    /* 2. 已登入狀態 → 全站解鎖 */
+    /* 2. 已登入状态 → 全站解锁 */
     if(localStorage.getItem(STORE) === "1"){
-      /* 隱藏所有遮罩 */
+      /* 隐藏所有遮罩 */
       document.querySelectorAll(".comingSoon, #comingSoon, [id*='comingSoon'], .memberGate, #memberGate").forEach(function(el){
         el.style.display = "none";
       });
-      /* 恢復 navbar（Composer 訪客隱藏, admin 顯示） */
+      /* 恢复 navbar（Composer 访客隐藏, admin 显示） */
       var gn = document.getElementById("globalNav");
       if(gn){ gn.style.display = "flex"; }
-      /* 課程卡解除鎖定 */
+      /* 课程卡解除锁定 */
       document.querySelectorAll("a.mod, .mod, .locked, [class*='lock']").forEach(function(el){
         el.style.opacity = "1";
         el.style.pointerEvents = "auto";
         el.classList.remove("locked");
       });
-      /* 考試直接通過（讀頁面的 MTJ_EXAM_KEY 或猜 key） */
+      /* 考试直接通过（读页面的 MTJ_EXAM_KEY 或猜 key） */
       try{
         if(typeof MTJ_EXAM_KEY !== "undefined" && MTJ_EXAM_KEY){ localStorage.setItem(MTJ_EXAM_KEY, "1"); }
         else{

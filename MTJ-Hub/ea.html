@@ -719,19 +719,19 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
 </script>
 
 <script>
-/* ===== MTJ EXAM LOCK — 主頁課程解鎖 ===== */
+/* ===== MTJ EXAM LOCK — 主页课程解锁 ===== */
 (function(){
   var mods = document.querySelectorAll("a.mod");
   for(var i = 0; i < mods.length; i++){
     var a = mods[i];
-    // 從 idx 提取模組號
+    // 从 idx 提取模组号
     var idxEl = a.querySelector(".idx");
     if(!idxEl) continue;
     var m = parseInt(a.getAttribute("data-mod") || (idxEl.textContent||"").replace(/[^0-9]/g,""));
-    if(isNaN(m) || m <= 3) continue;  /* Foundations stage stays open: it is the free top of funnel, and the lock is localStorage only so it protects nothing anyway */  // Module 1 永遠解鎖
+    if(isNaN(m) || m <= 3) continue;  /* Foundations stage stays open: it is the free top of funnel, and the lock is localStorage only so it protects nothing anyway */  // Module 1 永远解锁
     /* Global admin mode: skip all locks */
     try { if(localStorage.getItem("mtj_admin") === "1") continue; } catch(e){}
-    // 前一課必須通過
+    // 前一课必须通过
     var prevKey = "mtj_exam_pass_" + (m-1);
     var passed = false;
     try { passed = localStorage.getItem(prevKey) === "1"; } catch(e){}
@@ -739,7 +739,7 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
       a.style.opacity = "0.45";
       a.style.pointerEvents = "none";
       a.style.filter = "grayscale(0.6)";
-      // 加鎖標記
+      // 加锁标记
       var lock = document.createElement("div");
       lock.style.cssText = "font-size:11px;color:var(--gold);letter-spacing:.12em;margin-top:8px;font-family:'JetBrains Mono',monospace;";
       lock.innerHTML = '<span class="en">LOCKED · PASS MODULE ' + (m-1) + ' EXAM TO UNLOCK</span>'
@@ -1040,18 +1040,18 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
   var secs = {};
   links.forEach(function(a){
     var href = a.getAttribute('href') || '';
-    if(href.charAt(0) !== '#') return; /* 外頁連結（courses.html 等）不參與 scroll-spy */
+    if(href.charAt(0) !== '#') return; /* 外页连结（courses.html 等）不参与 scroll-spy */
     var id = a.getAttribute('data-sec');
     var el = document.getElementById(id) || (id === 'home' ? document.getElementById('top') : null);
     if(el) secs[id]=el;
   });
   var secList = [];
   for(var id in secs){ secList.push({id:id, top:secs[id].offsetTop}); }
-  secList.sort(function(a,b){ return a.top - b.top; }); /* 依頁面位置排序 */
+  secList.sort(function(a,b){ return a.top - b.top; }); /* 依页面位置排序 */
   var hasSecs = secList.length > 0;
   function spy(){
-    if(!hasSecs) return; /* 無對應 section（課程/工具頁）→ 保持初始 active */
-    var cur = ''; for(var k=0;k<links.length;k++){ var hh=(links[k].getAttribute('href')||''); if(hh.charAt(0)==='#'){ cur=links[k].getAttribute('data-sec'); break; } } /* 初始 = 第一個同頁錨點 */
+    if(!hasSecs) return; /* 无对应 section（课程/工具页）→ 保持初始 active */
+    var cur = ''; for(var k=0;k<links.length;k++){ var hh=(links[k].getAttribute('href')||''); if(hh.charAt(0)==='#'){ cur=links[k].getAttribute('data-sec'); break; } } /* 初始 = 第一个同页锚点 */
     var y = window.scrollY + 140;
     for(var i=0;i<secList.length;i++){
       if(secList[i].top <= y) cur = secList[i].id;
@@ -1068,7 +1068,7 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
   var KEY = "xrs2026";
   var STORE = "mtj_admin";
   try{
-    /* 1. URL 參數登入 */
+    /* 1. URL 参数登入 */
     var p = new URLSearchParams(window.location.search);
     if(p.get("admin") === KEY){
       localStorage.setItem(STORE, "1");
@@ -1077,22 +1077,22 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
       window.location.replace(window.location.pathname + (q ? "?" + q : ""));
       return;
     }
-    /* 2. 已登入狀態 → 全站解鎖 */
+    /* 2. 已登入状态 → 全站解锁 */
     if(localStorage.getItem(STORE) === "1"){
-      /* 隱藏所有遮罩 */
+      /* 隐藏所有遮罩 */
       document.querySelectorAll(".comingSoon, #comingSoon, [id*='comingSoon'], .memberGate, #memberGate").forEach(function(el){
         el.style.display = "none";
       });
-      /* 恢復 navbar（Composer 訪客隱藏, admin 顯示） */
+      /* 恢复 navbar（Composer 访客隐藏, admin 显示） */
       var gn = document.getElementById("globalNav");
       if(gn){ gn.style.display = "flex"; }
-      /* 課程卡解除鎖定 */
+      /* 课程卡解除锁定 */
       document.querySelectorAll("a.mod, .mod, .locked, [class*='lock']").forEach(function(el){
         el.style.opacity = "1";
         el.style.pointerEvents = "auto";
         el.classList.remove("locked");
       });
-      /* 考試直接通過（讀頁面的 MTJ_EXAM_KEY 或猜 key） */
+      /* 考试直接通过（读页面的 MTJ_EXAM_KEY 或猜 key） */
       try{
         if(typeof MTJ_EXAM_KEY !== "undefined" && MTJ_EXAM_KEY){ localStorage.setItem(MTJ_EXAM_KEY, "1"); }
         else{

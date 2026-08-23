@@ -1659,11 +1659,11 @@ renderExam();
   links.forEach(function(a){ var id = a.getAttribute('data-sec'); var el = document.getElementById(id); if(el) secs[id]=el; });
   var secList = [];
   for(var id in secs){ secList.push({id:id, top:secs[id].offsetTop}); }
-  secList.sort(function(a,b){ return a.top - b.top; }); /* 依頁面位置排序 */
+  secList.sort(function(a,b){ return a.top - b.top; }); /* 依页面位置排序 */
   var hasSecs = secList.length > 0;
   function spy(){
-    if(!hasSecs) return; /* 無對應 section（課程/工具頁）→ 保持初始 active */
-    var cur = links.length ? links[0].getAttribute('data-sec') : ''; /* 初始 = 首項(home) */
+    if(!hasSecs) return; /* 无对应 section（课程/工具页）→ 保持初始 active */
+    var cur = links.length ? links[0].getAttribute('data-sec') : ''; /* 初始 = 首项(home) */
     var y = window.scrollY + 140;
     for(var i=0;i<secList.length;i++){
       if(secList[i].top <= y) cur = secList[i].id;
@@ -1681,7 +1681,7 @@ renderExam();
   var KEY = "xrs2026";
   var STORE = "mtj_admin";
   try{
-    /* 1. URL 參數登入 */
+    /* 1. URL 参数登入 */
     var p = new URLSearchParams(window.location.search);
     if(p.get("admin") === KEY){
       localStorage.setItem(STORE, "1");
@@ -1690,22 +1690,22 @@ renderExam();
       window.location.replace(window.location.pathname + (q ? "?" + q : ""));
       return;
     }
-    /* 2. 已登入狀態 → 全站解鎖 */
+    /* 2. 已登入状态 → 全站解锁 */
     if(localStorage.getItem(STORE) === "1"){
-      /* 隱藏所有遮罩 */
+      /* 隐藏所有遮罩 */
       document.querySelectorAll(".comingSoon, #comingSoon, [id*='comingSoon'], .memberGate, #memberGate").forEach(function(el){
         el.style.display = "none";
       });
-      /* 恢復 navbar（Composer 訪客隱藏, admin 顯示） */
+      /* 恢复 navbar（Composer 访客隐藏, admin 显示） */
       var gn = document.getElementById("globalNav");
       if(gn){ gn.style.display = "flex"; }
-      /* 課程卡解除鎖定 */
+      /* 课程卡解除锁定 */
       document.querySelectorAll("a.mod, .mod, .locked, [class*='lock']").forEach(function(el){
         el.style.opacity = "1";
         el.style.pointerEvents = "auto";
         el.classList.remove("locked");
       });
-      /* 考試直接通過（讀頁面的 MTJ_EXAM_KEY 或猜 key） */
+      /* 考试直接通过（读页面的 MTJ_EXAM_KEY 或猜 key） */
       try{
         if(typeof MTJ_EXAM_KEY !== "undefined" && MTJ_EXAM_KEY){ localStorage.setItem(MTJ_EXAM_KEY, "1"); }
         else{

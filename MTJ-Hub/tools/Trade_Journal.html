@@ -933,13 +933,13 @@ $('impCsv').addEventListener('change',ev=>{
 
 /* ---------- MT5 report import ---------- */
 const SYN={
-  time:['time','open time','時間','时间','开仓时间','開倉時間'],
-  symbol:['symbol','item','品种','品種','交易品种'],
-  type:['type','方向','类型','類型'],
-  volume:['volume','size','lots','手数','手數','交易量'],
-  price:['price','开仓价','開倉價','价格'],
-  sl:['s / l','s/l','sl','stop loss','止损','止損'],
-  profit:['profit','获利','獲利','利润','盈亏']
+  time:['time','open time','时间','时间','开仓时间','开仓时间'],
+  symbol:['symbol','item','品种','品种','交易品种'],
+  type:['type','方向','类型','类型'],
+  volume:['volume','size','lots','手数','手数','交易量'],
+  price:['price','开仓价','开仓价','价格'],
+  sl:['s / l','s/l','sl','stop loss','止损','止损'],
+  profit:['profit','获利','获利','利润','盈亏']
 };
 function matchCol(head,keys){
   for(let i=0;i<head.length;i++){ const h=head[i]; if(keys.some(k=>h===k)) return i; }
@@ -983,16 +983,16 @@ function parseMt5(file,text){
     const sym=(r[ci.symbol]||'').trim();
     const profit=numOf(r[ci.profit]);
     if(!sym || profit===null) continue;
-    if(/^(total|balance|summary|合计|合計|总计)/i.test(sym)) continue;
+    if(/^(total|balance|summary|合计|合计|总计)/i.test(sym)) continue;
     const typ=(r[ci.type]||'').toLowerCase();
-    if(typ && !/buy|sell|买|賣|卖|買/.test(typ)) continue;
+    if(typ && !/buy|sell|买|卖|卖|买/.test(typ)) continue;
     const price=ci.price>=0?numOf(r[ci.price]):null;
     const sl=ci.sl>=0?numOf(r[ci.sl]):null;
     const vol=ci.volume>=0?numOf(r[ci.volume]):null;
     /* MT5 writes 2026.07.01 10:15:03 - normalise to 2026-07-01T10:15 */
     const t=(r[ci.time]||'').trim().replace(/\./g,'-').replace(/\//g,'-');
     out.push({ raw:r, date:t.replace(' ','T').slice(0,16), symbol:sym,
-      dir:/sell|賣|卖/.test(typ)?'sell':'buy', entry:price, stop:sl, lots:vol, pnl:profit });
+      dir:/sell|卖|卖/.test(typ)?'sell':'buy', entry:price, stop:sl, lots:vol, pnl:profit });
   }
   return out.length?{rows:out,cols:ci}:{err:'no-rows'};
 }
@@ -1318,11 +1318,11 @@ load(); renderTrades(); renderCl();
   links.forEach(function(a){ var id = a.getAttribute('data-sec'); var el = document.getElementById(id); if(el) secs[id]=el; });
   var secList = [];
   for(var id in secs){ secList.push({id:id, top:secs[id].offsetTop}); }
-  secList.sort(function(a,b){ return a.top - b.top; }); /* 依頁面位置排序 */
+  secList.sort(function(a,b){ return a.top - b.top; }); /* 依页面位置排序 */
   var hasSecs = secList.length > 0;
   function spy(){
-    if(!hasSecs) return; /* 無對應 section（課程/工具頁）→ 保持初始 active */
-    var cur = links.length ? links[0].getAttribute('data-sec') : ''; /* 初始 = 首項(home) */
+    if(!hasSecs) return; /* 无对应 section（课程/工具页）→ 保持初始 active */
+    var cur = links.length ? links[0].getAttribute('data-sec') : ''; /* 初始 = 首项(home) */
     var y = window.scrollY + 140;
     for(var i=0;i<secList.length;i++){
       if(secList[i].top <= y) cur = secList[i].id;
@@ -1339,7 +1339,7 @@ load(); renderTrades(); renderCl();
   var KEY = "xrs2026";
   var STORE = "mtj_admin";
   try{
-    /* 1. URL 參數登入 */
+    /* 1. URL 参数登入 */
     var p = new URLSearchParams(window.location.search);
     if(p.get("admin") === KEY){
       localStorage.setItem(STORE, "1");
@@ -1348,22 +1348,22 @@ load(); renderTrades(); renderCl();
       window.location.replace(window.location.pathname + (q ? "?" + q : ""));
       return;
     }
-    /* 2. 已登入狀態 → 全站解鎖 */
+    /* 2. 已登入状态 → 全站解锁 */
     if(localStorage.getItem(STORE) === "1"){
-      /* 隱藏所有遮罩 */
+      /* 隐藏所有遮罩 */
       document.querySelectorAll(".comingSoon, #comingSoon, [id*='comingSoon'], .memberGate, #memberGate").forEach(function(el){
         el.style.display = "none";
       });
-      /* 恢復 navbar（Composer 訪客隱藏, admin 顯示） */
+      /* 恢复 navbar（Composer 访客隐藏, admin 显示） */
       var gn = document.getElementById("globalNav");
       if(gn){ gn.style.display = "flex"; }
-      /* 課程卡解除鎖定 */
+      /* 课程卡解除锁定 */
       document.querySelectorAll("a.mod, .mod, .locked, [class*='lock']").forEach(function(el){
         el.style.opacity = "1";
         el.style.pointerEvents = "auto";
         el.classList.remove("locked");
       });
-      /* 考試直接通過（讀頁面的 MTJ_EXAM_KEY 或猜 key） */
+      /* 考试直接通过（读页面的 MTJ_EXAM_KEY 或猜 key） */
       try{
         if(typeof MTJ_EXAM_KEY !== "undefined" && MTJ_EXAM_KEY){ localStorage.setItem(MTJ_EXAM_KEY, "1"); }
         else{

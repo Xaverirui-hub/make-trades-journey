@@ -1099,7 +1099,7 @@ function drawMACDCross(box){
   const s=svgFor(box,W,H);
   const gm=[-4.0,-3.6,-3.1,-2.6,-2.1,-1.6,-1.2,-0.9,-0.7,-0.55,-0.45,-0.35,-0.25,-0.12,0.0,0.2,0.5,0.85,1.2,1.6,2.0,2.4,2.7,2.9,3.0,2.9,2.7,2.4];
   const gs=[-2.5,-2.1,-1.7,-1.3,-1.0,-0.8,-0.65,-0.5,-0.35,-0.22,-0.12,-0.05,0.0,0.02,0.0,-0.05,-0.1,-0.05,0.1,0.35,0.7,1.1,1.5,1.9,2.3,2.6,2.7,2.55];
-  /* 死叉 = 金叉整組上下翻。两条线要各自取负:dm-ds = -(gm-gs),交叉方向才会
+  /* 死叉 = 金叉整组上下翻。两条线要各自取负:dm-ds = -(gm-gs),交叉方向才会
      反过来。若写成 dm=-gs, ds=-gm,则 dm-ds = gm-gs,画出来还是个金叉。 */
   const dm=gm.map(v=>-v),ds=gs.map(v=>-v);
   const pw=(W-L-R-12)/2,n=gm.length;
@@ -1126,9 +1126,9 @@ function drawMACDCross(box){
     el('line',{x1:cxp,x2:cxp,y1:Y(sc.mx),y2:Y(sc.mn),stroke:col,'stroke-width':1.1,'stroke-dasharray':'3 3',class:'rlbl',style:'--i:20'},s);
     const cg=el('g',{style:'--i:21'},s);
     el('circle',{cx:cxp,cy:cyp,r:6,fill:col,'fill-opacity':.25,stroke:col,'stroke-width':2,class:'rlbl'},cg);
-    /* 箭頭是兩筆從【尖端】往外撇。尖端在上才是朝上,原本寫成尖端在下、
-       手臂往上 —— 畫出來金叉是個朝下的 V,死叉是個朝上的 ^,教反了。
-       朝上的擺在交叉點下方,朝下的擺在上方(同 MT5 買賣箭頭慣例)。 */
+    /* 箭头是两笔从【尖端】往外撇。尖端在上才是朝上,原本写成尖端在下、
+       手臂往上 —— 画出来金叉是个朝下的 V,死叉是个朝上的 ^,教反了。
+       朝上的摆在交叉点下方,朝下的摆在上方(同 MT5 买卖箭头惯例)。 */
     el('path',{d:arrowUp?'M'+cxp+' '+(cyp+7)+' l-6 9 M'+cxp+' '+(cyp+7)+' l6 9':'M'+cxp+' '+(cyp-7)+' l-6 -9 M'+cxp+' '+(cyp-7)+' l6 -9',
       stroke:col,'stroke-width':2.2,'fill':'none','stroke-linecap':'round',class:'rlbl',style:'--i:22'},cg);
     txt(s,px+26+plotW/2,T+plotH+22,title,{'text-anchor':'middle','font-size':10.5,fill:col,'font-weight':700,'letter-spacing':'.14em'});
@@ -1786,11 +1786,11 @@ renderExam();
   links.forEach(function(a){ var id = a.getAttribute('data-sec'); var el = document.getElementById(id); if(el) secs[id]=el; });
   var secList = [];
   for(var id in secs){ secList.push({id:id, top:secs[id].offsetTop}); }
-  secList.sort(function(a,b){ return a.top - b.top; }); /* 依頁面位置排序 */
+  secList.sort(function(a,b){ return a.top - b.top; }); /* 依页面位置排序 */
   var hasSecs = secList.length > 0;
   function spy(){
-    if(!hasSecs) return; /* 無對應 section（課程/工具頁）→ 保持初始 active */
-    var cur = links.length ? links[0].getAttribute('data-sec') : ''; /* 初始 = 首項(home) */
+    if(!hasSecs) return; /* 无对应 section（课程/工具页）→ 保持初始 active */
+    var cur = links.length ? links[0].getAttribute('data-sec') : ''; /* 初始 = 首项(home) */
     var y = window.scrollY + 140;
     for(var i=0;i<secList.length;i++){
       if(secList[i].top <= y) cur = secList[i].id;
@@ -1807,7 +1807,7 @@ renderExam();
   var KEY = "xrs2026";
   var STORE = "mtj_admin";
   try{
-    /* 1. URL 參數登入 */
+    /* 1. URL 参数登入 */
     var p = new URLSearchParams(window.location.search);
     if(p.get("admin") === KEY){
       localStorage.setItem(STORE, "1");
@@ -1816,22 +1816,22 @@ renderExam();
       window.location.replace(window.location.pathname + (q ? "?" + q : ""));
       return;
     }
-    /* 2. 已登入狀態 → 全站解鎖 */
+    /* 2. 已登入状态 → 全站解锁 */
     if(localStorage.getItem(STORE) === "1"){
-      /* 隱藏所有遮罩 */
+      /* 隐藏所有遮罩 */
       document.querySelectorAll(".comingSoon, #comingSoon, [id*='comingSoon'], .memberGate, #memberGate").forEach(function(el){
         el.style.display = "none";
       });
-      /* 恢復 navbar（Composer 訪客隱藏, admin 顯示） */
+      /* 恢复 navbar（Composer 访客隐藏, admin 显示） */
       var gn = document.getElementById("globalNav");
       if(gn){ gn.style.display = "flex"; }
-      /* 課程卡解除鎖定 */
+      /* 课程卡解除锁定 */
       document.querySelectorAll("a.mod, .mod, .locked, [class*='lock']").forEach(function(el){
         el.style.opacity = "1";
         el.style.pointerEvents = "auto";
         el.classList.remove("locked");
       });
-      /* 考試直接通過（讀頁面的 MTJ_EXAM_KEY 或猜 key） */
+      /* 考试直接通过（读页面的 MTJ_EXAM_KEY 或猜 key） */
       try{
         if(typeof MTJ_EXAM_KEY !== "undefined" && MTJ_EXAM_KEY){ localStorage.setItem(MTJ_EXAM_KEY, "1"); }
         else{

@@ -821,13 +821,7 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
 <script>
 /* ===== MTJ EXAM MODULE - Module 03 ===== */
 const MTJ_EXAM_KEY = "mtj_exam_pass_3";
-const EXAM_QUESTIONS = [
-{"q": "外匯市場流動性與波動最高的時段是?", "q_en": "When is forex liquidity and volatility at its peak?", "opts": ["Asian session open", "London-New York overlap (13:00-17:00 UTC)", "Friday close", "Tokyo lunch break"], "opts_zh": ["亚盘开盘", "伦敦与纽约重叠时段(13:00–17:00 UTC)", "周五收盘前", "东京午休"], "ans": 1, "why": "Liquidity and volatility peak where London and New York overlap (13:00-17:00 UTC / 21:00-01:00 Beijing) - the best window to trade majors and gold.", "why_zh": "流动性与波动率在伦敦与纽约重叠时段（13:00–17:00 UTC / 北京时间 21:00–01:00）达到峰值——这是交易主要货币对和黄金的最佳窗口。"},
-{"q": "亞盤(東京)的主要特徵是?", "q_en": "What characterises the Asian (Tokyo) session?", "opts": ["Highest volatility, clearest trend", "Quietest - thin liquidity, ranging, often sets the day's initial range", "Largest volume, tightest spread", "Driven mostly by US data"], "opts_zh": ["波动最大,趋势最明显", "最安静,流动性薄,常区间震荡,并奠定当天的初始区间", "成交量最大,点差最窄", "主要由美国数据主导"], "ans": 1, "why": "Asia is the quietest shift - thin liquidity, low volatility, lots of ranging. It often sets the day's initial range that London later breaks; it favours JPY/AUD/NZD pairs.", "why_zh": "亚盘是最安静的时段——流动性薄、波动小、多以区间震荡为主。它常常奠定当日初始区间，随后由伦敦突破；亚盘活跃的是日元、澳元、纽元等货币对。"},
-{"q": "歐盤(倫敦)的主要特徵是?", "q_en": "What characterises the European (London) session?", "opts": ["Largest volume - the open often makes a strong directional move that breaks the Asian range", "Thinnest liquidity, widest spread", "Best for range trading", "Gold is least volatile"], "opts_zh": ["成交量最大,开盘常出现强烈方向性行情并突破亚盘区间", "流动性最差,点差最宽", "最适合做区间交易", "黄金波动最小"], "ans": 0, "why": "London is the biggest session by volume - liquidity surges, spreads tighten, and the open often makes a strong directional move that breaks the Asian range. Real trends begin here.", "why_zh": "伦敦是成交量最大的时段——流动性激增、点差收窄，开盘时常出现突破亚盘区间的强烈方向性行情。真正的趋势从这里开始。"},
-{"q": "黃金(XAU/USD)什麼時候最活躍?", "q_en": "When is gold (XAU/USD) most active?", "opts": ["Asian session", "London open and the London-NY overlap (21:00-01:00 Beijing)", "Monday early hours", "After the US close"], "opts_zh": ["亚盘时段", "欧盘开盘与伦敦–纽约重叠时段(21:00–01:00 北京时间)", "周一凌晨", "美盘收盘之后"], "ans": 1, "why": "Gold is calm in Asia, wakes at the London open, and peaks in the London-NY overlap (21:00-01:00 Beijing) - that is where the clean, tradeable gold moves live.", "why_zh": "黄金在亚盘平静，伦敦开盘时苏醒，在伦敦–纽约重叠时段（北京时间 21:00–01:00）达到高潮——干净可交易的黄金行情就在这里。"},
-{"q": "為什麼做黃金必須尊重數據公布(NFP、CPI、FOMC)?", "q_en": "Why must gold traders respect data releases (NFP, CPI, FOMC)?", "opts": ["Spreads automatically narrow during releases", "NFP, CPI and Fed decisions can move gold dozens of dollars in seconds", "Data only affects stocks, not forex", "News moves are great for heavy entries"], "opts_zh": ["数据公布时点差会自动变小", "非农、CPI 与美联储决议可能在几秒内让黄金波动数十美元", "数据只影响股票,不影响外汇", "数据行情更适合重仓进场"], "ans": 1, "why": "NFP, CPI and Fed decisions can move gold dozens of dollars in seconds. Always respect news releases - plan around them or stay flat.", "why_zh": "非农、CPI 和美联储决议可能在几秒内让黄金波动数十美元。务必尊重数据发布——围绕它们做计划，或保持空仓。"}
-];
+const EXAM_QUESTIONS = [{"q":"When is forex liquidity and volatility at its peak?","q_zh":"外汇市场流动性与波动最高的时段是?","opts":["Asian session open","London-New York overlap (13:00-17:00 UTC)","Friday close","Tokyo lunch break"],"opts_zh":["亚盘开盘","伦敦与纽约重叠时段(13:00–17:00 UTC)","周五收盘前","东京午休"],"ans":1,"why":"Liquidity and volatility peak where London and New York overlap (13:00-17:00 UTC / 21:00-01:00 Beijing) - the best window to trade majors and gold.","why_zh":"流动性与波动率在伦敦与纽约重叠时段（13:00–17:00 UTC / 北京时间 21:00–01:00）达到峰值——这是交易主要货币对和黄金的最佳窗口。"},{"q":"What characterises the Asian (Tokyo) session?","q_zh":"亚盘(东京)的主要特征是?","opts":["Highest volatility, clearest trend","Quietest - thin liquidity, ranging, often sets the day's initial range","Largest volume, tightest spread","Driven mostly by US data"],"opts_zh":["波动最大,趋势最明显","最安静,流动性薄,常区间震荡,并奠定当天的初始区间","成交量最大,点差最窄","主要由美国数据主导"],"ans":1,"why":"Asia is the quietest shift - thin liquidity, low volatility, lots of ranging. It often sets the day's initial range that London later breaks; it favours JPY/AUD/NZD pairs.","why_zh":"亚盘是最安静的时段——流动性薄、波动小、多以区间震荡为主。它常常奠定当日初始区间，随后由伦敦突破；亚盘活跃的是日元、澳元、纽元等货币对。"},{"q":"What characterises the European (London) session?","q_zh":"欧盘(伦敦)的主要特征是?","opts":["Largest volume - the open often makes a strong directional move that breaks the Asian range","Thinnest liquidity, widest spread","Best for range trading","Gold is least volatile"],"opts_zh":["成交量最大,开盘常出现强烈方向性行情并突破亚盘区间","流动性最差,点差最宽","最适合做区间交易","黄金波动最小"],"ans":0,"why":"London is the biggest session by volume - liquidity surges, spreads tighten, and the open often makes a strong directional move that breaks the Asian range. Real trends begin here.","why_zh":"伦敦是成交量最大的时段——流动性激增、点差收窄，开盘时常出现突破亚盘区间的强烈方向性行情。真正的趋势从这里开始。"},{"q":"When is gold (XAU/USD) most active?","q_zh":"黄金(XAU/USD)什么时候最活跃?","opts":["Asian session","London open and the London-NY overlap (21:00-01:00 Beijing)","Monday early hours","After the US close"],"opts_zh":["亚盘时段","欧盘开盘与伦敦–纽约重叠时段(21:00–01:00 北京时间)","周一凌晨","美盘收盘之后"],"ans":1,"why":"Gold is calm in Asia, wakes at the London open, and peaks in the London-NY overlap (21:00-01:00 Beijing) - that is where the clean, tradeable gold moves live.","why_zh":"黄金在亚盘平静，伦敦开盘时苏醒，在伦敦–纽约重叠时段（北京时间 21:00–01:00）达到高潮——干净可交易的黄金行情就在这里。"},{"q":"Why must gold traders respect data releases (NFP, CPI, FOMC)?","q_zh":"为什么做黄金必须尊重数据公布(NFP、CPI、FOMC)?","opts":["Spreads automatically narrow during releases","NFP, CPI and Fed decisions can move gold dozens of dollars in seconds","Data only affects stocks, not forex","News moves are great for heavy entries"],"opts_zh":["数据公布时点差会自动变小","非农、CPI 与美联储决议可能在几秒内让黄金波动数十美元","数据只影响股票,不影响外汇","数据行情更适合重仓进场"],"ans":1,"why":"NFP, CPI and Fed decisions can move gold dozens of dollars in seconds. Always respect news releases - plan around them or stay flat.","why_zh":"非农、CPI 和美联储决议可能在几秒内让黄金波动数十美元。务必尊重数据发布——围绕它们做计划，或保持空仓。"}];
 function renderExam(){
   var box = document.getElementById("examBox"); if(!box) return;
   EXAM_QUESTIONS.forEach(function(item, qi){
@@ -841,7 +835,8 @@ function renderExam(){
     var zhMode = document.body.classList.contains('lang-zh');
     var q = document.createElement("div");
     q.style.cssText = "font-weight:600;font-size:15px;color:var(--text);margin-bottom:14px;";
-    q.textContent = (zhMode && item.q) ? item.q : (item.q_en || item.q);
+    /* 与其余 23 课统一:q 是英文、q_zh 是中文 */
+    q.textContent = (zhMode && item.q_zh) ? item.q_zh : item.q;
     card.appendChild(q);
     var optsArr = (zhMode && item.opts_zh) ? item.opts_zh : item.opts;
     /* 看图作答:题目上方一张大图。绘图库没载入就静静跳过,题目仍可作答。 */
@@ -1195,11 +1190,11 @@ renderExam();
   links.forEach(function(a){ var id = a.getAttribute('data-sec'); var el = document.getElementById(id); if(el) secs[id]=el; });
   var secList = [];
   for(var id in secs){ secList.push({id:id, top:secs[id].offsetTop}); }
-  secList.sort(function(a,b){ return a.top - b.top; }); /* 依頁面位置排序 */
+  secList.sort(function(a,b){ return a.top - b.top; }); /* 依页面位置排序 */
   var hasSecs = secList.length > 0;
   function spy(){
-    if(!hasSecs) return; /* 無對應 section（課程/工具頁）→ 保持初始 active */
-    var cur = links.length ? links[0].getAttribute('data-sec') : ''; /* 初始 = 首項(home) */
+    if(!hasSecs) return; /* 无对应 section（课程/工具页）→ 保持初始 active */
+    var cur = links.length ? links[0].getAttribute('data-sec') : ''; /* 初始 = 首项(home) */
     var y = window.scrollY + 140;
     for(var i=0;i<secList.length;i++){
       if(secList[i].top <= y) cur = secList[i].id;
@@ -1216,7 +1211,7 @@ renderExam();
   var KEY = "xrs2026";
   var STORE = "mtj_admin";
   try{
-    /* 1. URL 參數登入 */
+    /* 1. URL 参数登入 */
     var p = new URLSearchParams(window.location.search);
     if(p.get("admin") === KEY){
       localStorage.setItem(STORE, "1");
@@ -1225,22 +1220,22 @@ renderExam();
       window.location.replace(window.location.pathname + (q ? "?" + q : ""));
       return;
     }
-    /* 2. 已登入狀態 → 全站解鎖 */
+    /* 2. 已登入状态 → 全站解锁 */
     if(localStorage.getItem(STORE) === "1"){
-      /* 隱藏所有遮罩 */
+      /* 隐藏所有遮罩 */
       document.querySelectorAll(".comingSoon, #comingSoon, [id*='comingSoon'], .memberGate, #memberGate").forEach(function(el){
         el.style.display = "none";
       });
-      /* 恢復 navbar（Composer 訪客隱藏, admin 顯示） */
+      /* 恢复 navbar（Composer 访客隐藏, admin 显示） */
       var gn = document.getElementById("globalNav");
       if(gn){ gn.style.display = "flex"; }
-      /* 課程卡解除鎖定 */
+      /* 课程卡解除锁定 */
       document.querySelectorAll("a.mod, .mod, .locked, [class*='lock']").forEach(function(el){
         el.style.opacity = "1";
         el.style.pointerEvents = "auto";
         el.classList.remove("locked");
       });
-      /* 考試直接通過（讀頁面的 MTJ_EXAM_KEY 或猜 key） */
+      /* 考试直接通过（读页面的 MTJ_EXAM_KEY 或猜 key） */
       try{
         if(typeof MTJ_EXAM_KEY !== "undefined" && MTJ_EXAM_KEY){ localStorage.setItem(MTJ_EXAM_KEY, "1"); }
         else{
