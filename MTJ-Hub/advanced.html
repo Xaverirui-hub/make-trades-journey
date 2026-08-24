@@ -101,8 +101,13 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 .hero .h-sub{color:rgba(255,255,255,.84);text-shadow:0 1px 18px rgba(0,0,0,.75);}
 .hero .h-zh{color:rgba(255,255,255,.94);text-shadow:0 2px 30px rgba(0,0,0,.5);}
 /* 第三行是标题的一部分,不随语言切换 —— 两种语言都要看得到。 */
-.hero h1 .h1-journey{display:inline-block;font-size:.44em;font-weight:700;
-  letter-spacing:.02em;color:rgba(255,255,255,.82);margin-top:.28em;}
+/* 引子:一行放得下,所以不折行;字级压到主标的三分之一左右。 */
+.hero .h-kicker{font-size:clamp(14px,2.1vw,21px);font-weight:600;letter-spacing:.01em;
+  color:rgba(255,255,255,.8);margin:0 0 6px;text-shadow:0 1px 22px rgba(0,0,0,.6);}
+.hero .h-kicker .zh{font-family:'Noto Sans SC';font-size:1.02em;letter-spacing:.12em;}
+/* 主标一行摆得下就别让它折 —— 上限比原本低一点,换来的是不断行。 */
+.hero h1{font-size:clamp(26px,6.4vw,74px);white-space:nowrap;}
+@media(max-width:560px){.hero h1{white-space:normal;}}
 /* Prism 封面。跟 lightfall 一样淡入,着色器就绪前不闪。 */
 /* 上游的示例框是 2:1(width:100%, height:600px),而 uPxScale 由高度算 ——
    f.y 的范围恒等於 5/scale,跟解析度无关;f.x 才随长宽比变。封面若接近 1:1,
@@ -515,8 +520,9 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
 <div class="wrap" style="padding-top:57px;">
 <header class="hero" id="top">
   <div id="prism" aria-hidden="true"></div>
-  <h1>No shortcut.<br>Just your path.<br><span class="h1-journey">The Advanced Journey.</span></h1>
-  <div class="h-zh">没 有 捷 径 · 只 有 你 自 己 的 路</div>
+  <div class="h-kicker">No shortcut. Just your path.<span class="zh">没 有 捷 径 · 只 有 你 自 己 的 路</span></div>
+  <h1>The Advanced Journey.</h1>
+  <div class="h-zh">进 阶 之 旅</div>
   <p class="h-sub">Technicals tell you where to enter. This is the rest of the journey — why the move existed at all, how much to put at risk, and how to turn all of it into a system you can repeat.<span class="zh">技术面告诉你在哪里进场。这里是旅程的其余部分 —— 这一波为什么会存在、该冒多少风险，以及怎么把这一切变成一套可以重复的系统。</span></p>
 
   <div class="cta-row cover-cta">
