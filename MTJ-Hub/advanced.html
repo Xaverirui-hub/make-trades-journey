@@ -94,6 +94,34 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 .hero .h-zh{font-family:'Noto Sans SC';font-weight:500;font-size:clamp(15px,2.7vw,25px);
   letter-spacing:.42em;color:var(--muted);margin:16px 0 0;padding-left:.42em;}
 .hero .h-sub{max-width:640px;color:var(--muted);font-size:clamp(14px,2vw,17px);margin:22px auto 0;}
+/* 封面标题走白 —— 棱镜本身就有颜色,标题再上金就是两个东西在抢。 */
+.hero h1{color:#FFFFFF;text-shadow:0 2px 40px rgba(0,0,0,.55);}
+/* 副标横穿棱镜的斜边,原本的 --muted 灰在亮处就糊了。与其再叠一层暗压
+   住画面,不如把字本身提亮 —— 画面留给棱镜。 */
+.hero .h-sub{color:rgba(255,255,255,.84);text-shadow:0 1px 18px rgba(0,0,0,.75);}
+.hero .h-zh{color:rgba(255,255,255,.94);text-shadow:0 2px 30px rgba(0,0,0,.5);}
+/* 第三行是标题的一部分,不随语言切换 —— 两种语言都要看得到。 */
+.hero h1 .h1-journey{display:inline-block;font-size:.44em;font-weight:700;
+  letter-spacing:.02em;color:rgba(255,255,255,.82);margin-top:.28em;}
+/* Prism 封面。跟 lightfall 一样淡入,着色器就绪前不闪。 */
+/* 上游的示例框是 2:1(width:100%, height:600px),而 uPxScale 由高度算 ——
+   f.y 的范围恒等於 5/scale,跟解析度无关;f.x 才随长宽比变。封面若接近 1:1,
+   同一个 scale 就等於把镜头拉远一倍:棱镜变小、颗粒变粗,看起来就是一团朦
+   的光。让容器自己维持 2:1,再照抄上游的公式,构图才对得上。 */
+/* 铺满整个封面:从导航列下方一路到封面底部。
+   注意 uPxScale 若照上游用「高度」算,取景就会随封面比例乱掉(封面接近
+   1:1 时等於把镜头怼在棱镜正中,只剩一团过曝的光)。所以这里改用
+   uPxScale 照上游算(只看高度),一般桌面比例算出来就是官网那个构图;
+   视窗过窄或封面过高时由 prism.js 的 minHalfWidth 兜底。offset.y 把棱镜
+   往下摆,亮底边才落在按钮以下。 */
+#prism{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;
+  opacity:0;transition:opacity 1.6s ease;
+  --pz-mask:linear-gradient(to bottom,transparent 0%,#000 8%,#000 84%,transparent 100%);
+  mask-image:var(--pz-mask);-webkit-mask-image:var(--pz-mask);}
+#prism.is-live{opacity:1;}
+}
+#prism canvas{width:100%;height:100%;display:block;}
+@media(prefers-reduced-motion:reduce){#prism{display:none;}}
 .hero .h-sub .zh{display:block;font-family:'Noto Sans SC';font-size:1.02em;color:inherit;margin-top:6px;}
 
 .hero-stats{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(18px,4vw,48px);margin:34px 0 6px;}
@@ -141,16 +169,10 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
    out of sight. Cancel the offset instead of shrinking the hero, so the light
    still starts at the very top edge behind the translucent navbar. */
 .hero{margin-top:-114px;padding-top:clamp(96px,14vh,150px);}
-#lightfall{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;
-  opacity:0;transition:opacity 1.4s ease;
-  --lf-mask:linear-gradient(to bottom,rgba(0,0,0,.5) 0%,#000 26%,#000 60%,rgba(0,0,0,.4) 85%,transparent 100%);
-  mask-image:var(--lf-mask);-webkit-mask-image:var(--lf-mask);}
-#lightfall.is-live{opacity:.8;}
-#lightfall canvas{width:100%;height:100%;display:block;}
-/* keep the headline legible over the falling light */
+/* 白色标题压在棱镜上,靠这层暗井拉开对比 */
+/* 只留一层很淡的底部收边,让封面接得住下一段;棱镜本身不压。 */
 .hero::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
-  background:radial-gradient(58% 44% at 50% 46%,rgba(6,6,8,.88),rgba(6,6,8,.5) 55%,transparent 78%);}
-@media(prefers-reduced-motion:reduce){#lightfall{display:none;}}
+  background:linear-gradient(to bottom,rgba(6,6,8,.35) 0%,transparent 14%,transparent 80%,rgba(6,6,8,.55) 93%,var(--bg) 100%);}
 .hero .scroll-cue{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);z-index:2;
   font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;
   color:var(--muted-2);text-decoration:none;display:flex;flex-direction:column;align-items:center;gap:7px;}
@@ -405,7 +427,7 @@ body.lang-zh.lang-strict h3 .zh{display:block;margin-top:0;}
 body.lang-zh.lang-strict .divider:has(> .zh) h2{display:none;}
 body.lang-zh.lang-strict .divider > .zh{font-size:clamp(26px,4.4vw,44px);font-weight:700;
   letter-spacing:.26em;color:var(--text,#EDE7D8);margin-top:0;}
-body.lang-zh.lang-strict .hero .h-zh{font-size:clamp(19px,3.2vw,30px);color:var(--gold,#E8C877);
+body.lang-zh.lang-strict .hero .h-zh{font-size:clamp(19px,3.2vw,30px);color:rgba(255,255,255,.94);
   letter-spacing:.34em;}
 /* ========================================================================= */
 
@@ -492,10 +514,9 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
 
 <div class="wrap" style="padding-top:57px;">
 <header class="hero" id="top">
-  <div id="lightfall" aria-hidden="true"></div>
-  <div class="course-tag"><span class="en">The journey continues</span><span class="zh">旅 程 · 下 半 段</span></div>
-  <h1>Why price moves<br>before it moves you.</h1>
-  <div class="h-zh">进 阶 交 易 课 程</div>
+  <div id="prism" aria-hidden="true"></div>
+  <h1>No shortcut.<br>Just your path.<br><span class="h1-journey">The Advanced Journey.</span></h1>
+  <div class="h-zh">没 有 捷 径 · 只 有 你 自 己 的 路</div>
   <p class="h-sub">Technicals tell you where to enter. This is the rest of the journey — why the move existed at all, how much to put at risk, and how to turn all of it into a system you can repeat.<span class="zh">技术面告诉你在哪里进场。这里是旅程的其余部分 —— 这一波为什么会存在、该冒多少风险，以及怎么把这一切变成一套可以重复的系统。</span></p>
 
   <div class="cta-row cover-cta">
@@ -1312,8 +1333,13 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
   /* Cover only. Silent failure by design: the hero keeps its own glow and
      particle background if WebGL is unavailable. */
   try{
-    const { mountLightfall } = await import('./assets/lightfall.js');
-    mountLightfall('#lightfall');
+    const { mountPrism } = await import('./assets/prism.js');
+    /* 与官网 Demo 的实际设定一致 —— 注意 noise 是 0,不是属性表写的
+       0.5;那 0.5 的胶片颗粒正是把效果弄「朦」的东西。 */
+    mountPrism('#prism', { animationType: 'rotate', timeScale: 0.5, height: 3.5,
+                           baseWidth: 5.5, scale: 3.6, hueShift: 0,
+                           colorFrequency: 1, noise: 0, glow: 1,
+                           offset: { x: 0, y: -110 } });
   }catch(e){ /* static cover stands on its own */ }
 /* Below the cover: star field, same silent-failure contract. */
   try{
