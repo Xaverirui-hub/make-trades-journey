@@ -14,7 +14,7 @@
    规格是宣告式的,题目资料才不会变成一大坨座标:
      { k:[收盘价...],                    K 线
        ma:[{p:6,role:'fast'},...],       叠在 K 线上的 EMA
-       osc:{k:[...],d:[...]},            震荡指标面板(0–100,含 20/50/80)
+       osc:{k:[...],d:[...],tl:[{x1,v1,x2,v2,kind}]},  震荡面板(0–100,含 20/50/80)
        hist:{bars:[...],line:[...],sig:[...]},  柱状图 + 两条线
        lv:[{p:价位,kind:'res'|'sup',t:'标签'}],
        zone:[{from:,to:,kind:,t:}],
@@ -238,6 +238,16 @@
         out += el('path', { d: pair[0].map(function (v, i) { return (i ? 'L' : 'M') + esc(oX(i)) + ',' + esc(oY(v)); }).join(' '),
                             stroke: pair[1], 'stroke-width': mini ? 1.6 : 2, fill: 'none' });
       });
+      /* osc.tl —— 画在震荡面板座标里的斜线。背离讲的就是「价格那条斜率」跟
+         「动能那条斜率」不一致,只在价格面板上画线是说不出这件事的。
+         v 用 0-100,跟面板同一个刻度。 */
+      (spec.osc.tl || []).forEach(function (t) {
+        var tcol = t.kind === 'bad' ? C.bear : t.kind === 'sup' ? C.bull : C.gold;
+        out += el('line', { x1: esc(padL + (W - padL - padR) * t.x1), y1: esc(oY(t.v1)),
+                            x2: esc(padL + (W - padL - padR) * t.x2), y2: esc(oY(t.v2)),
+                            stroke: tcol, 'stroke-width': mini ? 1.5 : 2,
+                            'stroke-dasharray': t.dash ? '5 4' : null, 'stroke-opacity': .9 });
+      });
     }
 
     /* ---------- 柱状图面板(MACD) ---------- */
@@ -291,7 +301,8 @@
         if (L.t && !mini) out += txt(LX(L.v.length - 1) - 3, LY(L.v[L.v.length - 1]) - 7, L.t,
           { a: 'end', c: col, s: 9.5, w: 700, cjk: /[一-龥]/.test(L.t) });
       });
-      if (spec.xlab && !mini) out += txt(W / 2, H - 5, spec.xlab, { c: C.muted2, s: 9, cjk: /[一-龥]/.test(spec.xlab) });
+      /* xlab 与 cap 原本都落在 H-5,同时给就直接叠在一起。两个都有就往上让一行。 */
+      if (spec.xlab && !mini) out += txt(W / 2, H - (spec.cap ? 18 : 5), spec.xlab, { c: C.muted2, s: 9, cjk: /[一-龥]/.test(spec.xlab) });
     }
 
     /* ---------- 对比条(成本拆解、胜率比较之类) ---------- */
