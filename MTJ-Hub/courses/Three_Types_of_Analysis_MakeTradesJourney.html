@@ -420,6 +420,14 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
 label:has(> .opt-why.is-on){align-items:flex-start;flex-wrap:wrap;}
 label:has(> .opt-why.is-on) .opt-why{flex:1 0 100%;padding-left:26px;}
 .quizfig-opt .opt-why.is-on{padding-left:0;text-align:center;}
+
+/* ===== 封面标题一律白色 =====
+   放在样式表最後,靠顺序赢过前面那几条金色的规则。
+   text-shadow 是给封面动画用的 —— 白字压在会动的背景上,没有一点暗影
+   就会在亮处糊掉。 */
+.hero h1{color:#FFFFFF;text-shadow:0 2px 40px rgba(0,0,0,.55);}
+.hero .h-zh{color:rgba(255,255,255,.94);text-shadow:0 2px 30px rgba(0,0,0,.5);}
+body.lang-zh.lang-strict .hero .h-zh{color:rgba(255,255,255,.94);}
 </style>
 </head>
 <body>

@@ -363,6 +363,14 @@ body.lang-zh.lang-strict .hero .h-zh{font-size:clamp(19px,3.2vw,30px);color:var(
    keyboard/AT, so pointer users see no change. */
 :focus-visible{outline:2px solid var(--gold,#E8C877);outline-offset:3px;border-radius:4px;}
 a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width:2px;}
+
+/* ===== 封面标题一律白色 =====
+   放在样式表最後,靠顺序赢过前面那几条金色的规则。
+   text-shadow 是给封面动画用的 —— 白字压在会动的背景上,没有一点暗影
+   就会在亮处糊掉。 */
+.hero h1{color:#FFFFFF;text-shadow:0 2px 40px rgba(0,0,0,.55);}
+.hero .h-zh{color:rgba(255,255,255,.94);text-shadow:0 2px 30px rgba(0,0,0,.5);}
+body.lang-zh.lang-strict .hero .h-zh{color:rgba(255,255,255,.94);}
 </style>
 </head>
 <body>
