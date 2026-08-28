@@ -553,18 +553,11 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
     <p class="lead reveal">The technical track taught you to read a chart. These four stages are the rest of the journey — context, cause, risk, and routine.
       <span class="zh">技术面课程教你读懂一张图。这四个阶段是旅程的其余部分 —— 脉络、成因、风险，以及流程。</span></p>
 
-    <div class="journey-progress reveal" id="journeyProgress" aria-live="polite">
-      <div class="jp-top">
-        <div class="jp-title">Journey Progress <span class="zh">旅程进度</span></div>
-        <div class="jp-count"><span id="journeyDone">0</span>/<span id="journeyTotal">0</span></div>
-      </div>
-      <div class="jp-track"><div class="jp-fill" id="journeyFill"></div></div>
-      <div class="jp-note">Complete every exam in a stage to close the loop. Fundamentals is still in production.
-        <span class="zh">通过一个阶段内所有课程考核，即完成该阶段闭环。基本面还在制作中。</span></div>
-    </div>
+    <div class="note" style="max-width:820px;line-height:1.9;margin-top:26px;"><span class="en">// Every module below is written and reviewed. Nothing opens until the server can check who paid &mdash; a front-end lock protects nothing.</span><span class="zh">下面每一课都已经写好、审过。在服务器能判断谁付了费之前不会开放 —— 前端的锁挡不住任何东西。</span></div>
+
 
     <div class="path">
-    <a class="stage reveal" data-stage="1" data-courses="21" href="#stage-market">
+    <a class="stage reveal" data-stage="1" href="#stage-market">
       <div class="num">01</div>
       <h3>Market Context<span class="zh">市 场 脉 络</span></h3>
       <p>The data and central-bank decisions that move price in the first place - and why the surprise matters more than the number.<span class="zh">最初推动价格的那些数据与央行决议 —— 以及为什么意外幅度比数字本身更重要。</span></p>
@@ -576,13 +569,13 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
       <p>Rates, the Fed, and the chain that turns a number into a candle. Fifteen modules, in production.<span class="zh">利率、美联储，以及把一个数字变成一根 K 线的那条链。十五课，制作中。</span></p>
       <div class="cnt">15 Modules · 十五课</div>
     </a>
-    <a class="stage reveal" data-stage="3" data-courses="22,23,24" href="#stage-execution">
+    <a class="stage reveal" data-stage="3" href="#stage-execution">
       <div class="num">03</div>
       <h3>Execution &amp; Risk<span class="zh">执 行 与 风 控</span></h3>
       <p>Reading a chart is half the job. This is the other half - how much to put on, where the stop belongs, the loop that turns every trade into feedback, and the discipline to actually follow it.<span class="zh">看懂图只是一半。另一半在这里 —— 下多大、止损放哪、把每笔交易变成回馈的闭环，以及真的照做的纪律。</span></p>
       <div class="cnt">3 Modules · 三课</div>
     </a>
-    <a class="stage reveal" data-stage="4" data-courses="25,26,27" href="#stage-system">
+    <a class="stage reveal" data-stage="4" href="#stage-system">
       <div class="num">04</div>
       <h3>System &amp; Execution<span class="zh">系 统 与 执 行</span></h3>
       <p>Trade management, backtesting and the daily routine — turning decisions into a repeatable system.<span class="zh">交易管理、回测与每日流程 —— 把决策变成可重复的系统。</span></p>
@@ -600,14 +593,14 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
     </div>
   </div>
   <div class="grid">
-    <a class="mod reveal" data-mod="21" href="courses/US_High_Impact_Data_MakeTradesJourney.html">
+    <div class="mod reveal adv-mod is-ready" data-mod="21" data-course="courses/US_High_Impact_Data_MakeTradesJourney.html">
       <div class="idx"><span class="en">MODULE 21</span><span class="zh">模块 21</span></div>
       <h4>US High-Impact Data<span class="zh">美 国 高 影 响 数 据</span></h4>
       <p>From the data → to inflation → to the Fed's next move. NFP, CPI, PCE and rate decisions: what they measure and why price reacts the way it does.
         <span class="zh">从数据 → 通胀 → 美联储的下一步：非农、CPI、PCE 与利率决议衡量什么，价格为何这样反应。</span></p>
       <div class="chips"><span>The Data 数据</span><span>Inflation 通胀</span><span>The Fed 加减息</span></div>
-      <div class="go">Open Module <span class="ar">→</span></div>
-    </a>
+      <div class="go adv-go"><span class="en">Written · locked until launch</span><span class="zh">已完成 · 上线前锁定</span></div>
+    </div>
   </div>
   </section>
 
@@ -624,7 +617,7 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
   <section class="adv-progress reveal" id="progress-panel">
     <div class="adv-prog-head">
       <div><span class="en">Production progress</span><span class="zh">制作进度</span></div>
-      <div class="adv-prog-num"><span id="advDone">0</span> / 15</div>
+      <div class="adv-prog-num"><span id="advDone">0</span> / <span id="advTotal">0</span></div>
     </div>
     <div class="adv-prog-bar"><div class="adv-prog-fill" id="advFill"></div></div>
     <div class="adv-prog-note"><span class="en">// Lessons are written and reviewed before launch. Nothing is delivered until the server can check who paid — a front-end overlay protects nothing.</span><span class="zh">课程在上线前先写好、先审过。在服务器能判断谁付了费之前不会发送 —— 前端遮罩挡不住任何东西。</span></div>
@@ -786,30 +779,30 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
     </div>
   </div>
   <div class="grid">
-    <a class="mod reveal" data-mod="22" href="courses/Risk_Management_MakeTradesJourney.html">
+    <div class="mod reveal adv-mod is-ready" data-mod="22" data-course="courses/Risk_Management_MakeTradesJourney.html">
       <div class="idx"><span class="en">MODULE 22</span><span class="zh">模块 22</span></div>
       <h4>Risk &amp; Position Sizing<span class="zh">风 控 · 仓 位 计 算</span></h4>
       <p>Entries make the story - position size decides whether you're still here to tell it. The loss math, how to derive lot size, where the stop belongs, R:R, leverage and the three caps that keep an account alive.
         <span class="zh">进场决定故事精不精彩，仓位决定你还在不在场上。亏损的数学、手数怎么算、止损放哪、盈亏比、杠杆真相，以及让帐户活下来的三道防线。</span></p>
       <div class="chips"><span>Position Size 仓位</span><span>Stop Loss 止损</span><span>R:R 盈亏比</span><span>Leverage 杠杆</span></div>
-      <div class="go">Open Module <span class="ar">→</span></div>
-    </a>
-    <a class="mod reveal" data-mod="23" href="courses/Journal_Review_MakeTradesJourney.html">
+      <div class="go adv-go"><span class="en">Written · locked until launch</span><span class="zh">已完成 · 上线前锁定</span></div>
+    </div>
+    <div class="mod reveal adv-mod is-ready" data-mod="23" data-course="courses/Journal_Review_MakeTradesJourney.html">
       <div class="idx"><span class="en">MODULE 23</span><span class="zh">模块 23</span></div>
       <h4>The Journal &amp; Review Loop<span class="zh">交 易 日 志 · 复 盘</span></h4>
       <p>Memory is not a record - it's a story you tell yourself. What to log, the four quadrants of process vs. outcome, the daily / weekly / monthly loop, and how many trades it actually takes before your numbers mean anything.
         <span class="zh">记忆不是记录，是你说给自己听的故事。记什么、过程与结果的四象限、每日／每周／每月的复盘节奏，以及要做几笔交易，你的统计数字才开始有意义。</span></p>
       <div class="chips"><span>Four Quadrants 四象限</span><span>Review SOP 复盘</span><span>Expectancy 期望值</span><span>Sample Size 样本数</span></div>
-      <div class="go">Open Module <span class="ar">→</span></div>
-    </a>
-    <a class="mod reveal" data-mod="24" href="courses/Psychology_Discipline_MakeTradesJourney.html">
+      <div class="go adv-go"><span class="en">Written · locked until launch</span><span class="zh">已完成 · 上线前锁定</span></div>
+    </div>
+    <div class="mod reveal adv-mod is-ready" data-mod="24" data-course="courses/Psychology_Discipline_MakeTradesJourney.html">
       <div class="idx"><span class="en">MODULE 24</span><span class="zh">模块 24</span></div>
       <h4>Psychology &amp; Discipline<span class="zh">交 易 心 理 · 纪 律</span></h4>
       <p>You already know what to do - this is about doing it at 2am, down three trades. Loss aversion, the four killers, surviving a drawdown, the danger after a winning run, and how to externalise rules so they don't depend on willpower.
         <span class="zh">你早就知道该怎么做 —— 这一课处理的是凌晨两点连亏三单时还做不做得到。损失厌恶、四大杀手、连亏期怎么撑、赢钱之后的危险，以及如何把规则外部化，让纪律不再依赖意志力。</span></p>
       <div class="chips"><span>Loss Aversion 损失厌恶</span><span>Four Killers 四大杀手</span><span>Drawdown 连亏期</span><span>Daily SOP 每日流程</span></div>
-      <div class="go">Open Module <span class="ar">→</span></div>
-    </a>
+      <div class="go adv-go"><span class="en">Written · locked until launch</span><span class="zh">已完成 · 上线前锁定</span></div>
+    </div>
   </div>
   </section>
 
@@ -822,42 +815,42 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
     </div>
   </div>
   <div class="grid">
-    <a class="mod reveal" data-mod="25" href="courses/Trade_Management_MakeTradesJourney.html">
+    <div class="mod reveal adv-mod is-ready" data-mod="25" data-course="courses/Trade_Management_MakeTradesJourney.html">
       <div class="idx"><span class="en">MODULE 25</span><span class="zh">模块 25</span></div>
       <h4>Trade Management<span class="zh">交 易 管 理</span></h4>
       <div class="zh-t">持 仓 管 理</div>
       <p>Entry decides whether a trade can win; management decides whether it does. Three kinds of stop moves, scaling out, when to move to breakeven, and the time stop that ends a stalled trade.
         <span class="zh">进场决定一笔交易能不能赢；持仓管理决定它是否真的赢。三种止损移动、分批止盈、何时移到保本、以及结束僵持交易的时间止损。</span></p>
       <div class="chips"><span>Trailing 追踪</span><span>Scaling Out 分批止盈</span><span>Breakeven 保本</span><span>Time Stop 时间止损</span></div>
-      <div class="go">Open Module <span class="ar">→</span></div>
-    </a>
-    <a class="mod reveal" data-mod="26" href="courses/Backtesting_System_Design_MakeTradesJourney.html">
+      <div class="go adv-go"><span class="en">Written · locked until launch</span><span class="zh">已完成 · 上线前锁定</span></div>
+    </div>
+    <div class="mod reveal adv-mod is-ready" data-mod="26" data-course="courses/Backtesting_System_Design_MakeTradesJourney.html">
       <div class="idx"><span class="en">MODULE 26</span><span class="zh">模块 26</span></div>
       <h4>Backtesting &amp; System Design<span class="zh">回 测 与 系 统 设 计</span></h4>
       <p>Luck wears a disguise. Test before you trust: sample size, the five metrics that matter, overfitting traps, and the paper-trading bridge between a backtest and your real account.
         <span class="zh">运气会伪装。先测试再相信：样本量、五个关键指标、过拟合陷阱、以及连接回测与实盘账户的模拟交易桥梁。</span></p>
       <div class="chips"><span>Sample Size 样本量</span><span>Metrics 指标</span><span>Overfitting 过拟合</span><span>Paper Trade 模拟</span></div>
-      <div class="go">Open Module <span class="ar">→</span></div>
-    </a>
-    <a class="mod reveal" data-mod="27" href="courses/Trading_Plan_Routine_MakeTradesJourney.html">
+      <div class="go adv-go"><span class="en">Written · locked until launch</span><span class="zh">已完成 · 上线前锁定</span></div>
+    </div>
+    <div class="mod reveal adv-mod is-ready" data-mod="27" data-course="courses/Trading_Plan_Routine_MakeTradesJourney.html">
       <div class="idx"><span class="en">MODULE 27</span><span class="zh">模块 27</span></div>
       <h4>Trading Plan &amp; Routine<span class="zh">交 易 计 划 · 日 常</span></h4>
       <div class="zh-t">交 易 计 划 与 日 常</div>
       <p>A plan turns impulse into process. Pre-market checklist, in-session execution, the five-question review, cooldown rules that protect you from yourself, and the 30-day habit loop that makes it stick.
         <span class="zh">计划把冲动变成流程。盘前清单、盘中执行、盘后五问、保护你免于失控的冷却规则、以及让纪律生根的三十天习惯循环。</span></p>
       <div class="chips"><span>Checklist 清单</span><span>Cooldown 冷却</span><span>Review 复盘</span><span>30-Day Habit 习惯</span></div>
-      <div class="go">Open Module <span class="ar">→</span></div>
-    </a>
+      <div class="go adv-go"><span class="en">Written · locked until launch</span><span class="zh">已完成 · 上线前锁定</span></div>
+    </div>
   </div>
   </section>
 
 <section class="section closing" id="close">
   <div class="eyebrow reveal" style="justify-content:center;">Begin · 开始</div>
-  <h2 class="title reveal">Start with the context.<span class="zh">从市场脉络开始。</span></h2>
+  <h2 class="title reveal">Written. Not open yet.<span class="zh">已经写好，还没开放。</span></h2>
   <p class="lead reveal" style="margin-left:auto;margin-right:auto;">You don't need to be ready. You need to start, and then stay consistent long enough for the charts to start making sense.
     <span class="zh">你不需要准备好才开始，你需要开始，然后坚持到图表开始说得通的那一天。</span></p>
   <div class="cta-row reveal">
-    <a class="btn primary" href="courses/US_High_Impact_Data_MakeTradesJourney.html"><span class="en">Start: Market Context</span><span class="zh">从市场脉络开始</span> <span class="ar">→</span></a>
+    <a class="btn primary" href="#path"><span class="en">See the four stages</span><span class="zh">看四个阶段</span> <span class="ar">&#8595;</span></a>
     <a class="btn" href="courses.html"><span class="en">Back to the technical track</span><span class="zh">回 到 技 术 面 课 程</span></a>
   </div>
   <div class="quote reveal">学 习 · 交 易 · 盈 利 · 享 受</div>
@@ -1363,11 +1356,14 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
    这是「课程做到哪」的进度,不是学员的学习进度 —— 学习进度要等
    服务器上线、能分辨是谁在看之后才有意义。 */
 (function () {
-  var ready = document.querySelectorAll(".adv-mod.is-ready").length;
-  var total = document.querySelectorAll(".adv-mod").length;
+  /* 只数基本面的卡。课程卡现在也是 .adv-mod,用 class 数会把它们算进来,
+     分母就跟面板上写的 15 打架。 */
+  var ready = document.querySelectorAll(".adv-mod[data-fund].is-ready").length;
+  var total = document.querySelectorAll(".adv-mod[data-fund]").length;
   var numEl = document.getElementById("advDone");
   var fill = document.getElementById("advFill");
   if (numEl) numEl.textContent = ready;
+  var totEl = document.getElementById("advTotal"); if (totEl) totEl.textContent = total;
   if (fill) requestAnimationFrame(function () {
     fill.style.width = (total ? ready / total * 100 : 0) + "%";
   });
