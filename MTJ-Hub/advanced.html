@@ -109,23 +109,26 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 .hero h1{font-size:clamp(26px,6.4vw,74px);white-space:nowrap;}
 @media(max-width:560px){.hero h1{white-space:normal;}}
 /* Prism 封面。跟 lightfall 一样淡入,着色器就绪前不闪。 */
-/* 上游的示例框是 2:1(width:100%, height:600px),而 uPxScale 由高度算 ——
-   f.y 的范围恒等於 5/scale,跟解析度无关;f.x 才随长宽比变。封面若接近 1:1,
-   同一个 scale 就等於把镜头拉远一倍:棱镜变小、颗粒变粗,看起来就是一团朦
-   的光。让容器自己维持 2:1,再照抄上游的公式,构图才对得上。 */
-/* 铺满整个封面:从导航列下方一路到封面底部。
-   注意 uPxScale 若照上游用「高度」算,取景就会随封面比例乱掉(封面接近
-   1:1 时等於把镜头怼在棱镜正中,只剩一团过曝的光)。所以这里改用
-   uPxScale 照上游算(只看高度),一般桌面比例算出来就是官网那个构图;
-   视窗过窄或封面过高时由 prism.js 的 minHalfWidth 兜底。offset.y 把棱镜
-   往下摆,亮底边才落在按钮以下。 */
+/* 棱镜封面。uPxScale 照上游算(只看高度),一般桌面比例(1.5:1 到 2.5:1)
+   算出来就是官网那个构图;视窗过窄时由 prism.js 的 minHalfWidth 兜底。
+   画布本身的样式由 prism.js 设定 —— 这里不要再写 #prism canvas 那种规则,
+   一旦被弄丢,canvas 会以装置像素当行内元素排版,只看得到左上角一块。 */
 #prism{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;
   opacity:0;transition:opacity 1.6s ease;
   --pz-mask:linear-gradient(to bottom,transparent 0%,#000 8%,#000 84%,transparent 100%);
   mask-image:var(--pz-mask);-webkit-mask-image:var(--pz-mask);}
 #prism.is-live{opacity:1;}
+/* 直式手机的封面长宽比大约 0.46 —— 那个比例下棱镜只占画面三分之一,整片黑。
+   又让它撑满高度,几何上做不到 —— 铺满 hero 的结果是棱镜只占画面高度的
+   三分之一,整片黑。窄视窗改成一条 1.83:1 的光带 —— 那正是官网 demo 的
+   比例(实测 912×498),套上游公式算出来就是 f.x±2.54 f.y±1.39,
+   跟官网一模一样,minHalfWidth 兜底也不会触发。 */
+@media(max-aspect-ratio:1/1){
+  #prism{left:0;right:0;top:52%;bottom:auto;translate:0 -50%;height:auto;aspect-ratio:1 / 1;}
+  /* 直式手机上封面顶部原本留了 185px 死黑 —— 那是照桌机的 14vh 算的。
+     内距收掉一半,整块内容往上走,光带占的比重也就跟着变大。 */
+  .hero{min-height:84svh;padding-top:clamp(48px,7vh,88px);}
 }
-#prism canvas{width:100%;height:100%;display:block;}
 @media(prefers-reduced-motion:reduce){#prism{display:none;}}
 .hero .h-sub .zh{display:block;font-family:'Noto Sans SC';font-size:1.02em;color:inherit;margin-top:6px;}
 
@@ -1346,7 +1349,7 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
     mountPrism('#prism', { animationType: 'rotate', timeScale: 0.5, height: 3.5,
                            baseWidth: 5.5, scale: 3.6, hueShift: 0,
                            colorFrequency: 1, noise: 0, glow: 1,
-                           offset: { x: 0, y: -110 } });
+                           offsetRel: { x: 0, y: -0.13 } });
   }catch(e){ /* static cover stands on its own */ }
 /* Below the cover: star field, same silent-failure contract. */
   try{

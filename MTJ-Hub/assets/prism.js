@@ -145,6 +145,11 @@ const DEFAULTS = {
   animationType: 'rotate',   /* 'rotate' | 'hover' | '3drotate' */
   glow: 1,
   offset: { x: 0, y: 0 },
+  /* offsetRel:照画布尺寸的比例位移(x→右, y→下),范围 -1..1。
+     offset 是固定像素,容器一小就失准 —— 封面光带在桌机约 800px 高时
+     y:-110 只是微调,在手机上光带只有 280px,同一个值等於把棱镜推出画面。
+     要「不管萤幕多大都摆在同一个相对位置」就用这个。 */
+  offsetRel: null,
   noise: 0.5,
   transparent: true,
   scale: 3.6,
@@ -228,6 +233,13 @@ export function mountPrism(target, options = {}) {
   });
   if (!gl) return null;
 
+  /* 画布样式在这里定死,别依赖页面 CSS —— 页面那条规则一旦被弄丢,canvas
+     会以自己的装置像素尺寸当行内元素排版(750×750 塞进 375×375 的容器),
+     结果只看得到棱镜的左上角一块,看起来就像效果坏了。 */
+  Object.assign(canvas.style, {
+    position: 'absolute', inset: '0', width: '100%', height: '100%', display: 'block'
+  });
+
   let program;
   try {
     program = gl.createProgram();
@@ -294,7 +306,9 @@ export function mountPrism(target, options = {}) {
     canvas.height = h;
     gl.viewport(0, 0, w, h);
     gl.uniform2f(U.iResolution, w, h);
-    gl.uniform2f(U.uOffsetPx, (o.offset?.x ?? 0) * dpr, (o.offset?.y ?? 0) * dpr);
+    var offX = (o.offset?.x ?? 0) * dpr + (o.offsetRel?.x ?? 0) * w;
+    var offY = (o.offset?.y ?? 0) * dpr + (o.offsetRel?.y ?? 0) * h;
+    gl.uniform2f(U.uOffsetPx, offX, offY);
     var px = 1 / ((h || 1) * 0.1 * SCALE);          /* 上游:只看高度 */
     if (o.minHalfWidth) {                            /* 横向切太进去就兜底 */
       var minPx = o.minHalfWidth / ((w || 1) * 0.5);
