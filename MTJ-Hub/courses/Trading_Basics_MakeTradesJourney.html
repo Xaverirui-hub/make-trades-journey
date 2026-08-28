@@ -651,7 +651,7 @@ label:has(> .opt-why.is-on) .opt-why{flex:1 0 100%;padding-left:26px;}
 <section class="section" id="exam" style="padding-top:70px;">
   <div class="group-head reveal">
     <span class="tier">EXAM</span>
-    <div><div class="eyebrow"><span class="en">Module Check</span><span class="zh">模块测验</span></div><h2 class="title">Pass the Quiz to Unlock Module 02<span class="zh">通过测验解锁下一课</span></h2></div>
+    <div><div class="eyebrow"><span class="en">Module Check</span><span class="zh">模块测验</span></div><h2 class="title">Pass the Quiz to Unlock the Next Module<span class="zh">通过测验解锁下一课</span></h2></div>
   </div>
 <div class="note" id="examIntro" style="max-width:820px;line-height:1.9;"></div>
   <div id="examBox" style="max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:22px;"></div>
@@ -1051,7 +1051,7 @@ function gradeExam(){
   var res = document.getElementById("examResult");
   if(correct >= need){
     localStorage.setItem(MTJ_EXAM_KEY, "1");
-    res.innerHTML = "<div style='background:rgba(44,217,138,.1);border:1px solid rgba(44,217,138,.4);border-radius:14px;padding:22px;'><div style='color:var(--bull);font-weight:700;font-size:18px;margin-bottom:6px;'><span class='en'>PASSED - " + correct + "/" + total + "</span><span class='zh'>通过 - " + correct + "/" + total + "</span></div><div style='color:var(--muted);font-size:13.5px;'><span class='en'>Module 02 is unlocked.</span><span class='zh'>模块 02 已解锁。</span></div><a class='btn-next' href='Three_Types_of_Analysis_MakeTradesJourney.html'><span class='en'>Next: Three Types of Analysis</span><span class='zh'>下一课：三种分析方法</span> <span class='ar'>&#8594;</span></a></div>";
+    res.innerHTML = "<div style='background:rgba(44,217,138,.1);border:1px solid rgba(44,217,138,.4);border-radius:14px;padding:22px;'><div style='color:var(--bull);font-weight:700;font-size:18px;margin-bottom:6px;'><span class='en'>PASSED - " + correct + "/" + total + "</span><span class='zh'>通过 - " + correct + "/" + total + "</span></div><div style='color:var(--muted);font-size:13.5px;'><span class='en'>Next module unlocked.</span><span class='zh'>下一课已解锁。</span></div><a class='btn-next' href='Three_Types_of_Analysis_MakeTradesJourney.html'><span class='en'>Next: Three Types of Analysis</span><span class='zh'>下一课：三种分析方法</span> <span class='ar'>&#8594;</span></a></div>";
   } else {
     res.innerHTML = "<div style='background:rgba(255,92,99,.08);border:1px solid rgba(255,92,99,.35);border-radius:14px;padding:22px;'><div style='color:var(--bear);font-weight:700;font-size:18px;margin-bottom:6px;'>NOT PASSED - " + correct + "/" + total + " (" + Math.round(correct/total*100) + "%)</div><div style='color:var(--muted);font-size:13.5px;'>需要 70% (" + need + "/" + total + ")。阅读上面的错题解析，然后重试。</div></div>";
   }

@@ -33,6 +33,29 @@
                advanced:'advanced.html',
                ea:'ea.html', tools:'tools.html', about:'about.html' };
 
+
+  /* ===== 模块编号迁移 v2 =====
+     2026-08 把交易课程重排成 1-19、进阶 20-26、EA 27,并下架了平台课。
+     mtj_exam_pass_N 是学员的通过纪录,编号一动就对不上,所以在这里做一次
+     性映射。放 nav.js 是因为它全站共用,而且比各页的解锁逻辑先跑。
+     旧 25 同时被枢轴点与 EA 用过(撞号),取存在比较久的 EA。 */
+  try {
+    if (localStorage.getItem('mtj_renum_v2') !== '1') {
+      var REMAP = { 1:1, 2:2, 3:3, 4:4, 5:12, 6:13, 7:18, 8:15, 9:5, 10:19,
+                    11:17, 12:8, 13:9, 14:10, 15:6, 16:7, 17:20, 18:21,
+                    19:22, 20:23, 21:24, 22:25, 23:26, 25:27, 26:14, 27:11 };
+      var passed = [];
+      for (var k in REMAP) {
+        if (localStorage.getItem('mtj_exam_pass_' + k) === '1') passed.push(REMAP[k]);
+      }
+      /* 先清掉旧的整段,再写新的 —— 新旧号码会互相覆盖,不能就地改 */
+      for (var i = 1; i <= 27; i++) localStorage.removeItem('mtj_exam_pass_' + i);
+      for (var j = 0; j < passed.length; j++) {
+        localStorage.setItem('mtj_exam_pass_' + passed[j], '1');
+      }
+      localStorage.setItem('mtj_renum_v2', '1');
+    }
+  } catch (e) {}
   var pathn = location.pathname;
   var here  = pathn.slice(pathn.lastIndexOf('/') + 1) || 'MakeTradesJourney.html';
 
