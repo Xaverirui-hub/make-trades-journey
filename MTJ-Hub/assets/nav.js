@@ -75,6 +75,27 @@
       localStorage.setItem('mtj_renum_v3', '1');
     }
   } catch (e) {}
+
+  /* ===== 模块编号迁移 v4 =====
+     学习顺序改成「价格优先、指标最後」:指标原本排在第 5-11,小白还没学会
+     看一根 K 线就先学了七门指标,而课程页自己写着「指标只用来确认价格」。
+     顺带解掉两个前置依赖(背离要会认摆动结构、一目不再是第七门课)。
+     接在 v3 之後,只做一次位置对调。 */
+  try {
+    if (localStorage.getItem('mtj_renum_v4') !== '1') {
+      var R4 = { 5:14, 6:15, 7:16, 8:17, 9:18, 10:19, 11:20,
+                 12:5, 13:6, 14:7, 15:8, 16:9, 17:10, 18:11, 19:12, 20:13 };
+      var keep = [];
+      for (var a = 5; a <= 20; a++) {
+        if (localStorage.getItem('mtj_exam_pass_' + a) === '1') keep.push(R4[a]);
+        localStorage.removeItem('mtj_exam_pass_' + a);
+      }
+      for (var b = 0; b < keep.length; b++) {
+        localStorage.setItem('mtj_exam_pass_' + keep[b], '1');
+      }
+      localStorage.setItem('mtj_renum_v4', '1');
+    }
+  } catch (e) {}
   var pathn = location.pathname;
   var here  = pathn.slice(pathn.lastIndexOf('/') + 1) || 'MakeTradesJourney.html';
 
