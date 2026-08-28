@@ -56,6 +56,25 @@
       localStorage.setItem('mtj_renum_v2', '1');
     }
   } catch (e) {}
+
+  /* ===== 模块编号迁移 v3 =====
+     「均线 · 支撑阻力」拆成两门:均线留在 5,支撑与阻力新增为 15(阶段 05
+     最前面),所以 15 以後全部往後挪一格。v2 已经把大家正规化到旧的编号,
+     这里只要在它之上再做一次 +1。
+     旧 5 是那门合并课,通过纪录留给均线(主题以它为主),支撑与阻力从头开始。 */
+  try {
+    if (localStorage.getItem('mtj_renum_v3') !== '1') {
+      var moved = [];
+      for (var q = 27; q >= 15; q--) {
+        if (localStorage.getItem('mtj_exam_pass_' + q) === '1') moved.push(q + 1);
+        localStorage.removeItem('mtj_exam_pass_' + q);
+      }
+      for (var r = 0; r < moved.length; r++) {
+        localStorage.setItem('mtj_exam_pass_' + moved[r], '1');
+      }
+      localStorage.setItem('mtj_renum_v3', '1');
+    }
+  } catch (e) {}
   var pathn = location.pathname;
   var here  = pathn.slice(pathn.lastIndexOf('/') + 1) || 'MakeTradesJourney.html';
 
