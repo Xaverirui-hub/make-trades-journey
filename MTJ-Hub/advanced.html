@@ -541,6 +541,26 @@ body.lang-zh.lang-strict .hero .h-zh{color:rgba(255,255,255,.94);}
 .tc7{--c:255,159,69;}  /* 橙 */
 .tc8{--c:255,111,216;}  /* 粉 */
 .tc9{--c:182,226,74;}  /* 柠 */
+
+/* ===== RotatingText —— 卡片 CTA =====
+   .rt-word 收边是为了让字从边缘外滑进来;padding/margin 那一对是
+   给下沉部件留的空,不然 g、y 的尾巴会被裁掉。宽度由脚本量,
+   两句话不一样长时右边的箭头才不会跳。 */
+.mod .go .rt{display:inline-flex;position:relative;white-space:pre;overflow:hidden;
+  vertical-align:bottom;}
+.mod .go .rt-sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+.mod .go .rt-stage{display:inline-flex;flex-wrap:nowrap;white-space:pre;}
+.mod .go .rt-word{display:inline-flex;overflow:hidden;padding-bottom:.14em;margin-bottom:-.14em;}
+.mod .go .rt-char{display:inline-block;
+  transition-property:transform,opacity;transition-duration:420ms;}
+.mod .go .rt-char.rt-in{transform:translateY(100%);opacity:0;}
+.mod .go .rt-char.rt-out{transform:translateY(-120%);opacity:0;}
+.mod .go .rt-space{white-space:pre;}
+/* 能点的卡,CTA 平时就点着金色;点不进去的留在原来的灰。 */
+.mod:not(.mod-locked):not(.adv-mod) .go{color:var(--gold);transition:color .3s,text-shadow .3s;}
+.mod:not(.mod-locked):not(.adv-mod):hover .go{color:var(--gold-bright);
+  text-shadow:0 0 14px rgba(232,200,119,.45);}
 </style>
 </head>
 <body>
@@ -900,7 +920,7 @@ body.lang-zh.lang-strict .hero .h-zh{color:rgba(255,255,255,.94);}
       <div class="zh-t">E A 课 程</div>
       <p>Once your rules are written down and tested by hand, they can be handed to a robot. That track is hands-on: assemble the strategy in the Composer, then put it through the Backtest SOP. 当你的规则已经写下来、手动验证过，就可以交给机器人执行。那条线是动手的：先用 Composer 拼出策略，再拿去走一遍回测标准流程。</p>
       <div class="chips"><span class="tc tc9">Strategy Composer 拼装器</span><span class="tc tc1">Backtest SOP 回测流程</span><span class="tc tc2">MT5 EA</span></div>
-      <div class="go">OPEN TRACK →<span class="zh">打 开 课 程 →</span></div>
+      <div class="go"><span class="rt" data-rt-en="Open Track|The EA Path" data-rt-zh="打 开 课 程|E A 那 条 线"></span><span class="ar">&#8594;</span></div>
     </a>
   </div>
 </section>
@@ -1496,6 +1516,81 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
     });
   }, { rootMargin: '120px' });
   for(var m = 0; m < rows.length; m++) io.observe(rows[m]);
+})();
+</script>
+
+<script src="assets/rotatingtext.js"></script>
+<script>
+/* ===== 卡片 CTA 轮播 =====
+   只有按得进去的卡才转:锁着的卡装上这个效果等于骗人。
+   而且只有进了视窗的才在转 —— 二十张卡在後台各自跑一个 interval
+   是白烧,离开视窗就停。 */
+(function(){
+  if(typeof MTJRotatingText !== 'function') return;
+  var hosts = [].slice.call(document.querySelectorAll('.mod .go .rt[data-rt-en]'));
+  if(!hosts.length) return;
+
+  var reduce = false;
+  try{ reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){}
+
+  function lang(){ return document.body.classList.contains('lang-en') ? 'en' : 'zh'; }
+  function textsOf(h){
+    return (h.getAttribute('data-rt-' + lang()) || '').split('|').filter(Boolean);
+  }
+
+  var live = [], io = null;
+
+  function plain(h){                       /* 不转的:老老实实写第一句 */
+    h.style.width = '';
+    h.textContent = textsOf(h)[0] || '';
+  }
+
+  function build(){
+    live.forEach(function(r){ if(r.api) r.api.destroy(); });
+    live = [];
+    if(io){ io.disconnect(); io = null; }
+
+    hosts.forEach(function(h){
+      var card = h.closest('.mod');
+      /* 锁着的卡由 EXAM LOCK 打上 .mod-locked */
+      if(reduce || (card && card.classList.contains('mod-locked'))){ plain(h); return; }
+      var api = MTJRotatingText(h, {
+        texts: textsOf(h),
+        auto: false,
+        rotationInterval: 2800,
+        staggerDuration: 0.025,
+        staggerFrom: 'last',
+        stiffness: 400, damping: 30
+      });
+      if(api) live.push({ host: h, card: card || h, api: api });
+      else plain(h);
+    });
+    if(!live.length) return;
+
+    if(!('IntersectionObserver' in window)){
+      live.forEach(function(r){ r.api.start(); });
+      return;
+    }
+    var map = new WeakMap();
+    live.forEach(function(r){ map.set(r.card, r); });
+    io = new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        var r = map.get(e.target);
+        if(!r) return;
+        if(e.isIntersecting) r.api.start(); else r.api.stop();
+      });
+    }, { rootMargin: '100px' });
+    live.forEach(function(r){ io.observe(r.card); });
+  }
+
+  build();
+
+  /* setLang 不发事件,盯 body 的 class 就够了 */
+  var was = lang();
+  new MutationObserver(function(){
+    var now = lang();
+    if(now !== was){ was = now; build(); }
+  }).observe(document.body, { attributes: true, attributeFilter: ['class'] });
 })();
 </script>
 </body>

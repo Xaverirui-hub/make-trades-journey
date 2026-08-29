@@ -543,6 +543,28 @@ body.lang-zh.lang-strict .hero .h-zh{color:rgba(255,255,255,.94);}
 .tc7{--c:255,159,69;}  /* 橙 */
 .tc8{--c:255,111,216;}  /* 粉 */
 .tc9{--c:182,226,74;}  /* 柠 */
+
+/* ===== RotatingText —— 卡片 CTA =====
+   .rt-word 收边是为了让字从边缘外滑进来;padding/margin 那一对是
+   给下沉部件留的空,不然 g、y 的尾巴会被裁掉。宽度由脚本量,
+   两句话不一样长时右边的箭头才不会跳。 */
+.mod .go .rt{display:inline-flex;position:relative;white-space:pre;overflow:hidden;
+  vertical-align:bottom;}
+.mod .go .rt-sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+.mod .go .rt-stage{display:inline-flex;flex-wrap:nowrap;white-space:pre;}
+.mod .go .rt-word{display:inline-flex;overflow:hidden;padding-bottom:.14em;margin-bottom:-.14em;}
+.mod .go .rt-char{display:inline-block;
+  transition-property:transform,opacity;transition-duration:420ms;}
+.mod .go .rt-char.rt-in{transform:translateY(100%);opacity:0;}
+.mod .go .rt-char.rt-out{transform:translateY(-120%);opacity:0;}
+.mod .go .rt-space{white-space:pre;}
+/* 能点的卡,CTA 平时就点着金色;点不进去的留在原来的灰。
+   光靠字在动还不够 —— 原本这行是整张卡上最暗的东西,颜色不改,
+   动起来也只是「暗处有东西在抖」。 */
+.mod:not(.mod-locked) .go{color:var(--gold);transition:color .3s,text-shadow .3s;}
+.mod:not(.mod-locked):hover .go{color:var(--gold-bright);
+  text-shadow:0 0 14px rgba(232,200,119,.45);}
 </style>
 </head>
 <body>
@@ -672,7 +694,7 @@ body.lang-zh.lang-strict .hero .h-zh{color:rgba(255,255,255,.94);}
       <p>The foundation every trader must know before the first trade - what currencies are, how a pair is quoted, and what price is really telling you.
         <span class="zh">下第一单之前必须掌握的基础：货币是什么、货币对怎么报价、价格到底在说什么。</span></p>
       <div class="chips"><span class="tc tc1">Currencies 货币</span><span class="tc tc2">Pairs &amp; Price 报价</span><span class="tc tc3">Price Action 价格</span></div>
-      <div class="go">Open Module <span class="ar">→</span></div>
+      <div class="go"><span class="rt" data-rt-en="Open Module|Start Learning|Read the Lesson" data-rt-zh="打 开 课 程|开 始 学 习|进 去 读 一 遍"></span><span class="ar">&#8594;</span></div>
     </a>
     <a class="mod reveal" data-mod="2" href="courses/Three_Types_of_Analysis_MakeTradesJourney.html">
       <div class="idx"><span class="en">MODULE 2</span><span class="zh">模块 2</span></div>
@@ -681,7 +703,7 @@ body.lang-zh.lang-strict .hero .h-zh{color:rgba(255,255,255,.94);}
       <p>The red pill, the green pill, or the blue pill - technical, fundamental or sentiment. Pick the lens you'll read the market through.
         <span class="zh">红色、绿色还是蓝色药丸 —— 技术面、基本面还是情绪面？选择你看市场的那副眼镜。</span></p>
       <div class="chips"><span class="tc tc4">Technical 技术面</span><span class="tc tc5">Fundamental 基本面</span><span class="tc tc6">Sentiment 情绪面</span></div>
-      <div class="go">Open Module <span class="ar">→</span></div>
+      <div class="go"><span class="rt" data-rt-en="Open Module|Start Learning|Read the Lesson" data-rt-zh="打 开 课 程|开 始 学 习|进 去 读 一 遍"></span><span class="ar">&#8594;</span></div>
     </a>
     <a class="mod reveal" data-mod="3" href="courses/Trading_Sessions_MakeTradesJourney.html">
       <div class="idx"><span class="en">MODULE 3</span><span class="zh">模块 3</span></div>
@@ -690,7 +712,7 @@ body.lang-zh.lang-strict .hero .h-zh{color:rgba(255,255,255,.94);}
       <p>Asian, London, New York - when to trade, what to trade in each window, and how gold behaves as the sessions hand over.
         <span class="zh">亚洲、伦敦、纽约 —— 什么时候交易、各时段适合什么品种，以及黄金在交接时的表现。</span></p>
       <div class="chips"><span class="tc tc7">24 Hours 全天</span><span class="tc tc8">3 Sessions 三时段</span><span class="tc tc9">Gold 黄金</span></div>
-      <div class="go">Open Module <span class="ar">→</span></div>
+      <div class="go"><span class="rt" data-rt-en="Open Module|Start Learning|Read the Lesson" data-rt-zh="打 开 课 程|开 始 学 习|进 去 读 一 遍"></span><span class="ar">&#8594;</span></div>
     </a>
     <a class="mod reveal" data-mod="4" href="courses/Trading_Instruments_MakeTradesJourney.html">
       <div class="idx"><span class="en">MODULE 4</span><span class="zh">模块 4</span></div>
@@ -699,7 +721,7 @@ body.lang-zh.lang-strict .hero .h-zh{color:rgba(255,255,255,.94);}
       <p>Beyond forex - gold, silver, oil and the big indices. What moves them, when they trade, and why they matter.
         <span class="zh">外汇之外：黄金、白银、原油与主要指数。什么驱动它们、何时活跃、为什么重要。</span></p>
       <div class="chips"><span class="tc tc1">Metals 金属</span><span class="tc tc2">Oil 原油</span><span class="tc tc3">Indices 指数</span></div>
-      <div class="go">Open Module <span class="ar">→</span></div>
+      <div class="go"><span class="rt" data-rt-en="Open Module|Start Learning|Read the Lesson" data-rt-zh="打 开 课 程|开 始 学 习|进 去 读 一 遍"></span><span class="ar">&#8594;</span></div>
     </a>
   </div>
 
@@ -719,7 +741,7 @@ body.lang-zh.lang-strict .hero .h-zh{color:rgba(255,255,255,.94);}
       <p>Read the market's emotion - one candle at a time. From the anatomy of a single bar to the single, dual and triple formations that signal a turn.
         <span class="zh">一根一根地读懂市场情绪：从单根 K 线的结构，到单根、双根、三根组合所暗示的转折。</span></p>
       <div class="chips"><span class="tc tc4">Anatomy 解剖</span><span class="tc tc5">Single 单根</span><span class="tc tc6">Dual 双根</span><span class="tc tc7">Triple 三根</span></div>
-      <div class="go">Open Module <span class="ar">→</span></div>
+      <div class="go"><span class="rt" data-rt-en="Open Module|Start Learning|Read the Lesson" data-rt-zh="打 开 课 程|开 始 学 习|进 去 读 一 遍"></span><span class="ar">&#8594;</span></div>
     </a>
     <a class="mod reveal" data-mod="6" href="courses/Chart_Patterns_MakeTradesJourney.html">
       <div class="idx"><span class="en">MODULE 6</span><span class="zh">模块 6</span></div>
@@ -728,7 +750,7 @@ body.lang-zh.lang-strict .hero .h-zh{color:rgba(255,255,255,.94);}
       <p>Patterns repeat - and hint at what comes next. Reversals, continuations, wedges and the cup &amp; handle, with the break and the target on every chart.
         <span class="zh">形态会重复，也会暗示下一步：反转、持续、楔形与杯柄，每张图都标出突破位与目标位。</span></p>
       <div class="chips"><span class="tc tc8">Reversal 反转</span><span class="tc tc9">Continuation 持续</span><span class="tc tc1">Wedge &amp; Cup 楔形杯柄</span></div>
-      <div class="go">Open Module <span class="ar">→</span></div>
+      <div class="go"><span class="rt" data-rt-en="Open Module|Start Learning|Read the Lesson" data-rt-zh="打 开 课 程|开 始 学 习|进 去 读 一 遍"></span><span class="ar">&#8594;</span></div>
     </a>
     <a class="mod reveal" data-mod="7" href="courses/Elliott_Wave_MakeTradesJourney.html">
       <div class="idx"><span class="en">MODULE 7</span><span class="zh">模块 7</span></div>
@@ -737,7 +759,7 @@ body.lang-zh.lang-strict .hero .h-zh{color:rgba(255,255,255,.94);}
       <p>Five waves with the trend, three against it. The three rules that cannot be broken - and what a wave count honestly cannot tell you.
         <span class="zh">顺势五浪，逆势三浪。三条不能破的规则 —— 以及数浪诚实来说给不了你什么。</span></p>
       <div class="chips"><span class="tc tc2">5-3 Structure 结构</span><span class="tc tc3">Three Rules 三规则</span><span class="tc tc4">Fib Targets 比例</span></div>
-      <div class="go">Open Module <span class="ar">&#8594;</span></div>
+      <div class="go"><span class="rt" data-rt-en="Open Module|Start Learning|Read the Lesson" data-rt-zh="打 开 课 程|开 始 学 习|进 去 读 一 遍"></span><span class="ar">&#8594;</span></div>
     </a>
   </div>
 
@@ -757,7 +779,7 @@ body.lang-zh.lang-strict .hero .h-zh{color:rgba(255,255,255,.94);}
       <p>Not the line you drew - the orders that were already sitting there. Zones, the flip, and why most breakouts fail.
         <span class="zh">不是你画的那条线 —— 是本来就堆在那里的订单。区间、角色互换，以及多数突破为什么会失败。</span></p>
       <div class="chips"><span class="tc tc5">Zones 区间</span><span class="tc tc6">Flip 互换</span><span class="tc tc7">Retest 回踩</span></div>
-      <div class="go">Open Module <span class="ar">&#8594;</span></div>
+      <div class="go"><span class="rt" data-rt-en="Open Module|Start Learning|Read the Lesson" data-rt-zh="打 开 课 程|开 始 学 习|进 去 读 一 遍"></span><span class="ar">&#8594;</span></div>
     </a>
     <a class="mod reveal" data-mod="9" href="courses/Supply_Demand_MakeTradesJourney.html">
       <div class="idx"><span class="en">MODULE 9</span><span class="zh">模块 9</span></div>
@@ -766,7 +788,7 @@ body.lang-zh.lang-strict .hero .h-zh{color:rgba(255,255,255,.94);}
       <p>Price leaves footprints where institutions traded. A zone is not a line - it is a drawer of resting orders. Learn to spot the origin of a move and trade the return to base.
         <span class="zh">价格在机构成交过的地方留下脚印。区域不是一条线 —— 它是一个装着挂单的抽屉。学会识别一波行情的起点，交易价格回到原点的回测。</span></p>
       <div class="chips"><span class="tc tc8">Order Blocks 订单块</span><span class="tc tc9">RTB 回测</span><span class="tc tc1">Zone vs Line 区与线</span><span class="tc tc2">Invalidation 失效</span></div>
-      <div class="go">Open Module <span class="ar">→</span></div>
+      <div class="go"><span class="rt" data-rt-en="Open Module|Start Learning|Read the Lesson" data-rt-zh="打 开 课 程|开 始 学 习|进 去 读 一 遍"></span><span class="ar">&#8594;</span></div>
     </a>
     <a class="mod reveal" data-mod="10" href="courses/Pivot_Points_MakeTradesJourney.html">
       <div class="idx"><span class="en">MODULE 10</span><span class="zh">模块 10</span></div>
@@ -775,7 +797,7 @@ body.lang-zh.lang-strict .hero .h-zh{color:rgba(255,255,255,.94);}
       <p>Levels the whole market computes the same way, fixed before the session opens. The central pivot as a bias line, fading versus following.
         <span class="zh">整个市场用同一条公式算出来的价位，开盘前就定好。中枢当多空分界，做回归还是做突破。</span></p>
       <div class="chips"><span class="tc tc3">P R1 S1</span><span class="tc tc4">Bias 多空分界</span><span class="tc tc5">Fade / Follow 回归 突破</span></div>
-      <div class="go">Open Module <span class="ar">&#8594;</span></div>
+      <div class="go"><span class="rt" data-rt-en="Open Module|Start Learning|Read the Lesson" data-rt-zh="打 开 课 程|开 始 学 习|进 去 读 一 遍"></span><span class="ar">&#8594;</span></div>
     </a>
     <a class="mod reveal" data-mod="11" href="courses/Multi_Timeframe_Trading_MakeTradesJourney.html">
       <div class="idx"><span class="en">MODULE 11</span><span class="zh">模块 11</span></div>
@@ -784,7 +806,7 @@ body.lang-zh.lang-strict .hero .h-zh{color:rgba(255,255,255,.94);}
       <p>Zoom out for direction, zoom in for the entry. The three-step top-down routine and what it means when your timeframes finally agree.
         <span class="zh">放大看方向，缩小找进场：由上而下的三步流程，以及多周期共振代表什么。</span></p>
       <div class="chips"><span class="tc tc6">Top-Down 三步</span><span class="tc tc7">Alignment 共振</span></div>
-      <div class="go">Open Module <span class="ar">→</span></div>
+      <div class="go"><span class="rt" data-rt-en="Open Module|Start Learning|Read the Lesson" data-rt-zh="打 开 课 程|开 始 学 习|进 去 读 一 遍"></span><span class="ar">&#8594;</span></div>
     </a>
   </div>
 
@@ -804,7 +826,7 @@ body.lang-zh.lang-strict .hero .h-zh{color:rgba(255,255,255,.94);}
       <p>The market remembers where it has been defended. Two points draw the line, the third touch validates it - then you wait for the break or the bounce. Channels turn the same idea into a tradable range.
         <span class="zh">市场记得自己被防守过的地方。两点连线，三次触碰验证 —— 然后等突破或反弹。通道把同一个想法变成可交易的区间。</span></p>
       <div class="chips"><span class="tc tc8">How to Draw 怎么画</span><span class="tc tc9">Breakouts 突破</span><span class="tc tc1">Fakeouts 假突破</span><span class="tc tc2">Channels 通道</span></div>
-      <div class="go">Open Module <span class="ar">→</span></div>
+      <div class="go"><span class="rt" data-rt-en="Open Module|Start Learning|Read the Lesson" data-rt-zh="打 开 课 程|开 始 学 习|进 去 读 一 遍"></span><span class="ar">&#8594;</span></div>
     </a>
     <a class="mod reveal" data-mod="13" href="courses/Fibonacci_MakeTradesJourney.html">
       <div class="idx"><span class="en">MODULE 13</span><span class="zh">模块 13</span></div>
@@ -813,7 +835,7 @@ body.lang-zh.lang-strict .hero .h-zh{color:rgba(255,255,255,.94);}
       <p>Read the market's retracements - and where it may turn. The ratios, how to anchor them correctly, the golden pocket, and extension targets.
         <span class="zh">读懂价格回撤，找到可能反转的位置：比率、正确的锚定方法、黄金口袋与扩展目标位。</span></p>
       <div class="chips"><span class="tc tc3">The Ratios 比率</span><span class="tc tc4">How to Draw 画法</span><span class="tc tc5">Golden Pocket 黄金口袋</span></div>
-      <div class="go">Open Module <span class="ar">→</span></div>
+      <div class="go"><span class="rt" data-rt-en="Open Module|Start Learning|Read the Lesson" data-rt-zh="打 开 课 程|开 始 学 习|进 去 读 一 遍"></span><span class="ar">&#8594;</span></div>
     </a>
   </div>
 
@@ -833,7 +855,7 @@ body.lang-zh.lang-strict .hero .h-zh{color:rgba(255,255,255,.94);}
       <p>A line that walks behind price on purpose. Slope, side, and the one place it reliably fails.
         <span class="zh">一条刻意走在价格後面的线。斜率、站哪边，以及它必定失效的那个地方。</span></p>
       <div class="chips"><span class="tc tc6">SMA vs EMA</span><span class="tc tc7">Slope 斜率</span><span class="tc tc8">Whipsaw 来回打脸</span></div>
-      <div class="go">Open Module <span class="ar">&#8594;</span></div>
+      <div class="go"><span class="rt" data-rt-en="Open Module|Start Learning|Read the Lesson" data-rt-zh="打 开 课 程|开 始 学 习|进 去 读 一 遍"></span><span class="ar">&#8594;</span></div>
     </a>
     <a class="mod reveal" data-mod="15" href="courses/Bollinger_Bands_MakeTradesJourney.html">
       <div class="idx"><span class="en">MODULE 15</span><span class="zh">模块 15</span></div>
@@ -842,7 +864,7 @@ body.lang-zh.lang-strict .hero .h-zh{color:rgba(255,255,255,.94);}
       <p>Squeeze, walk and mean-reversion - the band that adapts to volatility and tells you when calm is about to end.
         <span class="zh">挤压、贴轨与回归中轨：自适应波动率的通道，告诉你平静何时结束。</span></p>
       <div class="chips"><span class="tc tc9">Squeeze 挤压</span><span class="tc tc1">The Walk 贴轨</span><span class="tc tc2">Volatility 波动率</span></div>
-      <div class="go">OPEN MODULE →<span class="zh">打 开 课 程 →</span></div>
+      <div class="go"><span class="rt" data-rt-en="Open Module|Start Learning|Read the Lesson" data-rt-zh="打 开 课 程|开 始 学 习|进 去 读 一 遍"></span><span class="ar">&#8594;</span></div>
     </a>
     <a class="mod reveal" data-mod="16" href="courses/Ichimoku_MakeTradesJourney.html">
       <div class="idx"><span class="en">MODULE 16</span><span class="zh">模块 16</span></div>
@@ -851,7 +873,7 @@ body.lang-zh.lang-strict .hero .h-zh{color:rgba(255,255,255,.94);}
       <p>Five lines, one cloud - trend, support and momentum in a single glance. The complete system Japanese traders built.
         <span class="zh">五线一云：趋势、支撑与动量一眼看全。日本交易者构建的完整系统。</span></p>
       <div class="chips"><span class="tc tc3">Kumo 云</span><span class="tc tc4">Tenkan/Kijun</span><span class="tc tc5">Chikou 迟行线</span></div>
-      <div class="go">OPEN MODULE →<span class="zh">打 开 课 程 →</span></div>
+      <div class="go"><span class="rt" data-rt-en="Open Module|Start Learning|Read the Lesson" data-rt-zh="打 开 课 程|开 始 学 习|进 去 读 一 遍"></span><span class="ar">&#8594;</span></div>
     </a>
   </div>
 
@@ -870,7 +892,7 @@ body.lang-zh.lang-strict .hero .h-zh{color:rgba(255,255,255,.94);}
       <div class="zh-t">相 对 强 弱 指 标</div>
       <p>Overbought, oversold and the divergence that catches turns - read momentum like a dial, not a crystal ball. 超买超卖与背离：把动量当仪表盘读，而不是水晶球。</p>
       <div class="chips"><span class="tc tc6">Overbought 超买</span><span class="tc tc7">Divergence 背离</span><span class="tc tc8">Trend 趋势</span></div>
-      <div class="go">OPEN MODULE →<span class="zh">打 开 课 程 →</span></div>
+      <div class="go"><span class="rt" data-rt-en="Open Module|Start Learning|Read the Lesson" data-rt-zh="打 开 课 程|开 始 学 习|进 去 读 一 遍"></span><span class="ar">&#8594;</span></div>
     </a>
     <a class="mod reveal" data-mod="18" href="courses/Stochastic_Indicator_MakeTradesJourney.html">
       <div class="idx"><span class="en">MODULE 18</span><span class="zh">模块 18</span></div>
@@ -878,7 +900,7 @@ body.lang-zh.lang-strict .hero .h-zh{color:rgba(255,255,255,.94);}
       <div class="zh-t">随 机 指 标</div>
       <p>Where is price inside its own range? %K, %D and the crosses that fire in ranging markets. 价格在自己区间里的位置：%K、%D 与震荡市的交叉信号。</p>
       <div class="chips"><span class="tc tc9">%K/%D</span><span class="tc tc1">Cross 交叉</span><span class="tc tc2">Range 震荡</span></div>
-      <div class="go">OPEN MODULE →<span class="zh">打 开 课 程 →</span></div>
+      <div class="go"><span class="rt" data-rt-en="Open Module|Start Learning|Read the Lesson" data-rt-zh="打 开 课 程|开 始 学 习|进 去 读 一 遍"></span><span class="ar">&#8594;</span></div>
     </a>
     <a class="mod reveal" data-mod="19" href="courses/MACD_Indicator_MakeTradesJourney.html">
       <div class="idx"><span class="en">MODULE 19</span><span class="zh">模块 19</span></div>
@@ -886,7 +908,7 @@ body.lang-zh.lang-strict .hero .h-zh{color:rgba(255,255,255,.94);}
       <div class="zh-t">移 动 平 均 收 敛 散 发</div>
       <p>The MT5 single-line MACD - line, signal, histogram and the momentum story they tell together. MT5 单线 MACD：线、信号、柱状图与它们合讲的动量故事。</p>
       <div class="chips"><span class="tc tc3">Signal 信号线</span><span class="tc tc4">Histogram 柱</span><span class="tc tc5">MT5 Style<span class="zh">MT5 风格</span></span></div>
-      <div class="go">OPEN MODULE →<span class="zh">打 开 课 程 →</span></div>
+      <div class="go"><span class="rt" data-rt-en="Open Module|Start Learning|Read the Lesson" data-rt-zh="打 开 课 程|开 始 学 习|进 去 读 一 遍"></span><span class="ar">&#8594;</span></div>
     </a>
     <a class="mod reveal" data-mod="20" href="courses/Divergences_MakeTradesJourney.html">
       <div class="idx"><span class="en">MODULE 20</span><span class="zh">模块 20</span></div>
@@ -895,7 +917,7 @@ body.lang-zh.lang-strict .hero .h-zh{color:rgba(255,255,255,.94);}
       <p>Price makes a new high; momentum does not. Regular versus hidden, how to draw it honestly, and why it needs a trigger.
         <span class="zh">价格创了新高，动能没有。常规与隐藏的差别、怎么诚实地画，以及它为什么需要一个触发。</span></p>
       <div class="chips"><span class="tc tc6">Regular 常规</span><span class="tc tc7">Hidden 隐藏</span><span class="tc tc8">Trigger 触发</span></div>
-      <div class="go">Open Module <span class="ar">&#8594;</span></div>
+      <div class="go"><span class="rt" data-rt-en="Open Module|Start Learning|Read the Lesson" data-rt-zh="打 开 课 程|开 始 学 习|进 去 读 一 遍"></span><span class="ar">&#8594;</span></div>
     </a>
   </div>
   <!-- The EA track lives on its own page: it is a different discipline, not a
@@ -910,7 +932,7 @@ body.lang-zh.lang-strict .hero .h-zh{color:rgba(255,255,255,.94);}
       <div class="zh-t">E A 课 程</div>
       <p>Once your rules are written down and tested by hand, they can be handed to a robot. That track is hands-on: assemble the strategy in the Composer, then put it through the Backtest SOP. 当你的规则已经写下来、手动验证过，就可以交给机器人执行。那条线是动手的：先用 Composer 拼出策略，再拿去走一遍回测标准流程。</p>
       <div class="chips"><span class="tc tc9">Strategy Composer 拼装器</span><span class="tc tc1">Backtest SOP 回测流程</span><span class="tc tc2">MT5 EA</span></div>
-      <div class="go">OPEN TRACK →<span class="zh">打 开 课 程 →</span></div>
+      <div class="go"><span class="rt" data-rt-en="Open Track|The EA Path" data-rt-zh="打 开 课 程|E A 那 条 线"></span><span class="ar">&#8594;</span></div>
     </a>
   </div>
 </section>
@@ -1038,6 +1060,9 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
       a.style.opacity = "0.45";
       a.style.pointerEvents = "none";
       a.style.filter = "grayscale(0.6)";
+      /* CTA 轮播靠这个标记跳过锁着的卡 —— 那个效果本身就是在说
+         「这里能点」,挂在点不进去的卡上就是骗人。 */
+      a.classList.add("mod-locked");
       // 加锁标记
       var lock = document.createElement("div");
       lock.style.cssText = "font-size:11px;color:var(--gold);letter-spacing:.12em;margin-top:8px;font-family:'JetBrains Mono',monospace;";
@@ -1476,6 +1501,81 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
     });
   }, { rootMargin: '120px' });
   for(var m = 0; m < rows.length; m++) io.observe(rows[m]);
+})();
+</script>
+
+<script src="assets/rotatingtext.js"></script>
+<script>
+/* ===== 卡片 CTA 轮播 =====
+   只有按得进去的卡才转:锁着的卡装上这个效果等于骗人。
+   而且只有进了视窗的才在转 —— 二十张卡在後台各自跑一个 interval
+   是白烧,离开视窗就停。 */
+(function(){
+  if(typeof MTJRotatingText !== 'function') return;
+  var hosts = [].slice.call(document.querySelectorAll('.mod .go .rt[data-rt-en]'));
+  if(!hosts.length) return;
+
+  var reduce = false;
+  try{ reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){}
+
+  function lang(){ return document.body.classList.contains('lang-en') ? 'en' : 'zh'; }
+  function textsOf(h){
+    return (h.getAttribute('data-rt-' + lang()) || '').split('|').filter(Boolean);
+  }
+
+  var live = [], io = null;
+
+  function plain(h){                       /* 不转的:老老实实写第一句 */
+    h.style.width = '';
+    h.textContent = textsOf(h)[0] || '';
+  }
+
+  function build(){
+    live.forEach(function(r){ if(r.api) r.api.destroy(); });
+    live = [];
+    if(io){ io.disconnect(); io = null; }
+
+    hosts.forEach(function(h){
+      var card = h.closest('.mod');
+      /* 锁着的卡由 EXAM LOCK 打上 .mod-locked */
+      if(reduce || (card && card.classList.contains('mod-locked'))){ plain(h); return; }
+      var api = MTJRotatingText(h, {
+        texts: textsOf(h),
+        auto: false,
+        rotationInterval: 2800,
+        staggerDuration: 0.025,
+        staggerFrom: 'last',
+        stiffness: 400, damping: 30
+      });
+      if(api) live.push({ host: h, card: card || h, api: api });
+      else plain(h);
+    });
+    if(!live.length) return;
+
+    if(!('IntersectionObserver' in window)){
+      live.forEach(function(r){ r.api.start(); });
+      return;
+    }
+    var map = new WeakMap();
+    live.forEach(function(r){ map.set(r.card, r); });
+    io = new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        var r = map.get(e.target);
+        if(!r) return;
+        if(e.isIntersecting) r.api.start(); else r.api.stop();
+      });
+    }, { rootMargin: '100px' });
+    live.forEach(function(r){ io.observe(r.card); });
+  }
+
+  build();
+
+  /* setLang 不发事件,盯 body 的 class 就够了 */
+  var was = lang();
+  new MutationObserver(function(){
+    var now = lang();
+    if(now !== was){ was = now; build(); }
+  }).observe(document.body, { attributes: true, attributeFilter: ['class'] });
 })();
 </script>
 </body>
