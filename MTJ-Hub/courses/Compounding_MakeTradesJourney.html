@@ -1004,6 +1004,104 @@ body.lang-zh.lang-strict .hero .h-zh{color:rgba(255,255,255,.94);}
 </section>
 
 
+<!-- ================= PART 05 &middot; THE LADDER ================= -->
+<section class="divider">
+  <div class="rail reveal"><span class="en">Part 05</span><span class="zh">第五部分</span></div>
+  <h2 class="reveal"><span class="en">Put It on a Ladder</span></h2>
+  <div class="zh reveal">把 它 排 成 一 张 表</div>
+</section>
+
+<section class="section" id="ladder">
+  <div class="group-head reveal"><span class="tier">05</span>
+    <div><div class="eyebrow"><span class="en">From idea to worksheet</span><span class="zh">从概念到工作表</span></div><h2 class="title"><span class="en">Every Step Has a Number</span><span class="zh">每一阶都有一个数字</span></h2></div></div>
+
+  <article class="pattern reveal">
+    <div class="pattern-head"><span class="idx">P.09</span><h3>The Step Ladder<span class="zh">阶 梯 表</span></h3><span class="tag bull"><span class="en">Do this</span><span class="zh">照着做</span></span></div>
+    <div class="pattern-desc">
+      <p>Everything above is a principle until you can see the next number. The ladder turns it into one: pick a gain
+        per step, and every rung tells you exactly what that step has to earn and what lot size the balance supports.
+        <span class="zh">上面讲的都还只是道理，直到你能看见下一个数字。阶梯表把它变成数字：定一个每阶涨幅，每一级就会告诉你这一阶要赚出多少、这个余额撑得起多少手。</span></p>
+      <p>Three columns, three formulas. That is the whole worksheet.
+        <span class="zh">三栏、三条公式，整张表就这些。</span></p>
+      <div class="steps">
+        <div class="step">
+          <div class="sn"><span class="en">Column 01</span><span class="zh">第一栏</span></div>
+          <h4>Balance<span class="zh">余额</span></h4>
+          <p>B(n) = B(n−1) × (1 + r). The balance carries forward; that is the compounding.
+            <span style="display:block;font-family:'Noto Sans SC';color:var(--muted);font-size:12.5px;margin-top:6px;">余额往下滚，滚下去的那一步就是复利。</span></p>
+          <div class="out"><span class="en">&rarr; Carries forward</span><span class="zh">往下滚</span></div>
+        </div>
+        <div class="step">
+          <div class="sn"><span class="en">Column 02</span><span class="zh">第二栏</span></div>
+          <h4>Target<span class="zh">目标</span></h4>
+          <p>C(n) = B(n) − B(n−1). The dollars this step has to produce. It grows every rung, which is the point.
+            <span style="display:block;font-family:'Noto Sans SC';color:var(--muted);font-size:12.5px;margin-top:6px;">这一阶要赚出来的钱。它每一级都在变大 —— 那正是重点。</span></p>
+          <div class="out"><span class="en">&rarr; Grows every rung</span><span class="zh">每级都变大</span></div>
+        </div>
+        <div class="step">
+          <div class="sn"><span class="en">Column 03</span><span class="zh">第三栏</span></div>
+          <h4>Lot size<span class="zh">手数</span></h4>
+          <p>D(n) = B(n−1) ÷ 10,000 &mdash; 0.01 lots per $100, taken on <b>last</b> rung's balance, because this step's profit does not exist yet.
+            <span style="display:block;font-family:'Noto Sans SC';color:var(--muted);font-size:12.5px;margin-top:6px;">每 100 美元余额 0.01 手，按【上一阶】的余额算 —— 进场那一刻，这一阶的利润还没赚到。</span></p>
+          <div class="out"><span class="en">&rarr; Floor to 0.01</span><span class="zh">向下取到 0.01</span></div>
+        </div>
+      </div>
+
+      <p>Here is what that looks like starting from 100 at 5% a step. Read the last column of the last row before you
+        read anything else.
+        <span class="zh">从 100 起、每阶 5%，长成下面这样。先看最後一行的最後一栏，再看别的。</span></p>
+      <table class="tbl">
+        <thead><tr>
+          <th><span class="en">Step</span><span class="zh">阶</span></th>
+          <th><span class="en">Start</span><span class="zh">起始余额</span></th>
+          <th><span class="en">Target</span><span class="zh">这阶要赚</span></th>
+          <th><span class="en">Lot</span><span class="zh">手数</span></th>
+          <th><span class="en">End</span><span class="zh">结束余额</span></th>
+        </tr></thead>
+        <tbody>
+          <tr><td class="dim">1</td><td class="dim">100.00</td><td class="good">+5.00</td><td>0.01</td><td>105.00</td></tr>
+          <tr><td class="dim">2</td><td class="dim">105.00</td><td class="good">+5.25</td><td>0.01</td><td>110.25</td></tr>
+          <tr><td class="dim">3</td><td class="dim">110.25</td><td class="good">+5.51</td><td>0.01</td><td>115.76</td></tr>
+          <tr><td class="dim">5</td><td class="dim">121.55</td><td class="good">+6.08</td><td>0.01</td><td>127.63</td></tr>
+          <tr><td class="dim">10</td><td class="dim">155.13</td><td class="good">+7.76</td><td>0.01</td><td>162.89</td></tr>
+          <tr><td class="dim">20</td><td class="dim">252.70</td><td class="good">+12.63</td><td>0.02</td><td>265.33</td></tr>
+          <tr><td class="dim">40</td><td class="dim">670.48</td><td class="good">+33.52</td><td>0.06</td><td>704.00</td></tr>
+          <tr class="hi"><td class="dim">60</td><td class="dim">1,778.97</td><td class="good">+88.95</td><td>0.17</td><td>1,867.92</td></tr>
+        </tbody>
+      </table>
+      <p>Step 1 asks for five dollars. Step 60 asks for eighty-nine. Nothing about the trader changed between those two
+        rows &mdash; the same 5%, the same setups, the same discipline. The only thing that grew is the balance doing the
+        work, and the lot size that balance can carry.
+        <span class="zh">第一阶要你赚五块，第六十阶要你赚八十九。两行之间，交易者身上没有任何东西变过 —— 同样的 5%、同样的形态、同样的纪律。长大的只有那个在干活的余额，以及它撑得起的手数。</span></p>
+<div class="note"><span class="en">// The ladder does not make you better. It just stops you from leaving the profit idle.</span><span class="zh">阶梯表不会让你变强，它只是不让你的利润闲着。</span></div>
+    </div>
+  </article>
+
+  <article class="pattern reveal">
+    <div class="pattern-head"><span class="idx">P.10</span><h3>What the Ladder Does Not Say<span class="zh">这张表没说的事</span></h3><span class="tag bear"><span class="en">Read this too</span><span class="zh">这段也要读</span></span></div>
+    <div class="pattern-desc">
+      <p>A clean ladder is the most seductive spreadsheet in trading, and the most misread. Four things it is silent
+        about:
+        <span class="zh">一张干净的阶梯表是交易里最诱人的表格，也是最容易被误读的。它对四件事保持沉默：</span></p>
+      <ul class="points">
+        <li><b>It assumes you never draw down.</b> One −30% step throws you back about seven rungs, and you climb them again from a smaller lot size.<span class="zh">它假设你一次都不回撤。一个 −30% 的坎会把你打回大约七阶，而且你要用更小的手数重新爬一遍。</span></li>
+        <li><b>5% a step is a target, not a return.</b> The table will happily compute 20% a step. Whether your system produces it is a separate question, and that question is answered by a backtest, not by this sheet.<span class="zh">每阶 5% 是目标，不是回报。你填 20% 它照样算得出来。你的系统做不做得到是另一个问题，而那个问题由回测回答，不由这张表回答。</span></li>
+        <li><b>The lot column is a scale, not risk control.</b> How much you actually risk is set by the distance to your stop. Balance ÷ 10,000 tells you what size the account can carry; it does not tell you where the stop belongs.<span class="zh">手数那一栏是尺度，不是风控。你真正冒的风险由止损距离决定。「余额 ÷ 10000」说的是这个账户撑得起多大的仓，它没有说止损该放在哪。</span></li>
+        <li><b>Sixty rungs is sixty chances to break a rule.</b> The curve only belongs to whoever is still following the same plan at row sixty.<span class="zh">六十阶就是六十次可以破戒的机会。这条曲线只属于走到第六十行时还在照同一份计划做的那个人。</span></li>
+      </ul>
+      <p>Used with those four in mind, the ladder is the most useful page in your journal: it replaces &ldquo;I want to grow
+        the account&rdquo; with a number you can either hit today or not.
+        <span class="zh">带着这四点用，阶梯表会是你日志里最有用的一页：它把「我想把账户做大」换成一个你今天要么做到、要么没做到的数字。</span></p>
+<div class="note"><span class="en">// A ladder you can actually climb beats a curve you can only admire.</span><span class="zh">一张爬得上去的梯子，胜过一条只能欣赏的曲线。</span></div>
+    </div>
+  </article>
+
+  <div class="note reveal" style="max-width:820px;line-height:1.9;margin-top:30px;">
+    <span class="en">// The Compound Calculator in the tools lab builds this ladder for any starting balance, gain per step and lot rule &mdash; and tells you how many steps stand between you and your target. It opens with the member system.</span>
+    <span class="zh">工具栏里的「复利计算器」会按你给的起始余额、每阶涨幅与手数规则把整条阶梯排出来，并告诉你离目标还差几阶。它随会员系统一起开放。</span>
+  </div>
+</section>
+
 <section class="section" id="exam" style="padding-top:70px;">
   <div class="group-head reveal">
     <span class="tier">EXAM</span>
