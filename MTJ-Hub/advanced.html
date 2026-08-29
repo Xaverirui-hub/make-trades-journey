@@ -506,6 +506,41 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
 .hero h1{color:#FFFFFF;text-shadow:0 2px 40px rgba(0,0,0,.55);}
 .hero .h-zh{color:rgba(255,255,255,.94);text-shadow:0 2px 30px rgba(0,0,0,.5);}
 body.lang-zh.lang-strict .hero .h-zh{color:rgba(255,255,255,.94);}
+
+/* ===== Topic 上色 =====
+   一个 topic 一个固定的颜色,全站同一个词永远同一色 —— 颜色在这里是
+   索引,不是装饰。字一律白:9.5px 的小字染色会糊,压在淡底上的白字
+   才读得清,颜色只走底、描边和辉光。 */
+.chips span.tc{position:relative;overflow:hidden;color:#fff;
+  border-color:rgba(var(--c),.42);
+  background:linear-gradient(180deg,rgba(var(--c),.20),rgba(var(--c),.085));
+  box-shadow:0 0 12px rgba(var(--c),.16);
+  text-shadow:0 0 10px rgba(var(--c),.5);
+  transition:border-color .3s,background .3s,box-shadow .3s;}
+.mod:hover .chips span.tc{border-color:rgba(var(--c),.68);
+  background:linear-gradient(180deg,rgba(var(--c),.30),rgba(var(--c),.13));
+  box-shadow:0 0 18px rgba(var(--c),.30);}
+
+/* 扫光。只有进了视窗的那几排会挂上 .tw —— 全页一百颗 chip 一起扫,
+   既是噪音,也是白烧 GPU。斜切一点,让它像光划过而不是块平移。 */
+.chips.tw span.tc::after{content:"";position:absolute;top:-60%;bottom:-60%;left:0;width:38%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.5),transparent);
+  transform:translateX(-130%) skewX(-18deg);
+  animation:tcSweep 3.6s cubic-bezier(.4,0,.2,1) infinite;
+  animation-delay:var(--tc-d,0s);}
+@keyframes tcSweep{0%{transform:translateX(-130%) skewX(-18deg);}
+                   55%,100%{transform:translateX(380%) skewX(-18deg);}}
+@media(prefers-reduced-motion:reduce){.chips.tw span.tc::after{animation:none;opacity:0;}}
+
+.tc1{--c:155,107,242;}  /* 紫 */
+.tc2{--c:47,224,214;}  /* 青 */
+.tc3{--c:232,200,119;}  /* 金 */
+.tc4{--c:44,217,138;}  /* 绿 */
+.tc5{--c:255,92,99;}  /* 玫 */
+.tc6{--c:91,140,255;}  /* 蓝 */
+.tc7{--c:255,159,69;}  /* 橙 */
+.tc8{--c:255,111,216;}  /* 粉 */
+.tc9{--c:182,226,74;}  /* 柠 */
 </style>
 </head>
 <body>
@@ -606,7 +641,7 @@ body.lang-zh.lang-strict .hero .h-zh{color:rgba(255,255,255,.94);}
       <h4>US High-Impact Data<span class="zh">美 国 高 影 响 数 据</span></h4>
       <p>From the data → to inflation → to the Fed's next move. NFP, CPI, PCE and rate decisions: what they measure and why price reacts the way it does.
         <span class="zh">从数据 → 通胀 → 美联储的下一步：非农、CPI、PCE 与利率决议衡量什么，价格为何这样反应。</span></p>
-      <div class="chips"><span>The Data 数据</span><span>Inflation 通胀</span><span>The Fed 加减息</span></div>
+      <div class="chips"><span class="tc tc3">The Data 数据</span><span class="tc tc4">Inflation 通胀</span><span class="tc tc5">The Fed 加减息</span></div>
       <div class="go adv-go"><span class="en">Written · locked until launch</span><span class="zh">已完成 · 上线前锁定</span></div>
     </div>
   </div>
@@ -645,21 +680,21 @@ body.lang-zh.lang-strict .hero .h-zh{color:rgba(255,255,255,.94);}
         <div class="idx"><span class="en">MODULE F01</span><span class="zh">模块 F01</span></div>
         <h4>Interest Rates<span class="zh">利 率</span></h4>
         <p>Why does one number, set by one committee, reprice assets that have nothing to do with it? Start here and the rest of the track follows.<span class="zh">为什么一个委员会定的一个数字，会让看起来完全无关的资产同时重新定价？从这里开始，后面每一课都接得上。</span></p>
-        <div class="chips"><span>Rent 租金</span><span>Discounting 折现</span><span>Expectations 预期</span></div>
+        <div class="chips"><span class="tc tc6">Rent 租金</span><span class="tc tc7">Discounting 折现</span><span class="tc tc8">Expectations 预期</span></div>
         <div class="go adv-go"><span class="en">Written · locked until launch</span><span class="zh">已完成 · 上线前锁定</span></div>
       </div>
       <div class="mod reveal adv-mod is-ready" data-fund="F02">
         <div class="idx"><span class="en">MODULE F02</span><span class="zh">模块 F02</span></div>
         <h4>What a Central Bank Does<span class="zh">央 行 在 干 什 么</span></h4>
         <p>It is not trying to lift stocks or protect your position. So what is it trying to do — and with which levers?<span class="zh">它不是在拉抬股市，也不是在保护你的仓位。那它到底想做什么？又是用哪几根杠杆？</span></p>
-        <div class="chips"><span>Dual mandate 双重使命</span><span>QE / QT</span><span>Guidance 前瞻指引</span></div>
+        <div class="chips"><span class="tc tc9">Dual mandate 双重使命</span><span class="tc tc1">QE / QT</span><span class="tc tc2">Guidance 前瞻指引</span></div>
         <div class="go adv-go"><span class="en">Written · locked until launch</span><span class="zh">已完成 · 上线前锁定</span></div>
       </div>
       <div class="mod reveal adv-mod is-ready" data-fund="F03">
         <div class="idx"><span class="en">MODULE F03</span><span class="zh">模块 F03</span></div>
         <h4>Measuring Inflation<span class="zh">通 胀 怎 么 量</span></h4>
         <p>CPI, core CPI, PCE, core PCE, PPI. Five gauges, one word — and they disagree. Which one does policy actually follow?<span class="zh">CPI、核心CPI、PCE、核心PCE、PPI。五把尺、一个词，而且它们互相不一致。政策到底跟着哪一个走？</span></p>
-        <div class="chips"><span>CPI vs PCE</span><span>Core 核心</span><span>YoY vs MoM</span></div>
+        <div class="chips"><span class="tc tc3">CPI vs PCE</span><span class="tc tc4">Core 核心</span><span class="tc tc5">YoY vs MoM</span></div>
         <div class="go adv-go"><span class="en">Written · locked until launch</span><span class="zh">已完成 · 上线前锁定</span></div>
       </div>
     </div>
@@ -676,35 +711,35 @@ body.lang-zh.lang-strict .hero .h-zh{color:rgba(255,255,255,.94);}
         <div class="idx"><span class="en">MODULE F04</span><span class="zh">模块 F04</span></div>
         <h4>The FOMC<span class="zh">F O M C</span></h4>
         <p>Nineteen people sit at the table. Twelve of them vote. Who are the other seven, and why can they still move your chart?<span class="zh">十九个人坐在桌边，只有十二个人投票。另外七个是谁？为什么他们照样能撼动你的图？</span></p>
-        <div class="chips"><span>8 meetings 八次</span><span>Who votes 谁有票</span><span>2:00 / 2:30</span></div>
+        <div class="chips"><span class="tc tc6">8 meetings 八次</span><span class="tc tc7">Who votes 谁有票</span><span class="tc tc8">2:00 / 2:30</span></div>
         <div class="go adv-go"><span class="en">Written · locked until launch</span><span class="zh">已完成 · 上线前锁定</span></div>
       </div>
       <div class="mod reveal adv-mod is-ready" data-fund="F05">
         <div class="idx"><span class="en">MODULE F05</span><span class="zh">模块 F05</span></div>
         <h4>Reading the Statement<span class="zh">声 明 怎 么 读</span></h4>
         <p>The document barely changes between meetings — and that is the point. Which two words moved, and what did they cost?<span class="zh">两次会议之间，这份文件几乎没变 —— 而那正是重点。哪两个字动了？它们值多少钱？</span></p>
-        <div class="chips"><span>Word diff 逐句对比</span><span>Dissents 反对票</span><span>Guidance 指引</span></div>
+        <div class="chips"><span class="tc tc9">Word diff 逐句对比</span><span class="tc tc1">Dissents 反对票</span><span class="tc tc2">Guidance 指引</span></div>
         <div class="go adv-go"><span class="en">Written · locked until launch</span><span class="zh">已完成 · 上线前锁定</span></div>
       </div>
       <div class="mod reveal adv-mod" data-fund="F06">
         <div class="idx"><span class="en">MODULE F06</span><span class="zh">模块 F06</span></div>
         <h4>Dot Plot &amp; Projections<span class="zh">点 阵 图 与 预 测</span></h4>
         <p><span class="en">Outline published; lesson in production.</span><span class="zh">大纲已定，课程制作中。</span></p>
-        <div class="chips"><span>SEP</span><span>Not a promise 不是承诺</span></div>
+        <div class="chips"><span class="tc tc3">SEP</span><span class="tc tc4">Not a promise 不是承诺</span></div>
         <div class="go adv-go"><span class="en">In production</span><span class="zh">制作中</span></div>
       </div>
       <div class="mod reveal adv-mod" data-fund="F07">
         <div class="idx"><span class="en">MODULE F07</span><span class="zh">模块 F07</span></div>
         <h4>The Press Conference<span class="zh">主 席 记 者 会</span></h4>
         <p><span class="en">Outline published; lesson in production.</span><span class="zh">大纲已定，课程制作中。</span></p>
-        <div class="chips"><span>Which lines matter 哪几句</span></div>
+        <div class="chips"><span class="tc tc5">Which lines matter 哪几句</span></div>
         <div class="go adv-go"><span class="en">In production</span><span class="zh">制作中</span></div>
       </div>
       <div class="mod reveal adv-mod" data-fund="F08">
         <div class="idx"><span class="en">MODULE F08</span><span class="zh">模块 F08</span></div>
         <h4>Minutes &amp; Speeches<span class="zh">纪 要 与 讲 话</span></h4>
         <p><span class="en">Outline published; lesson in production.</span><span class="zh">大纲已定，课程制作中。</span></p>
-        <div class="chips"><span>3 weeks later 三周后</span></div>
+        <div class="chips"><span class="tc tc6">3 weeks later 三周后</span></div>
         <div class="go adv-go"><span class="en">In production</span><span class="zh">制作中</span></div>
       </div>
     </div>
@@ -721,28 +756,28 @@ body.lang-zh.lang-strict .hero .h-zh{color:rgba(255,255,255,.94);}
         <div class="idx"><span class="en">MODULE F09</span><span class="zh">模块 F09</span></div>
         <h4>The Surprise Is the Fuel<span class="zh">意 外 才 是 燃 料</span></h4>
         <p><span class="en">Outline published; lesson in production.</span><span class="zh">大纲已定，课程制作中。</span></p>
-        <div class="chips"><span>Forecast vs actual 预期与实际</span></div>
+        <div class="chips"><span class="tc tc7">Forecast vs actual 预期与实际</span></div>
         <div class="go adv-go"><span class="en">In production</span><span class="zh">制作中</span></div>
       </div>
       <div class="mod reveal adv-mod" data-fund="F10">
         <div class="idx"><span class="en">MODULE F10</span><span class="zh">模块 F10</span></div>
         <h4>The Transmission Chain<span class="zh">传 导 链</span></h4>
         <p><span class="en">Outline published; lesson in production.</span><span class="zh">大纲已定，课程制作中。</span></p>
-        <div class="chips"><span>Rates → USD → Gold</span></div>
+        <div class="chips"><span class="tc tc8">Rates → USD → Gold</span></div>
         <div class="go adv-go"><span class="en">In production</span><span class="zh">制作中</span></div>
       </div>
       <div class="mod reveal adv-mod" data-fund="F11">
         <div class="idx"><span class="en">MODULE F11</span><span class="zh">模块 F11</span></div>
         <h4>Good News, Bad News<span class="zh">好 消 息 变 坏 消 息</span></h4>
         <p><span class="en">Outline published; lesson in production.</span><span class="zh">大纲已定，课程制作中。</span></p>
-        <div class="chips"><span>Higher for longer</span></div>
+        <div class="chips"><span class="tc tc9">Higher for longer</span></div>
         <div class="go adv-go"><span class="en">In production</span><span class="zh">制作中</span></div>
       </div>
       <div class="mod reveal adv-mod" data-fund="F12">
         <div class="idx"><span class="en">MODULE F12</span><span class="zh">模块 F12</span></div>
         <h4>What Is Priced In<span class="zh">已 经 定 价 了 什 么</span></h4>
         <p><span class="en">Outline published; lesson in production.</span><span class="zh">大纲已定，课程制作中。</span></p>
-        <div class="chips"><span>Consensus 共识</span></div>
+        <div class="chips"><span class="tc tc1">Consensus 共识</span></div>
         <div class="go adv-go"><span class="en">In production</span><span class="zh">制作中</span></div>
       </div>
     </div>
@@ -759,21 +794,21 @@ body.lang-zh.lang-strict .hero .h-zh{color:rgba(255,255,255,.94);}
         <div class="idx"><span class="en">MODULE F13</span><span class="zh">模块 F13</span></div>
         <h4>Before the Event<span class="zh">事 件 前</span></h4>
         <p><span class="en">Outline published; lesson in production.</span><span class="zh">大纲已定，课程制作中。</span></p>
-        <div class="chips"><span>Spread 点差</span><span>Gap risk 跳空</span></div>
+        <div class="chips"><span class="tc tc2">Spread 点差</span><span class="tc tc3">Gap risk 跳空</span></div>
         <div class="go adv-go"><span class="en">In production</span><span class="zh">制作中</span></div>
       </div>
       <div class="mod reveal adv-mod" data-fund="F14">
         <div class="idx"><span class="en">MODULE F14</span><span class="zh">模块 F14</span></div>
         <h4>After the Event<span class="zh">事 件 后</span></h4>
         <p><span class="en">Outline published; lesson in production.</span><span class="zh">大纲已定，课程制作中。</span></p>
-        <div class="chips"><span>First move is a fake 第一波是假</span></div>
+        <div class="chips"><span class="tc tc4">First move is a fake 第一波是假</span></div>
         <div class="go adv-go"><span class="en">In production</span><span class="zh">制作中</span></div>
       </div>
       <div class="mod reveal adv-mod" data-fund="F15">
         <div class="idx"><span class="en">MODULE F15</span><span class="zh">模块 F15</span></div>
         <h4>Fundamentals × Technicals<span class="zh">基 本 面 × 技 术 面</span></h4>
         <p><span class="en">Outline published; lesson in production.</span><span class="zh">大纲已定，课程制作中。</span></p>
-        <div class="chips"><span>Direction + entry</span></div>
+        <div class="chips"><span class="tc tc5">Direction + entry</span></div>
         <div class="go adv-go"><span class="en">In production</span><span class="zh">制作中</span></div>
       </div>
     </div>
@@ -792,7 +827,7 @@ body.lang-zh.lang-strict .hero .h-zh{color:rgba(255,255,255,.94);}
       <h4>Risk &amp; Position Sizing<span class="zh">风 控 · 仓 位 计 算</span></h4>
       <p>Entries make the story - position size decides whether you're still here to tell it. The loss math, how to derive lot size, where the stop belongs, R:R, leverage and the three caps that keep an account alive.
         <span class="zh">进场决定故事精不精彩，仓位决定你还在不在场上。亏损的数学、手数怎么算、止损放哪、盈亏比、杠杆真相，以及让帐户活下来的三道防线。</span></p>
-      <div class="chips"><span>Position Size 仓位</span><span>Stop Loss 止损</span><span>R:R 盈亏比</span><span>Leverage 杠杆</span></div>
+      <div class="chips"><span class="tc tc6">Position Size 仓位</span><span class="tc tc7">Stop Loss 止损</span><span class="tc tc8">R:R 盈亏比</span><span class="tc tc9">Leverage 杠杆</span></div>
       <div class="go adv-go"><span class="en">Written · locked until launch</span><span class="zh">已完成 · 上线前锁定</span></div>
     </div>
     <div class="mod reveal adv-mod is-ready" data-mod="23" data-course="courses/Journal_Review_MakeTradesJourney.html">
@@ -800,7 +835,7 @@ body.lang-zh.lang-strict .hero .h-zh{color:rgba(255,255,255,.94);}
       <h4>The Journal &amp; Review Loop<span class="zh">交 易 日 志 · 复 盘</span></h4>
       <p>Memory is not a record - it's a story you tell yourself. What to log, the four quadrants of process vs. outcome, the daily / weekly / monthly loop, and how many trades it actually takes before your numbers mean anything.
         <span class="zh">记忆不是记录，是你说给自己听的故事。记什么、过程与结果的四象限、每日／每周／每月的复盘节奏，以及要做几笔交易，你的统计数字才开始有意义。</span></p>
-      <div class="chips"><span>Four Quadrants 四象限</span><span>Review SOP 复盘</span><span>Expectancy 期望值</span><span>Sample Size 样本数</span></div>
+      <div class="chips"><span class="tc tc1">Four Quadrants 四象限</span><span class="tc tc2">Review SOP 复盘</span><span class="tc tc3">Expectancy 期望值</span><span class="tc tc4">Sample Size 样本数</span></div>
       <div class="go adv-go"><span class="en">Written · locked until launch</span><span class="zh">已完成 · 上线前锁定</span></div>
     </div>
     <div class="mod reveal adv-mod is-ready" data-mod="24" data-course="courses/Psychology_Discipline_MakeTradesJourney.html">
@@ -808,7 +843,7 @@ body.lang-zh.lang-strict .hero .h-zh{color:rgba(255,255,255,.94);}
       <h4>Psychology &amp; Discipline<span class="zh">交 易 心 理 · 纪 律</span></h4>
       <p>You already know what to do - this is about doing it at 2am, down three trades. Loss aversion, the four killers, surviving a drawdown, the danger after a winning run, and how to externalise rules so they don't depend on willpower.
         <span class="zh">你早就知道该怎么做 —— 这一课处理的是凌晨两点连亏三单时还做不做得到。损失厌恶、四大杀手、连亏期怎么撑、赢钱之后的危险，以及如何把规则外部化，让纪律不再依赖意志力。</span></p>
-      <div class="chips"><span>Loss Aversion 损失厌恶</span><span>Four Killers 四大杀手</span><span>Drawdown 连亏期</span><span>Daily SOP 每日流程</span></div>
+      <div class="chips"><span class="tc tc5">Loss Aversion 损失厌恶</span><span class="tc tc6">Four Killers 四大杀手</span><span class="tc tc7">Drawdown 连亏期</span><span class="tc tc8">Daily SOP 每日流程</span></div>
       <div class="go adv-go"><span class="en">Written · locked until launch</span><span class="zh">已完成 · 上线前锁定</span></div>
     </div>
   </div>
@@ -829,7 +864,7 @@ body.lang-zh.lang-strict .hero .h-zh{color:rgba(255,255,255,.94);}
       <div class="zh-t">持 仓 管 理</div>
       <p>Entry decides whether a trade can win; management decides whether it does. Three kinds of stop moves, scaling out, when to move to breakeven, and the time stop that ends a stalled trade.
         <span class="zh">进场决定一笔交易能不能赢；持仓管理决定它是否真的赢。三种止损移动、分批止盈、何时移到保本、以及结束僵持交易的时间止损。</span></p>
-      <div class="chips"><span>Trailing 追踪</span><span>Scaling Out 分批止盈</span><span>Breakeven 保本</span><span>Time Stop 时间止损</span></div>
+      <div class="chips"><span class="tc tc9">Trailing 追踪</span><span class="tc tc1">Scaling Out 分批止盈</span><span class="tc tc2">Breakeven 保本</span><span class="tc tc3">Time Stop 时间止损</span></div>
       <div class="go adv-go"><span class="en">Written · locked until launch</span><span class="zh">已完成 · 上线前锁定</span></div>
     </div>
     <div class="mod reveal adv-mod is-ready" data-mod="26" data-course="courses/Backtesting_System_Design_MakeTradesJourney.html">
@@ -837,7 +872,7 @@ body.lang-zh.lang-strict .hero .h-zh{color:rgba(255,255,255,.94);}
       <h4>Backtesting &amp; System Design<span class="zh">回 测 与 系 统 设 计</span></h4>
       <p>Luck wears a disguise. Test before you trust: sample size, the five metrics that matter, overfitting traps, and the paper-trading bridge between a backtest and your real account.
         <span class="zh">运气会伪装。先测试再相信：样本量、五个关键指标、过拟合陷阱、以及连接回测与实盘账户的模拟交易桥梁。</span></p>
-      <div class="chips"><span>Sample Size 样本量</span><span>Metrics 指标</span><span>Overfitting 过拟合</span><span>Paper Trade 模拟</span></div>
+      <div class="chips"><span class="tc tc4">Sample Size 样本量</span><span class="tc tc5">Metrics 指标</span><span class="tc tc6">Overfitting 过拟合</span><span class="tc tc7">Paper Trade 模拟</span></div>
       <div class="go adv-go"><span class="en">Written · locked until launch</span><span class="zh">已完成 · 上线前锁定</span></div>
     </div>
     <div class="mod reveal adv-mod is-ready" data-mod="27" data-course="courses/Trading_Plan_Routine_MakeTradesJourney.html">
@@ -846,7 +881,7 @@ body.lang-zh.lang-strict .hero .h-zh{color:rgba(255,255,255,.94);}
       <div class="zh-t">交 易 计 划 与 日 常</div>
       <p>A plan turns impulse into process. Pre-market checklist, in-session execution, the five-question review, cooldown rules that protect you from yourself, and the 30-day habit loop that makes it stick.
         <span class="zh">计划把冲动变成流程。盘前清单、盘中执行、盘后五问、保护你免于失控的冷却规则、以及让纪律生根的三十天习惯循环。</span></p>
-      <div class="chips"><span>Checklist 清单</span><span>Cooldown 冷却</span><span>Review 复盘</span><span>30-Day Habit 习惯</span></div>
+      <div class="chips"><span class="tc tc8">Checklist 清单</span><span class="tc tc9">Cooldown 冷却</span><span class="tc tc1">Review 复盘</span><span class="tc tc2">30-Day Habit 习惯</span></div>
       <div class="go adv-go"><span class="en">Written · locked until launch</span><span class="zh">已完成 · 上线前锁定</span></div>
     </div>
   </div>
@@ -864,7 +899,7 @@ body.lang-zh.lang-strict .hero .h-zh{color:rgba(255,255,255,.94);}
       <h4>EA Courses<span class="zh">EA 课 程</span></h4>
       <div class="zh-t">E A 课 程</div>
       <p>Once your rules are written down and tested by hand, they can be handed to a robot. That track is hands-on: assemble the strategy in the Composer, then put it through the Backtest SOP. 当你的规则已经写下来、手动验证过，就可以交给机器人执行。那条线是动手的：先用 Composer 拼出策略，再拿去走一遍回测标准流程。</p>
-      <div class="tags"><span>Strategy Composer 拼装器</span><span>Backtest SOP 回测流程</span><span>MT5 EA</span></div>
+      <div class="chips"><span class="tc tc9">Strategy Composer 拼装器</span><span class="tc tc1">Backtest SOP 回测流程</span><span class="tc tc2">MT5 EA</span></div>
       <div class="go">OPEN TRACK →<span class="zh">打 开 课 程 →</span></div>
     </a>
   </div>
@@ -1434,5 +1469,34 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
 })();
 </script>
 
+
+<script>
+/* ===== Topic 闪烁 =====
+   错开起跑,并且只让看得见的那几排在动。一百颗 chip 同时扫过去是
+   噪音,而且离开视窗还在跑纯属白烧 —— 进视窗才挂,离开就摘。 */
+(function(){
+  var rows = document.querySelectorAll('.chips');
+  if(!rows.length) return;
+  try{ if(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return; }catch(e){}
+
+  /* 负的 delay = 从动画中途接上,不用等一轮才错开 */
+  for(var r = 0; r < rows.length; r++){
+    var kids = rows[r].children;
+    for(var i = 0; i < kids.length; i++)
+      kids[i].style.setProperty('--tc-d', (-(r * 0.7 + i * 0.45)).toFixed(2) + 's');
+  }
+
+  if(!('IntersectionObserver' in window)){
+    for(var k = 0; k < rows.length; k++) rows[k].classList.add('tw');
+    return;
+  }
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      e.target.classList[e.isIntersecting ? 'add' : 'remove']('tw');
+    });
+  }, { rootMargin: '120px' });
+  for(var m = 0; m < rows.length; m++) io.observe(rows[m]);
+})();
+</script>
 </body>
 </html>
