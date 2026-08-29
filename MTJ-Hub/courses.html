@@ -238,6 +238,28 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 .group-head h3{margin:0;font-size:clamp(19px,3vw,26px);font-weight:700;}
 .group-head .zh{font-family:'Noto Sans SC';font-size:14px;color:inherit;letter-spacing:.16em;margin-top:2px;}
 
+/* 阶段标题旁的进度条。轨道用金色的极淡底,填充走金 → 亮金;
+   整段通过後转绿(--bull),因为「完成」跟「进行中」要一眼分得开。 */
+.gh-prog{margin-left:auto;display:flex;align-items:center;gap:12px;flex:none;}
+.gh-prog .ghp-num{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;
+  color:var(--muted-2);white-space:nowrap;text-transform:uppercase;}
+.gh-prog .ghp-num .zh{font-family:'Noto Sans SC';font-size:1.1em;letter-spacing:.1em;text-transform:none;}
+.gh-prog .ghp-n{color:var(--gold-bright);font-weight:700;font-size:13px;}
+.gh-prog .ghp-d{color:var(--muted-2);}
+.gh-prog .ghp-track{width:140px;height:5px;border-radius:999px;background:rgba(232,200,119,.10);
+  border:1px solid rgba(232,200,119,.10);overflow:hidden;flex:none;}
+.gh-prog .ghp-fill{display:block;height:100%;width:0;border-radius:999px;
+  background:linear-gradient(90deg,var(--gold-deep),var(--gold-bright));
+  transition:width .9s cubic-bezier(.2,.7,.2,1);}
+.gh-prog.is-done .ghp-n{color:var(--bull);}
+.gh-prog.is-done .ghp-fill{background:linear-gradient(90deg,#1FA96C,var(--bull));}
+/* 窄屏:标题跟条挤在一行会把标题压断,让它自己占一行,条撑满。 */
+@media(max-width:680px){
+  .group-head{flex-wrap:wrap;}
+  .gh-prog{margin-left:0;width:100%;padding-left:2px;}
+  .gh-prog .ghp-track{flex:1;width:auto;}
+}
+
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-bottom:52px;}
 .mod{display:flex;flex-direction:column;text-decoration:none;color:inherit;
   border:1px solid var(--line-soft);border-radius:18px;padding:26px 24px 22px;background:var(--panel);
@@ -569,6 +591,10 @@ body.lang-zh.lang-strict .hero .h-zh{color:rgba(255,255,255,.94);}
   <!-- STAGE 01 -->
   <div class="group-head reveal" id="stage-foundations"><span class="tier">01</span>
     <div><h3>Foundations</h3><div class="zh">打 基 础 · 入 门 必 修</div></div>
+    <div class="gh-prog" data-for="stage-foundations">
+      <div class="ghp-num"><span class="en">Passed</span><span class="zh">已通过</span> <span class="ghp-n">0</span>/<span class="ghp-d">0</span></div>
+      <div class="ghp-track"><span class="ghp-fill"></span></div>
+    </div>
   </div>
   <div class="grid">
     <a class="mod reveal" data-mod="1" href="courses/Trading_Basics_MakeTradesJourney.html">
@@ -612,6 +638,10 @@ body.lang-zh.lang-strict .hero .h-zh{color:rgba(255,255,255,.94);}
   <!-- STAGE 02 -->
   <div class="group-head reveal" id="stage-candles"><span class="tier">02</span>
     <div><h3>Price Structure</h3><div class="zh">价 格 结 构 · K 线 · 形 态 · 波 浪</div></div>
+    <div class="gh-prog" data-for="stage-candles">
+      <div class="ghp-num"><span class="en">Passed</span><span class="zh">已通过</span> <span class="ghp-n">0</span>/<span class="ghp-d">0</span></div>
+      <div class="ghp-track"><span class="ghp-fill"></span></div>
+    </div>
   </div>
   <div class="grid">
     <a class="mod reveal" data-mod="5" href="courses/Candlestick_Patterns_MakeTradesJourney.html">
@@ -646,6 +676,10 @@ body.lang-zh.lang-strict .hero .h-zh{color:rgba(255,255,255,.94);}
   <!-- STAGE 03 -->
   <div class="group-head reveal" id="stage-levels"><span class="tier">03</span>
     <div><h3>Key Levels &amp; Zones</h3><div class="zh">关 键 位 与 区 域 · 价 格 的 记 忆</div></div>
+    <div class="gh-prog" data-for="stage-levels">
+      <div class="ghp-num"><span class="en">Passed</span><span class="zh">已通过</span> <span class="ghp-n">0</span>/<span class="ghp-d">0</span></div>
+      <div class="ghp-track"><span class="ghp-fill"></span></div>
+    </div>
   </div>
   <div class="grid">
     <a class="mod reveal" data-mod="8" href="courses/Support_Resistance_MakeTradesJourney.html">
@@ -689,6 +723,10 @@ body.lang-zh.lang-strict .hero .h-zh{color:rgba(255,255,255,.94);}
   <!-- STAGE 04 -->
   <div class="group-head reveal" id="stage-drawing"><span class="tier">04</span>
     <div><h3>Drawing Tools</h3><div class="zh">画 图 工 具 · 手 画 的 那 两 件</div></div>
+    <div class="gh-prog" data-for="stage-drawing">
+      <div class="ghp-num"><span class="en">Passed</span><span class="zh">已通过</span> <span class="ghp-n">0</span>/<span class="ghp-d">0</span></div>
+      <div class="ghp-track"><span class="ghp-fill"></span></div>
+    </div>
   </div>
   <div class="grid">
     <a class="mod reveal" data-mod="12" href="courses/Trendlines_Channels_MakeTradesJourney.html">
@@ -714,6 +752,10 @@ body.lang-zh.lang-strict .hero .h-zh{color:rgba(255,255,255,.94);}
   <!-- STAGE 05 -->
   <div class="group-head reveal" id="stage-ind-trend"><span class="tier">05</span>
     <div><h3>Indicators · Trend</h3><div class="zh">指 标 · 趋 势 · 画 在 价 格 上</div></div>
+    <div class="gh-prog" data-for="stage-ind-trend">
+      <div class="ghp-num"><span class="en">Passed</span><span class="zh">已通过</span> <span class="ghp-n">0</span>/<span class="ghp-d">0</span></div>
+      <div class="ghp-track"><span class="ghp-fill"></span></div>
+    </div>
   </div>
   <div class="grid">
     <a class="mod reveal" data-mod="14" href="courses/Moving_Averages_MakeTradesJourney.html">
@@ -748,6 +790,10 @@ body.lang-zh.lang-strict .hero .h-zh{color:rgba(255,255,255,.94);}
   <!-- STAGE 06 -->
   <div class="group-head reveal" id="stage-ind-osc"><span class="tier">06</span>
     <div><h3>Indicators · Oscillator</h3><div class="zh">指 标 · 震 荡 · 独 立 面 板</div></div>
+    <div class="gh-prog" data-for="stage-ind-osc">
+      <div class="ghp-num"><span class="en">Passed</span><span class="zh">已通过</span> <span class="ghp-n">0</span>/<span class="ghp-d">0</span></div>
+      <div class="ghp-track"><span class="ghp-fill"></span></div>
+    </div>
   </div>
   <div class="grid">
     <a class="mod reveal" data-mod="17" href="courses/RSI_Indicator_MakeTradesJourney.html">
@@ -958,6 +1004,18 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
     var CN = ["","一","两","三","四","五","六","七","八","九","十","十一","十二","十三","十四","十五"];
     var cnt = stage.querySelector(".cnt");
     if(cnt && total) cnt.textContent = total + (total === 1 ? " Module · " : " Modules · ") + (CN[total] || total) + "课";
+    /* 阶段标题旁的那条 —— 跟徽章同一份数据,不另算一次 */
+    var gp = document.querySelector('.gh-prog[data-for="' +
+      (stage.getAttribute('href') || '').replace('#','') + '"]');
+    if(gp){
+      var gn = gp.querySelector('.ghp-n'), gd = gp.querySelector('.ghp-d'),
+          gf = gp.querySelector('.ghp-fill');
+      if(gn) gn.textContent = passed;
+      if(gd) gd.textContent = total;
+      if(gf) gf.style.width = (total ? Math.round(passed / total * 100) : 0) + '%';
+      gp.classList[(total && passed === total) ? 'add' : 'remove']('is-done');
+    }
+
     var badge = stage.querySelector('.stage-badge');
     if(!badge){
       badge = document.createElement('div');
