@@ -248,11 +248,44 @@ h2.title .zh{display:block;font-family:'Noto Sans SC';font-weight:500;font-size:
 .gh-prog .ghp-d{color:var(--muted-2);}
 .gh-prog .ghp-track{width:140px;height:5px;border-radius:999px;background:rgba(232,200,119,.10);
   border:1px solid rgba(232,200,119,.10);overflow:hidden;flex:none;}
-.gh-prog .ghp-fill{display:block;height:100%;width:0;border-radius:999px;
+.gh-prog .ghp-fill{display:block;position:relative;height:100%;width:0;border-radius:999px;
   background:linear-gradient(90deg,var(--gold-deep),var(--gold-bright));
   transition:width .9s cubic-bezier(.2,.7,.2,1);}
+
+/* 走起来的样子:一层不动的辉光 + 一道来回扫过的高光 + 头上一颗呼吸的光点。
+   只在 .has-progress(至少通过一课)时开 —— 六条空条一起闪只是噪音。
+   动的两样都用 transform / opacity,交给合成层;box-shadow 那层不动,
+   因为它每帧重绘,是这三样里唯一会拖帧的。 */
+.gh-prog.has-progress .ghp-fill{
+  box-shadow:0 0 8px rgba(232,200,119,.55),0 0 18px rgba(232,200,119,.28);}
+.gh-prog.has-progress .ghp-fill::after{content:"";position:absolute;inset:0;border-radius:999px;
+  /* 高光带要窄。铺满 18%–82% 那种宽度扫过去,整条会读成「白的」,
+     金色就没了 —— 要的是一道光划过,不是换个颜色。 */
+  background:linear-gradient(100deg,transparent 40%,rgba(255,255,255,.8) 50%,transparent 60%);
+  transform:translateX(-110%);
+  animation:ghpSweep 3.2s cubic-bezier(.45,0,.25,1) infinite;
+  animation-delay:var(--ghp-delay,0s);}
+.gh-prog.has-progress .ghp-fill::before{content:"";position:absolute;right:1px;top:50%;
+  width:5px;height:5px;margin-top:-2.5px;border-radius:50%;background:#FFF6DC;
+  box-shadow:0 0 6px var(--gold-bright),0 0 12px rgba(252,233,168,.7);
+  animation:ghpBlink 1.9s ease-in-out infinite;
+  animation-delay:var(--ghp-delay,0s);}
+/* 扫完停一拍再来,不然像跑马灯 */
+@keyframes ghpSweep{0%{transform:translateX(-110%);}60%,100%{transform:translateX(110%);}}
+@keyframes ghpBlink{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.35;transform:scale(.7);}}
+
 .gh-prog.is-done .ghp-n{color:var(--bull);}
 .gh-prog.is-done .ghp-fill{background:linear-gradient(90deg,#1FA96C,var(--bull));}
+.gh-prog.is-done.has-progress .ghp-fill{
+  box-shadow:0 0 9px rgba(44,217,138,.55),0 0 22px rgba(44,217,138,.30);}
+.gh-prog.is-done.has-progress .ghp-fill::before{background:#E4FFF3;
+  box-shadow:0 0 6px var(--bull),0 0 14px rgba(44,217,138,.75);}
+
+/* 系统设了「减少动态效果」就只留辉光:不扫、不闪。 */
+@media(prefers-reduced-motion:reduce){
+  .gh-prog .ghp-fill::after{animation:none;opacity:0;}
+  .gh-prog .ghp-fill::before{animation:none;}
+}
 /* 窄屏:标题跟条挤在一行会把标题压断,让它自己占一行,条撑满。 */
 @media(max-width:680px){
   .group-head{flex-wrap:wrap;}
@@ -992,7 +1025,7 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
   }
 
   var completeStages = 0;
-  stages.forEach(function(stage){
+  stages.forEach(function(stage, si){
     var stageNo = parseInt(stage.getAttribute('data-stage') || '0', 10);
     var courses = (stage.getAttribute('data-courses') || '').split(',').map(function(v){ return parseInt(v, 10); }).filter(Boolean);
     var passed = courses.filter(examPassed).length;
@@ -1012,8 +1045,15 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
           gf = gp.querySelector('.ghp-fill');
       if(gn) gn.textContent = passed;
       if(gd) gd.textContent = total;
-      if(gf) gf.style.width = (total ? Math.round(passed / total * 100) : 0) + '%';
+      if(gf){
+        gf.style.width = (total ? Math.round(passed / total * 100) : 0) + '%';
+        /* 错开起跑。同时起跑的话整页六条一起闪,读起来像画面出错;
+           错开後才像各走各的。负值 = 从动画中途接上,不用等一轮。 */
+        gf.style.setProperty('--ghp-delay', (si * -0.47).toFixed(2) + 's');
+      }
       gp.classList[(total && passed === total) ? 'add' : 'remove']('is-done');
+      /* 一课都没过就不点亮:空条上挂辉光会读成「这里有东西」 */
+      gp.classList[passed > 0 ? 'add' : 'remove']('has-progress');
     }
 
     var badge = stage.querySelector('.stage-badge');
