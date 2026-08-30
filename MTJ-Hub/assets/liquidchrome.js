@@ -1,3 +1,13 @@
+/* ---------------------------------------------------------------------------
+   Source     React Bits — <LiquidChrome />   https://reactbits.dev
+   Copyright  (c) 2026 David Haz
+   Licence    MIT + Commons Clause License Condition v1.0
+              https://github.com/DavidHDev/react-bits/blob/main/LICENSE.md
+
+   本档是独立重写的原生 JS 移植版,作为 Make Trades Journey 网站的一部分使用。
+   Commons Clause 禁止贩售或散布元件本身(含移植版);此处不单独贩售、不单独散布。
+   完整第三方声明见 assets/THIRD-PARTY-NOTICES.md
+   --------------------------------------------------------------------------- */
 /* ============================================================================
    LiquidChrome — MTJ theme port
    ----------------------------------------------------------------------------

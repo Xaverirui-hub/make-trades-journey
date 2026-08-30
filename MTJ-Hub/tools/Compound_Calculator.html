@@ -283,7 +283,9 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
       </div>
       <div class="field">
         <label>Steps <span class="zh">阶数</span></label>
-        <input type="number" id="cSteps" value="60" min="1" max="500" step="1">
+        <!-- 预设 24 阶(×3.2),不是 60 阶(×18.7)。两个都是同一条算术,但打开
+             页面就看到 ×18.7 的人,记住的是那个数字,不是它下面的但书。 -->
+        <input type="number" id="cSteps" value="24" min="1" max="500" step="1">
       </div>
       <div class="field">
         <label>Deposit per Step <span class="zh">每阶加金 (USD)</span></label>
@@ -327,6 +329,10 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
       <h2>After the Ladder &middot; 走完之后</h2>
       <div class="h-zh">起始余额、涨幅与阶数决定的终点</div>
 
+      <!-- 警告放在结果【上面】。放下面的话，版面上最大的那个数字会先被读到,
+           而那个数字正是最容易被当成承诺的东西。 -->
+      <div class="note" id="cWarn"></div>
+
       <div class="result">
         <div class="rl">Final Balance 最终余额</div>
         <div class="lots" id="oFinal">&mdash;</div>
@@ -342,8 +348,6 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
         <div class="stat"><div class="k">Steps to Goal <span class="zh">到目标要几阶</span></div><div class="v" id="oGoalN">&mdash;</div><div class="s" id="oGoalNote"></div></div>
         <div class="stat"><div class="k">Estimated Time <span class="zh">预计耗时</span></div><div class="v" id="oTime">&mdash;</div><div class="s" id="oTimeNote"></div></div>
       </div>
-
-      <div class="note" id="cWarn"></div>
     </div>
 
     <div class="card" style="margin-top:14px;">
@@ -527,12 +531,14 @@ function render(){
   $("cTableNote").innerHTML = "// 手数按【上一阶】的余额算 —— 进场那一刻，这一阶的利润还没赚到。"
     + "<br>// 手数向下取到 0.01。四舍五入会把 0.0155 变成 0.02，那是悄悄把自己的尺度放大三成。";
 
-  /* 越离谱的输入越要说话。这个工具最大的风险不是算错,是被当成承诺。 */
-  var w = [];
-  if(m.final / m.b0 > 50) w.push("×" + (m.final / m.b0).toFixed(0) + " 是一条数学曲线，不是一个计划。");
+  /* 越离谱的输入越要说话。这个工具最大的风险不是算错,是被当成承诺。
+     所以第一句永远先出现,而且门槛调低了 —— 旧的 ×50 太宽,连 ×18 都不触发,
+     而 ×18 正是最容易被当成承诺的那种数字。 */
+  var w = ["这是算术，不是预测，更不是任何形式的收益承诺。"];
+  w.push("这张表假设你一次都没有回撤。真实账户不是这样走的 —— 一次 −30% 会把你打回前面七阶。");
+  if(m.final / m.b0 > 10) w.push("×" + (m.final / m.b0).toFixed(1) + " 是一条数学曲线，不是一个计划。");
   if(m.rate > 0.10) w.push("每阶 " + (m.rate * 100).toFixed(1) + "% 是很高的门槛 —— 阶数越多，连续做到的概率越低。");
   if(m.n > 100) w.push(m.n + " 阶意味着 " + m.n + " 次不出错。");
-  w.push("这张表假设你一次都没有回撤。真实账户不是这样走的 —— 一次 −30% 会把你打回前面七阶。");
   $("cWarn").innerHTML = "// " + w.join("<br>// ");
 
   chart(m);
@@ -916,6 +922,7 @@ render();
   <div class="disc-title reveal"><span class="en">Disclaimer</span><span class="zh">免责声明</span></div>
   <p class="disc reveal">This tool is for educational purposes only and does not constitute financial, investment, or legal advice.
     <span class="zh">本工具仅供教育用途，不构成任何财务、投资或法律建议。</span></p>
+  <p class="disc reveal">This is general market education written for a global audience. It is not directed at, or tailored to, any particular country and does not take account of local licensing, tax or regulatory requirements. You are responsible for confirming the rules that apply where you live, and the legal standing of any broker or platform you choose to use.<span class="zh">本内容为面向全球读者的一般性市场教育，不针对任何特定国家或地区，亦未考虑当地的执照、税务或监管要求。请自行确认你所在地的相关法规，以及你所选用的任何券商或平台的合法地位。</span></p>
 </div>
 
 </body>
