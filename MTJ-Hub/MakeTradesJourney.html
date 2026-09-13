@@ -525,7 +525,9 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
     /* Global admin mode: skip all locks */
     try { if(localStorage.getItem("mtj_admin") === "1") continue; } catch(e){}
     // 前一课必须通过
-    var prevKey = "mtj_exam_pass_" + (m-1);
+    var prevKey = window.mtjPassKey ? mtjPassKey(m-1) : null;
+    /* 查不到前一课就不锁 —— 这把锁是学习节奏的提示,不是权限控制,宁可放行 */
+    if(!prevKey) continue;
     var passed = false;
     try { passed = localStorage.getItem(prevKey) === "1"; } catch(e){}
     if(!passed){

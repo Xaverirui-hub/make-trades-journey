@@ -9,14 +9,17 @@ import path from 'node:path';
 const dir = 'MTJ-Hub/courses';
 const files = fs.readdirSync(dir).filter(f => f.endsWith('.html'));
 
-/* 按 exam key 排出真实顺序 */
+/* 2026-09 起 exam key 改存课程名,数字已不在 key 里。
+   权威改成 assets/nav.js 的 MODULES 表(MODULES[n] = 第 n 课的课程名)。 */
+const nav = fs.readFileSync('MTJ-Hub/assets/nav.js', 'utf8');
+const MODULES = [null, ...eval('[' + nav.match(/var MODULES = \[null,([\s\S]*?)\];/)[1] + ']')];
 const order = files.map(f => {
   const s = fs.readFileSync(path.join(dir, f), 'utf8');
-  const k = +(s.match(/MTJ_EXAM_KEY\s*=\s*"mtj_exam_pass_(\d+)"/) || [])[1];
+  const k = MODULES.indexOf(f.replace('_MakeTradesJourney.html', '').toLowerCase());
   return { f, k, s };
-}).sort((a, b) => a.k - b.k);
+}).filter(it => it.k > 0).sort((a, b) => a.k - b.k);   // EA 课不在编号线上
 
-const LAST_TRADING = 24;            // 25 是 EA 课,不在交易线里
+const LAST_TRADING = MODULES.length - 1;   // 最後一课没有「下一课」
 const pad = n => String(n).padStart(2, '0');
 const log = [];
 

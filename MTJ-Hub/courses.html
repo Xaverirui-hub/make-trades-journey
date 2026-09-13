@@ -1054,7 +1054,9 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
        再用 m-1 就会出现「照页面顺序走却被锁死」的死结。 */
     var prev = i > 0 ? parseInt(mods[i-1].getAttribute("data-mod"), 10) : NaN;
     if(isNaN(prev)) continue;
-    var prevKey = "mtj_exam_pass_" + prev;
+    var prevKey = window.mtjPassKey ? mtjPassKey(prev) : null;
+    /* 查不到前一课就不锁 —— 这把锁是学习节奏的提示,不是权限控制,宁可放行 */
+    if(!prevKey) continue;
     var passed = false;
     try { passed = localStorage.getItem(prevKey) === "1"; } catch(e){}
     if(!passed){
@@ -1082,7 +1084,8 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
   if(!stages.length) return;
 
   function examPassed(n){
-    try{ return localStorage.getItem('mtj_exam_pass_' + n) === '1'; }catch(e){ return false; }
+    var k = window.mtjPassKey ? mtjPassKey(n) : null; if(!k) return false;
+    try{ return localStorage.getItem(k) === '1'; }catch(e){ return false; }
   }
 
   var completeStages = 0;

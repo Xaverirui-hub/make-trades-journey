@@ -96,6 +96,47 @@
       localStorage.setItem('mtj_renum_v4', '1');
     }
   } catch (e) {}
+
+  /* ===== 通过纪录改用课程名 (v5) =====
+     v2-v4 三次迁移都是同一个病:纪录存的是【位置】,课一重排纪录就指错课。
+     第 28 号还撞过一次 —— EA 课与复利课共用 mtj_exam_pass_28,复利课的
+     进度读到的是 EA 的纪录。
+
+     从这里起,纪录存的是【课程名】(档名去掉 _MakeTradesJourney.html 再
+     小写),课号只是显示用的位置。以後重排只改下面这张表,不再动学员的
+     纪录,也不需要 v6。
+
+     MODULES[n] = 第 n 课的课程名。考试页各自写死自己的 key,
+     总览页的解锁链与进度条经 mtjPassKey(n) 查这张表。 */
+  var MODULES = [null,
+    'trading_basics', 'three_types_of_analysis', 'trading_sessions', 'trading_instruments',
+    'candlestick_patterns', 'chart_patterns', 'elliott_wave',
+    'support_resistance', 'supply_demand', 'pivot_points', 'multi_timeframe_trading',
+    'trendlines_channels', 'fibonacci',
+    'moving_averages', 'bollinger_bands', 'ichimoku',
+    'rsi_indicator', 'stochastic_indicator', 'macd_indicator', 'divergences',
+    'us_high_impact_data', 'risk_management', 'journal_review', 'psychology_discipline',
+    'trade_management', 'backtesting_system_design', 'trading_plan_routine', 'compounding'
+  ];
+  window.MTJ_MODULES = MODULES;
+  window.mtjPassKey = function (n) {
+    return MODULES[n] ? 'mtj_exam_pass_' + MODULES[n] : null;
+  };
+  try {
+    if (localStorage.getItem('mtj_renum_v5') !== '1') {
+      /* v4 之後的数字 key 就是上面这张表的位置,只有 28 例外:
+         那个数字当时是 EA 课的,复利课一开始就用名字。 */
+      for (var c = 1; c <= 28; c++) {
+        var old = 'mtj_exam_pass_' + c;
+        if (localStorage.getItem(old) === '1') {
+          var name = (c === 28) ? 'expert_advisor' : MODULES[c];
+          localStorage.setItem('mtj_exam_pass_' + name, '1');
+        }
+        localStorage.removeItem(old);
+      }
+      localStorage.setItem('mtj_renum_v5', '1');
+    }
+  } catch (e) {}
   var pathn = location.pathname;
   var here  = pathn.slice(pathn.lastIndexOf('/') + 1) || 'MakeTradesJourney.html';
 

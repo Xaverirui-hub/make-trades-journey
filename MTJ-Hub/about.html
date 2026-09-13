@@ -274,8 +274,8 @@ body.lang-zh .zh-t{display:revert !important;}
 
 
 
-/* ===== Global Navbar v3 (glass + logo + lang) ===== */
-@media(max-width:640px){
+/* ===== Global Navbar v3 (glass + logo + lang) ===== */
+@media(max-width:640px){
 }
 </style>
 </head>
@@ -307,7 +307,7 @@ body.lang-zh .zh-t{display:revert !important;}
   <p class="lead reveal" style="max-width:860px;">Make Trades Journey was founded in 2022 - born from one belief: every trader must build their own trading journey by hand. This is not a place that promises easy money or borrowed conviction. It is a place where courses become blueprints, tools become building materials, exams become road signs, and every chart, journal entry, and decision helps you construct something that is truly yours.
     <span class="zh">Make Trades Journey 创立于 2022 年，始于一个信念：每一位交易者，都必须亲手建造自己的交易之旅。这里不承诺轻松获利，也不借给你别人的信念。这里让课程成为蓝图，工具成为建材，考核成为路标，让每一张图表、每一条 Journal 记录、每一次决策，都帮你建造真正属于自己的东西。</span></p>
 
-<div class="vm-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:44px;max-width:860px;">
+<div class="vm-grid" id="vision" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:44px;max-width:860px;">
     <div class="vm-card reveal" style="border:1px solid var(--line-soft);border-radius:14px;padding:22px 24px;background:linear-gradient(180deg,rgba(232,200,119,.05),transparent);">
       <div class="vm-tag" style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.24em;color:var(--gold);text-transform:uppercase;"><span class="en">Vision</span><span class="zh">愿景</span></div>
       <p style="margin:12px 0 0;font-size:14px;color:var(--text);line-height:1.8;">A world where anyone who truly wants to trade can be taught properly - and can build their own trading journey by hand.
@@ -369,9 +369,11 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
 /* ===== 第一面标题白色 =====
    这一页没有 hero(星空就是整页背景),第一面是 #about 的大标 */
 #about .title{color:#FFFFFF;text-shadow:0 2px 40px rgba(0,0,0,.55);}
+/* 侧边导航的愿景/价值观跳到 #about 里面的区块,顶栏是 fixed,留出它的高度 */
+#vision,#values{scroll-margin-top:96px;}
 </style>
 
-  <div class="pillars" style="margin-top:16px;">
+  <div class="pillars" id="values" style="margin-top:16px;">
     <div class="pil reveal">
       <div class="ico"><span class="en">RESPECT</span></div>
       <h3>Respect the Market<span class="zh">尊 重 市 场</span></h3>
@@ -398,8 +400,8 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width
   <div class="manifesto reveal" style="max-width:860px;margin:56px auto 0;text-align:center;border-top:1px solid var(--line-soft);padding-top:40px;">
     <p style="font-size:clamp(19px,2.6vw,26px);font-weight:700;line-height:1.7;color:var(--text);letter-spacing:-.01em;"><span class="en">Build your own trading journey.</span>
       <span class="zh" style="display:block;font-family:'Noto Sans SC';font-weight:500;font-size:clamp(16px,2.2vw,20px);color:inherit;margin-top:14px;">亲 手 打 造 你 的 交 易 之 旅</span></p>
-    <p style="margin:18px auto 0;max-width:760px;font-size:14px;color:var(--muted);line-height:1.9;"><span class="en">Courses are the blueprint. Tools are the building materials. Exams are the road signs. Journal is the construction log. Composer is the final layer: autonomous building at the top.</span>
-      <span class="zh" style="display:block;font-family:'Noto Sans SC';font-size:14.5px;color:inherit;margin-top:8px;">课程是蓝图，工具是建材，考核是路标，Journal 是施工记录，Composer 是顶层自主建造。</span></p>
+    <p style="margin:18px auto 0;max-width:760px;font-size:14px;color:var(--muted);line-height:1.9;"><span class="en">Courses are the blueprint. Tools are the building materials. Exams are the road signs. Journal is the construction log. Strategy LAB is the final layer: autonomous building at the top.</span>
+      <span class="zh" style="display:block;font-family:'Noto Sans SC';font-size:14.5px;color:inherit;margin-top:8px;">课程是蓝图，工具是建材，考核是路标，Journal 是施工记录，策略实验室是顶层自主建造。</span></p>
   </div>
 
 </section>
@@ -506,7 +508,9 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
     /* Global admin mode: skip all locks */
     try { if(localStorage.getItem("mtj_admin") === "1") continue; } catch(e){}
     // 前一课必须通过
-    var prevKey = "mtj_exam_pass_" + (m-1);
+    var prevKey = window.mtjPassKey ? mtjPassKey(m-1) : null;
+    /* 查不到前一课就不锁 —— 这把锁是学习节奏的提示,不是权限控制,宁可放行 */
+    if(!prevKey) continue;
     var passed = false;
     try { passed = localStorage.getItem(prevKey) === "1"; } catch(e){}
     if(!passed){

@@ -629,7 +629,7 @@ body.lang-zh.lang-strict .hero .h-zh{color:rgba(255,255,255,.94);}
     <a class="stage reveal is-soon" data-stage="2" href="#stage-fundamentals">
       <div class="num">02</div>
       <h3>Fundamentals<span class="zh">基 本 面</span></h3>
-      <p>Rates, the Fed, and the chain that turns a number into a candle. Fifteen modules, in production.<span class="zh">利率、美联储，以及把一个数字变成一根 K 线的那条链。十五课，制作中。</span></p>
+      <p>Rates, the Fed, and the chain that turns a number into a candle. Twenty-three lessons, written and locked until launch.<span class="zh">利率、美联储，以及把一个数字变成一根 K 线的那条链。二十三课，已完成 · 上线前锁定。</span></p>
       <div class="cnt">23 Modules · 二十三课</div>
     </a>
     <a class="stage reveal" data-stage="3" href="#stage-execution">
@@ -1100,7 +1100,9 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
     /* Global admin mode: skip all locks */
     try { if(localStorage.getItem("mtj_admin") === "1") continue; } catch(e){}
     // 前一课必须通过
-    var prevKey = "mtj_exam_pass_" + (m-1);
+    var prevKey = window.mtjPassKey ? mtjPassKey(m-1) : null;
+    /* 查不到前一课就不锁 —— 这把锁是学习节奏的提示,不是权限控制,宁可放行 */
+    if(!prevKey) continue;
     var passed = false;
     try { passed = localStorage.getItem(prevKey) === "1"; } catch(e){}
     if(!passed){
@@ -1125,7 +1127,8 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
   if(!stages.length) return;
 
   function examPassed(n){
-    try{ return localStorage.getItem('mtj_exam_pass_' + n) === '1'; }catch(e){ return false; }
+    var k = window.mtjPassKey ? mtjPassKey(n) : null; if(!k) return false;
+    try{ return localStorage.getItem(k) === '1'; }catch(e){ return false; }
   }
 
   var completeStages = 0;
@@ -1531,7 +1534,8 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
   if(!stages.length) return;
 
   function examPassed(n){
-    try{ return localStorage.getItem('mtj_exam_pass_' + n) === '1'; }catch(e){ return false; }
+    var k = window.mtjPassKey ? mtjPassKey(n) : null; if(!k) return false;
+    try{ return localStorage.getItem(k) === '1'; }catch(e){ return false; }
   }
 
   var completeStages = 0;
