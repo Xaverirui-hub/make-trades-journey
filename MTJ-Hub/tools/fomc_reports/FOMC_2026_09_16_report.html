@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#060608">
+<title>FOMC Report · 2026.09.16 · Make Trades Journey</title>
+<link href="../../assets/fonts/fonts.css" rel="stylesheet"><!-- 自架字体,不走 CDN:大陆连不上 Google Fonts -->
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{color-scheme:dark;
+  --bg:#060608; --bg2:#0b0b10; --panel:rgba(20,20,26,.55);
+  --gold:#E8C877; --gold-bright:#FCE9A8; --gold-deep:#C9A227;
+  --bull:#2CD98A; --bear:#FF5C63; --cyan:#2FE0D6;
+  --text:#EDEBE2; --muted:#9A968C; --muted2:#6f6c64;
+  --line:rgba(232,200,119,.16); --line-soft:rgba(232,200,119,.09);
+}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);
+  font-family:'Sora','Noto Sans SC',system-ui,sans-serif;line-height:1.6;overflow-x:hidden}
+.bg-glow{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(1100px 700px at 80% -10%,rgba(232,200,119,.10),transparent 60%),
+  radial-gradient(900px 600px at -10% 20%,rgba(201,162,39,.08),transparent 60%)}
+.bg-grid{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.4;
+  background-image:linear-gradient(rgba(232,200,119,.04) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(232,200,119,.04) 1px,transparent 1px);
+  background-size:64px 64px;mask-image:radial-gradient(circle at 50% 30%,#000 0%,transparent 80%);
+  -webkit-mask-image:radial-gradient(circle at 50% 30%,#000 0%,transparent 80%)}
+.wrap{position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:0 24px}
+.topbar{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;align-items:center;justify-content:space-between;
+  padding:14px clamp(16px,4vw,40px);background:linear-gradient(to bottom,rgba(6,6,8,.82),rgba(6,6,8,0));
+  backdrop-filter:blur(6px)}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.brand .bwrap{display:flex;flex-direction:column;line-height:1.1}
+.brand .bn{font-weight:700;font-size:14px;color:var(--text);letter-spacing:.04em}
+.brand .bs{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:.2em;text-transform:uppercase}
+.brand .live{display:inline-flex;align-items:center;gap:6px;margin-left:14px;font-family:'JetBrains Mono',monospace;
+  font-size:10.5px;color:var(--gold);letter-spacing:.14em;text-transform:uppercase}
+.brand .live i{width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px var(--gold);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero{position:relative;padding:clamp(110px,16vh,170px) 0 clamp(40px,6vh,70px);text-align:center}
+.hero .tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--gold);
+  letter-spacing:.3em;text-transform:uppercase;margin-bottom:18px;border:1px solid var(--line);border-radius:30px;padding:8px 20px}
+.hero h1{font-size:clamp(34px,5.5vw,58px);font-weight:800;letter-spacing:-.02em;line-height:1.12;margin:0 0 14px}
+.hero h1 em{font-style:normal;color:var(--gold-bright);text-shadow:0 0 30px rgba(232,200,119,.35)}
+.hero .zh{color:var(--muted);font-size:clamp(14px,2vw,18px);letter-spacing:.1em;margin-bottom:22px}
+.hero .meta{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted2);letter-spacing:.12em}
+.group-head{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin:0 0 8px}
+.group-head .tier{font-family:'JetBrains Mono',monospace;font-size:40px;font-weight:700;color:rgba(232,200,119,.16);line-height:1}
+.group-head h2{margin:0;font-size:clamp(20px,2.8vw,28px);font-weight:700}
+.group-head .zh{color:var(--muted);font-size:14px}
+.section{padding:26px 0}
+.pattern{display:grid;grid-template-columns:1fr;gap:20px;padding:24px 0;border-top:1px solid var(--line-soft)}
+.pattern:first-of-type{border-top:none}
+.card{position:relative;padding:24px 22px;border:1px solid var(--line-soft);border-radius:16px;
+  background:linear-gradient(160deg,rgba(232,200,119,.05),rgba(20,20,26,.35));overflow:hidden;transition:.3s}
+.card:hover{border-color:var(--line)}
+.card .n{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--gold);letter-spacing:.12em;margin-bottom:10px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
+.kpi{background:rgba(0,0,0,.3);border:1px solid var(--line-soft);border-radius:12px;padding:18px}
+.kpi .k{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--muted);letter-spacing:.14em;text-transform:uppercase}
+.kpi .v{font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:700;margin-top:8px}
+.kpi .v.up{color:var(--bull)} .kpi .v.dn{color:var(--bear)} .kpi .v.gd{color:var(--gold-bright)}
+.kpi .d{font-size:12px;color:var(--muted2);margin-top:5px;line-height:1.5}
+.rate-big{font-family:'JetBrains Mono',monospace;font-weight:800;font-size:clamp(40px,6vw,64px);color:var(--gold-bright);
+  letter-spacing:-1px;line-height:1;text-shadow:0 0 30px rgba(232,200,119,.45)}
+.rate-sub{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--muted);margin-top:10px;letter-spacing:.08em}
+.vote-bar{display:flex;height:26px;border-radius:6px;overflow:hidden;border:1px solid rgba(255,255,255,.1);margin:14px 0 8px}
+.vote-bar .hold{flex:9;background:linear-gradient(90deg,var(--gold-deep),var(--gold));box-shadow:0 0 14px rgba(232,200,119,.3)}
+.vote-bar .dis{flex:3;background:linear-gradient(90deg,#7a2530,var(--bear))}
+.vote-nums{display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--muted)}
+.vote-nums .g{color:var(--gold)} .vote-nums .r{color:var(--bear)}
+.timeline{position:relative;padding-left:28px}
+.timeline::before{content:"";position:absolute;left:7px;top:6px;bottom:6px;width:2px;background:linear-gradient(180deg,var(--gold-dim,rgba(201,162,39,.4)),transparent)}
+.titem{position:relative;padding:0 0 26px 0}
+.titem:last-child{padding-bottom:0}
+.tdot{position:absolute;left:-28px;top:5px;width:14px;height:14px;border-radius:50%;background:var(--bg);border:2px solid var(--gold);box-shadow:0 0 10px rgba(232,200,119,.5)}
+.tdot.hot{background:var(--gold)}
+.tt{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+.tm{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold);letter-spacing:.05em;white-space:nowrap}
+.th{font-weight:700;font-size:16px}
+.tp{font-family:'JetBrains Mono',monospace;font-size:13px}
+.tp.u{color:var(--bull)} .tp.d{color:var(--bear)}
+.td2{font-size:13.5px;color:var(--muted);line-height:1.7}
+.delta-row{display:flex;gap:14px;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.05);align-items:flex-start}
+.delta-row:last-child{border-bottom:0}
+.dico{flex:none;width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:15px;margin-top:1px}
+.dico.cut{background:rgba(255,92,99,.14);color:var(--bear);border:1px solid rgba(255,92,99,.32)}
+.dico.keep{background:rgba(47,224,214,.12);color:var(--cyan);border:1px solid rgba(47,224,214,.3)}
+.dico.new{background:rgba(232,200,119,.14);color:var(--gold);border:1px solid rgba(232,200,119,.32)}
+.dtxt{font-size:14.5px;line-height:1.6;color:#d3dbe9}
+.dtxt b{color:var(--text);font-weight:600}
+.dtxt .q{color:var(--gold-bright);font-style:italic}
+.mirror{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.mirror .m{background:rgba(0,0,0,.3);border:1px solid var(--line-soft);border-radius:12px;padding:18px}
+.mirror .m .mk{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px}
+.mirror .m .mv{font-size:13.5px;color:var(--muted);line-height:1.7}
+.mirror .m .mv b{color:var(--text)}
+.mirror .july{border-color:rgba(255,92,99,.25)}
+.mirror .sept{border-color:rgba(44,217,138,.25)}
+.concl{background:linear-gradient(160deg,rgba(232,200,119,.08),rgba(20,20,26,.5));border:1px solid var(--line);border-radius:18px;padding:26px}
+.concl .ch{font-weight:700;font-size:17px;margin-bottom:10px;color:var(--gold-bright)}
+.concl p{font-size:14.5px;color:var(--muted);line-height:1.9}
+.concl p b{color:var(--text)}
+.concl p .up{color:var(--bull)} .concl p .dn{color:var(--bear)}
+.shots{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.shots a{display:block;line-height:0}
+.shots img{width:100%;height:auto;display:block;border-radius:12px;border:1px solid var(--line-soft);transition:.3s}
+.shots a:hover img{border-color:var(--line)}
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+@media(max-width:760px){.mirror,.shots{grid-template-columns:1fr}}
+footer{padding:40px 0 50px;text-align:center;border-top:1px solid var(--line-soft);margin-top:50px}
+footer .l{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.18em;line-height:2}
+footer .l b{color:var(--gold)}
+
+/* Keyboard focus. The inputs already swap outline for a border + ring, but
+   nothing else on the page had a focus style of its own, so custom controls
+   (.btn, .mod cards, nav links) fell back to whatever the UA drew - or to
+   nothing where a background sat on top. :focus-visible only fires for
+   keyboard/AT, so pointer users see no change. */
+:focus-visible{outline:2px solid var(--gold,#E8C877);outline-offset:3px;border-radius:4px;}
+a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline-width:2px;}
+
+/* prefers-reduced-motion: stop the decorative loops for anyone who asked for
+   less movement. Transitions are shortened rather than removed so state
+   changes are still legible. */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;scroll-behavior:auto !important;}
+}
+</style>
+</head>
+<body>
+<a href="../../MakeTradesJourney.html" id="mtjBack" style="position:fixed;left:14px;bottom:14px;z-index:60;display:inline-flex;align-items:center;gap:9px;text-decoration:none;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#7A8699;background:rgba(10,14,20,.85);border:1px solid rgba(232,180,74,.28);border-radius:30px;padding:9px 16px;backdrop-filter:blur(6px);transition:.25s" onmouseover="this.style.color='#E8B44A';this.style.borderColor='#E8B44A'" onmouseout="this.style.color='#7A8699';this.style.borderColor='rgba(232,180,74,.28)'"><span>&#8592;</span>Hub &middot; 返回目录</a>
+<div class="bg-glow"></div><div class="bg-grid"></div>
+<div class="wrap">
+  <div class="topbar">
+    <a class="brand" href="../../MakeTradesJourney.html">
+      <div class="bwrap"><span class="bn">Make Trades Journey</span><span class="bs">FOMC Report · 决议报告</span></div>
+      <span class="live"><i></i>Review</span>
+    </a>
+  </div>
+
+  <header class="hero">
+    <div class="tag reveal in">FOMC REPORT · 决议复盘报告</div>
+    <h1>Rate <em>Hiked</em>, More <em>Signalled.</em></h1>
+    <div class="zh">利 率 加 息 一 码 · 三 年 来 首 次</div>
+    <div class="meta">2026.09.16 · XAUUSD 黄金 · 马来西亚时间 (MYT)</div>
+  </header>
+
+  <!-- 01 利率决议 -->
+  <section class="section">
+    <div class="group-head reveal"><span class="tier">01</span><h2>The Decision<span class="zh">利率决议表决</span></h2></div>
+    <div class="pattern">
+      <div class="card" style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center;">
+        <div>
+          <div class="n">TARGET RANGE · 联邦基金利率</div>
+          <div class="rate-big">3.75<span style="font-size:.5em;color:var(--gold);">–</span>4.00%</div>
+          <div class="rate-sub">HIKE · 加息 25bp · 自 2023.07 以来首次</div>
+        </div>
+        <div>
+          <div class="n">VOTE · 投票结果</div>
+          <div class="vote-bar"><div class="hold" style="flex:12"></div><div class="dis" style="flex:0"></div></div>
+          <div class="vote-nums"><span class="g">12 一致支持加息 +25bp</span><span class="r">0 反对</span></div>
+          <div style="margin-top:14px;font-size:13px;color:var(--muted);line-height:1.6;">
+            <b style="color:var(--text);">CHAIR · 美联储主席</b><br>
+            Kevin Warsh <span style="color:var(--gold);">（第 3 次主持 · 本轮不提交点阵）</span><br>
+            无一票反对 — Warsh：「通胀<span style="color:var(--bear);">太高</span>，而且<span style="color:var(--bear);">持续太久</span>」
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pattern">
+      <div class="card">
+        <div class="n">SEP · 点阵图 / 经济预测</div>
+        <div class="delta-row"><div class="dico keep">=</div><div class="dtxt">18 位与会者中 <b>16 位</b>预期年内至少再加息一次，其中 <b>4 位</b>看两次；<b>2 位</b>认为加一次就结束。</div></div>
+        <div class="delta-row"><div class="dico new">!</div><div class="dtxt">通胀预测上修：PCE <b>3.7%</b>、核心 PCE <b>3.4%</b>（均较 6 月上修 0.1pp）；2027 年回落至 2.3% / 2.5%，<b>2029 年</b>才回到 2% 目标。</div></div>
+        <div class="delta-row"><div class="dico keep">=</div><div class="dtxt">失业率预测下修至 <b>4.1%</b>（6 月为 4.3%）— 就业稳住，是敢加息的前提。</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 声明变化 -->
+  <section class="section">
+    <div class="group-head reveal"><span class="tier">02</span><h2>Statement vs July<span class="zh">声明变化（Vs 7月）</span></h2></div>
+    <div class="pattern">
+      <div class="card">
+        <div class="delta-row"><div class="dico new">!</div><div class="dtxt"><b>经济描述升级</b>：由「稳步扩张」改为<span class="q">"经济以稳健步伐扩张"</span>，并新增<b>生产率强劲 · 资本投资稳健 · 就业增长跟得上劳动力</b></div></div>
+        <div class="delta-row"><div class="dico cut">−</div><div class="dtxt"><b>删去通胀外部归因</b>：7 月声明称通胀「部分反映能源等供给冲击」，本次删除 — 不再为高通胀找借口</div></div>
+        <div class="delta-row"><div class="dico new">!</div><div class="dtxt">新增行动语言：<span class="q">"今天的政策行动将支持更及时地回归 2% 目标"</span></div></div>
+        <div class="delta-row"><div class="dico keep">=</div><div class="dtxt">保留：<span class="q">"委员会将实现价格稳定"</span> 与「维持充足准备金」框架</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 市场反应 -->
+  <section class="section">
+    <div class="group-head reveal"><span class="tier">03</span><h2>Market Reaction<span class="zh">市场即时反应（09-16 美股收盘）</span></h2></div>
+    <div class="pattern">
+      <div class="kpis">
+        <div class="kpi"><div class="k">DXY 美元指数</div><div class="v up">100.31 ↑</div><div class="d">决议日 <span style="color:var(--bull);">+0.66%</span> · 7 月底以来最强</div></div>
+        <div class="kpi"><div class="k">US10Y 收益率</div><div class="v up">5.01% ↑</div><div class="d">10Y 站上 5%（收 5.006%）· 2Y +5bp 至 4.72%</div></div>
+        <div class="kpi"><div class="k">美股</div><div class="v dn">−1.21%</div><div class="d">道指 <span style="color:var(--bear);">−631 点</span> · 标普 −0.45% · 纳指持平</div></div>
+        <div class="kpi"><div class="k">XAUUSD 黄金</div><div class="v gd">$4,275</div><div class="d">盘中冲 $4,368 后倒跌 · 收 <span style="color:var(--bear);">−0.4%</span>（六周低）</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 黄金时间轴 -->
+  <section class="section">
+    <div class="group-head reveal"><span class="tier">04</span><h2>Gold Night Timeline<span class="zh">黄金决议日走势（MYT）</span></h2></div>
+    <div class="pattern">
+      <div class="card">
+        <div class="n">XAUUSD · 决议夜复盘</div>
+        <div class="timeline">
+          <div class="titem"><div class="tdot"></div><div class="tt"><span class="tm">决议前</span><span class="th">美元走软，先冲高位</span><span class="tp u">$4,368</span></div>
+            <div class="td2">美国盘早段美元回落、收益率走低，金价自 $4,293 一路冲上日内高点 <b style="color:var(--text);">$4,367.93</b>。</div></div>
+          <div class="titem"><div class="tdot hot"></div><div class="tt"><span class="tm">02:00</span><span class="th">决议公布</span><span class="tp">$4,293</span></div>
+            <div class="td2">加息 <b style="color:var(--text);">25bp</b> 至 <b style="color:var(--text);">3.75–4.00%</b>，投票 <b style="color:var(--text);">12–0</b>；点阵图 16/18 位预期年内再加息。</div></div>
+          <div class="titem"><div class="tdot"></div><div class="tt"><span class="tm">02:30 后</span><span class="th">发布会鹰派，加速下杀</span><span class="tp d">→ $4,275</span></div>
+            <div class="td2">Warsh「通胀太高、持续太久」+ 明示还有加息空间 → 美元 <span style="color:var(--bear);">100.3</span>、10Y <span style="color:var(--bear);">5.0%</span> 同步走高，金价抹去全部涨幅。</div></div>
+          <div class="titem"><div class="tdot hot"></div><div class="tt"><span class="tm">隔夜</span><span class="th">探六周低</span><span class="tp d">$4,257</span></div>
+            <div class="td2">收盘 $4,275（−0.4%，较日内高回落约 <b style="color:var(--text);">$93</b>），随后续探 <b style="color:var(--text);">$4,256.70</b>，为六周低位。</div></div>
+          <div class="titem"><div class="tdot"></div><div class="tt"><span class="tm">亚欧盘</span><span class="th">美元回落，修复反弹</span><span class="tp u">$4,336 ↑</span></div>
+            <div class="td2">美元自七周高位回落至 <span style="color:var(--bull);">100.1</span>、油价回落，金价反弹至 $4,336，重回 $4,300 上方。</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 逻辑核心 -->
+  <section class="section">
+    <div class="group-head reveal"><span class="tier">05</span><h2>Core Logic<span class="zh">7 月「维持」→ 9 月「加息」</span></h2></div>
+    <div class="pattern">
+      <div class="mirror">
+        <div class="m july"><div class="mk">JULY · 7月</div><div class="mv"><b>维持 3.50–3.75%</b>，9–3 三票主张加息 → 黄金 <span style="color:var(--bull);">由跌转涨</span> +0.27%<br><br>「未加息」构成宽慰，但长端利率上行给反弹戴上天花板。</div></div>
+        <div class="m sept"><div class="mk">SEPTEMBER · 9月</div><div class="mv"><b>加息 25bp，12–0 全票</b>，点阵图指向更多 → 黄金 <span style="color:var(--bear);">冲高被砸</span> −0.4%<br><br>鹰派措辞 + 美元、收益率齐升，先杀多头再等美元回落修复。</div></div>
+      </div>
+      <div class="concl">
+        <div class="ch">核心：加息落地，黄金走完「冲高 → 下杀 → 修复」</div>
+        <p>决议前市场已 <b>90%+</b> 定价加息，金价先冲 <b class="up">$4,368</b>；Warsh 把「一次到位」讲成「还有下一步」，黄金与美股同步下杀。隔夜六周低 $4,257 后，美元与收益率回落带来修复，但 <b>实际利率走高 + 美元七周最强</b>仍是上方天花板，$4,316–$4,355 为第一道压力。下次会议 <span style="color:var(--cyan);">10/28（MYT 10/29 02:00）</span>前，盯 CPI / PCE 与油价。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 报告卡 -->
+  <section class="section">
+    <div class="group-head reveal"><span class="tier">06</span><h2>Share Cards<span class="zh">决议报告卡（可保存 / 转发）</span></h2></div>
+    <div class="pattern">
+      <div class="card">
+        <div class="shots">
+          <a href="FOMC_2026_09_16_P1.png" target="_blank" rel="noopener"><img src="FOMC_2026_09_16_P1.png" alt="FOMC 2026.09.16 决议核心" loading="lazy"></a>
+          <a href="FOMC_2026_09_16_P2.png" target="_blank" rel="noopener"><img src="FOMC_2026_09_16_P2.png" alt="FOMC 2026.09.16 黄金走势" loading="lazy"></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="l"><b>MAKETRADES JOURNEY</b> · XRs Trading Lab by Xavier Rui<br>仅供复盘研究，不构成投资建议 · 截至 2026-09-16 美股收盘 · 时间为马来西亚时间 (MYT)</div>
+  </footer>
+</div>
+<script>
+const io = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }), {threshold:.12});
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
