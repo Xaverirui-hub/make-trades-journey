@@ -1,6 +1,21 @@
 # GitHub Pages → Cloudflare Pages 搬迁 SOP
 
-建立 2026-11-02 · 执行人:Xavier(步骤 A/B)+ Hermes(步骤 C)
+建立 2026-11-02
+
+## 谁做哪一段
+
+| 段 | 做什麽 | 谁做 | 多久 |
+|---|---|---|---|
+| **A** | 注册 Cloudflare、连 GitHub、建 Pages 专案 | **你** | 约 15 分 |
+| **B** | 照清单验收新站 | **你** | 约 5 分 |
+| — | **B 全打勾 → 跟我说一声** | | |
+| **C** | 关 GitHub Pages、repo 转私有、清旧档 | **我** | 约 5 分 |
+
+**交接点就是 B 做完。** A 和 B 全是在浏览器里点 ——
+注册帐号、授权、按按钮这些我不能替你做。
+C 全是指令,我来跑,而且动手前会再问你一次。
+
+中间卡住随时喊停,不用硬着头皮做完 A。
 
 ---
 
@@ -39,22 +54,46 @@ GitHub Pages 服务的是**仓库根目录**,所以现在线上公开的不只�
 
 ## 步骤 A — 在 Cloudflare 建站(你做,约 15 分钟)
 
-### A1 · 注册
+### A1 · 注册 Cloudflare 帐号
 
-https://dash.cloudflare.com/sign-up — 免费方案就够。
-Pages 免费方案:流量与请求不限,每月 500 次建置。这个站一个月建置不到 20 次。
+1. 开 **https://dash.cloudflare.com/sign-up**
+2. 填 Email + 密码 → Sign Up
+   建议用你平常在收的信箱。这个帐号以後会管网域、付费墙、可能还有金流,
+   不要用临时信箱。
+3. 去信箱收验证信,点里面的连结。**没验证的话建不了 Pages 专案。**
+4. 回到 dashboard。
+
+**方案选免费的就够。** Pages 免费方案:流量不限、请求不限,每月 500 次建置。
+这个站一个月建置不到 20 次。不要买 Pro($20/月),那是给网站流量分析和
+进阶安全用的,你现在用不到。
+
+> **⚠ 注册完会有一个坑**
+> Cloudflare 会引导你「Add a site / 新增网站」,要你输入一个网域,
+> 甚至推荐你买一个。
+> **跳过它。** 你现在没有自己的网域,也还不需要 —— Pages 会免费给你
+> 一个 `xxx.pages.dev`。看到要你填网域的画面就直接关掉 / 按跳过,
+> 从左侧选单走 A2。
+> (买网域是以後的事,见文末「之後」。)
 
 ### A2 · 连接 GitHub
 
-左侧 **Compute (Workers & Pages)** → **Create** → 选 **Pages** 分页 →
-**Connect to Git** → 授权 GitHub。
+1. 左侧选单 → **Workers & Pages**
+2. **Create application** → **Pages** 分页 → **Connect to Git**
+3. 选 **GitHub** → 授权
 
-> 授权范围选 **Only select repositories**,只勾 `make-trades-journey`。
-> 不要给 All repositories —— 你另外七个私有 repo(EA 源码在内)没必要让它看到。
+> 这一步会跳到 GitHub 的授权页。
+> **Repository access 选 `Only select repositories`,只勾
+> `make-trades-journey`。**
+> 不要给 All repositories —— 你另外七个私有 repo(EA 源码在内)
+> 没必要让 Cloudflare 看到。
+> 之後要加 repo 随时能回 GitHub 设定里改。
 
-选 `Xaverirui-hub/make-trades-journey` → Begin setup。
+4. 按 **Install & Authorize**
+5. 清单里选 `Xaverirui-hub/make-trades-journey` → **Begin setup**
 
 ### A3 · 建置设定 ← 整个 SOP 最重要的一格
+
+画面标题是 **Set up builds and deployments**。
 
 | 栏位 | 填什麽 | 为什麽 |
 |---|---|---|
@@ -63,6 +102,8 @@ Pages 免费方案:流量与请求不限,每月 500 次建置。这个站一个�
 | Framework preset | **None** | 没有建置步骤,这是纯静态站 |
 | Build command | **留空** | 填了会失败 |
 | **Build output directory** | **`MTJ-Hub`** | **← 不是 `/`** |
+| Root directory (advanced) | 不用动 | 预设就是仓库根目录 |
+| Environment variables | 不用填 | 没有建置步骤,没东西可传 |
 
 **输出目录必须是 `MTJ-Hub`,不能是 `/`。** 两个理由:
 
