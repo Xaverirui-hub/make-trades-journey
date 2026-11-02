@@ -1,0 +1,28 @@
+# Cloudflare Pages 的回应标头设定。GitHub Pages 没有这个能力 —— 这是搬家
+# 顺手拿到的东西,不是额外工作。
+#
+# CSP 的 'unsafe-inline' 是必要的:整站的 script 与 style 都写在页面里。
+# 它挡不住 inline 脚本,但挡得住【外部】脚本 —— 而这正好是这个站的规矩:
+# 不走 CDN,字体自架,零 fetch。现在这条规矩由浏览器强制执行,哪天有人
+# (包括我)手滑加了一行 CDN,浏览器会直接拒载,而不是悄悄上线。
+#
+# 验证过:实际载入 courses.html 与复利计算器,资源全部同源(css 23 / script 4
+# / link 1),外部资源 0 个、fetch/XHR/WebSocket/Worker 0 处。
+#
+# form-action 'self':login.html 有一个 <form>,但它不送出任何东西(帐号系统
+# 还不存在)。限成同源,是为了即使哪天那张表单被动了手脚,资料也出不了这个站。
+# Phase 2 真的接上後端时,这一条不用改 —— 後端就在同源。
+
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=(), interest-cohort=()
+
+# 字体与 vendor 档不会变动,放长快取。其余的 HTML 维持预设,
+# 免得改了课程内容学员那边还拿到旧的。
+/assets/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/vendor/*
+  Cache-Control: public, max-age=31536000, immutable
